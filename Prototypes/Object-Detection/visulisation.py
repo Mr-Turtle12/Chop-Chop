@@ -4,6 +4,8 @@ import argparse
 from ultralytics import YOLO   
 import supervision as sv 
 
+###From  https://www.youtube.com/watch?v=QV85eYOb7gk&t=633s #######
+
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="YOLOv8 live")
     parser.add_argument(
@@ -19,12 +21,12 @@ def parse_arguments() -> argparse.Namespace:
 def main():
     args = parse_arguments()
     frame_width,frame_height = args.webcam_resolution
-    urls = "http://192.168.0.4:8080/video"
 
-    cap = cv2.VideoCapture(urls)
+    cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
 
+####### Change to the trained data ################
     model = YOLO("best.pt")
 
     box_annotator = sv.BoxAnnotator(
@@ -36,7 +38,7 @@ def main():
     while True:
         ret, frame = cap.read()
         result = model(frame)[0]
-        detections = sv.Detections.from_ultralytics(result)
+        detections = sv.Detections.from_yolov8(result)
         labels= [
             f"{model.model.name[class_id]} {confidence:0.2f}"
             for _,confidence, class_id, _
