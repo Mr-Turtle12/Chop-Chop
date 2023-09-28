@@ -1,9 +1,10 @@
 import cv2 
 import argparse
-
+import json
 from ultralytics import YOLO   
 import supervision as sv 
 
+#Please make sure that supervision is verison==0.2.1 or it will crash 
 ###From  https://www.youtube.com/watch?v=QV85eYOb7gk&t=633s #######
 
 def parse_arguments() -> argparse.Namespace:
@@ -27,28 +28,25 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
 
 ####### Change to the trained data ################
-    model = YOLO("best.pt")
+    model = YOLO("C:/Uni work/Operation Custard/Repo/comp6000-chop-chop/Prototypes/Object-Detection/best.pt")
 
-    box_annotator = sv.BoxAnnotator(
-        thickness=2,
-        text_thickness=2,
-        text_scale=1
-    )
 
     while True:
         ret, frame = cap.read()
-        result = model(frame)[0]
+        result = model(frame)[0] 
         detections = sv.Detections.from_yolov8(result)
-        labels= [
-            f"{model.model.name[class_id]} {confidence:0.2f}"
-            for _,confidence, class_id, _
-            in detections
-        ]
-        frame = box_annotator.annotate(scene=frame,
-                                        detections=detections, 
-                                        labels=labels)
-        cv2.imshow("yolov8", frame)
 
+        #looking at all objects that are being detected, if cut onion but no whole onion then send a response to API call
+        if 0 in detections.class_id:
+            if not (1 in detections.class_id):
+                print("All done chopping ready to move on")
+                #For now it just ends the program but will need to send a response to the API
+                exit()
+            else:
+                print("Chopping is going on at the moment")
+        elif 1 in detections.class_id:
+            print("Found onion no chopping has started!")
+        
         if(cv2.waitKey(30) == 27):
             break
 if __name__ == "__main__":
