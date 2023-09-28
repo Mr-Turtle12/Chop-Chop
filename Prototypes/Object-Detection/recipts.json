@@ -2,11 +2,14 @@
     "receipts":[{
         "pancake":[
             {
-                "Human": "Step one is to wait for an aonion to appear on the chopping board",
+                "Human": "Put Onion on board",
                 "AI": "null:Red-Onion"
             },{
-                "Human": "Step two wait for when there is only just chopped onion is on the chopping board",
-                "AI": "Red-Onion:chopped"
+                "Human": "Chop Onion",
+                "AI": "Red-Onion:Chopped-Red-Onion"
+            },{
+                "Human": "All done",
+                "AI": "Chopped-Red-onion:null"
             }
         ]
     }]
