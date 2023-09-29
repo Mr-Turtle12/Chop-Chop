@@ -27,7 +27,7 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
 
 ####### Change to the trained data ################
-    model = YOLO("best.pt")
+    model = YOLO("../Trained-Data/Version1/runs/detect/train/weights/best.pt")
 
     box_annotator = sv.BoxAnnotator(
         thickness=2,
@@ -40,7 +40,7 @@ def main():
         result = model(frame)[0]
         detections = sv.Detections.from_yolov8(result)
         labels= [
-            f"{model.model.name[class_id]} {confidence:0.2f}"
+            f"{model.model.names[class_id]} {confidence:0.2f}"
             for _,confidence, class_id, _
             in detections
         ]
