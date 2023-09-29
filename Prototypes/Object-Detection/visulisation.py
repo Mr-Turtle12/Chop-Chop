@@ -38,12 +38,13 @@ def GetCurrentStep(receipt, model,Step):
     if(len(CurrentStep[1]) == 0):
         CurrentStep[1] = -1
     else:
-        list(CurrentStep[1])[0]
+        CurrentStep[1] = list(CurrentStep[1])[0]
     CurrentStep[2] = {i for i in model.model.names if model.model.names[i]==CurrentStep[2]}
     if(len(CurrentStep[2]) == 0):
         CurrentStep[2] = -1
     else:
-        list(CurrentStep[2])[0]
+        CurrentStep[2] = list(CurrentStep[2])[0]
+
     return CurrentStep
 
 
@@ -73,7 +74,7 @@ def main():
 
 
 # Set the position and other properties for the text
-    position = (100, 200)  # (x, y) coordinates
+    position = (100, 200)  # (x, y) coordinates/
     font_scale = 1
     font_color = (255, 255, 255)  # White color in BGR
     font_thickness = 2
