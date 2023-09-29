@@ -1,111 +1,113 @@
-import cv2 
+import cv2
 import argparse
 import json
 import numpy as np
-from ultralytics import YOLO   
-import supervision as sv 
+from ultralytics import YOLO
+import supervision as sv
 
-#Please make sure that supervision is verison==0.2.1 or it will crash 
-###From  https://www.youtube.com/watch?v=QV85eYOb7gk&t=633s #######
+#Please make sure that the Supervision verision is on 0.2.1 to do this, *pip unistall supervision , pip install supervision==0.2.1
 
+#Display class is for all the setting and displaying cv2 window with text
+class Display:
+    def __init__(self, resolution):
+        self.frame_width, self.frame_height = resolution
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
+        self.font_scale = 1
+        self.font_color = (255, 255, 255)
+        self.font_thickness = 2
+        self.font_face = cv2.FONT_HERSHEY_SIMPLEX
+        self.image = np.zeros((self.frame_height, self.frame_width, 3), dtype=np.uint8)
+
+    def set_text(self, text):
+        position = (100, 200)
+        self.image = np.zeros((self.frame_height, self.frame_width, 3), dtype=np.uint8)
+        cv2.putText(self.image, text, position, self.font_face, self.font_scale, self.font_color, self.font_thickness)
+
+    def show_image(self):
+        cv2.imshow("Image with Text", self.image)
+
+    def release(self):
+        self.cap.release()
+        cv2.destroyAllWindows()
+#Does all the AI detection and also the Json reading
+class DetectionAI:
+
+    def __init__(self, model_location, json_location,Recipt):
+        self.model = YOLO(model_location)
+        self.index_Class = {idx: name for idx, name in enumerate(self.model.model.names)}
+        self.receipt = self.get_json(json_location)[0][Recipt]
+        self.index = 0
+        self.current_step = self.get_current_step()
+
+    def get_json(self, file_name):
+        with open(file_name, "r") as json_file:
+            data = json.load(json_file)
+        return data.get("receipts", [])
+
+    def get_current_step(self):
+        print(self.receipt[self.index])
+        CurrentStep = [
+            self.receipt[self.index]["Human"],
+            *self.receipt[self.index]["AI"].split(":") 
+        ]
+        #Change the currentstep for AI to the number index on the model
+        CurrentStep[1] = {i for i in self.model.model.names if self.model.model.names[i]==CurrentStep[1]}
+        if(len(CurrentStep[1]) == 0):
+            CurrentStep[1] = -1
+        else:
+            CurrentStep[1] = list(CurrentStep[1])[0]
+        CurrentStep[2] = {i for i in self.model.model.names if self.model.model.names[i]==CurrentStep[2]}
+        if(len(CurrentStep[2]) == 0):
+            CurrentStep[2] = -1
+        else:
+            CurrentStep[2] = list(CurrentStep[2])[0]
+
+        return CurrentStep
+
+#Add the detection to each frame
+    def process_frame(self, frame):
+        result = self.model(frame)[0]
+        detections = sv.Detections.from_yolov8(result)
+        return detections
+
+#Update to what the next recipt step should be
+    def update_step(self):
+        self.index += 1
+        self.current_step = self.get_current_step()
+
+
+#Passing in all the arguments you might want to change
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="YOLOv8 live")
-    parser.add_argument(
-        "--webcam-resolution",
-        default=[1280,720],
-        nargs=2,
-        type=int
-    )
-    args = parser.parse_args()
-    return args
-
-
-def GetJson(file_name):
-    with open(file_name, "r") as json_file:
-        # Load the JSON data from the file
-        data = json.load(json_file)
-
-    receipts = data.get("receipts", [])
-    return receipts
-
-def GetCurrentStep(receipt, model,Step):
-    CurrentStep = [
-        receipt[Step]["Human"],
-        *receipt[Step]["AI"].split(":") 
-    ]
-    #Change the currentstep for AI to the number index on the model
-    CurrentStep[1] = {i for i in model.model.names if model.model.names[i]==CurrentStep[1]}
-    if(len(CurrentStep[1]) == 0):
-        CurrentStep[1] = -1
-    else:
-        CurrentStep[1] = list(CurrentStep[1])[0]
-    CurrentStep[2] = {i for i in model.model.names if model.model.names[i]==CurrentStep[2]}
-    if(len(CurrentStep[2]) == 0):
-        CurrentStep[2] = -1
-    else:
-        CurrentStep[2] = list(CurrentStep[2])[0]
-
-    return CurrentStep
-
-
+    parser.add_argument("--resolution", default=[1280, 720], nargs=2, type=int)
+    parser.add_argument("-m", "--model", default= "C:/Uni work/Operation Custard/Repo/comp6000-chop-chop/Prototypes/Object-Detection/best.pt",required=False, help="Path to the model location")
+    parser.add_argument("-j", "--json", default= "C:/Uni work/Operation Custard/Repo/comp6000-chop-chop/Prototypes/Object-Detection/recipts.json",required=False, help="Path to the JSON location")
+    parser.add_argument("-r", "--Recipt", required=True, help="What recipt you want to use")
+    return parser.parse_args()
 
 def main():
-    #Get the receipts from Json file 
-    receipts = GetJson("C:/Uni work/Operation Custard/Repo/comp6000-chop-chop/Prototypes/Object-Detection/recipts.json")
-    #only get the pancake part of the receipt json file
-    pancakeReceipt = receipts[0]["pancake"]
-    #Set the current step to be at the start
     args = parse_arguments()
-    frame_width,frame_height = args.webcam_resolution
+    #init both display class and detectionAI
+    display = Display(args.resolution)
+    ai = DetectionAI(args.model, args.json,args.Recipt)
 
-    cap = cv2.VideoCapture(0)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
-
-####### Change to the trained data ################
-    model = YOLO("C:/Uni work/Operation Custard/Repo/comp6000-chop-chop/Prototypes/Object-Detection/best.pt")
-    index = 0
-    CurrentStep = GetCurrentStep(pancakeReceipt,model,index)
-
-
-    # Create a blank image (you can also load an existing image)
-    width, height = 800, 600
-    image = np.zeros((height, width, 3), dtype=np.uint8)  # Create a black image
-
-
-# Set the position and other properties for the text
-    position = (100, 200)  # (x, y) coordinates/
-    font_scale = 1
-    font_color = (255, 255, 255)  # White color in BGR
-    font_thickness = 2
-    font_face = cv2.FONT_HERSHEY_SIMPLEX
-
-
+    #Big while loop for all the logic that happens each frame
     while True:
-        ret, frame = cap.read()
-        result = model(frame)[0] 
-        detections = sv.Detections.from_yolov8(result)
+        ret, frame = display.cap.read()
+        detections = ai.process_frame(frame)
+        display.set_text(ai.current_step[0])
+        display.show_image()
+        #if next step has been reached
+        if ai.current_step[2] in detections.class_id:
+            if not (ai.current_step[1] in detections.class_id):
+                ai.update_step()
 
-        image = np.zeros((height, width, 3), dtype=np.uint8)  # Create a black image
-
-        cv2.putText(image, CurrentStep[0], position, font_face, font_scale, font_color, font_thickness)
-
-        #looking at all objects that are being detecteqd, if cut onion but no whole onion then send a response to API call
-        print(CurrentStep[2])
-        print(detections.class_id)
-        if CurrentStep[2] in detections.class_id:
-            print("Found")
-            if not (CurrentStep[1] in detections.class_id):
-                print("All done chopping ready to move on")
-                #For now it just ends the program but will need to send a response to the API
-                CurrentStep = GetCurrentStep(pancakeReceipt,model,index)
-                index = index + 1
-            else:
-                print("Chopping is going on at the moment")
-        elif CurrentStep[1] in detections.class_id:
-            print("Found onion no chopping has started!")
-        cv2.imshow("Image with Text", image)
-        if(cv2.waitKey(30) == 27):
+        if cv2.waitKey(30) == 27:
             break
+
+    display.release()
+
 if __name__ == "__main__":
     main()
