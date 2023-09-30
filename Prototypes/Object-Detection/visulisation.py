@@ -32,6 +32,10 @@ class Display:
         self.cap.release()
         cv2.destroyAllWindows()
 
+
+
+
+
 #Does all the AI detection and also the Json reading
 class DetectionAI:
 
@@ -48,15 +52,13 @@ class DetectionAI:
         return data.get("receipts", [])
 
     def get_current_step(self):
-        CurrentStep = [
-            self.receipt[self.index]["Human"],
-            self.receipt[self.index]["AI"][0]["Ingredent"],
-            self.receipt[self.index]["AI"][0]["Detects"]
-        ]
-        IngredentIndex = next((i for i in self.model.model.names if self.model.model.names[i] == CurrentStep[1]), None)
-        DetectsIndex =  next((i for i in self.model.model.names if self.model.model.names[i] == CurrentStep[2]), None)
+        ReciptStepsForAI = self.receipt[self.index]["AI"][0]
+        BgDetects = ReciptStepsForAI["BgDetects"][0]
+        IngredentIndex = next((i for i in self.model.model.names if self.model.model.names[i] == ReciptStepsForAI["Ingredent"]), None)
+        DetectsIndex =  next((i for i in self.model.model.names if self.model.model.names[i] == ReciptStepsForAI["Detects"]), None)
 
-        return [CurrentStep[0],IngredentIndex,DetectsIndex]
+
+        return [self.receipt[self.index]["Human"],IngredentIndex,DetectsIndex]
 
 #Add the detection to each frame
     def process_frame(self, frame):
@@ -95,7 +97,7 @@ def main():
         if ai.current_step[2] in detections.class_id:
             if not (ai.current_step[1] in detections.class_id):
                 ai.update_step()
-        #Add a timer that checks if we need to str 
+        #Add a timer that checks if we need to str
 
         #Add a timer to check if there is any boil over 
 
