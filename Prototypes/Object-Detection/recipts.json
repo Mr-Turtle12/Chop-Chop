@@ -1,37 +1,37 @@
 {
-    "receipts":[{
+    "receipts":{
         "pancake":[
             {
                 "Human": "Please get Red Onion",
-                "AI": [{
+                "AI": {
                     "Ingredent": "",
                     "Detects":"Red-Onion"
-                    }]
+                }
             },{
                 "Human": "Start chopping Onion",
-                "AI": [{
+                "AI": {
                     "Ingredent": "Red-Onion",
                     "Detects": "Chopped-Red-Onion"                
-                }]
+                }
             },{
                 "Human": "Get a Carrot",
-                "AI": [{
+                "AI": {
                     "Ingredent": "",
                     "Detects":"Carrot"
-                }]
+                }
             },{
-                "Human":"Start chopping Carrot, also Start strying",
-                "AI": [{
+                "Human":"Start chopping Carrot",
+                "AI": {
                     "Ingredent": "Carrot",
                     "Detects":"Diced-Carrots"
-                }]
+                }
             },{
                 "Human":"Put in pan",
-                "AI": [{
+                "AI": {
                     "Ingredent": "Diced-Carrots",
                     "Detects":"null"
-                }]
+                }
             }
         ]
-    }]
+    }
 }

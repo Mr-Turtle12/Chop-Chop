@@ -42,7 +42,7 @@ class DetectionAI:
     def __init__(self, model_location, json_location,Recipt):
         self.model = YOLO(model_location)
         self.index_Class = {idx: name for idx, name in enumerate(self.model.model.names)}
-        self.receipt = self.get_json(json_location)[0][Recipt]
+        self.receipt = self.get_json(json_location)[Recipt]
         self.index = 0
         self.current_step = self.get_current_step()
 
@@ -52,8 +52,7 @@ class DetectionAI:
         return data.get("receipts", [])
 
     def get_current_step(self):
-        ReciptStepsForAI = self.receipt[self.index]["AI"][0]
-        BgDetects = ReciptStepsForAI["BgDetects"][0]
+        ReciptStepsForAI = self.receipt[self.index]["AI"]
         IngredentIndex = next((i for i in self.model.model.names if self.model.model.names[i] == ReciptStepsForAI["Ingredent"]), None)
         DetectsIndex =  next((i for i in self.model.model.names if self.model.model.names[i] == ReciptStepsForAI["Detects"]), None)
 
