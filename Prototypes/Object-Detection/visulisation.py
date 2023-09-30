@@ -31,6 +31,7 @@ class Display:
     def release(self):
         self.cap.release()
         cv2.destroyAllWindows()
+
 #Does all the AI detection and also the Json reading
 class DetectionAI:
 
@@ -47,24 +48,15 @@ class DetectionAI:
         return data.get("receipts", [])
 
     def get_current_step(self):
-        print(self.receipt[self.index])
         CurrentStep = [
             self.receipt[self.index]["Human"],
-            *self.receipt[self.index]["AI"].split(":") 
+            self.receipt[self.index]["AI"][0]["Ingredent"],
+            self.receipt[self.index]["AI"][0]["Detects"]
         ]
-        #Change the currentstep for AI to the number index on the model
-        CurrentStep[1] = {i for i in self.model.model.names if self.model.model.names[i]==CurrentStep[1]}
-        if(len(CurrentStep[1]) == 0):
-            CurrentStep[1] = -1
-        else:
-            CurrentStep[1] = list(CurrentStep[1])[0]
-        CurrentStep[2] = {i for i in self.model.model.names if self.model.model.names[i]==CurrentStep[2]}
-        if(len(CurrentStep[2]) == 0):
-            CurrentStep[2] = -1
-        else:
-            CurrentStep[2] = list(CurrentStep[2])[0]
+        IngredentIndex = next((i for i in self.model.model.names if self.model.model.names[i] == CurrentStep[1]), None)
+        DetectsIndex =  next((i for i in self.model.model.names if self.model.model.names[i] == CurrentStep[2]), None)
 
-        return CurrentStep
+        return [CurrentStep[0],IngredentIndex,DetectsIndex]
 
 #Add the detection to each frame
     def process_frame(self, frame):
@@ -84,7 +76,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--resolution", default=[1280, 720], nargs=2, type=int)
     parser.add_argument("-m", "--model", default= "C:/Uni work/Operation Custard/Repo/comp6000-chop-chop/Prototypes/Object-Detection/best.pt",required=False, help="Path to the model location")
     parser.add_argument("-j", "--json", default= "C:/Uni work/Operation Custard/Repo/comp6000-chop-chop/Prototypes/Object-Detection/recipts.json",required=False, help="Path to the JSON location")
-    parser.add_argument("-r", "--Recipt", required=True, help="What recipt you want to use")
+    parser.add_argument("-r", "--Recipt", default="pancake", help="What recipt you want to use")
     return parser.parse_args()
 
 def main():
@@ -99,10 +91,13 @@ def main():
         detections = ai.process_frame(frame)
         display.set_text(ai.current_step[0])
         display.show_image()
-        #if next step has been reached
+        #Check to see if only the detects id is in the detections and the Ingredent isn't
         if ai.current_step[2] in detections.class_id:
             if not (ai.current_step[1] in detections.class_id):
                 ai.update_step()
+        #Add a timer that checks if we need to str 
+
+        #Add a timer to check if there is any boil over 
 
         if cv2.waitKey(30) == 27:
             break
