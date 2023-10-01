@@ -1,21 +1,17 @@
 <template>
-  <img src="./assets/logo.png">
-  <LargeCard></LargeCard>
+  <body>
+    <img
+      class="logo"
+      src="./assets/logo.png"
+    >
+    <LargeCard />
+    <CardScroll />
+  </body>
 </template>
 
-<script>
-import LargeCard from './components/LargeCard.vue';
-
-export default {
-  name: 'App',
-  components: {
-    LargeCard
-  }
-}
-
-fetch("")
-  .then()
-
+<script setup>
+import CardScroll from './components/CardScroll.vue'
+import LargeCard from './components/LargeCard.vue'
 </script>
 
 <style>
@@ -24,7 +20,17 @@ fetch("")
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #fbeada;
+}
+
+body {
+  margin: 0;
+}
+
+img.logo {
+  width: 300px;
+  height: 300px;
+  margin-bottom: 100px;
+  margin-top: 100px;
 }
 </style>
