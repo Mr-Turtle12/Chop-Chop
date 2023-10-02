@@ -1,21 +1,6 @@
 <template>
-  <body>
-    <img
-      class="logo"
-      src="./assets/logo.png"
-    >
-    <LargeCard
-      :recipe-name="'special recipe'"
-      :info="'info'"
-    />
-    <CardScroll />
-  </body>
+  <router-view />
 </template>
-
-<script setup>
-import CardScroll from './components/CardScroll.vue'
-import LargeCard from './components/LargeCard.vue'
-</script>
 
 <style>
 #app {
@@ -25,15 +10,7 @@ import LargeCard from './components/LargeCard.vue'
   text-align: center;
   background-color: #fbeada;
 }
-
 body {
   margin: 0;
-}
-
-img.logo {
-  width: 300px;
-  height: 300px;
-  margin-bottom: 100px;
-  margin-top: 100px;
 }
 </style>

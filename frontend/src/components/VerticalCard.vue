@@ -32,7 +32,7 @@ div.vertical-card:not(:last-child) {
   margin-right: 70px;
 }
 div.text-area {
-  height: 40%;
+  height: 35%;
   width: 100%;
   position: absolute;
   bottom: 0;
