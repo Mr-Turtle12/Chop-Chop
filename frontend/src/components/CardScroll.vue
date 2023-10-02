@@ -13,6 +13,9 @@
 
 <script setup>
 import VerticalCard from './VerticalCard.vue'
+defineProps({
+    apiUrl: {type:String, default:'http://localhost:8000'}
+})
 const y = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // needs to be changed to api call
 </script>
 

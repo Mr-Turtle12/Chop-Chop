@@ -4,7 +4,10 @@
       class="logo"
       src="./assets/logo.png"
     >
-    <LargeCard />
+    <LargeCard
+      :recipe-name="'special recipe'"
+      :info="'info'"
+    />
     <CardScroll />
   </body>
 </template>
