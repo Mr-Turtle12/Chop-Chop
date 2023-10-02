@@ -1,7 +1,7 @@
 import json
 
 def GetJson():
-    json_file_path = "C:/Uni work/Operation Custard/Repo/comp6000-chop-chop/Prototypes/Object-Detection/recipts.json"
+    json_file_path = "../Prototypes/Object-Detection/recipts.json"
     with open(json_file_path, "r") as json_file:
         # Load the JSON data from the file
         data = json.load(json_file)
