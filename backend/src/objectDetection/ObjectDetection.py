@@ -26,14 +26,10 @@ class ObjectDetection:
         self.camare = GetCamare.GetCamare([1280, 720], camareID)
 
     # Will set everything up to check the frame for any objects that is passed in to it
-    def check_items(self, items, debugs=False):
+    def check_items(self, items):
         _, frame = self.camare.cap.read()
         _, frame = self.camare.cap.read()
         self.camare.show(frame)
-        # This will return an array of True and False
-        if debugs:
-            return self.debugframe(frame, items)
-
         return self.AI.process_frame(frame, items)
 
     # To be called at the end
