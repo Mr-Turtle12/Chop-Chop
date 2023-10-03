@@ -1,6 +1,6 @@
 # Controls the flow of the whole of the back-end
 
-from backend.controller import recipe
+from backend.src.controller import recipe
 
 
 class Controller:

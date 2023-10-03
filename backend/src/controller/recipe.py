@@ -1,4 +1,4 @@
-from backend.controller import utils
+from backend.src.controller import utils
 
 
 class Recipe:
