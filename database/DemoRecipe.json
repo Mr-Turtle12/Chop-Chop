@@ -1,0 +1,16 @@
+{
+  "RecipeName": "Demo",
+  "description": "This recipe is empty. Not very yummy",
+  "ingredients": [
+    {"Item":"Onion", "Amount":"2"},
+    {"Item":"Carrot","Amount":"100g"}
+  ],
+  "Steps": [
+    {
+      "HumanCommand": "Get 2 onions",
+      "Computer": {
+        "criteria":
+      }
+    }
+  ]
+}
