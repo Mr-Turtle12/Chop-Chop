@@ -1,26 +1,32 @@
 {
-  "RecipeName": "Demo",
+  "recipeName": "Demo",
   "description": "This recipe is empty. Not very yummy",
   "ingredients": [
-    {"Item":"Red Onion", "Amount":"2"},
-    {"Item":"Carrot","Amount":"100g"}
+    {"item":"Red Onion", "amount":"2"},
+    {"item":"Carrot","amount":"100g"}
   ],
-  "Steps": [
+  "steps": [
     {
-      "HumanCommand": "Get 2 red onions",
+      "message": "Get 2 red onions",
       "criteria": [
         {
-          "Red-Onion": true
+          "object": "Red-Onion",
+          "state": true
         }
       ]
 
     },
     {
-      "HumanCommand": "Chop 2 onions",
+      "message": "Chop 2 onions",
         "criteria": [
           {
-            "Red-Onion" : false,
-            "Chopped-Red-Onion" : true
+            "object": "Red-Onion",
+            "state": false
+          },
+          {
+            "object": "Chopped-Red-Onion",
+            "state": true
+
           }
         ]
 
