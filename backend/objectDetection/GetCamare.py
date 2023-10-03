@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-#Get the Frame from camare 
+#Get the frame from camare 
 class getCamare:
     def __init__(self, resolution,camareID):
         #Set up the camare
