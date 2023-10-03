@@ -1,4 +1,3 @@
-
 # How to call:
 # Initialize the object:
 # detector = ObjectDetection.ObjectDetection("./Database/best.pt", 0)
@@ -17,24 +16,27 @@
 # detector.end()
 
 
-
 import DetectionAI
 import GetCamare
 
 
 class ObjectDetection:
-    def __init__(self, model,camareID):
+    def __init__(self, model, camareID):
         self.AI = DetectionAI.DetectionAI(model)
-        self.camare = GetCamare.GetCamare([1280, 720],camareID)
-    
-#Will set everything up to check the frame for any objects that is passed in to it
-    def check_items(self, objects):
+        self.camare = GetCamare.GetCamare([1280, 720], camareID)
+
+    # Will set everything up to check the frame for any objects that is passed in to it
+    def check_items(self, items, debugs=False):
         _, frame = self.camare.cap.read()
-        #This will return an array of True and  False
-        return self.AI.process_frame(frame,objects)
-    
-    #To be called at the end
+        _, frame = self.camare.cap.read()
+        self.camare.show(frame)
+        # This will return an array of True and False
+        if debugs:
+            return self.debugframe(frame, items)
+
+        return self.AI.process_frame(frame, items)
+
+    # To be called at the end
+
     def end(self):
         self.camare.release()
-    
-    
