@@ -14,5 +14,8 @@ class Controller:
         self.current_recipe_instance = recipe.Recipe(recipe_name)
 
 
-def test_print():
-    print("Hello")
+def test_new_recipe():
+    CONTROLLER_INSTANCE.new_recipe("DemoRecipe")
+
+
+CONTROLLER_INSTANCE = Controller()
