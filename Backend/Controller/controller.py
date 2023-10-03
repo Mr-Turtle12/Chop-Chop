@@ -5,7 +5,7 @@ from backend.controller import recipe
 
 class Controller:
     def __init__(self):
-        self.current_recipe_instance = {}
+        self.current_recipe_instance = None
 
     # Get the required recipe from the JSON files
     # Begin incrementing the steps.
