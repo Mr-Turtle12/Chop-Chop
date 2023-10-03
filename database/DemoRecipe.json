@@ -8,24 +8,22 @@
   "Steps": [
     {
       "HumanCommand": "Get 2 red onions",
-      "Computer": {
-        "criteria": [
-          {
-            "Red-Onion": true
-          }
-        ]
-      }
+      "criteria": [
+        {
+          "Red-Onion": true
+        }
+      ]
+
     },
     {
       "HumanCommand": "Chop 2 onions",
-      "Computer": {
         "criteria": [
           {
             "Red-Onion" : false,
             "Chopped-Red-Onion" : true
           }
         ]
-      }
+
     }
   ]
 }

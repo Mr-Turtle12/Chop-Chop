@@ -14,11 +14,6 @@ def get_JSON(file):
     # a dictionary
     data = json.load(f)
 
-    # Iterating through the json
-    # list
-    for i in data["Steps"]:
-        print(i)
-
     # Closing file
     f.close()
 
