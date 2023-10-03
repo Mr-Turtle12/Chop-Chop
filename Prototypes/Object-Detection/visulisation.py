@@ -27,7 +27,7 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
 
 ####### Change to the trained data ################
-    model = YOLO("../../Trained-Data/Version3/runs/detect/train/weights/best.pt")
+    model = YOLO("../Trained-Data/Version1/runs/detect/train/weights/best.pt")
 
     box_annotator = sv.BoxAnnotator(
         thickness=2,
