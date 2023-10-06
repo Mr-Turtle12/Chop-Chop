@@ -10,12 +10,14 @@
       :info="'info'"
     />
     <CardScroll />
+    <RecentRecipes />
   </body>
 </template>
 
 <script setup>
 import CardScroll from '@/components/CardScroll.vue'
 import LargeCard from '@/components/LargeCard.vue'
+import RecentRecipes from '@/components/RecentRecipes.vue'
 </script>
 
 <style>
