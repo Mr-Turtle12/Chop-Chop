@@ -1,0 +1,28 @@
+:root {
+  /*colours*/
+  $clr-main: #f9ecdf;
+  $clr-highlight: #419170;
+  $clr-heart: #de3c3c;
+
+  /*fonts*/
+  $body-font-family: 'Londrina Solid', sans-serif;
+  $base-font-size: 36px;
+  $base-font-weight: 400;
+  
+}
+
+@font-face {
+  font-family: 'Londrina Solid', sans-serif;
+  font-size: 36px;
+  font-weight: 400;
+  src: url('https://fonts.googleapis.com/css?family=Londrina Solid');
+}
+
+body {
+  background-color: var(--clr-main)
+
+}
+
+card {
+  background-color: var(--clr-highlight)
+}

@@ -55,11 +55,6 @@ defineProps({
 
       #{$c}__heading {
         color: #419170;
-        font-family: Londrina Solid;
-        font-size: 36px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
         margin:0;
       }
   }
