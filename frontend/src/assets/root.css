@@ -1,0 +1,7 @@
+root {
+  --clr-main: red;
+}
+
+card {
+  background-color: var(--clr-main);
+}
