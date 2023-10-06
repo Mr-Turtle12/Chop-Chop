@@ -1,16 +1,24 @@
+
+
 <template>
+  <head>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    >
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossOrigin
+    >
+    <link
+      href="https://fonts.googleapis.com/css2?family=Londrina+Solid&display=swap"
+      rel="stylesheet"
+    >
+  </head>
   <router-view />
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  background-color: #fbeada;
-}
-body {
-  margin: 0;
-}
+@import './assets/css/root.scss';
 </style>

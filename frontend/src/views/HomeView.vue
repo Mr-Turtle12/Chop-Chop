@@ -3,7 +3,7 @@
     <a href="/recipe">recipe view</a>
     <img
       class="logo"
-      src="@/assets/logo.png"
+      src="@/assets/logo-nobg.png"
     >
     <LargeCard
       :recipe-name="'special recipe'"
@@ -27,5 +27,6 @@ img.logo {
   height: 300px;
   margin-bottom: 100px;
   margin-top: 100px;
+  color: green;
 }
 </style>
