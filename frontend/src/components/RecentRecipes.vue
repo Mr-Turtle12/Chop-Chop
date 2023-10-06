@@ -31,15 +31,6 @@ import RecipeCard from './RecipeCard.vue'
 </script>
 
 <style scoped lang="scss">
-.o-container {
-  box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: calc(90rem + 2rem * 2);
-    padding-left: 2rem;
-    padding-right: 2rem;
-    width: 100%;
-}
 .c-recent-recipes {
   $c : &;
 
