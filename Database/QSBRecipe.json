@@ -1,0 +1,21 @@
+{
+  "recipeName": "Quorn Spaghetti Bolognese",
+  "description": "It's like bolognese but veggie with spaghetti",
+  "ingredients": [
+    {"item":"Red Onion", "amount":"1", "unit": "unit"},
+    {"item":"Carrot", "amount":"2", "unit": "unit"},
+    {"item":"Chopped Tomatoes", "amount":"400", "unit": "grams"},
+    {"item":"Quorn Mince","amount":"500", "unit": "grams"},
+    {"item":"Vegetable Stock Cube","amount":"1", "unit": "unit"},
+    {"item":"Spaghetti","amount":"500", "unit": "grams"}
+  ],
+  "steps": [
+    {"command":"Get 1 Red Onion", "amount":"1", "progressionObject": "Red-Onion", "inhibitor": "none"},
+    {"command":"Chop the Red Onion", "amount":"1", "progressionObject": "Chopped-Red-Onion", "inhibitor": "Red-Onion", "errorMessage": "Please remove additional Red Onion"},
+    {"command":"Get 2 Carrots", "amount":"2", "progressionObject": "Carrot", "inhibitor": "none"},
+    {"command":"Dice the Carrots", "amount":"2", "progressionObject": "Diced-Carrot", "inhibitor": "Carrot", "errorMessage": "Please remove additional Carrot"},
+    {"command":"Lightly oil pan and add to heat", "amount":"1", "progressionObject": "Frying-Pan", "inhibitor": "none"},
+    {"command":"Add the Onions and Carrots to the Pan", "amount":"1", "progressionObject": "Onion-Carrot-Pan", "progressionCriteria": "true", "inhibitor": "Pan", "errorMessage": "Please remove additional Pan"}
+  ]
+}
+
