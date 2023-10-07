@@ -16,23 +16,24 @@
 # detector.end()
 
 
-import DetectionAI
-import GetCamare
+from objectDetection import detection
+from objectDetection import camera
 
 
 class ObjectDetection:
-    def __init__(self, model, camareID):
-        self.AI = DetectionAI.DetectionAI(model)
-        self.camare = GetCamare.GetCamare([1280, 720], camareID)
+    def __init__(self, model, cameraID):
+        self.AI = detection.Detection(model)
+        self.cameraObj = camera.Camera([1280, 720], cameraID)
 
     # Will set everything up to check the frame for any objects that is passed in to it
     def check_items(self, items):
-        _, frame = self.camare.cap.read()
-        _, frame = self.camare.cap.read()
-        self.camare.show(frame)
+        #This is called twice because the first time, sometimes the camera doesn't capture anything, so running it twice ensures that the frame from the camera is captured."
+        _, frame = self.cameraObj.cap.read()
+        _, frame = self.cameraObj.cap.read()
+        self.cameraObj.show(frame)
         return self.AI.process_frame(frame, items)
 
     # To be called at the end
 
     def end(self):
-        self.camare.release()
+        self.cameraObj.release()

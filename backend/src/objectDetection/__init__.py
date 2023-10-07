@@ -1,2 +1,2 @@
-from .ObjectDetection import *
+from .objectDetection import *
 
