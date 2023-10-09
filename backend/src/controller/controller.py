@@ -17,13 +17,13 @@ class Controller:
         else:
             return False
 
-    def get_all_recipe_metadata():
-        print("Get all Recipe metadata")
+    def get_all_recipe_metadata(self):
+        return "replace me"
         # Returns information about all recipes (as dictionary)
         # `recipe_name`,`recipe_picture`, `recipe_description`  (if possible)
 
-    def get_a_recipe(recipe_id):
-        print("Get Recipe information")
+    def get_a_recipe(self, recipe_id):
+        return "replace me"
 
     def get_current_recipe_step(self):
         if self.current_recipe_instance is not None:
