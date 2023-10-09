@@ -50,6 +50,14 @@ defineProps({
     }
   }
 
+  #{$c}__image {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 16/9;
+  }
+  
   #{$c}__info {
     height: 35%;
     width: 100%;
