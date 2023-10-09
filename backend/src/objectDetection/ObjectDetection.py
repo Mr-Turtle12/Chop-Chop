@@ -15,7 +15,7 @@
 # Once all detecting have finished:
 # detector.end()
 
-
+import time
 from objectDetection import detection
 from objectDetection import camera
 
@@ -28,9 +28,8 @@ class ObjectDetection:
     # Will set everything up to check the frame for any objects that is passed in to it
     def check_items(self, items):
         #This is called twice because the first time, sometimes the camera doesn't capture anything, so running it twice ensures that the frame from the camera is captured."
+        time.sleep(2)
         _, frame = self.cameraObj.cap.read()
-        _, frame = self.cameraObj.cap.read()
-        self.cameraObj.show(frame)
         return self.AI.process_frame(frame, items)
 
     # To be called at the end
