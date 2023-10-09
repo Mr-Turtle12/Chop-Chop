@@ -1,5 +1,5 @@
 @mixin grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-column-gap: var(--gutter);
+  grid-gap: var(--gutter);
 }

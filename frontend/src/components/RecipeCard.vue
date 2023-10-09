@@ -35,13 +35,12 @@ defineProps({
   width: 200px;
   background-color: red;
   border-radius: 20px;
-  display: inline-block;
   position: relative;
   overflow: hidden;
 
-  &:not(:last-child) {
-  margin-right: 70px;
-}
+//   &:not(:last-child) {
+//   margin-right: 70px;
+// }
 
 &:hover,
   &:focus {
