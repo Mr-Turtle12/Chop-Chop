@@ -1,10 +1,13 @@
 <template>
-  <section class="c-recent-recipes">
+  <section class="c-recent-recipes o-section">
     <div class="c-recent-recipes__container o-container">
       <div class="c-recent-recipes__text-container">
-        <h1 class="c-recent-recipes__heading-link">
-          <a>
-            <span class="c-recent-recipes__heading">Recent Recipes</span>
+        <h1 class="c-recent-recipes__heading">
+          <a
+            class="c-recent-recipes__heading-link"
+            href="/recipe"
+          >
+            Recent Recipes
             <span class="c-recent-recipes__heading-icon">></span>
           </a>
         </h1>
@@ -36,19 +39,25 @@ import RecipeCard from './RecipeCard.vue'
     grid-gap: 2rem;
   }
 
-  &__heading-link {
+  &__heading {
     @include ts-heading-2;
+    color: #419170;
     grid-column:1/7;
-    // color: #419170;
+    margin: 0;
+    width:fit-content;
 
     &:hover,
     &:focus {
-      color: #419170;
+      #{$c}__heading-icon {
+        transform: translateX(10px);
+      }
     }
   }
 
-  &__heading + &__heading-icon {
+  &__heading-icon {
     margin-left:8px;
+    display:inline-block;
+    transition: transform 0.3s;
   }
 
   &__recipes {

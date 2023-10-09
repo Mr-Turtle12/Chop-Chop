@@ -29,6 +29,10 @@ body {
   margin: 0;
 }
 
+.o-section {
+  margin-top: var(--space-xl);
+}
+
 .o-container {
   box-sizing: border-box;
   margin-left: auto;
