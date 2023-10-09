@@ -19,6 +19,7 @@
   <router-view />
 </template>
 
-<style>
-@import './assets/css/root.scss';
+<style lang="scss">
+@import '@/assets/css/root.scss';
+// @import "@/assets/css/text-styles.scss";
 </style>

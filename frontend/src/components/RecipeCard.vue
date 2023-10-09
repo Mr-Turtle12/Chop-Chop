@@ -5,13 +5,13 @@
   >
     <img
       class="c-card__image"
-      src="@/assets/logo.png"
+      src="@/assets/recipe-1.png"
     >
     
     <div class="c-card__info">
       <h1 class="c-card__heading">this is a card</h1>
 
-      <p>1 hr</p>
+      <p class="c-card__meta">1 hr</p>
     </div>
   </a>
 </template>
@@ -23,18 +23,19 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
+@import "@/assets/css/text-styles.scss";  // remove this and make global 
 .c-card {
   $c : &;
   text-decoration:none;
 
   &--side {
     display:flex;
-    gap:2rem;
 
       #{$c}__image {
         height:auto;
         width:50%;
         object-fit: contain;
+        border-radius: 30px 0px 0px 30px;
       }
 
       #{$c}__info {
@@ -47,15 +48,22 @@ defineProps({
         &:focus {
           background-color: #419170;
 
-          #{$c}__heading {
+          #{$c}__heading,
+          #{$c}__meta {
             color: #fff;
           }
         }
       }
 
       #{$c}__heading {
+        @include ts-heading-3;
         color: #419170;
         margin:0;
+      }
+
+      #{$c}__meta {
+        @include ts-meta;
+        color: #419170;
       }
   }
 }

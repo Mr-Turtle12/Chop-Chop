@@ -18,14 +18,10 @@
   --body-font-family: 'Londrina Solid', sans-serif;
   --base-font-size: 36px;
   --base-font-weight: 400;
-
 }
 
 #app {
   font-family: var(--body-font-family);
-  font-size: 36px;
-  font-weight: 400;
-  text-align: center;
 }
 
 body {
@@ -41,8 +37,4 @@ body {
   padding-left: 2rem;
   padding-right: 2rem;
   width: 100%;
-}
-
-card {
-  background-color: var(--clr-highlight)
 }

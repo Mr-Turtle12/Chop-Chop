@@ -1,18 +1,13 @@
 <template>
-  <link
-    href="https://fonts.googleapis.com/css?family=Londrina Solid"
-    rel="stylesheet"
-  >
-  
   <section class="c-recent-recipes">
     <div class="c-recent-recipes__container o-container">
       <div class="c-recent-recipes__text-container">
-        <a class="c-recent-recipes__heading-link">
-          <h1>
+        <h1 class="c-recent-recipes__heading-link">
+          <a>
             <span class="c-recent-recipes__heading">Recent Recipes</span>
             <span class="c-recent-recipes__heading-icon">></span>
-          </h1>
-        </a>
+          </a>
+        </h1>
       </div>
 
       <div class="c-recent-recipes__recipes">
@@ -31,6 +26,7 @@ import RecipeCard from './RecipeCard.vue'
 </script>
 
 <style scoped lang="scss">
+@import "@/assets/css/text-styles.scss";  // remove this and make global 
 .c-recent-recipes {
   $c : &;
 
@@ -41,8 +37,9 @@ import RecipeCard from './RecipeCard.vue'
   }
 
   &__heading-link {
-    grid-column:1/3;
-    color: #419170;
+    @include ts-heading-2;
+    grid-column:1/7;
+    // color: #419170;
 
     &:hover,
     &:focus {
