@@ -37,7 +37,7 @@ class Detection:
     def process_frame(self, frame, items):
         global CONFIDENCE_THRESHOLD
         result = self.model(frame)[0]
-        detections = sv.Detections.from_ultralytics(result)
+        detections = sv.Detections.from_yolov8(result)
         # Set detection to only detect on confidence threshold
         detections = detections[detections.confidence > CONFIDENCE_THRESHOLD]
         return self.check_items(items, detections)
