@@ -1,10 +1,7 @@
 <template>
   <body>
+    <PageHeader />
     <a href="/recipe">recipe view</a>
-    <img
-      class="logo"
-      src="@/assets/logo-nobg.png"
-    >
     <LargeCard
       :recipe-name="'special recipe'"
       :info="'info'"
@@ -15,6 +12,7 @@
 </template>
 
 <script setup>
+import PageHeader from '@/components/PageHeader.vue'
 import CardScroll from '@/components/CardScroll.vue'
 import LargeCard from '@/components/LargeCard.vue'
 import RecentRecipes from '@/components/RecentRecipes.vue'

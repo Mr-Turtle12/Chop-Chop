@@ -46,8 +46,9 @@ defineProps({
       #{$c}__image {
         height:auto;
         width:50%;
-        object-fit: contain;
+        object-fit: cover;
         border-radius: 30px 0px 0px 30px;
+        aspect-ratio: 16/9;
       }
 
       #{$c}__info {
