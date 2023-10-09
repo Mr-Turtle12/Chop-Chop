@@ -2,7 +2,7 @@ import json
 import os
 
 
-def does_recipe_id_exist():
+def does_recipe_id_exist(recipe_id):
     # Check if ID is in the JSON files
     print("check if id exist")
 
