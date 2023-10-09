@@ -1,14 +1,14 @@
 # How to call:
 # Initialize the object:
-# detector = ObjectDetection.ObjectDetection("./Database/best.pt", 0)
+# detectorObj = objectDetection.ObjectDetection("./Trained-Data/Version3/runs/detect/train/weights/best.pt", 0)
 
-# To check for a food item, e.g., "onion":
-# detector.check_items("onion")
+# To check for a food item, e.g., "Red-Onion":
+# detectorObj.check_items("Red-Onion")
 # return:
 # [False]
 
-# To check for more than one food item, e.g., "onion" and "carrot":
-# detector.check_items(["onion", "carrot"])
+# To check for more than one food item, e.g., "Red-Onion" and "carrot":
+# detectorObj.check_items(["Red-Onion", "carrot"])
 # return:
 # [False,False]
 
@@ -27,8 +27,8 @@ class ObjectDetection:
 
     # Will set everything up to check the frame for any objects that is passed in to it
     def check_items(self, items):
-        #This is called twice because the first time, sometimes the camera doesn't capture anything, so running it twice ensures that the frame from the camera is captured."
-        time.sleep(2)
+        #wait 1 seconds to give camera time to load up
+        time.sleep(1)
         _, frame = self.cameraObj.cap.read()
         return self.AI.process_frame(frame, items)
 
