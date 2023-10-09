@@ -17,7 +17,7 @@
         <RecipeCard
           v-for="x in 4"
           :key="x"
-          :size="'side'"
+          :size="'horizontal'"
         />
       </div>
     </div>

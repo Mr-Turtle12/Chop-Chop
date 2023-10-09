@@ -9,16 +9,18 @@
     >
     
     <div class="c-card__info">
-      <h1 class="c-card__heading">this is a card</h1>
+      <h1 class="c-card__heading">{{ recipeName }}</h1>
 
-      <p class="c-card__meta">1 hr</p>
+      <p class="c-card__meta">{{ info }}</p>
     </div>
   </a>
 </template>
 
 <script setup>
 defineProps({
-    size: { type: String, default: 'small' },
+    size: { type: String, default: 'vertical' },
+    recipeName: { type: String, default: 'recipe name' },
+    info: { type: String, default: 'info' },
 })
 </script>
 
@@ -28,7 +30,39 @@ defineProps({
   $c : &;
   text-decoration:none;
 
-  &--side {
+  &--vertical {
+    height: 300px;
+  width: 200px;
+  background-color: red;
+  border-radius: 20px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+
+  &:not(:last-child) {
+  margin-right: 70px;
+}
+
+&:hover,
+  &:focus {
+    #{$c}__info {
+      height: 50%;
+    }
+  }
+
+  #{$c}__info {
+    height: 35%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.1); /*maybe change to box shadow*/
+    text-align: left;
+    transition: ease 200ms;
+    }
+  }
+
+  &--horizontal {
     display:flex;
 
     &:hover,

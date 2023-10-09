@@ -11,8 +11,9 @@
       :recipe-name="'special recipe'"
       :info="'info'"
     /> -->
-    <CardScroll />
     <RecentRecipes />
+
+    <CardScroll />
   </body>
 </template>
 
