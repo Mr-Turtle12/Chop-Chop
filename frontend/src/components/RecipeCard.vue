@@ -1,7 +1,7 @@
 <template>
   <a
     :class="`c-card c-card--${ size }`"
-    href="www.google.com"
+    href="/recipe"
   >
     <img
       class="c-card__image"
@@ -31,6 +31,18 @@ defineProps({
   &--side {
     display:flex;
 
+    &:hover,
+    &:focus {
+      #{$c}__info {
+      background-color: #419170;
+    }
+
+      #{$c}__heading,
+      #{$c}__meta {
+          color: #fff;
+        }
+      }
+
       #{$c}__image {
         height:auto;
         width:50%;
@@ -43,16 +55,6 @@ defineProps({
         background: #FFF;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         padding: 30px;
-
-        &:hover,
-        &:focus {
-          background-color: #419170;
-
-          #{$c}__heading,
-          #{$c}__meta {
-            color: #fff;
-          }
-        }
       }
 
       #{$c}__heading {
