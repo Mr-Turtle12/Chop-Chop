@@ -1,16 +1,16 @@
 <template>
-  <section class="c-featured-recipe o-section">
-    <div class="c-featured-recipe__image-container">
-      <img
-        class="c-featured-recipe__image"
-        src="@/assets/recipe-1.png"
-      >
-    </div>
-      
+  <section class="c-featured-recipe o-section">  
     <div class="c-featured-recipe__container o-container">
+      <div class="c-featured-recipe__image-container">
+        <img
+          class="c-featured-recipe__image"
+          src="@/assets/recipe-1.png"
+        >
+      </div>
+    
       <div class="c-featured-recipe__text-container">
         <h1 class="c-featured-recipe__heading">
-          {{ recipeName }}
+          <a class="c-featured-recipe__heading-link">{{ recipeName }}</a>
         </h1>
 
         <p class="c-featured-recipe__meta">
@@ -33,7 +33,10 @@ defineProps({
 @import "@/assets/css/grid-settings.scss";  // remove this and make global 
 
 .c-featured-recipe {
-  position: relative;
+  &__container {
+    @include grid;
+    position:relative;
+  }
 
   &__image-container {
     height: 100%;
@@ -51,12 +54,8 @@ defineProps({
     width: 100%;
   }
 
-  &__container {
-    @include grid;
-  }
-
   &__text-container {
-    grid-column:3/9;
+    grid-column: 3/9;
     z-index:2;
   }
 
