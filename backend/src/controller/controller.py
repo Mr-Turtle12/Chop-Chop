@@ -24,13 +24,14 @@ class Controller:
 
     def get_a_recipe(self, recipe_id):
         return "replace me"
+        # Return information about one singular recipe.
+        # search by id and return, recipe_name, recipe_description, recipe_picture, recipe_steps, recipe_ingredients
 
     def get_current_recipe_step(self):
+        # returns the current recipe step
         if self.current_recipe_instance is not None:
             return self.current_recipe_instance.get_current_step()
         return -1
-
-    # returns the informations about a specific recipe
 
 
 def test_new_recipe():
