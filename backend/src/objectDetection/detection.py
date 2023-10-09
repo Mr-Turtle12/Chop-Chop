@@ -5,7 +5,7 @@ import supervision as sv
 CONFIDENCE_THRESHOLD = float(0.4)
 
 
-#This class is used for processing the frame and adding the detections from the AI to the frame
+# This class is used for processing the frame and adding the detections from the AI to the frame
 class Detection:
     def __init__(self, modelLocation):
         self.model = YOLO(modelLocation)
@@ -37,7 +37,7 @@ class Detection:
     def process_frame(self, frame, items):
         global CONFIDENCE_THRESHOLD
         result = self.model(frame)[0]
-        detections = sv.Detections.from_yolov8(result)
+        detections = sv.Detections.from_ultralytics(result)
         # Set detection to only detect on confidence threshold
         detections = detections[detections.confidence > CONFIDENCE_THRESHOLD]
         return self.check_items(items, detections)
