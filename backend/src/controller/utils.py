@@ -2,6 +2,11 @@ import json
 import os
 
 
+def does_recipe_id_exist(recipe_id):
+    # Check if ID is in the JSON files
+    print("check if id exist")
+
+
 def get_database_address(json_file_name):
     return os.getenv("chop-chop-database") + "/" + json_file_name + ".json"
 
