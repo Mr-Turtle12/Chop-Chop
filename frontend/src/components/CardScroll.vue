@@ -5,7 +5,7 @@
         <h1 class="c-card-scroll__heading">
           <a
             class="c-card-scroll__heading-link"
-            href="/recipe"
+            href="/search"
           >
             Liked Recipes
             <span class="c-card-scroll__heading-icon">></span>

@@ -5,7 +5,7 @@
         <h1 class="c-recent-recipes__heading">
           <a
             class="c-recent-recipes__heading-link"
-            href="/recipe"
+            href="/search"
           >
             Recent Recipes
             <span class="c-recent-recipes__heading-icon">></span>
