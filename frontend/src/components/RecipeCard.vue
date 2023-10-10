@@ -1,7 +1,7 @@
 <template>
   <a
     :class="`c-card c-card--${ size }`"
-    href="/recipe"
+    href="/recipe-overview"
   >
     <img
       class="c-card__image"

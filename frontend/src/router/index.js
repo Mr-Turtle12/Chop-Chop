@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import RecipeView from '@/views/RecipeView.vue'
 import SearchView from '@/views/SearchView.vue'
+import RecipeOverview from '@/views/RecipeOverview.vue'
+import RecipeView from '@/views/RecipeView.vue'
 
 const routes = [
     {
@@ -20,7 +21,13 @@ const routes = [
         name: 'search',
         component: SearchView,
         meta: { transition: 'slide-left'}
-    }
+    },
+    {
+        path: '/recipe-overview',
+        name: 'recipe-overview',
+        component: RecipeOverview,
+        meta: { transition: 'slide-left'}
+    },
 ]
 
 const router = createRouter({

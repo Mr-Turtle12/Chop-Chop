@@ -15,6 +15,8 @@
         <div class="c-page-header__nav">
           <a>menu</a>
         </div>
+
+        <div class="c-page-header__search" />
       </div>
     </div>
   </header>
@@ -31,6 +33,10 @@
 
   &__logo-wrapper {
     grid-column:6;
+  }
+
+  &__search {
+    grid-column: 2/11;
   }
 }
 </style>

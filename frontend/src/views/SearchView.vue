@@ -1,5 +1,7 @@
 <template>
-  <PageHeader />
+  <PageHeader 
+    :search="true"
+  />
 
   <CardListing />
 </template>
