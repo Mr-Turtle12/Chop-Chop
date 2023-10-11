@@ -25,7 +25,6 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/css/text-styles.scss";  // remove this and make global 
 .c-card {
   $c : &;
   text-decoration:none;

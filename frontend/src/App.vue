@@ -1,5 +1,3 @@
-
-
 <template>
   <head>
     <link
@@ -20,6 +18,5 @@
 </template>
 
 <style lang="scss">
-@import '@/assets/css/root.scss';
-// @import "@/assets/css/text-styles.scss";
+// comment
 </style>

@@ -29,7 +29,6 @@ import RecipeCard from './RecipeCard.vue'
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/css/text-styles.scss";  // remove this and make global 
 .c-recent-recipes {
   $c : &;
 
