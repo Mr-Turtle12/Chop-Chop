@@ -1,9 +1,9 @@
 {
   "recipes": [
     {
-      "recipeID" : "1",
-      "recipeIMG" : "QuornSpagBol.png",
-      "recipeName": "Quorn Spaghetti Bolognese",
+      "id" : "1",
+      "image" : "QuornSpagBol.png",
+      "name": "Quorn Spaghetti Bolognese",
       "description": "It's like bolognese but veggie with spaghetti",
       "ingredients": [
         { "item": "Red Onion", "amount": "1", "unit": "unit" },
@@ -60,9 +60,9 @@
       ]
     },
     {
-      "recipeID": "2",
-      "recipeIMG" : "Pancakes.png",
-      "recipeName": "pancakes",
+      "id": "2",
+      "image" : "Pancakes.png",
+      "name": "pancakes",
       "description": "oui oui le crepe",
       "ingredients": [
         { "item": "Plain Flour", "amount": "500", "unit": "grams" },
@@ -94,9 +94,9 @@
       ]
     },
     {
-      "recipeID": "3",
-      "recipeIMG" : "Sandwiches.png",
-      "recipeName": "Sandwiches",
+      "id": "3",
+      "image" : "Sandwiches.png",
+      "name": "Sandwiches",
       "description": "sandwich recipe",
       "ingredients": [
         { "item": "Slice of Bread", "amount": "2", "unit": "unit" },

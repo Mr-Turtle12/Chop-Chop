@@ -69,8 +69,8 @@ class Controller:
 
         for recipe in recipe_data:
             metadata = {
-                'recipeIMG': recipe.get('recipeIMG', ''),
-                'recipeName': recipe.get('recipeName', ''),
+                'image': recipe.get('image', ''),
+                'name': recipe.get('name', ''),
                 'description': recipe.get('description', '')
             }
             all_metadata.append(metadata)
@@ -81,8 +81,8 @@ class Controller:
         self.new_recipe(recipe_id)
         step_num = 1
         metadata = {
-            'recipeIMG' : '',
-            'recipeName': '',
+            'image' : '',
+            'name': '',
             'description': '',
             'ingredients': [],
             'commands': []
@@ -90,8 +90,8 @@ class Controller:
 
         recipe_data = self.read_recipe()
         if recipe_data:
-            metadata['recipeIMG'] = recipe_data[0].get('recipeIMG', '')
-            metadata['recipeName'] = recipe_data[0].get('recipeName', '')
+            metadata['image'] = recipe_data[0].get('image', '')
+            metadata['name'] = recipe_data[0].get('name', '')
             metadata['description'] = recipe_data[0].get('description', '')
 
             # Use the get_recipe_ingredients function to get ingredients for the specified recipe
