@@ -1,5 +1,3 @@
-# Controls the flow of the whole of the back-end
-
 import json
 import os
 from controller import recipe
@@ -8,97 +6,60 @@ from controller import recipe
 class Controller:
     def __init__(self, file_path):
         self.file_path = file_path
-        self.recipe_id = None
+        self.recipe_data = self.read_recipe()
+        self.current_recipe = None
 
     def read_recipe(self):
         try:
             with open(self.file_path, 'r') as json_file:
                 recipe_data = json.load(json_file)
-                recipes = recipe_data.get('recipes', [])
-                return recipes  # Return all recipes
+                return recipe_data
         except FileNotFoundError:
             print(f"File not found: {self.file_path}")
-            return []
+            return {}
         except json.JSONDecodeError as e:
             print(f"Error decoding JSON: {e}")
-            return []
+            return {}
 
-    def new_recipe(self, recipe_id):
-        self.recipe_id = recipe_id
+    def switch_recipe(self, recipe_id):
+        for recipe in self.recipe_data.get('recipes', []):
+            if recipe.get('id') == recipe_id:
+                self.current_recipe = recipe
+                return True
+        self.current_recipe = None
+        return False
 
     def get_command_for_step(self, step_number):
-        recipe_data = self.read_recipe()
-        if recipe_data:
-            steps = recipe_data[0].get('steps', [])
+        if self.current_recipe:
+            steps = self.current_recipe.get('steps', [])
             if 1 <= step_number <= len(steps):
                 return steps[step_number - 1].get('command', '')
         return None
 
     def get_progression_requirements_for_step(self, step_number):
-        steps = self.read_recipe()
-        if 1 <= step_number < len(steps):
-            return [
-                steps[step_number - 1].get('progressionObject', ''),
-                steps[step_number - 1].get('inhibitor', '')
-            ]
-        else:
+        if self.current_recipe:
+            steps = self.current_recipe.get('steps', [])
+            if 1 <= step_number <= len(steps):
+                step = steps[step_number - 1]
+                return [
+                    step.get('camera', ''),
+                    (step.get('progressionObject', ''), step.get('inhibitor', ''))
+                ]
+        return None
+
+    def get_recipe_metadata(self):
+        if not self.current_recipe:
             return None
 
-    def get_recipe_ingredients(self, recipe_id):
-        self.new_recipe(recipe_id)
-        recipe_data = self.read_recipe()
-        ingredients_list = []
-
-        if recipe_data:
-            ingredients = recipe_data[0].get('ingredients', [])
-            for ingredient in ingredients:
-                item = ingredient.get('item', '')
-                amount = ingredient.get('amount', '')
-                unit = ingredient.get('unit', '')
-                ingredients_list.append({
-                    'item': item,
-                    'amount': amount,
-                    'unit': unit
-                })
-
-        return ingredients_list
-
-
-    def get_all_recipe_metadata(self):
-        recipe_data = self.read_recipe()
-        all_metadata = []
-
-        for recipe in recipe_data:
-            metadata = {
-                'image': recipe.get('image', ''),
-                'name': recipe.get('name', ''),
-                'description': recipe.get('description', '')
-            }
-            all_metadata.append(metadata)
-
-        return all_metadata
-
-    def get_recipe_metadata(self, recipe_id):
-        self.new_recipe(recipe_id)
-        step_num = 1
         metadata = {
-            'image' : '',
-            'name': '',
-            'description': '',
-            'ingredients': [],
-            'commands': []
+            'image': self.current_recipe.get('image', ''),
+            'name': self.current_recipe.get('name', ''),
+            'description': self.current_recipe.get('description', ''),
+            'ingredients': self.current_recipe.get('ingredients', []),
+            'commands': [],
         }
 
-        recipe_data = self.read_recipe()
-        if recipe_data:
-            metadata['image'] = recipe_data[0].get('image', '')
-            metadata['name'] = recipe_data[0].get('name', '')
-            metadata['description'] = recipe_data[0].get('description', '')
-
-            # Use the get_recipe_ingredients function to get ingredients for the specified recipe
-            ingredients = self.get_recipe_ingredients(recipe_id)
-            metadata['ingredients'] = ingredients
-
+        step_num = 1
         while True:
             command = self.get_command_for_step(step_num)
             if command is not None:
@@ -112,6 +73,19 @@ class Controller:
     def new_recipe(self, recipe_name):
         self.current_recipe_instance = recipe.Recipe(recipe_name)
 
+    def get_all_recipe_metadata(self):
+        all_metadata = []
+
+        for recipe in self.recipe_data.get('recipes', []):
+            metadata = {
+                'image': recipe.get('image', ''),
+                'name': recipe.get('name', ''),
+                'description': recipe.get('description', ''),
+            }
+            all_metadata.append(metadata)
+
+        return all_metadata
+
 
 # Example usage
 if __name__ == "__main__":
@@ -122,12 +96,20 @@ if __name__ == "__main__":
     # Initialize Controller
     recipe_reader = Controller(json_file_path)
 
-    # Provide the recipe ID for the recipe you want to retrieve metadata for
-    recipe_ID = "1"
+    # Switch to a specific recipe by ID
+    recipe_id = "1"
+    if recipe_reader.switch_recipe(recipe_id):
+        # Test outputs
+        print(recipe_reader.get_progression_requirements_for_step(1))
+        print(recipe_reader.get_recipe_metadata())
 
-    # Test outputs
-    recipe_metadata = recipe_reader.get_recipe_metadata(recipe_ID)
+    # Switch to another recipe
+    recipe_id = "2"
+    if recipe_reader.switch_recipe(recipe_id):
+        # Test outputs
+        print(recipe_reader.get_progression_requirements_for_step(1))
+        print(recipe_reader.get_recipe_metadata())
+
+    # Get metadata for all recipes
     all_recipe_metadata = recipe_reader.get_all_recipe_metadata()
-
-    print(recipe_metadata)
     print(all_recipe_metadata)
