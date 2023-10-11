@@ -1,7 +1,6 @@
 # Controls the flow of the whole of the back-end
 
 from controller import recipe
-from controller import utils
 
 
 class Controller:
