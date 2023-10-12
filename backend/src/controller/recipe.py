@@ -1,10 +1,13 @@
-from backend.src.controller import utils
+from controller import utils
 
 
 class Recipe:
     def __init__(self, recipe_id):
         self.current_recipe = utils.fetch_recipe_by_id(recipe_id, utils.get_JSON(utils.get_database_address("QSBRecipe.json")))
         self.current_step = 1
+
+    def get_current_step(self):
+        return self.current_step
 
     def get_command_for_step(self, step_number):
         if self.current_recipe:

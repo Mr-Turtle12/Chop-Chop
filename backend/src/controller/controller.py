@@ -1,3 +1,6 @@
+# Controls the flow of the whole of the back-end
+
+from controller import recipe
 import json
 import os
 
@@ -20,6 +23,13 @@ class Controller:
             print(f"Error decoding JSON: {e}")
             return {}
 
+    # Get the required recipe from the JSON files
+    # Begin incrementing the steps.
+    def new_recipe(self, recipe_name):
+        self.current_recipe_instance = recipe.Recipe(recipe_name)
+
+
+
     def get_progression_requirements_for_step(self, step_number):
         if self.current_recipe:
             steps = self.current_recipe.get('steps', [])
@@ -30,6 +40,7 @@ class Controller:
                     (step.get('progressionObject', ''), step.get('inhibitor', ''))
                 ]
         return None
+
 
     def get_recipe_metadata(self):
         if not self.current_recipe:

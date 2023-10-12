@@ -1,0 +1,44 @@
+:root {
+  /*spacing */
+  --space-xxs: 0.5rem;
+  --space-xs: 1rem;
+  --space-s: 1.5rem;
+  --space-m: 2rem;
+  --space-l: 3rem;
+  --space-xl: 4rem;
+  --space-xxl: 5rem;
+  --gutter: 2rem;
+
+  /*colours*/
+  --clr-main: #faead8;
+  --clr-highlight: #419170;
+  --clr-heart: #de3c3c;
+
+  /*fonts*/
+  --body-font-family: 'Londrina Solid', sans-serif;
+  --base-font-size: 36px;
+  --base-font-weight: 400;
+}
+
+#app {
+  font-family: var(--body-font-family);
+}
+
+body {
+  background-color: var(--clr-main);
+  margin: 0;
+}
+
+.o-section {
+  margin-top: var(--space-xl);
+}
+
+.o-container {
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: calc(90rem + 2rem * 2);
+  padding-left: 2rem;
+  padding-right: 2rem;
+  width: 100%;
+}

@@ -5,8 +5,8 @@ import supervision as sv
 CONFIDENCE_THRESHOLD = float(0.4)
 
 
-# Does all the AI detection
-class DetectionAI:
+# This class is used for processing the frame and adding the detections from the AI to the frame
+class Detection:
     def __init__(self, modelLocation):
         self.model = YOLO(modelLocation)
         self.index_Class = {
@@ -19,10 +19,7 @@ class DetectionAI:
             (i for i in self.model.model.names if self.model.model.names[i] == item),
             None,
         )
-        if item_index in detections.class_id:
-            return True
-        else:
-            return False
+        return item_index in detections.class_id
 
     # take care if the items var is an item or array of items you want to check
 
