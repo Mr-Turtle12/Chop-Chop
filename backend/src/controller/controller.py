@@ -1,67 +1,36 @@
+# Controls the flow of the whole of the back-end
+from backend.src.controller import recipe, utils
 import json
 import os
 from controller import recipe
 
 
 class Controller:
-    def __init__(self, file_path):
-        self.file_path = file_path
-        self.recipe_data = self.read_recipe()
+    def __init__(self):
         self.current_recipe = None
 
-    def read_recipe(self):
-        try:
-            with open(self.file_path, 'r') as json_file:
-                recipe_data = json.load(json_file)
-                return recipe_data
-        except FileNotFoundError:
-            print(f"File not found: {self.file_path}")
-            return {}
-        except json.JSONDecodeError as e:
-            print(f"Error decoding JSON: {e}")
-            return {}
+    def new_recipe(self, recipe_id):
+        self.current_recipe = recipe.Recipe(recipe_id)
+
+    def get_command_for_step(self, step_number):
+        return self.current_recipe.get_command_for_step(step_number)
+
+    def get_command_for_current_step(self):
+        return self.current_recipe.get_command_for_current_step()
 
     def get_progression_requirements_for_step(self, step_number):
-        if self.current_recipe:
-            steps = self.current_recipe.get('steps', [])
-            if 1 <= step_number <= len(steps):
-                step = steps[step_number - 1]
-                return [
-                    step.get('camera', ''),
-                    (step.get('progressionObject', ''), step.get('inhibitor', ''))
-                ]
-        return None
+        return self.current_recipe.get_progression_requirements_for_step(step_number)
+
+    def get_progression_requirements_for_current_step(self):
+        return self.current_recipe.get_progression_requirements_for_current_step()
 
     def get_recipe_metadata(self):
-        if not self.current_recipe:
-            return None
-
-        metadata = {
-            'image': self.current_recipe.get('image', ''),
-            'name': self.current_recipe.get('name', ''),
-            'description': self.current_recipe.get('description', ''),
-            'ingredients': self.current_recipe.get('ingredients', []),
-            'commands': [],
-        }
-
-        step_num = 1
-        while True:
-            command = self.current_recipe.get_command_for_step(step_num)
-            if command is not None:
-                metadata['commands'].append(command)
-                step_num += 1
-            else:
-                break
-
-    # Get the required recipe from the JSON files
-    # Begin incrementing the steps.
-    def new_recipe(self, recipe_name):
-        self.current_recipe_instance = recipe.Recipe(recipe_name)
+        return self.current_recipe.get_recipe_metadata()
 
     def get_all_recipe_metadata(self):
         all_metadata = []
 
-        for recipe in self.recipe_data.get('recipes', []):
+        for recipe in utils.get_json(utils.get_database_address("QSBRecipe")).get('recipes', []):
             metadata = {
                 'image': recipe.get('image', ''),
                 'name': recipe.get('name', ''),
@@ -72,29 +41,11 @@ class Controller:
         return all_metadata
 
 
-# Example usage
-if __name__ == "__main__":
-    # Specify the path to the JSON file
-    json_file_name = "QSBRecipe.json"
-    json_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../Database', json_file_name))
-
-    # Initialize Controller
-    recipe_reader = Controller(json_file_path)
-
-    # Switch to a specific recipe by ID
+def test_new_recipe():
     recipe_id = "1"
-    if recipe_reader.switch_recipe(recipe_id):
-        # Test outputs
-        print(recipe_reader.get_progression_requirements_for_step(1))
-        print(recipe_reader.get_recipe_metadata())
+    CONTROLLER_INSTANCE.new_recipe(recipe_id)
+    print(CONTROLLER_INSTANCE.get_command_for_step(1))
+    print(CONTROLLER_INSTANCE.get_progression_requirements_for_current_step())
+    print(CONTROLLER_INSTANCE.get_all_recipe_metadata())
 
-    # Switch to another recipe
-    recipe_id = "2"
-    if recipe_reader.switch_recipe(recipe_id):
-        # Test outputs
-        print(recipe_reader.get_progression_requirements_for_step(1))
-        print(recipe_reader.get_recipe_metadata())
-
-    # Get metadata for all recipes
-    all_recipe_metadata = recipe_reader.get_all_recipe_metadata()
-    print(all_recipe_metadata)
+CONTROLLER_INSTANCE = Controller()
