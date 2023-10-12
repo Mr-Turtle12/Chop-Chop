@@ -21,21 +21,6 @@ class Controller:
             print(f"Error decoding JSON: {e}")
             return {}
 
-    def switch_recipe(self, recipe_id):
-        for recipe in self.recipe_data.get('recipes', []):
-            if recipe.get('id') == recipe_id:
-                self.current_recipe = recipe
-                return True
-        self.current_recipe = None
-        return False
-
-    def get_command_for_step(self, step_number):
-        if self.current_recipe:
-            steps = self.current_recipe.get('steps', [])
-            if 1 <= step_number <= len(steps):
-                return steps[step_number - 1].get('command', '')
-        return None
-
     def get_progression_requirements_for_step(self, step_number):
         if self.current_recipe:
             steps = self.current_recipe.get('steps', [])
@@ -61,7 +46,7 @@ class Controller:
 
         step_num = 1
         while True:
-            command = self.get_command_for_step(step_num)
+            command = self.current_recipe.get_command_for_step(step_num)
             if command is not None:
                 metadata['commands'].append(command)
                 step_num += 1
