@@ -1,14 +1,12 @@
 from ultralytics import YOLO
 import supervision as sv
 
-# GLOBAL VAR
-CONFIDENCE_THRESHOLD = float(0.4)
-
 
 # This class is used for processing the frame and adding the detections from the AI to the frame
 class Detection:
-    def __init__(self, modelLocation):
-        self.model = YOLO(modelLocation)
+    def __init__(self, model_location, confidence_threshold):
+        self.model = YOLO(model_location)
+        self.confidence_threshold = confidence_threshold
         self.index_Class = {
             idx: name for idx, name in enumerate(self.model.model.names)
         }
@@ -35,9 +33,8 @@ class Detection:
     # This function will return true of false for each item that is passed into the object
 
     def process_frame(self, frame, items):
-        global CONFIDENCE_THRESHOLD
         result = self.model(frame)[0]
         detections = sv.Detections.from_yolov8(result)
         # Set detection to only detect on confidence threshold
-        detections = detections[detections.confidence > CONFIDENCE_THRESHOLD]
+        detections = detections[detections.confidence > self.CONFIDENCE_THRESHOLD]
         return self.check_items(items, detections)

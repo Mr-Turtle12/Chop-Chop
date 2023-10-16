@@ -18,16 +18,19 @@
 import time
 from objectDetection import detection
 from objectDetection import camera
+import config
 
 
 class ObjectDetection:
-    def __init__(self, model, cameraID):
-        self.AI = detection.Detection(model)
-        self.cameraObj = camera.Camera([1280, 720], cameraID)
+    def __init__(self, camera_id):
+        self.AI = detection.Detection(
+            config.MODEL_LOCATION, config.CONFIDENCE_THRESHOLD
+        )
+        self.cameraObj = camera.Camera([1280, 720], camera_id)
 
     # Will set everything up to check the frame for any objects that is passed in to it
     def check_items(self, items):
-        #wait 1 seconds to give camera time to load up
+        # wait 1 seconds to give camera time to load up
         time.sleep(1)
         _, frame = self.cameraObj.cap.read()
         return self.AI.process_frame(frame, items)
