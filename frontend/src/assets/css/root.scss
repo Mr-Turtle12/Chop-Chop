@@ -32,6 +32,10 @@ body {
 
 .o-section {
   margin-top: var(--space-xl);
+
+  &:last-child {
+    margin-bottom: var(--space-xl);
+  }
 }
 
 .o-container {

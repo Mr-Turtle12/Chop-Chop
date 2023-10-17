@@ -1,5 +1,5 @@
 <template>
-  <section class="c-recipe-carousel">
+  <section class="c-recipe-carousel o-section">
     <div class="c-recipe-carousel__container o-container">
       <ul class="c-recipe-carousel__steps">
         <li class="c-recipe-carousel__step c-recipe-carousel__step--previous">
@@ -49,10 +49,10 @@ var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
 const recipe = {
     name: 'Test Recipe',
     steps: [
-        'Step 1',
-        'Step 2',
-        'Step 3',
-        'Step 4'
+        'Step 1: Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
+        'Step 2: Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
+        'Step 3:  In ut quam vitae odio lacinia tincidunt.',
+        'Step 4: Fusce risus nisl'
     ]
 }
 
@@ -71,44 +71,50 @@ function decrement() {
 
 <style scoped lang="scss">
 .c-recipe-carousel {
+  height: calc(100vh - (var(--space-xl)*2) - 70px);
+
   &__container {
-    display:flex;
+    @include grid;
+    height: 100%;
   }
 
   &__button-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    grid-column: 12;
   }
 
   &__button {
     background: transparent;
     border: 0;
-    
+
     &--next {
       transform: rotate(180deg);
     }
   }
 
   &__steps {
+    grid-column:2/11;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-xl);
     list-style-type: none;
+    justify-content: space-between;
   }
 
   &__step {
+    color: #419170;
+    text-align: center;
+
     &--previous, 
     &--next {
       @include ts-heading-2;
-      color: #419170;
       opacity: 0.6;
     }
 
     &--current {
       @include ts-heading-1;
-      color: #419170;
     }
   }
 }
