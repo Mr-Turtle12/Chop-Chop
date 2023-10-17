@@ -31,18 +31,15 @@
 </template>
 
 <script setup>
-import { reactive, computed, ref } from 'vue'
-
-var currentIndex = 0
-const steps = ['step1','step2', 'step3', 'step4']
+import { computed, ref } from 'vue'
 
 var stepIndex = ref(1)
 
-var previousStep = computed(() => steps[stepIndex.value - 1])
-var currentStep = computed(() => steps[stepIndex.value])
-var nextStep = computed(() => steps[stepIndex.value + 1])
+var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
+var currentStep = computed(() => recipe.steps[stepIndex.value])
+var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
 
-const recipe = reactive({
+const recipe = {
     name: 'Test Recipe',
     steps: [
         'Step 1',
@@ -50,14 +47,14 @@ const recipe = reactive({
         'Step 3',
         'Step 4'
     ]
-})
+}
 
 function increment() {
-    stepIndex.value += 1
+    stepIndex.value++
 }
 
 function decrement() {
-    stepIndex.value -= 1
+    stepIndex.value--
 }
 </script>
 
