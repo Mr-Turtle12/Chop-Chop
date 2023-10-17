@@ -38,7 +38,7 @@ var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
 var currentStep = computed(() => recipe.steps[stepIndex.value])
 var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
 
-const recipe = reactive({
+const recipe = {
     name: 'Test Recipe',
     steps: [
         'Step 1',
@@ -46,7 +46,7 @@ const recipe = reactive({
         'Step 3',
         'Step 4'
     ]
-})
+}
 
 function increment() {
     if(stepIndex.value != recipe.steps.length) {
