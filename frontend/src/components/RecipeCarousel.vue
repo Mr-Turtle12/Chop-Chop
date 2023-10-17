@@ -49,7 +49,7 @@ const recipe = {
 }
 
 function increment() {
-    if(stepIndex.value != recipe.steps.length) {
+    if(stepIndex.value != recipe.steps.length - 1) {
         stepIndex.value++
     }
 }
