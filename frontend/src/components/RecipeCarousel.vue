@@ -4,7 +4,7 @@
       <button
         class="c-recipe-carousel__button c-recipe-carousel__button--up"
         @click="
-          increment(currentIndex + 1)"
+          increment()"
       >
         up
       </button>
@@ -12,33 +12,35 @@
       <button
         class="c-recipe-carousel__button c-recipe-carousel__button--down"
         @click="
-          decrement(currentIndex - 1)"
+          decrement()"
       >
         down
       </button>
 
       <p class="c-recipe-carousel__previous js-previous">
-        previous
+        {{ previousStep }}
       </p>
       <p class="c-recipe-carousel__current js-current">
-        {{ recipe.name }}
+        {{ currentStep }}
       </p>
       <p class="c-recipe-carousel__next js-next">
-        next
+        {{ nextStep }}
       </p>
     </div>
   </section>
 </template>
 
 <script setup>
-import { reactive, computed } from 'vue'
+import { reactive, computed, ref } from 'vue'
 
 var currentIndex = 0
 const steps = ['step1','step2', 'step3', 'step4']
 
-const previous = document.getElementsByClassName('js-previous')
-const current = document.getElementsByClassName('js-current')
-const next = document.getElementsByClassName('js-next')
+var stepIndex = ref(1)
+
+var previousStep = computed(() => steps[stepIndex.value - 1])
+var currentStep = computed(() => steps[stepIndex.value])
+var nextStep = computed(() => steps[stepIndex.value + 1])
 
 const recipe = reactive({
     name: 'Test Recipe',
@@ -50,58 +52,12 @@ const recipe = reactive({
     ]
 })
 
-// const currentStep = computed((index) => {
-//     index + 1
-//     return recipe.steps[index]
-// })
-
-function increment(index) {
-    const currentStep = computed((index) => {
-        index + 1
-        return recipe.steps[index]
-    })
-    //     console.log(index)
-    //     if (index == 0 && index < steps.length - 1) {  // if first item in array
-    //         previous[0].innerHTML = 'null'
-    //         current[0].innerHTML = steps[index]
-    //         next[0].innerHTML = steps[index+1]
-
-    //         // currentIndex++
-    //     }
-    //     else if (index > 0 && index < steps.length - 1) {
-    //         previous[0].innerHTML = steps[index - 1]
-    //         current[0].innerHTML = steps[index]
-    //         next[0].innerHTML = steps[index+1]
-
-//         // currentIndex++
-//     }
-//     else if(index <= steps.length - 1) {
-//         previous[0].innerHTML = steps[index - 1]
-//         current[0].innerHTML = steps[index]
-//         next[0].innerHTML = 'null'
-//     }
+function increment() {
+    stepIndex.value += 1
 }
 
-function decrement(index) {
-//     console.log(index)
-//     if (index > 0 && index < steps.length - 1) {
-//         // currentIndex--
-
-//         previous[0].innerHTML = steps[index - 1]
-//         current[0].innerHTML = steps[index]
-//         next[0].innerHTML = steps[index + 1]
-//     }
-//     else if (index == 0 && index < steps.length - 1) {
-//         previous[0].innerHTML = 'null'
-//         current[0].innerHTML = steps[index]
-//         next[0].innerHTML = steps[index + 1]
-//     }
-//     else if(index >= steps.length - 1) {
-//         // currentIndex--
-//         previous[0].innerHTML = steps[index - 1]
-//         current[0].innerHTML = steps[index]
-//         next[0].innerHTML = 'null'
-//     }
+function decrement() {
+    stepIndex.value -= 1
 }
 </script>
 
