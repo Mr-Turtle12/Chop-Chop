@@ -1,6 +1,6 @@
 <template>
-  <!-- <PageHeader /> -->
-      
+  <PageHeader />
+
   <nav>
     <img
       class="back-arrow"
@@ -8,6 +8,7 @@
       @click="$router.back()"
     >
   </nav>
+      
   <RecipeCarousel />
 </template>
 

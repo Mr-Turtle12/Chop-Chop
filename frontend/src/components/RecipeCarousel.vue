@@ -49,10 +49,10 @@ var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
 const recipe = {
     name: 'Test Recipe',
     steps: [
-        'Step 1: Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
-        'Step 2: Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
-        'Step 3:  In ut quam vitae odio lacinia tincidunt.',
-        'Step 4: Fusce risus nisl'
+        'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
+        'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
+        'In ut quam vitae odio lacinia tincidunt.',
+        'Fusce risus nisl'
     ]
 }
 
@@ -71,7 +71,7 @@ function decrement() {
 
 <style scoped lang="scss">
 .c-recipe-carousel {
-  height: calc(100vh - (var(--space-xl)*2) - 70px); // might need to change, sets height of the carousel to be 100% minus the header and margins
+  height: calc(100vh - (var(--space-xl)*2)); // might need to change, sets height of the carousel to be 100% minus the header and margins
 
   &__container {
     @include grid;
