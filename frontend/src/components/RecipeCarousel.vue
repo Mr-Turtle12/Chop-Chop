@@ -1,31 +1,39 @@
 <template>
   <section class="c-recipe-carousel">
     <div class="c-recipe-carousel__container o-container">
-      <button
-        class="c-recipe-carousel__button c-recipe-carousel__button--up"
-        @click="
-          increment()"
-      >
-        up
-      </button>
+      <ul class="c-recipe-carousel__steps">
+        <li class="c-recipe-carousel__step c-recipe-carousel__step--previous">
+          {{ previousStep }}
+        </li>
+        <li class="c-recipe-carousel__step c-recipe-carousel__step--current">
+          {{ currentStep }}
+        </li>
+        <li class="c-recipe-carousel__step c-recipe-carousel__step--next">
+          {{ nextStep }}
+        </li>
+      </ul>
 
-      <button
-        class="c-recipe-carousel__button c-recipe-carousel__button--down"
-        @click="
-          decrement()"
-      >
-        down
-      </button>
+      <div class="c-recipe-carousel__button-container">
+        <button
+          class="c-recipe-carousel__button c-recipe-carousel__button--previous"
+          @click="
+            decrement()"
+        >
+          <img
+            src="@/assets/navigation-arrow.svg"
+          >
+        </button>
 
-      <p class="c-recipe-carousel__previous">
-        {{ previousStep }}
-      </p>
-      <p class="c-recipe-carousel__current">
-        {{ currentStep }}
-      </p>
-      <p class="c-recipe-carousel__next">
-        {{ nextStep }}
-      </p>
+        <button
+          class="c-recipe-carousel__button c-recipe-carousel__button--next"
+          @click="
+            increment()"
+        >
+          <img
+            src="@/assets/navigation-arrow.svg"
+          >
+        </button>
+      </div>
     </div>
   </section>
 </template>
@@ -61,5 +69,47 @@ function decrement() {
 }
 </script>
 
-<style>
+<style scoped lang="scss">
+.c-recipe-carousel {
+  &__container {
+    display:flex;
+  }
+
+  &__button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__button {
+    background: transparent;
+    border: 0;
+    
+    &--next {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+    list-style-type: none;
+  }
+
+  &__step {
+    &--previous, 
+    &--next {
+      @include ts-heading-2;
+      color: #419170;
+      opacity: 0.6;
+    }
+
+    &--current {
+      @include ts-heading-1;
+      color: #419170;
+    }
+  }
+}
 </style>
