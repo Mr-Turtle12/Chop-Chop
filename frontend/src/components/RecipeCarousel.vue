@@ -71,7 +71,7 @@ function decrement() {
 
 <style scoped lang="scss">
 .c-recipe-carousel {
-  height: calc(100vh - (var(--space-xl)*2) - 70px);
+  height: calc(100vh - (var(--space-xl)*2) - 70px); // might need to change, sets height of the carousel to be 100% minus the header and margins
 
   &__container {
     @include grid;
