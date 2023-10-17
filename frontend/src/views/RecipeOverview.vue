@@ -27,74 +27,14 @@
         </p>
       </div>
 
-      <div class="c-recipe__recipe-overview-container">
-        <div class="c-recipe__button-container">
-          <button class="c-recipe__button">
-            Ingredients
-          </button>
-
-          <button class="c-recipe__button">
-            Recipe
-          </button>
-        </div> 
-
-        <div class="c-recipe__ingredient-container">
-          <p class="c-recipe__ingredient">
-            Apple
-          </p>
-          <p class="c-recipe__ingredient">
-            Apple
-          </p>
-          <p class="c-recipe__ingredient">
-            Apple
-          </p>
-          <p class="c-recipe__ingredient">
-            Apple
-          </p>
-          <p class="c-recipe__ingredient">
-            Apple
-          </p>
-          <p class="c-recipe__ingredient">
-            Apple
-          </p>
-          <p class="c-recipe__ingredient">
-            Apple
-          </p>
-        </div> 
-
-        <div class="c-recipe__recipe-container">
-          <p class="c-recipe__recipe">
-            Put apple in box
-          </p>
-          <p class="c-recipe__recipe">
-            Put apple in box
-          </p>
-          <p class="c-recipe__recipe">
-            Put apple in box
-          </p>
-          <p class="c-recipe__recipe">
-            Put apple in box
-          </p>
-          <p class="c-recipe__recipe">
-            Put apple in box
-          </p>
-          <p class="c-recipe__recipe">
-            Put apple in box
-          </p>
-          <p class="c-recipe__recipe">
-            Put apple in box
-          </p>
-          <p class="c-recipe__recipe">
-            Put apple in box
-          </p>
-        </div> 
-      </div>
+      <RecipeSwitcher />
     </div> 
   </section>
 </template>
 
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
+import RecipeSwitcher from '@/components/RecipeSwitcher.vue'
 </script>
 
 <style scoped lang="scss">
