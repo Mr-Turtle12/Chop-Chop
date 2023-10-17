@@ -41,4 +41,8 @@ body {
   padding-left: 2rem;
   padding-right: 2rem;
   width: 100%;
+
+  &:last-child {
+    margin-bottom: var(--space-xl);
+  }
 }
