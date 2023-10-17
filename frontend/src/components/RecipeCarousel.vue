@@ -32,15 +32,11 @@
 
 <script setup>
 import { reactive, computed, ref } from 'vue'
+var stepIndex = ref(0)
 
-var currentIndex = 0
-const steps = ['step1','step2', 'step3', 'step4']
-
-var stepIndex = ref(1)
-
-var previousStep = computed(() => steps[stepIndex.value - 1])
-var currentStep = computed(() => steps[stepIndex.value])
-var nextStep = computed(() => steps[stepIndex.value + 1])
+var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
+var currentStep = computed(() => recipe.steps[stepIndex.value])
+var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
 
 const recipe = reactive({
     name: 'Test Recipe',
@@ -53,11 +49,15 @@ const recipe = reactive({
 })
 
 function increment() {
-    stepIndex.value += 1
+    if(stepIndex.value != recipe.steps.length) {
+        stepIndex.value++
+    }
 }
 
 function decrement() {
-    stepIndex.value -= 1
+    if(stepIndex.value != 0) {
+        stepIndex.value--
+    }
 }
 </script>
 
