@@ -14,7 +14,8 @@
 
         <button
           class="c-hamburger js-burger-button"
-          aria-label="Open navigation"
+          aria-label="Toggle navigation"
+          @click="toggleMenu()"
         >
           <span class="c-hamburger__line c-hamburger__line--top" />
           <span class="c-hamburger__line c-hamburger__line--middle" />
@@ -26,6 +27,19 @@
     </div>
   </header>
 </template>
+
+<script setup>
+function toggleMenu() {
+    const burgerMenu = document.getElementsByClassName('js-burger-button')[0]
+
+    if(burgerMenu.classList.contains('is-cross')) {
+        burgerMenu.classList.remove('is-cross')
+    }
+    else {
+        burgerMenu.classList.add('is-cross')
+    }
+}
+</script>
 
 <style scoped lang="scss">
 
@@ -44,42 +58,58 @@
 }
 
 .c-hamburger {
+  $c : &;
+
     cursor: pointer;
     display: inline-flex;
     grid-column: 12;
-    height: 24px;
+    height: 40px;
     position: relative;
-    width: 24px;
+    width: 40px;
     z-index: 4;
 
+    &.is-cross {
+      #{$c}__line {
+        top: 11px;
+
+        &--top {
+          transform: rotate(-45deg);
+          transform-origin: 50% 50%;
+          transition: top .2s ease,transform .2s .3s ease,-webkit-transform .2s .3s ease;
+        }
+
+        &--middle {
+          background-color: transparent;
+        }
+
+        &--bottom {
+          transform: rotate(45deg);
+          transform-origin: 50% 50%;
+          transition: top .2s ease,transform .2s .3s ease,-webkit-transform .2s .3s ease;
+        }
+      }
+    }
+
     &__line {
-      background-color: #0c0c0c;
+      background-color: #419170;
       display: block;
-      height: 3px;
+      height: 4px;
       position: absolute;
       width: 100%;
 
       &--top {
         top: 0;
-        // -webkit-transform-origin: 50% 50%;
         transform-origin: 50% 50%;
-        // -webkit-transition: top .2s .3s ease,-webkit-transform .2s ease;
-        // transition: top .2s .3s ease,-webkit-transform .2s ease;
-        // transition: transform .2s ease,top .2s .3s ease;
         transition: transform .2s ease,top .2s .3s ease,-webkit-transform .2s ease;
       }
 
       &--middle {
-        top: 10px;
+        top: 15px;
       }
 
       &--bottom {
-        top: 20px;
-        // -webkit-transform-origin: 50% 50%;
+        top: 30px;
         transform-origin: 50% 50%;
-        // -webkit-transition: top .2s .3s ease,-webkit-transform .2s ease;
-        // transition: top .2s .3s ease,-webkit-transform .2s ease;
-        // transition: transform .2s ease,top .2s .3s ease;
         transition: transform .2s ease,top .2s .3s ease,-webkit-transform .2s ease;
         margin-bottom: 0;
       }
