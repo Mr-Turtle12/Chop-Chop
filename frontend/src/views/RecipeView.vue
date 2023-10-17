@@ -1,5 +1,5 @@
 <template>
-  <PageHeader />
+  <!-- <PageHeader /> -->
 
   <nav>
     <img
