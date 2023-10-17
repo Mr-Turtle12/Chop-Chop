@@ -17,13 +17,13 @@
         down
       </button>
 
-      <p class="c-recipe-carousel__previous js-previous">
+      <p class="c-recipe-carousel__previous">
         {{ previousStep }}
       </p>
-      <p class="c-recipe-carousel__current js-current">
+      <p class="c-recipe-carousel__current">
         {{ currentStep }}
       </p>
-      <p class="c-recipe-carousel__next js-next">
+      <p class="c-recipe-carousel__next">
         {{ nextStep }}
       </p>
     </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, ref } from 'vue'
+import {computed, ref } from 'vue'
 var stepIndex = ref(0)
 
 var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
