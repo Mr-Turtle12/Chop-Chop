@@ -5,7 +5,7 @@
     <div class="c-recipe-image__image-container">
       <img
         class="c-recipe-image__image"
-        src="@/assets/recipe-3.png"
+        src="@/assets/recipe-4.png"
       >
     </div>
   </section>
@@ -38,6 +38,44 @@ import RecipeSwitcher from '@/components/RecipeSwitcher.vue'
 </script>
 
 <style scoped lang="scss">
+.c-recipe {
+  &__top {
+    @include grid;
+  }
+
+  &__heading {
+    @include ts-heading-1;
+    color: #419170;
+    grid-column:1/7;
+  }
+
+  &__link {
+    @include ts-heading-3;
+    grid-column: 10/-1;
+    border-radius: 10px;
+    border: 2px solid #419170;
+    background-color: #FFF;
+    color: #419170;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover,
+    &:focus {
+      background-color: #419170;
+      color: #fff;    
+    }
+  }
+
+  &__meta {
+    @include ts-meta;
+    color: #419170;
+
+    &::before {
+      content:url('@/assets/clock.svg');
+    }
+  }
+}
 .c-recipe-image {
   &__image-container {
     position:relative;
