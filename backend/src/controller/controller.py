@@ -27,7 +27,7 @@ class Controller:
     def get_all_recipe_metadata(self):
         all_metadata = []
 
-        for recipe in utils.get_json(utils.get_database_address("QSBRecipe")).get('recipes', []):
+        for recipe in utils.get_json(utils.get_database_address("Recipes")).get('recipes', []):
             metadata = {
                 'image': recipe.get('image', ''),
                 'name': recipe.get('name', ''),
