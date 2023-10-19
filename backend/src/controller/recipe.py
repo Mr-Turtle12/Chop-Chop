@@ -3,7 +3,7 @@ from backend.src.controller import utils
 
 class Recipe:
     def __init__(self, recipe_id):
-        self.current_recipe = utils.fetch_recipe_by_id(recipe_id, utils.get_json(utils.get_database_address("QSBRecipe")))
+        self.current_recipe = utils.fetch_recipe_by_id(recipe_id, utils.get_json(utils.get_database_address("Recipes")))
         self.current_step = 1
 
     def get_current_step(self):
