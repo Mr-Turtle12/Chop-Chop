@@ -45,14 +45,9 @@ class Recipe:
             'commands': [],
         }
 
-        step_num = 1
-        while True:
+        for step_num in range(1, len(["steps"])):
             command = self.current_recipe.get_command_for_step(step_num)
-            if command is not None:
-                metadata['commands'].append(command)
-                step_num += 1
-            else:
-                break
+            metadata['commands'].append(command)
 
         return metadata
 
