@@ -13,7 +13,9 @@ class Recipe:
         if self.current_recipe:
             steps = self.current_recipe.get('steps', [])
             if 1 <= step_number <= len(steps):
-                return steps[step_number - 1].get('command', '')
+                return [
+                    steps[step_number - 1].get('command', '')
+                ]
         return None
 
     def get_command_for_current_step(self):
