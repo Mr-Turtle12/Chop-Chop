@@ -6,28 +6,30 @@ class Recipe:
         self.current_recipe = utils.fetch_recipe_by_id(recipe_id, utils.get_json(utils.get_database_address("Recipes")))
         self.current_step = 1
 
+    def get_recipe_step(self, step_number):
+        if self.current_recipe:
+            steps = self.current_recipe.get('steps', [])
+            if 1 <= step_number <= len(steps):
+                return steps[step_number - 1]
+        return None
+
     def get_current_step(self):
         return self.current_step
 
     def get_command_for_step(self, step_number):
-        if self.current_recipe:
-            steps = self.current_recipe.get('steps', [])
-            if 1 <= step_number <= len(steps):
-                return {'command': steps[step_number - 1].get('command', '')}
-        return None
+        step = self.get_recipe_step(step_number)
+        return {'command': step.get('command', '')} if step else None
 
     def get_command_for_current_step(self):
         return self.get_command_for_step(self.current_step)
 
     def get_progression_requirements_for_step(self, step_number):
-        if self.current_recipe:
-            steps = self.current_recipe.get('steps', [])
-            if 1 <= step_number <= len(steps):
-                step = steps[step_number - 1]
-                return [
-                    step.get('camera', ''),
-                    (step.get('progressionObject', ''), step.get('inhibitor', ''))
-                ]
+        step = self.get_recipe_step(step_number)
+        if step:
+            return [
+                step.get('camera', ''),
+                (step.get('progressionObject', ''), step.get('inhibitor', ''))
+            ]
         return None
 
     def get_progression_requirements_for_current_step(self):
@@ -45,8 +47,8 @@ class Recipe:
             'commands': [],
         }
 
-        for step_num in range(1, len(["steps"])):
-            command = self.current_recipe.get_command_for_step(step_num)
+        for step_num in range(1, len(metadata['steps'])):
+            command = self.get_command_for_step(step_num)
             metadata['commands'].append(command)
 
         return metadata
