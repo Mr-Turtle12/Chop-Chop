@@ -1,7 +1,7 @@
 <template>
   <section class="c-recipe-carousel o-section">
     <div class="c-recipe-carousel__container o-container">
-      <ul class="c-recipe-carousel__steps">
+      <ul class="c-recipe-carousel__steps js-carousel-steps">
         <li class="c-recipe-carousel__step c-recipe-carousel__step--previous">
           {{ previousStep }}
         </li>
@@ -12,7 +12,7 @@
           {{ nextStep }}
         </li>
       </ul>
-
+    
       <div class="c-recipe-carousel__button-container">
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--previous"
@@ -40,11 +40,7 @@
 
 <script setup>
 import {computed, ref } from 'vue'
-var stepIndex = ref(0)
 
-var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
-var currentStep = computed(() => recipe.steps[stepIndex.value])
-var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
 
 const recipe = {
     name: 'Test Recipe',
@@ -52,9 +48,16 @@ const recipe = {
         'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
         'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
         'In ut quam vitae odio lacinia tincidunt.',
-        'Fusce risus nisl'
+        'Fusce risus nisl',
+        'Lacinia tincidunt.'
     ]
 }
+
+var stepIndex = ref(0)
+
+var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
+var currentStep = computed(() => recipe.steps[stepIndex.value])
+var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
 
 function increment() {
     if(stepIndex.value != recipe.steps.length - 1) {
@@ -93,9 +96,11 @@ function decrement() {
       transform: rotate(180deg);
     }
   }
-
+  
   &__steps {
     grid-column:2/11;
+    width:100%;
+    height:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
