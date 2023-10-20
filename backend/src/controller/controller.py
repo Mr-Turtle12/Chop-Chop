@@ -25,13 +25,15 @@ class Controller:
         return self.current_recipe.get_recipe_metadata()
 
     def get_all_recipe_metadata(self):
-        recipes = utils.get_json(utils.get_database_address("Recipes")).get('recipes', [])
+        recipes = utils.get_json("Recipes").get("recipes", [])
         all_metadata = [
-                        {'image': recipe.get('image', ''),
-                         'name': recipe.get('name', ''),
-                         'description': recipe.get('description', '')
-                         } for recipe in recipes
-                        ]
+            {
+                "image": recipe.get("image", ""),
+                "name": recipe.get("name", ""),
+                "description": recipe.get("description", ""),
+            }
+            for recipe in recipes
+        ]
         return all_metadata
 
 
@@ -41,5 +43,6 @@ def test_new_recipe():
     print(CONTROLLER_INSTANCE.get_command_for_step(1))
     print(CONTROLLER_INSTANCE.get_progression_requirements_for_current_step())
     print(CONTROLLER_INSTANCE.get_all_recipe_metadata())
+
 
 CONTROLLER_INSTANCE = Controller()
