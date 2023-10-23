@@ -36,6 +36,12 @@ class Controller:
         ]
         return all_metadata
 
+    def increment_recipe(self):
+        self.current_recipe.current_step += 1
+
+    def decrement_recipe(self):
+        self.current_recipe.current_step -= 1
+
 
 def test_new_recipe():
     recipe_id = "1"
