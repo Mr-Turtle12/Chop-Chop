@@ -36,5 +36,5 @@ class Detection:
         result = self.model(frame)[0]
         detections = sv.Detections.from_yolov8(result)
         # Set detection to only detect on confidence threshold
-        detections = detections[detections.confidence > self.CONFIDENCE_THRESHOLD]
+        detections = detections[detections.confidence > self.confidence_threshold]
         return self.check_items(items, detections)
