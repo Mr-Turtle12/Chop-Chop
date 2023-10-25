@@ -10,7 +10,7 @@ class Interpreter:
             self.detect_cook = objectDetection.ObjectDetection(config.CAMERA_IDS[1])
 
     # Pass into from json the camera name and the objects you want to check e.g [progressionObject , inhibitor]
-    def Check_Step(self, camera_name, object_array):
+    def check_step(self, camera_name, object_array):
         object_array.append("Hands")
         if camera_name == "cook":
             return self.detect_cook.check_items(object_array) == [
