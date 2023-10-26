@@ -38,12 +38,4 @@ class Controller:
         return all_metadata
 
 
-def test_new_recipe():
-    recipe_id = "1"
-    CONTROLLER_INSTANCE.new_recipe(recipe_id)
-    print(CONTROLLER_INSTANCE.get_command_for_step(1))
-    print(CONTROLLER_INSTANCE.get_progression_requirements_for_current_step())
-    print(CONTROLLER_INSTANCE.get_all_recipe_metadata())
-
-
 CONTROLLER_INSTANCE = Controller()
