@@ -8,7 +8,6 @@ def main():
     os.environ["chop-chop-database"] = os.path.normpath(
         os.path.join(os.path.dirname(__file__), "../..", "database")
     )
-    controller.test_new_recipe()
 
 
 main()
