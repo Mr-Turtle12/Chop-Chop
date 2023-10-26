@@ -16,7 +16,7 @@ class Interpreter:
             if in_q.empty():
                 self.current_step = in_q.get()
                 event.clear()
-            # logic for when it's str interrupt
+            # logic for when it's stir interrupt
             if self.check_step():
                 event.set()
 
