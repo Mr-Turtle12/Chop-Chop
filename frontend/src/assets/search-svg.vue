@@ -1,0 +1,26 @@
+<template>
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 35 35"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      cx="20"
+      cy="15"
+      r="13.5"
+      fill="white"
+      stroke="#419170"
+      stroke-width="3"
+    />
+    <line
+      x1="9.06066"
+      y1="25.0607"
+      x2="1.06066"
+      y2="33.0607"
+      stroke="#419170"
+      stroke-width="3"
+    />
+  </svg>
+</template>
