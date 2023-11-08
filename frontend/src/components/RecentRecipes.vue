@@ -42,7 +42,7 @@ import RecipeCard from './RecipeCard.vue'
     @include ts-heading-2;
     color: #419170;
     grid-column:1/7;
-    margin: 0;
+    margin-bottom: var(--space-s);
     width:fit-content;
 
     &:hover,
