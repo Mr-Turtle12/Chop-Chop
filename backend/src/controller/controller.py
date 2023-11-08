@@ -33,9 +33,10 @@ class Controller:
         return self.current_recipe.get_recipe_metadata()
 
     def progress_next_step(self):
+        print("next step")
         self.current_recipe.increment_step()
-        self.thread_instance.progress_next_step(
-            self.get_progression_requirements_for_current_step
+        self.thread_instance = manageThread.ManageThread(
+            self.get_progression_requirements_for_current_step()
         )
         # Notify frontend
 

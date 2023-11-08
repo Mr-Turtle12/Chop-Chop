@@ -13,6 +13,8 @@ class Camera:
 
     def show(self, frame):
         cv2.imshow("yolov8", frame)
+        cv2.waitKey(1)
+
 
     def release(self):
         self.cap.release()

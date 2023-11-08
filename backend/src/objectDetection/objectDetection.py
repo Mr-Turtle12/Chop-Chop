@@ -34,7 +34,6 @@ class ObjectDetection:
     def check_items(self, progression_object, inhibitor):
         # wait 1 seconds to give camera time to load up
         _, frame = self.cameraObj.cap.read()
-        self.cameraObj.show(frame)
         return self.AI.process_frame(frame, progression_object, inhibitor)
 
     # To be called at the end
