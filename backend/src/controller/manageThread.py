@@ -24,8 +24,4 @@ class ManageThread:
         thread.start()
 
     def end_thread(self, current_step):
-        """Ends the thread after completing the current step.
-        Args:
-            current_step (object): The current step object.
-        """
         controller.CONTROLLER_INSTANCE.progress_next_step()

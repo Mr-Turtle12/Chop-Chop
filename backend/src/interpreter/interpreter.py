@@ -8,6 +8,13 @@ PREP_CAMERA = None
 COOK_CAMERA = None
 
 
+class InvalidCamera(Exception):
+    """Create a class to throw an error when there isn't a camera initialize"""
+
+    "Camera not created"
+    pass
+
+
 def detection_loop(current_step):
     """Runs the detection loop until the the majority of frame return true, both number of frame and the number that need to be true are set in config.py.
     Args:
@@ -36,14 +43,12 @@ def check_step(current_step):
         if COOK_CAMERA is not None:
             return COOK_CAMERA.check_items(progression_object, inhibitor)
         else:
-            print("ERROR COOK CAMERA NOT AVAILABLE ")
-            return True
+            raise InvalidCamera
     else:
         if PREP_CAMERA is not None:
             return PREP_CAMERA.check_items(progression_object, inhibitor)
         else:
-            print("ERROR PREP CAMERA NOT AVAILABLE ")
-            return True
+            raise InvalidCamera
 
 
 def create_camera():
@@ -56,7 +61,7 @@ def create_camera():
     elif len(config.CAMERA_IDS) > 0:
         PREP_CAMERA = objectDetection.ObjectDetection(config.CAMERA_IDS[0])
     else:
-        print("ERROR PREP CAMERA NOT AVAILABLE ")
+        raise InvalidCamera
 
 
 def destroy_camera():
