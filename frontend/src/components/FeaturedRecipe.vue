@@ -32,28 +32,50 @@ defineProps({
 
 .c-featured-recipe {
   &__container {
-    @include grid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position:relative;
+    min-height: 50vh;
   }
 
   &__image-container {
+    box-sizing: border-box;
     height: 100%;
+    padding: inherit;
     position: absolute;
     width: 100%;
+    border-radius: 70px;
     z-index: 1;
+
+    &::before {
+      background: rgba(47, 41, 41, 0.40);
+      background-clip: content-box;
+      box-sizing: border-box;
+      content: '';
+      height:100%;
+      padding: inherit;
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      z-index: 99999;
+    }
   }
 
   &__image {
     object-fit: cover;
     height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
     width: 100%;
+    z-index:5;
   }
 
   &__text-container {
-    grid-column: 3/9;
+    align-items: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 198px 0;
     z-index:2;
   }
 
