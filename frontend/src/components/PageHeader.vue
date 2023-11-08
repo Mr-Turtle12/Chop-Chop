@@ -6,10 +6,8 @@
           class="c-page-header__logo-wrapper"
           href="/"
         >
-          <img
-            class="c-page-header__logo"
-            src="@/assets/logo.svg"
-          >
+        
+          <Logo />
         </a>
 
         <button
@@ -29,6 +27,8 @@
 </template>
 
 <script setup>
+import Logo from '@/assets/logo-svg.vue'
+
 function toggleMenu() {
     const burgerMenu = document.getElementsByClassName('js-burger-button')[0]
 
