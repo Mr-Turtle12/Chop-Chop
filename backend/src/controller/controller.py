@@ -1,5 +1,5 @@
 # Controls the flow of the whole of the back-end
-from backend.src.controller import recipe, utils, createThread
+from backend.src.controller import recipe, utils, ManageThread
 from queue import Queue
 import threading
 import json
@@ -14,7 +14,7 @@ class Controller:
 
     def new_recipe(self, recipe_id):
         self.current_recipe = recipe.Recipe(recipe_id)
-        self.thread_instance = createThread(
+        self.thread_instance = ManageThread(
             self.get_progression_requirements_for_current_step
         )
 
@@ -33,8 +33,6 @@ class Controller:
     def get_recipe_metadata(self):
         return self.current_recipe.get_recipe_metadata()
 
-    def get_detection_listener_state(self):
-        return self.thread_instance.get_detection_listener_state()
 
     def progress_next_step(self):
         self.current_recipe.increment_step()
@@ -60,9 +58,10 @@ class Controller:
 
 CONTROLLER_INSTANCE = Controller()
 
-while True:
-    if CONTROLLER_INSTANCE.get_detection_listener_state():
-        CONTROLLER_INSTANCE.progress_next_step()
+
+##while True:
+##    if CONTROLLER_INSTANCE.get_detection_listener_state():
+##        CONTROLLER_INSTANCE.progress_next_step()
 """
 import interpreter
 from queue import Queue
@@ -90,3 +89,5 @@ while True:
         inter.Detection_listener.clear()
 
 """
+
+CONTROLLER_INSTANCE.new_recipe(1)
