@@ -1,37 +1,35 @@
 from backend.src import objectDetection
 from backend.src import config
-import threading
+from backend.src.controller import utils
 
+
+# Set up global camera objects
 PREP_CAMERA = None
 COOK_CAMERA = None
 
 
-class BaseThread(threading.Thread):
-    def __init__(self, callback=None, callback_args=None, *args, **kwargs):
-        target = kwargs.pop('target')
-        super(BaseThread, self).__init__(target=self.target_with_callback, *args, **kwargs)
-        self.callback = callback
-        self.method = target
-        self.callback_args = callback_args
-
-    def target_with_callback(self):
-        self.method()
-        if self.callback is not None:
-            self.callback(*self.callback_args)
-
-
-# This loop will do run in another thread and will get the current step passed into it via the queue and set an
-# event once the step has been detected
 def detection_loop(current_step):
+    """Runs the detection loop until the the majority of frame return true, both number of frame and the number that need to be true are set in config.py.
+    Args:
+        current_step (tuple): A tuple containing information about the current step in the formate [camera, progression_object, inhibitor].
+    """
     create_camera()
+    rolling_ave = utils.LimitedQueue()
     while True:
-        if check_step(current_step):
+        rolling_ave.append(check_step(current_step))
+        print(rolling_ave.get_average())
+        if rolling_ave.get_average():
             break
     destroy_camera()
 
 
-# Pass into from json the camera name and the objects you want to check e.g [camera, progressionObject , inhibitor]
 def check_step(current_step):
+    """Checks the current step based on the provided parameters.
+    Args:
+        current_step (list): A list containing information about the current step.
+    Returns:
+        bool: Returns a boolean value indicating the result of the check.
+    """
     progression_object = current_step[1]
     inhibitor = [current_step[2], "hand"]
     if current_step[0] == "cook":
@@ -49,6 +47,7 @@ def check_step(current_step):
 
 
 def create_camera():
+    """Creates camera objects based on the configuration."""
     global PREP_CAMERA
     global COOK_CAMERA
     if len(config.CAMERA_IDS) > 1:
@@ -59,7 +58,9 @@ def create_camera():
     else:
         print("ERROR PREP CAMERA NOT AVAILABLE ")
 
+
 def destroy_camera():
+    """Destroys camera objects if they exist."""
     global PREP_CAMERA
     global COOK_CAMERA
     if COOK_CAMERA is not None:
