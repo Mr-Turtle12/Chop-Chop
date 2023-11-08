@@ -40,34 +40,23 @@ defineProps({
   text-decoration:none;
 
   &__time {
+    @include ts-meta;
     display: flex;
     align-items: center;
   }
-  
+
   &__time-icon {
     margin-right:4px;
-    color: #419170;
-  }
-
-  &:hover,
-  &:focus {
-    #{$c}__time-icon {
-      color:white;
-    }
   }
 
   &--vertical {
-    height: 300px;
-  width: 200px;
-  border-radius: 20px;
-  position: relative;
-  overflow: hidden;
+    min-height: 300px;
+    min-width: 200px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
 
-//   &:not(:last-child) {
-//   margin-right: 70px;
-// }
-
-&:hover,
+  &:hover,
   &:focus {
     #{$c}__info {
       height: 50%;
@@ -84,15 +73,28 @@ defineProps({
   
   #{$c}__info {
     height: 35%;
-    width: 100%;
+    padding: 8px 20px 16px 20px;
     position: absolute;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.1); /* maybe change to box shadow */
+    background-color: rgba(65, 145, 112, 0.84);
     text-align: left;
     transition: ease 200ms;
-    }
+    width: 100%;
+    box-sizing: border-box;
   }
+
+  #{$c}__heading {
+    @include ts-heading-4;
+    color: white;
+    padding-bottom: var(--space-xs);
+  }
+
+  #{$c}__time,
+  #{$c}__time-icon {
+    color: white;
+  }
+}
 
   &--horizontal {
     display:flex;
@@ -105,6 +107,10 @@ defineProps({
 
       #{$c}__heading,
       #{$c}__meta {
+          color: #fff;
+        }
+        
+      #{$c}__time-icon {
           color: #fff;
         }
       }
@@ -133,6 +139,10 @@ defineProps({
 
       #{$c}__meta {
         @include ts-meta;
+        color: #419170;
+      }
+  
+      #{$c}__time-icon {
         color: #419170;
       }
   }
