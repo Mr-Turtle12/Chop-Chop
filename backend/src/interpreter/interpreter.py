@@ -14,11 +14,11 @@ def detection_loop(current_step):
         current_step (tuple): A tuple containing information about the current step in the formate [camera, progression_object, inhibitor].
     """
     create_camera()
-    rolling_ave = utils.LimitedQueue()
+    rolling_average = utils.LimitedQueue()
     while True:
-        rolling_ave.append(check_step(current_step))
-        print(rolling_ave.get_average())
-        if rolling_ave.get_average():
+        rolling_average.append(check_step(current_step))
+        print(rolling_average.get_average())
+        if rolling_average.get_average():
             break
     destroy_camera()
 
