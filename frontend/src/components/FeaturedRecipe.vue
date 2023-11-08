@@ -13,15 +13,23 @@
           <a class="c-featured-recipe__heading-link">{{ recipeName }}</a>
         </h1>
 
-        <p class="c-featured-recipe__meta">
-          {{ info }}
-        </p>
+        <div class="c-featured-recipe__meta">
+          <div class="c-featured-recipe__time">
+            <ClockSVG
+              class="c-featured-recipe__time-icon"
+            />
+
+            <p>{{ info }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
+import ClockSVG from '@/assets/clock-svg.vue'
+
 defineProps({
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
@@ -64,10 +72,11 @@ defineProps({
   }
 
   &__image {
+    position:relative;
     object-fit: cover;
     height: 100%;
     width: 100%;
-    z-index:5;
+    z-index:2;
   }
 
   &__text-container {
@@ -76,7 +85,7 @@ defineProps({
     display: flex;
     flex-direction: column;
     padding: 198px 0;
-    z-index:2;
+    z-index:3;
   }
 
   &__heading {
@@ -85,6 +94,16 @@ defineProps({
 
   &__meta {
     @include ts-meta;
+  }
+
+  &__time {
+    display: flex;
+    align-items: center;
+  }
+  
+  &__time-icon {
+    margin-right:4px;
+    color: white;
   }
 }
 </style>
