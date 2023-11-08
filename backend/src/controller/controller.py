@@ -1,10 +1,9 @@
 # Controls the flow of the whole of the back-end
-from backend.src.controller import recipe, utils, ManageThread
+from backend.src.controller import recipe, utils, manageThread
 from queue import Queue
 import threading
 import json
 import os
-from controller import recipe
 
 
 class Controller:
@@ -14,8 +13,8 @@ class Controller:
 
     def new_recipe(self, recipe_id):
         self.current_recipe = recipe.Recipe(recipe_id)
-        self.thread_instance = ManageThread(
-            self.get_progression_requirements_for_current_step
+        self.thread_instance = manageThread.ManageThread(
+            self.get_progression_requirements_for_current_step()
         )
 
     def get_command_for_step(self, step_number):
@@ -32,7 +31,6 @@ class Controller:
 
     def get_recipe_metadata(self):
         return self.current_recipe.get_recipe_metadata()
-
 
     def progress_next_step(self):
         self.current_recipe.increment_step()
@@ -57,37 +55,3 @@ class Controller:
 
 
 CONTROLLER_INSTANCE = Controller()
-
-
-##while True:
-##    if CONTROLLER_INSTANCE.get_detection_listener_state():
-##        CONTROLLER_INSTANCE.progress_next_step()
-"""
-import interpreter
-from queue import Queue
-import threading
-
-
-def consumer(inters):
-    inters.detection_loop()
-
-
-recipe_queue = Queue()
-inter = interpreter.Interpreter(recipe_queue)
-recipe_queue.put(["prep", "Red-Onion", "chopped-Red-Onion"])
-t1 = threading.Thread(
-    target=consumer,
-    args=(inter, )
-)
-
-t1.start()
-
-while True:
-    if inter.get_detection_listener_state():
-        print("put in new next step")
-        inter.put_new_step_into_queue(["prep", "Chopped-Red-Onion", "Red-Onion"])
-        inter.Detection_listener.clear()
-
-"""
-
-CONTROLLER_INSTANCE.new_recipe(1)

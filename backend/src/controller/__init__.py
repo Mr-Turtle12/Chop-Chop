@@ -1,4 +1,4 @@
 from .controller import *
 from .recipe import *
 from .utils import *
-from .ManageThread import *
+from .manageThread import *

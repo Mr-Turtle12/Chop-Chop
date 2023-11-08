@@ -26,6 +26,6 @@ def get_json(file):
 
 def fetch_recipe_by_id(recipe_id, recipe_data):
     for recipe in recipe_data.get('recipes', []):
-        if recipe.get('id') == recipe_id:
+        if int(recipe.get('id')) == recipe_id:
             return recipe
     return None

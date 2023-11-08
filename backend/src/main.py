@@ -1,5 +1,5 @@
 # This file is the entry point for the back end
-from backend.src import controller
+from backend.src.controller import CONTROLLER_INSTANCE
 import os
 
 
@@ -11,3 +11,4 @@ def main():
 
 
 main()
+CONTROLLER_INSTANCE.new_recipe(1)

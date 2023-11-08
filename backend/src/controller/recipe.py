@@ -32,11 +32,9 @@ class Recipe:
         step = self.get_recipe_step(step_number)
         if step:
             return [
-                (
                     step.get("camera", ""),
                     step.get("progressionObject", ""),
                     step.get("inhibitor", ""),
-                )
             ]
         return None
 
