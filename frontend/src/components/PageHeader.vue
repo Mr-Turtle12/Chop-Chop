@@ -27,43 +27,58 @@
 
   <div class="c-header-menu js-header-menu">
     <div class="c-header-menu__container">
-      <ul class="c-header-menu__button-container o-container">
-        <li class="c-header-menu__button">
-          <a
-            class="c-header-menu__button-link"
-            href="/search"
+      <div class="o-container">
+        <div class="c-header-menu__search-container">
+          <input
+            class="c-header-menu__search-bar"
+            type="text"
+            placeholder="Search.."
           >
-            All Recipes
-            <span class="c-header-menu__button-icon">></span>
-          </a>
-        </li>
 
-        <li class="c-header-menu__button">
-          <a
-            class="c-header-menu__button-link"
-            href="/search"
-          >
-            Recent Recipes
-            <span class="c-header-menu__button-icon">></span>
-          </a>
-        </li>
+          <button class="c-header-menu__search-icon">
+            <SearchIcon />
+          </button>
+        </div>
 
-        <li class="c-header-menu__button">
-          <a
-            class="c-header-menu__button-link"
-            href="/search"
-          >
-            Liked Recipes
-            <span class="c-header-menu__button-icon">></span>
-          </a>
-        </li>
-      </ul>
+        <ul class="c-header-menu__button-container">
+          <li class="c-header-menu__button">
+            <a
+              class="c-header-menu__button-link"
+              href="/search"
+            >
+              All Recipes
+              <span class="c-header-menu__button-icon">></span>
+            </a>
+          </li>
+
+          <li class="c-header-menu__button">
+            <a
+              class="c-header-menu__button-link"
+              href="/search"
+            >
+              Recent Recipes
+              <span class="c-header-menu__button-icon">></span>
+            </a>
+          </li>
+
+          <li class="c-header-menu__button">
+            <a
+              class="c-header-menu__button-link"
+              href="/search"
+            >
+              Liked Recipes
+              <span class="c-header-menu__button-icon">></span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import Logo from '@/assets/logo-svg.vue'
+import SearchIcon from '@/assets/search-svg.vue'
 
 function toggleMenu() {
     const burgerMenu = document.getElementsByClassName('js-burger-button')[0]
@@ -203,10 +218,10 @@ function toggleMenu() {
 
     &__container {
       background: #419170;
-      height: 100%;
       margin-left: var(--space-l);
       max-width: 50vw;
       overflow: hidden;
+      padding-top: calc(var(--space-xl) + 40px + 30px);
       position: relative;
       transition: translate .4s;
       transition-delay: .2s;
@@ -215,8 +230,28 @@ function toggleMenu() {
       z-index: 2;
     }
 
+    &__search-container {
+      align-items: center;
+      display:flex;
+      position:relative;
+      margin-bottom: var(--space-l);
+    }
+
+    &__search-bar {
+      @include ts-meta;
+      background-color: white;
+      border-radius: 30px;
+      padding: 16px 50px 16px 16px;
+      width: 100%;
+    }
+
+    &__search-icon {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+    }
+
     &__button-container {
-      height: 100%;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -224,13 +259,10 @@ function toggleMenu() {
       gap: 100px;
     }
 
-    &__button {
-      @include ts-heading-1;
-    }
-
     &__button-link {
-    color: white;
-    width:fit-content;
+      @include ts-heading-1;
+      color: white;
+      width:fit-content;
 
     &:hover,
     &:focus {
