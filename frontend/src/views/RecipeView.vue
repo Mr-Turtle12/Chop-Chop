@@ -1,4 +1,6 @@
 <template>
+  <!-- <PageHeader /> -->
+
   <nav>
     <img
       class="back-arrow"
@@ -6,17 +8,14 @@
       @click="$router.back()"
     >
   </nav>
-  <div class="vertical-carousel">
-    <p
-      v-for="x in y"
-      :key="x"
-    >
-      {{ x }}
-    </p>
-  </div>
+      
+  <RecipeCarousel />
 </template>
 
 <script setup>
+import PageHeader from '@/components/PageHeader.vue'
+import RecipeCarousel from '@/components/RecipeCarousel.vue'
+
 const y = ['step1', 'step2', 'step3', 'step4']
 </script>
 
