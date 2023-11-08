@@ -47,6 +47,11 @@ ul {
   list-style: none;
 }
 
+a:-webkit-any-link {
+  text-decoration: none;
+  color: #419170;
+}
+
 button {
   background: transparent;
   border: none;
