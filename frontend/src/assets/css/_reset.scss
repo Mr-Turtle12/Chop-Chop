@@ -47,9 +47,10 @@ ul {
   list-style: none;
 }
 
-a:-webkit-any-link {
+a:link,
+a:visited {
+  color: inherit;
   text-decoration: none;
-  color: #419170;
 }
 
 button {
