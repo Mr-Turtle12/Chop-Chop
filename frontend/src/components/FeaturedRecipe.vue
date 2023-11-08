@@ -10,7 +10,11 @@
     
       <div class="c-featured-recipe__text-container">
         <h1 class="c-featured-recipe__heading">
-          <a class="c-featured-recipe__heading-link">{{ recipeName }}</a>
+          <a
+            class="c-featured-recipe__heading-link"
+            href="/recipe-overview"
+          >{{ recipeName }}
+          </a>
         </h1>
 
         <div class="c-featured-recipe__meta">
@@ -90,6 +94,7 @@ defineProps({
 
   &__heading {
     @include ts-heading-1;
+    margin-bottom: var(--space-xs);
   }
 
   &__meta {
