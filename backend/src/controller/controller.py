@@ -33,20 +33,29 @@ class Controller:
         return self.current_recipe.get_progression_requirements_for_current_step()
 
     def get_recipe_metadata(self, recipe_id):
-        recipes = utils.get_json(utils.get_database_address("Recipes")).get(
-            "recipes", []
-        )
-        recipe = utils.fetch_recipe_by_id(recipe_id, recipes)
+        # Fetch the recipes data from the JSON file
+        recipes_data = utils.get_json(utils.get_database_address("Recipes"))
+        recipes = recipes_data.get("recipes", [])
+
+        # Find the specified recipe by its ID
+        target_recipe = None
+        for recipe in recipes:
+            if recipe.get("id") == recipe_id:
+                target_recipe = recipe
+                break
+
+        if not target_recipe:
+            return json.dumps({})  # Recipe not found, return an empty JSON object
+
+        # Construct the metadata for the recipe
         metadata = {
-            "image": recipe.get("image", ""),
-            "name": recipe.get("name", ""),
-            "description": recipe.get("description", ""),
-            "ingredients": recipe.get("ingredients", []),
-            "commands": [],
+            "image": target_recipe.get("image", ""),
+            "name": target_recipe.get("name", ""),
+            "description": target_recipe.get("description", ""),
+            "ingredients": target_recipe.get("ingredients", []),
+            "commands": [step.get("command", "") for step in target_recipe.get("steps", [])],
         }
-        for step_num in range(1, len(metadata["steps"])):
-            command = self.get_command_for_step(step_num)
-            metadata["commands"].append(json.loads(command))
+
         return json.dumps(metadata)
 
     def progress_next_step(self):
