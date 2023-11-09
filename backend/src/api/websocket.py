@@ -8,35 +8,38 @@ from backend.src.controller.controller import CONTROLLER_INSTANCE
 
 
 async def consumer_handler(websocket):
-    request = []
-    try:
-        request = Request(json.loads(await websocket.recv()))
-    except:
-        await websocket.send("Poorly formatted JSON")
+    while True:
+        request = []
+        try:
+            request = Request(json.loads(await websocket.recv()))
+        except:
+            await websocket.send("Poorly formatted JSON")
 
-    print(f"<<< {request}")
+        print(f"<<< {request.keyword, request.recipe_id}")
 
-    match (request.keyword, request.recipe_id):
-        # returns basic info for all recipes
-        case ("get", 0):
-            print(">>> all recipes' info")
-            await websocket.send(CONTROLLER_INSTANCE.get_all_recipe_metadata())
+        match (request.keyword, request.recipe_id):
+            # returns basic info for all recipes
+            case ("get", 0):
+                print(">>> all recipes' info")
+                await websocket.send(CONTROLLER_INSTANCE.get_all_recipe_metadata())
 
         # returns specific info for one recipe
-        case ("get", recipe_id):
-            print(f">>> recipe {recipe_id} info")
-            await websocket.send(CONTROLLER_INSTANCE.get_recipe_metadata(recipe_id))
+            case ("get", recipe_id):
+                print(f">>> recipe {recipe_id} info")
+                await websocket.send(CONTROLLER_INSTANCE.get_recipe_metadata(recipe_id))
 
         # "loads" the recipe to the controller
-        case ("start", recipe_id):
-            print(f">>> starting recipe {recipe_id}")
-            CONTROLLER_INSTANCE.new_recipe(recipe_id)
-            await websocket.send("Started")
+            case ("start", recipe_id):
+                print(f">>> starting recipe {recipe_id}")
+                CONTROLLER_INSTANCE.new_recipe(recipe_id)
+                await websocket.send("Started")
 
         # Sets current step (to be implemented later)
-        case ("step", recipe_id):
-            print(">>> step set")
-            await websocket.send(f"set step {request.step}")
+            case ("step", recipe_id):
+                print(">>> step set")
+                await websocket.send(f"set step {request.step}")
+        await asyncio.sleep(UPDATE_STEP_INTERVAL)
+
 
 
 async def producer_handler(websocket):
@@ -48,7 +51,7 @@ async def producer_handler(websocket):
         await asyncio.sleep(UPDATE_STEP_INTERVAL)
 
 
-async def handler(websocket, path):
+async def handler(websocket):
     consumer_task = asyncio.create_task(consumer_handler(websocket))
     producer_task = asyncio.create_task(producer_handler(websocket))
     await asyncio.gather(consumer_task, producer_task)
