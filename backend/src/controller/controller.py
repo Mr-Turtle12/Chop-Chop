@@ -32,6 +32,13 @@ class Controller:
     def get_progression_requirements_for_current_step(self):
         return self.current_recipe.get_progression_requirements_for_current_step()
 
+    def set_step(self, step_numer):
+        if self.current_recipe is not None:
+            self.current_recipe.set_current_step(step_numer)
+            self.thread_instance = manageThread.ManageThread(
+                self.get_progression_requirements_for_current_step()
+            )
+
     def get_recipe_metadata(self, recipe_id):
         # Fetch the recipes data from the JSON file
         recipes_data = utils.get_json(utils.get_database_address("Recipes"))
@@ -40,7 +47,7 @@ class Controller:
         # Find the specified recipe by its ID
         target_recipe = None
         for recipe in recipes:
-            if recipe.get("id") == recipe_id:
+            if int(recipe.get("id")) == recipe_id:
                 target_recipe = recipe
                 break
 

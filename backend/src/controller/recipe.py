@@ -27,6 +27,9 @@ class Recipe:
         """Increments the current step by one."""
         self.current_step += 1
 
+    def set_current_step(self, step_number):
+        self.current_step = step_number
+
     def get_current_step(self):
         """Gets the current step number.
         Returns:
