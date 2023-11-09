@@ -99,3 +99,8 @@ class BaseThread(threading.Thread):
         self.method()
         if self.callback is not None:
             self.callback(*self.callback_args)
+
+
+class StepChangeFlag:
+    def __init__(self):
+        self.state = False

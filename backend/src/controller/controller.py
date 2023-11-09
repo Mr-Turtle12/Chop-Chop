@@ -1,3 +1,4 @@
+import json
 from backend.src.controller import recipe, utils, manageThread
 
 
@@ -7,6 +8,7 @@ class Controller:
     def __init__(self):
         self.current_recipe = None
         self.thread_instance = None
+        self.step_changed_flag = utils.StepChangeFlag()
 
     def new_recipe(self, recipe_id):
         """Starts a new recipe with the given recipe ID.
@@ -19,44 +21,33 @@ class Controller:
         )
 
     def get_command_for_step(self, step_number):
-        """Gets the command for the specified step number this is for frontend.
-        Args:
-            step_number (int): The step number for which the command is needed.
-        Returns:
-            str: The command for the specified step.
-        """
         return self.current_recipe.get_command_for_step(step_number)
 
     def get_command_for_current_step(self):
-        """Gets the command for the current step this is frontend.
-        Returns:
-            str: The command for the current step.
-        """
         return self.current_recipe.get_command_for_current_step()
 
     def get_progression_requirements_for_step(self, step_number):
-        """Gets the progression requirements for the specified step number this is for backend.
-        Args:
-            step_number (int): The step number for which the progression requirements are needed.
-
-        Returns:
-            dict: The progression requirements for the specified step.
-        """
         return self.current_recipe.get_progression_requirements_for_step(step_number)
 
     def get_progression_requirements_for_current_step(self):
-        """Gets the progression requirements for the current step this is for backend.
-        Returns:
-            dict: The progression requirements for the current step.
-        """
         return self.current_recipe.get_progression_requirements_for_current_step()
 
-    def get_recipe_metadata(self):
-        """Gets the metadata of the current recipe this is for frontend.
-        Returns:
-            dict: The metadata of the current recipe.
-        """
-        return self.current_recipe.get_recipe_metadata()
+    def get_recipe_metadata(self, recipe_id):
+        recipes = utils.get_json(utils.get_database_address("Recipes")).get(
+            "recipes", []
+        )
+        recipe = utils.fetch_recipe_by_id(recipe_id, recipes)
+        metadata = {
+            "image": recipe.get("image", ""),
+            "name": recipe.get("name", ""),
+            "description": recipe.get("description", ""),
+            "ingredients": recipe.get("ingredients", []),
+            "commands": [],
+        }
+        for step_num in range(1, len(metadata["steps"])):
+            command = self.get_command_for_step(step_num)
+            metadata["commands"].append(json.loads(command))
+        return json.dumps(metadata)
 
     def progress_next_step(self):
         """Progresses to the next step in the recipe."""
@@ -64,6 +55,7 @@ class Controller:
         self.thread_instance = manageThread.ManageThread(
             self.get_progression_requirements_for_current_step()
         )
+        self.step_changed_flag.state = True
         # Notify frontend
 
     def get_all_recipe_metadata(self):
@@ -82,7 +74,7 @@ class Controller:
             }
             for recipe in recipes
         ]
-        return all_metadata
+        return json.dumps(all_metadata)
 
 
 # start a instance for the controller
