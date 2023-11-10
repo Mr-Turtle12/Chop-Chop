@@ -20,6 +20,9 @@ class Controller:
             self.get_progression_requirements_for_current_step()
         )
 
+    def update_flag(self):
+        self.step_changed_flag.state = True
+
     def get_command_for_step(self, step_number):
         return self.current_recipe.get_command_for_step(step_number)
 
@@ -31,13 +34,6 @@ class Controller:
 
     def get_progression_requirements_for_current_step(self):
         return self.current_recipe.get_progression_requirements_for_current_step()
-
-    def set_step(self, step_numer):
-        if self.current_recipe is not None:
-            self.current_recipe.set_current_step(step_numer)
-            self.thread_instance = manageThread.ManageThread(
-                self.get_progression_requirements_for_current_step()
-            )
 
     def get_recipe_metadata(self, recipe_id):
         # Fetch the recipes data from the JSON file
@@ -60,7 +56,9 @@ class Controller:
             "name": target_recipe.get("name", ""),
             "description": target_recipe.get("description", ""),
             "ingredients": target_recipe.get("ingredients", []),
-            "commands": [step.get("command", "") for step in target_recipe.get("steps", [])],
+            "commands": [
+                step.get("command", "") for step in target_recipe.get("steps", [])
+            ],
         }
 
         return json.dumps(metadata)
@@ -71,8 +69,16 @@ class Controller:
         self.thread_instance = manageThread.ManageThread(
             self.get_progression_requirements_for_current_step()
         )
-        self.step_changed_flag.state = True
+        self.update_flag()
         # Notify frontend
+
+    def set_step(self, step_numer):
+        if self.current_recipe is not None:
+            self.current_recipe.set_current_step(step_numer)
+            self.thread_instance = manageThread.ManageThread(
+                self.get_progression_requirements_for_current_step()
+            )
+        self.update_flag()
 
     def get_all_recipe_metadata(self):
         """Gets metadata for all recipes.
