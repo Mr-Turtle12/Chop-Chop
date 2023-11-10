@@ -1,5 +1,6 @@
 # This file is the entry point for the back end
 from backend.src.controller import CONTROLLER_INSTANCE
+from backend.src.api.websocket import start_websocket
 import os
 
 
@@ -8,7 +9,8 @@ def main():
     os.environ["chop-chop-database"] = os.path.normpath(
         os.path.join(os.path.dirname(__file__), "../..", "database")
     )
+    start_websocket()
 
 
-main()
-CONTROLLER_INSTANCE.new_recipe(1)
+if __name__ == "__main__":
+    main()
