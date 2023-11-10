@@ -5,6 +5,7 @@ import json
 from backend.src.api.Request import Request
 from backend.src.config import WEBSOCKET_UPDATE_INTERVAL
 from backend.src.controller.controller import CONTROLLER_INSTANCE
+from backend.src.controller.utils import log
 
 
 async def consumer_handler(websocket):
@@ -17,35 +18,34 @@ async def consumer_handler(websocket):
         try:
             request = Request(json.loads(await websocket.recv()))
         except json.JSONDecodeError:
+            log("!!! Poorly formatted JSON", "API")
             await websocket.send("Poorly formatted JSON")
-
-        print(f"<<< {request.matcher}")
 
         match request.matcher:
             # returns basic info for all recipes
             case ("get", 0):
-                print(">>> all recipes' info")
+                log(">>> all recipes' info", "API")
                 await websocket.send(CONTROLLER_INSTANCE.get_all_recipe_metadata())
 
             # returns specific info for one recipe
             case ("get", recipe_id):
-                print(f">>> recipe {recipe_id} info")
+                log(f">>> recipe {recipe_id} info", "API")
                 await websocket.send(CONTROLLER_INSTANCE.get_recipe_metadata(recipe_id))
 
             # "loads" the recipe to the controller
             case ("start", recipe_id):
-                print(f">>> starting recipe {recipe_id}")
+                log(f">>> starting recipe {recipe_id}", "API")
                 CONTROLLER_INSTANCE.new_recipe(recipe_id)
                 await websocket.send("Started")
 
             # Sets current step (to be implemented later)
             case ("step", step_number):
-                print(f">>> step set {step_number}")
+                log(f">>> step set {step_number}", "API")
                 CONTROLLER_INSTANCE.set_step(step_number)
                 await websocket.send(f"set step {step_number}")
 
             case _:
-                print("!!! unknown command")
+                log("!!! unknown command", "API")
                 await websocket.send("Unknown command")
 
         await asyncio.sleep(WEBSOCKET_UPDATE_INTERVAL)
@@ -58,10 +58,9 @@ async def producer_handler(websocket):
     """
     while True:  # run forever
         if CONTROLLER_INSTANCE.step_changed_flag.state:
-            print("!!! step changed")
             new_step = CONTROLLER_INSTANCE.current_recipe.current_step
             response = {"step": new_step}
-            print(f">>> updated step {new_step}")
+            log(f">>> updated step {new_step}", "API")
             await websocket.send(json.dumps(response))
             CONTROLLER_INSTANCE.step_changed_flag.state = False
         await asyncio.sleep(WEBSOCKET_UPDATE_INTERVAL)

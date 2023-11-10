@@ -2,7 +2,19 @@ import json
 import os
 import threading
 from collections import deque
-from backend.src.config import DETECT_THRESHOLD, DETECT_FRAMES
+from backend.src import config
+
+
+def log(message, type):
+    log_file_path = None
+    match type:
+        case "API":
+            log_file_path = config.API_LOG_PATH
+        case "Detect":
+            log_file_path = config.DETECT_LOG_PATH
+
+    with open(log_file_path, "a") as log_file:
+        log_file.write(str(message) + "\n")
 
 
 def does_recipe_id_exist(recipe_id):
@@ -61,7 +73,7 @@ class LimitedQueue:
 
     def __init__(self):
         """Initializes the LimitedQueue."""
-        self.queue = deque(maxlen=DETECT_FRAMES)
+        self.queue = deque(maxlen=config.DETECT_FRAMES)
 
     def append(self, item):
         """Appends an item to the queue.
@@ -70,16 +82,20 @@ class LimitedQueue:
         """
         self.queue.append(item)
 
+    def get_queue(self):
+        """Returns the entire queue."""
+        return list(self.queue)
+
     def get_average(self):
         """Calculates the average based on the elements in the queue.
         Returns:
             bool: True if the average exceeds the threshold, otherwise False.
         """
-        if len(self.queue) < DETECT_FRAMES:
+        if len(self.queue) < config.DETECT_FRAMES:
             return False
         else:
             true_count = sum(1 for item in self.queue if item is True)
-            return true_count >= DETECT_THRESHOLD
+            return true_count >= config.DETECT_THRESHOLD
 
 
 class BaseThread(threading.Thread):
