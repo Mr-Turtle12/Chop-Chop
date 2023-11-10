@@ -1,25 +1,45 @@
 import keyword
 from click import command
 
-"""
-request class for chop chop
-"""
-
 
 class Request:
-    def __init__(self, jsonRequest: dict):
-        command: dict = jsonRequest["command"]
+    def __init__(self, json_request: dict):
+        command: dict = json_request["command"]
         self.recipe_id: int = command.get("recipe_id", None)
         self.keyword: str = command["keyword"]
-        self.step: int = command.get("step", None)
+        self.step_number: int = command.get("step_number", None)
 
         self.matcher = self.__matcher()
 
     def __matcher(self):
+        """returns matcher object as a tuple of (keyword, recipe_id | step_number)"""
         match self.keyword:
             case "get" | "start":
                 return (self.keyword, self.recipe_id)
-            case "step":
-                return (self.keyword, self.step)
+            case "set":
+                return (self.keyword, self.step_number)
             case _:
                 return None
+
+
+"""
+valid request examples:
+{
+    "command": {
+        "keyword": "get",
+        "recipe_id": 0
+    }
+}
+{
+    "command": {
+        "keyword": "start",
+        "recipe_id": 1
+    }
+}
+{
+    "command": {
+        "keyword": "set",
+        "step_number": 1
+    }
+}
+"""

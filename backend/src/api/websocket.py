@@ -43,7 +43,13 @@ async def consumer_handler(websocket):
                 print(f">>> step set {step_number}")
                 CONTROLLER_INSTANCE.set_step(step_number)
                 await websocket.send(f"set step {step_number}")
+
+            case _:
+                print("!!! unknown command")
+                await websocket.send("Unknown command")
+
         await asyncio.sleep(WEBSOCKET_UPDATE_INTERVAL)
+
 
 async def producer_handler(websocket):
     """Handles outgoing responses to the client.
