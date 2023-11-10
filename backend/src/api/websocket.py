@@ -16,7 +16,7 @@ async def consumer_handler(websocket):
         request = []
         try:
             request = Request(json.loads(await websocket.recv()))
-        except:
+        except json.JSONDecodeError:
             await websocket.send("Poorly formatted JSON")
 
         print(f"<<< {request.matcher}")
