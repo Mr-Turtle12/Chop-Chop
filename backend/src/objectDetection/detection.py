@@ -1,5 +1,6 @@
 from ultralytics import YOLO
 import supervision as sv
+from backend.src.controller.utils import log
 
 
 class Detection:
@@ -10,6 +11,7 @@ class Detection:
             confidence_threshold (float): The confidence threshold for detections.
         """
         self.model = YOLO(model_location)
+        self.last_tag = ["Start"]
         self.confidence_threshold = confidence_threshold
 
     def get_tags_from_class_ids(self, class_ids):
@@ -34,8 +36,11 @@ class Detection:
         Returns:
             bool: True if the progression object is in the detected class names and the inhibitor is not, otherwise False.
         """
-        result = self.model(frame)[0]
+        result = self.model(frame, verbose=False)[0]
         detections = sv.Detections.from_yolov8(result)
         detections = detections[detections.confidence > self.confidence_threshold]
         class_names = self.get_tags_from_class_ids(detections.class_id)
+        if self.last_tag != class_names:
+            log(class_names, "Detect")
+        self.last_tag = class_names
         return progression_object in class_names and inhibitor not in class_names

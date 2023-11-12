@@ -1,5 +1,11 @@
+from datetime import datetime
+
+# Logging:
+timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+API_LOG_PATH = f"API_logs_{timestamp}.log"
+DETECT_LOG_PATH = f"Detect_logs_{timestamp}.log"
 # AI Settings
-MODEL_LOCATION = "./Trained-Data/Version3/runs/detect/train/weights/best.pt"
+MODEL_LOCATION = "../../Trained-Data/Version3/runs/detect/train/weights/best.pt"
 CONFIDENCE_THRESHOLD = float(0.4)
 # Interpreter
 DETECT_FRAMES = 10

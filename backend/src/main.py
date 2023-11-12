@@ -2,6 +2,7 @@
 from backend.src.controller import CONTROLLER_INSTANCE
 from backend.src.api.websocket import start_websocket
 import os
+from backend.src.controller.utils import log
 
 
 def main():
@@ -13,4 +14,7 @@ def main():
 
 
 if __name__ == "__main__":
+    log("Script started...", "API")
+    log("Script started...", "Detect")
+
     main()
