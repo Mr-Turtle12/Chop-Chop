@@ -32,7 +32,7 @@ defineProps({
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
     image: { type: String, default: require('@/assets/recipe-1.png') },
-    id : {type: String, default: 1}
+    id : {type: Number, default: 1}
 
 })
 </script>
