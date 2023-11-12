@@ -16,21 +16,25 @@
 # detector.end()
 
 import time
-from objectDetection import detection
-from objectDetection import camera
+
+from backend.src import config
+from backend.src.objectDetection import detection
+from backend.src.objectDetection import camera
+
 
 
 class ObjectDetection:
-    def __init__(self, model, cameraID):
-        self.AI = detection.Detection(model)
-        self.cameraObj = camera.Camera([1280, 720], cameraID)
+    def __init__(self, camera_id):
+        self.AI = detection.Detection(
+            config.MODEL_LOCATION, config.CONFIDENCE_THRESHOLD
+        )
+        self.cameraObj = camera.Camera([1280, 720], camera_id)
 
     # Will set everything up to check the frame for any objects that is passed in to it
-    def check_items(self, items):
-        #wait 1 seconds to give camera time to load up
-        time.sleep(1)
+    def check_items(self, progression_object, inhibitor):
+        # wait 1 seconds to give camera time to load up
         _, frame = self.cameraObj.cap.read()
-        return self.AI.process_frame(frame, items)
+        return self.AI.process_frame(frame, progression_object, inhibitor)
 
     # To be called at the end
 
