@@ -17,7 +17,7 @@
         </button>
       </div> 
 
-      <ul class="c-recipe-switcher__ingredient-container js-ingredient-view is-toggled o-container">
+      <ul class="c-recipe-switcher__ingredient-container o-container js-ingredient-view is-toggled">
         <li 
           v-for="ingredient in recipe.ingredients"
           :key="ingredient"
