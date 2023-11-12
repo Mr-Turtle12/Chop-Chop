@@ -90,6 +90,7 @@ class Controller:
         )
         all_metadata = [
             {
+                "id": recipe.get("id", ""),
                 "image": recipe.get("image", ""),
                 "name": recipe.get("name", ""),
                 "description": recipe.get("description", ""),
