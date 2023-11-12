@@ -41,6 +41,8 @@
 <script setup>
 import {computed, ref } from 'vue'
 
+const socket = new WebSocket("ws://localhost:8765");
+
 
 const recipe = {
     name: 'Test Recipe',
@@ -64,6 +66,12 @@ function increment() {
         stepIndex.value++
     }
 }
+
+// Listen for messages
+socket.addEventListener("message", (event) => {
+  const data = JSON.parse(event.data);
+  stepIndex.value = data.step;
+});
 
 function decrement() {
     if(stepIndex.value != 0) {
