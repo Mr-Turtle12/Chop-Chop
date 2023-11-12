@@ -7,11 +7,11 @@
       "description": "It's like bolognese but veggie with spaghetti",
       "ingredients": [
         { "item": "Red Onion", "amount": "1", "unit": "unit" },
-        { "item": "Carrot", "amount": "2", "unit": "unit" },
-        { "item": "Chopped Tomatoes", "amount": "400", "unit": "grams" },
-        { "item": "Quorn Mince", "amount": "500", "unit": "grams" },
+        { "item": "Carrots", "amount": "2", "unit": "unit" },
+        { "item": "Chopped Tomatoes", "amount": "400", "unit": "g" },
+        { "item": "Quorn Mince", "amount": "500", "unit": "g" },
         { "item": "Vegetable Stock Cube", "amount": "1", "unit": "unit" },
-        { "item": "Spaghetti", "amount": "500", "unit": "grams" }
+        { "item": "Spaghetti", "amount": "500", "unit": "g" }
       ],
       "steps": [
         {
@@ -121,12 +121,12 @@
     {
       "id": "2",
       "image" : "Pancakes.png",
-      "name": "pancakes",
-      "description": "oui oui le crepe",
+      "name": "Pancakes",
+      "description": "Oui oui j'adore la crepe",
       "ingredients": [
-        { "item": "Plain Flour", "amount": "500", "unit": "grams" },
+        { "item": "Plain Flour", "amount": "500", "unit": "g" },
         { "item": "Egg", "amount": "1", "unit": "unit" },
-        { "item": "Milk", "amount":  "500", "unit":  "millilitres"}
+        { "item": "Milk", "amount":  "500", "unit":  "mls"}
       ],
       "steps": [
         {
@@ -155,9 +155,9 @@
       "name": "Sandwiches",
       "description": "sandwich recipe",
       "ingredients": [
-        { "item": "Slice of Bread", "amount": "2", "unit": "unit" },
-        { "item": "Peanut Butter", "amount": "1", "unit": "spread" },
-        { "item": "Strawberry Jam", "amount": "1", "unit": "spread" }
+        { "item": "Slices of Bread", "amount": "2", "unit": "unit" },
+        { "item": "Butter" },
+        { "item": "Strawberry Jam" }
       ],
       "steps": [
         {
