@@ -14,12 +14,14 @@
     <div class="c-recipe__container o-container">
       <div class="c-recipe__top">
         <h1 class="c-recipe__heading">
-          Recipe name
+          {{ recipe.name }}
         </h1>
 
         <a
           class="c-recipe__link"
           href="/recipe"
+          @click="
+            startRecipeAPICall()"
         >start recipe</a>
 
         <p class="c-recipe__meta">
@@ -27,7 +29,10 @@
         </p>
       </div>
 
-      <RecipeSwitcher />
+      <RecipeSwitcher 
+        :ingredients="recipe.ingredients"
+        :steps="recipe.steps" 
+      />
     </div> 
   </section>
 </template>
@@ -35,6 +40,82 @@
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeSwitcher from '@/components/RecipeSwitcher.vue'
+import { onMounted, reactive } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+
+const route = useRoute()
+
+var recipe = reactive({
+    name: 'ERROR NAME NOT FOUND',
+    decription: 'ERROR DESCRIPTION NOT FOUND',
+    steps: [
+        'NO STEPS FOUND'
+    ],
+    ingredients: [
+        'NO INGREDIENT FOUND'
+    ]
+})
+
+onMounted(() => {
+    getRecipeInfo()
+})
+
+function startRecipeAPICall(){
+  const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
+    
+    })
+
+}
+
+
+function getRecipeInfo()
+{
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
+    
+    })
+    socket.addEventListener('message', (event) => {
+        const RecipeJsonMessage = JSON.parse(event.data)
+        parseRecipeFromJson(RecipeJsonMessage)
+    })
+
+}
+
+
+function formatIngredients(RecipeJsonMessage)
+{
+    const ingredients = RecipeJsonMessage['ingredients']
+  
+    //Get and format all the ingredients 
+    var ingredientsList = []
+    for(const key in ingredients){
+        var ingredientFormatted = ingredients[key]['amount']
+        ingredientFormatted = ingredientFormatted ? ingredientFormatted : ''
+        if (ingredients[key]['unit'] !== 'unit' && ingredients[key]["unit"] != null) {
+            ingredientFormatted += ' ' + ingredients[key]['unit']
+        }
+        ingredientFormatted += ' ' + ingredients[key]['item']
+        ingredientsList.push(ingredientFormatted)
+    }
+    return ingredientsList
+}
+
+function parseRecipeFromJson(RecipeJsonMessage)
+{
+    recipe.name = RecipeJsonMessage.name
+    recipe.decription = RecipeJsonMessage.description
+
+    recipe.ingredients = formatIngredients(RecipeJsonMessage)
+
+    recipe.steps = RecipeJsonMessage['commands']
+
+}
+
+
+
 </script>
 
 <style scoped lang="scss">

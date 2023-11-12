@@ -19,7 +19,7 @@
 
       <ul class="c-recipe-switcher__ingredient-container o-container js-ingredient-view is-toggled">
         <li 
-          v-for="ingredient in recipe.ingredients"
+          v-for="ingredient in ingredients"
           :key="ingredient"
           class="c-recipe-switcher__ingredient"
         >
@@ -29,7 +29,7 @@
 
       <ul class="c-recipe-switcher__recipe-container js-recipe-view o-container">
         <li
-          v-for="(step, index) in recipe.steps"
+          v-for="(step, index) in steps"
           :key="step"
           class="c-recipe-switcher__recipe-step"
         >
@@ -42,22 +42,12 @@
 </template>
 
 <script setup>
-const recipe = {
-    name: 'Test Recipe',
-    steps: [
-        'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
-        'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
-        'In ut quam vitae odio lacinia tincidunt.',
-        'Fusce risus nisl'
-    ],
-    ingredients: [
-        'onion', 
-        'carrot', 
-        'pepper', 
-        'pasta', 
-        'tomato sauce'
-    ]
-}
+//import { Console } from 'console';
+
+defineProps({
+  ingredients: {type : Array[String], default: 'test ingredient'},
+  steps: {type : Array[String], default: 'test step'}
+})
 
 function toggle(buttonName) {
     const recipeButton = document.getElementsByClassName('js-recipe-button')[0]

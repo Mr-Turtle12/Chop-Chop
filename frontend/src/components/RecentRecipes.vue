@@ -19,6 +19,7 @@
           :key="recipe.id"
           :recipe-name="recipe.name"
           :info="recipe.info"
+          :id=recipe.id
           :size="'horizontal'"
           />
       </div>
@@ -41,7 +42,7 @@ onMounted(async () => {
 
   socket.addEventListener("message", (event) => {
     const arrayRecipe = JSON.parse(event.data);
-    recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, info: recipe.description }));
+    recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, info: recipe.description , id:recipe.id}));
     recipesLoaded.value = true;
   });
 })

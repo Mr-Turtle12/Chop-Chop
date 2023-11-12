@@ -1,7 +1,7 @@
 <template>
   <a
     :class="`c-card c-card--${ size }`"
-    href="/recipe-overview"
+    :href="`/recipe-overview/${ id }`"
   >
     <img
       class="c-card__image"
@@ -31,7 +31,8 @@ defineProps({
     size: { type: String, default: 'vertical' },
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
-    image: { type: String, default: require('@/assets/recipe-1.png') }
+    image: { type: String, default: require('@/assets/recipe-1.png') },
+    id : {type: Number, default: 1}
 
 })
 </script>
