@@ -47,3 +47,7 @@ body {
   padding-right: var(--gutter);
   width: 100%;
 }
+
+.is-scroll-locked {
+  overflow: hidden;
+}

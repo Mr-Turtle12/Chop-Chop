@@ -47,6 +47,26 @@ ul {
   list-style: none;
 }
 
+input {
+  margin: 0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+input[type="search"] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  cursor: pointer;
+}
+
 a:link,
 a:visited {
   color: inherit;
