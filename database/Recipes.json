@@ -5,6 +5,8 @@
       "image" : "QuornSpagBol.png",
       "name": "Quorn Spaghetti Bolognese",
       "description": "It's like bolognese but veggie with spaghetti",
+      "prepTime": "10 minutes",
+      "cookTime": "25 minutes",
       "ingredients": [
         { "item": "Red Onion", "amount": "1", "unit": "unit" },
         { "item": "Carrots", "amount": "2", "unit": "unit" },
@@ -135,6 +137,8 @@
       "image" : "Pancakes.png",
       "name": "Pancakes",
       "description": "Oui oui j'adore la crepe",
+      "prepTime": "5 minutes",
+      "cookTime": "10 minutes",
       "ingredients": [
         { "item": "Plain Flour", "amount": "500", "unit": "g" },
         { "item": "Egg", "amount": "1", "unit": "unit" },
@@ -166,6 +170,8 @@
       "image" : "Sandwiches.png",
       "name": "Sandwiches",
       "description": "Use Space Jam for space sandwiches",
+      "prepTime": "2 minutes",
+      "cookTime": "none",
       "ingredients": [
         { "item": "Slices of Bread", "amount": "2", "unit": "unit" },
         { "item": "Butter" },
