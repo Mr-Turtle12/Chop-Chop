@@ -87,10 +87,12 @@ function toggleMenu() {
     if(burgerMenu.classList.contains('is-cross')) {
         burgerMenu.classList.remove('is-cross')
         headerMenu.classList.remove('is-open')
+        document.body.classList.remove('is-scroll-locked')
     }
     else {
         burgerMenu.classList.add('is-cross')
         headerMenu.classList.add('is-open')
+        document.body.classList.add('is-scroll-locked')
     }
 }
 </script>
@@ -114,7 +116,7 @@ function toggleMenu() {
     position: relative;
     width: 40px;
     z-index: 9999;
-    position: fixed;
+    position: absolute;
     right: 0;
     margin-right: var(--gutter);
 
@@ -172,17 +174,17 @@ function toggleMenu() {
 .c-header-menu {
   $c : &;
 
-  z-index: 200;
+    z-index: 200;
     background-color: transparent;
     display: flex;
-    height: 100dvh;
+    height: 100vh;
     justify-content: flex-end;
     position: fixed;
     right: 0;
     top: 0;
     transition-delay: .7s; 
     transition-timing-function: ease-out; 
-    translate: 100%; 
+    transform: translate(100%); 
     width: 100%;
 
     &::before {
@@ -203,7 +205,7 @@ function toggleMenu() {
     &.is-open {
       transition-delay: 0s;
       transition-timing-function: ease-in;
-      translate: 0;
+      transform: translate(0);
 
       &::before {
         opacity: .6;
