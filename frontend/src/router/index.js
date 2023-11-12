@@ -23,7 +23,7 @@ const routes = [
         meta: { transition: 'slide-left'}
     },
     {
-        path: '/recipe-overview',
+        path: '/recipe-overview/:id',
         name: 'recipe-overview',
         component: RecipeOverview,
         meta: { transition: 'slide-left'}

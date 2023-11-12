@@ -63,11 +63,10 @@ onBeforeMount(() => {
 })
 function getRecipeInfo()
 {
-  //const recipeId = this.$route.params.recipeId
-  const socket = new WebSocket("ws://localhost:8765");
+yy  const socket = new WebSocket("ws://localhost:8765");
   socket.addEventListener("open", (event) => {
-    //console.log(socket.send(`{'command': { 'keyword': 'get','recipe_id': ${route.params.recipeId} }}`));
-    socket.send(`{"command": { "keyword": "get","recipe_id": 1 }}`);
+    socket.send(`{'command': { 'keyword': 'get','recipe_id': ${route.params.recipeId} }}`);
+    //socket.send(`{"command": { "keyword": "get","recipe_id": 1 }}`);
     
   })
   socket.addEventListener("message", (event) => {
