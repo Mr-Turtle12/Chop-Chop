@@ -19,7 +19,7 @@
           :key="recipe.id"
           :recipe-name="recipe.name"
           :info="recipe.info"
-          :id="recipe.id"
+          :id=recipe.id
           :size="'horizontal'"
           />
       </div>
