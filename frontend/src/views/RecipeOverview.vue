@@ -38,7 +38,10 @@
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeSwitcher from '@/components/RecipeSwitcher.vue'
-import { onBeforeMount, reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
+import { useRouter, useRoute } from 'vue-router'
+
+const route = useRoute()
 
 var recipe = reactive({
   name: 'Test Recipe',
@@ -58,15 +61,16 @@ var recipe = reactive({
       ]
     })
 
-onBeforeMount(() => {
+onMounted(() => {
   getRecipeInfo()
 })
+
+
 function getRecipeInfo()
 {
-yy  const socket = new WebSocket("ws://localhost:8765");
+const socket = new WebSocket("ws://localhost:8765")
   socket.addEventListener("open", (event) => {
-    socket.send(`{'command': { 'keyword': 'get','recipe_id': ${route.params.recipeId} }}`);
-    //socket.send(`{"command": { "keyword": "get","recipe_id": 1 }}`);
+    socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`);
     
   })
   socket.addEventListener("message", (event) => {
@@ -85,7 +89,7 @@ function formatIngredients(RecipeJsonMessage)
   var ingredientsList = []
   for(const key in ingredients){
     var ingredientFormatted = ingredients[key]["amount"];
-
+    ingredientFormatted = ingredientFormatted ? ingredientFormatted : ""
     if (ingredients[key]["unit"] !== "unit") {
       ingredientFormatted += " " + ingredients[key]["unit"];
     }

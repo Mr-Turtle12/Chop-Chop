@@ -1,7 +1,7 @@
 <template>
   <a
     :class="`c-card c-card--${ size }`"
-    href="/recipe-overview/" + {{ $id }}
+    :href="`/recipe-overview/${ id }`"
   >
     <img
       class="c-card__image"
