@@ -66,7 +66,8 @@ defineProps({
   }
 
   &__card-container {
-    @include grid;
+    display:flex;
+    column-gap: var(--gutter);
     overflow: auto;
     white-space: nowrap;
   }
