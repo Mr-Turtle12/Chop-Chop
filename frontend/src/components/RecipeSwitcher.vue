@@ -44,27 +44,31 @@
 <script setup>
 //import { Console } from 'console';
 
-const recipe = {
-    name: 'Test Recipe',
-    decription: 'Test Description',
-    steps: [
-        'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
-        'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
-        'In ut quam vitae odio lacinia tincidunt.',
-        'Fusce risus nisl'
-    ],
+
+
+var recipe = reactive({
+  name: 'Test Recipe',
+  decription: 'Test Description',
+  steps: [
+    'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
+    'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
+    'In ut quam vitae odio lacinia tincidunt.',
+    'Fusce risus nisl'
+  ],
     ingredients: [
         'onion', 
         'carrot', 
         'pepper', 
         'pasta', 
         'tomato sauce'
-    ]
-}
-getRecipeInfo()
+      ]
+    })
+    
+onBeforeMount(() => {
+  getRecipeInfo()
+})
 function getRecipeInfo()
 {
-  console.log("Hello")
   //const recipeId = this.$route.params.recipeId
   const socket = new WebSocket("ws://localhost:8765");
   socket.addEventListener("open", (event) => {
@@ -73,17 +77,40 @@ function getRecipeInfo()
     
   })
   socket.addEventListener("message", (event) => {
-    console.log('WebSocket connection opened:', event.data)
     const RecipeJsonMessage = JSON.parse(event.data)
     parseRecipeFromJson(RecipeJsonMessage)
   });
 
 }
 
+
+function formatIngredients(RecipeJsonMessage)
+{
+  const ingredients = RecipeJsonMessage["ingredients"]
+  
+  //Get and format all the ingredients 
+  var ingredientsList = []
+  for(const key in ingredients){
+    var ingredientFormatted = ingredients[key]["amount"];
+
+    if (ingredients[key]["unit"] !== "unit") {
+      ingredientFormatted += " " + ingredients[key]["unit"];
+    }
+    ingredientFormatted += " " + ingredients[key]["item"];
+    ingredientsList.push(ingredientFormatted)
+  }
+  return ingredientsList
+}
+
 function parseRecipeFromJson(RecipeJsonMessage)
 {
   recipe.name = RecipeJsonMessage.name
   recipe.decription = RecipeJsonMessage.description
+
+  recipe.ingredients = formatIngredients(RecipeJsonMessage)
+
+  recipe.steps = RecipeJsonMessage["commands"]
+
 }
 
 function toggle(buttonName) {
