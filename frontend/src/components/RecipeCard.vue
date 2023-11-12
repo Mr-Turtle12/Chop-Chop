@@ -5,7 +5,7 @@
   >
     <img
       class="c-card__image"
-      src="@/assets/recipe-1.png"
+      :src= image
     >
     
     <div class="c-card__info">
@@ -31,6 +31,8 @@ defineProps({
     size: { type: String, default: 'vertical' },
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
+    image: { type: String, default: require('@/assets/recipe-1.png') }
+
 })
 </script>
 
