@@ -261,9 +261,12 @@ function toggleMenu() {
       gap: 100px;
     }
 
-    &__button-link {
+    &__button {
       @include ts-heading-1;
       color: white;
+    }
+    
+    &__button-link {
       width:fit-content;
 
     &:hover,
