@@ -10,18 +10,30 @@
     
       <div class="c-featured-recipe__text-container">
         <h1 class="c-featured-recipe__heading">
-          <a class="c-featured-recipe__heading-link">{{ recipeName }}</a>
+          <a
+            class="c-featured-recipe__heading-link"
+            href="/recipe-overview"
+          >{{ recipeName }}
+          </a>
         </h1>
 
-        <p class="c-featured-recipe__meta">
-          {{ info }}
-        </p>
+        <div class="c-featured-recipe__meta">
+          <div class="c-featured-recipe__time">
+            <ClockSVG
+              class="c-featured-recipe__time-icon"
+            />
+
+            <p>{{ info }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
+import ClockSVG from '@/assets/clock-svg.vue'
+
 defineProps({
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
@@ -32,37 +44,71 @@ defineProps({
 
 .c-featured-recipe {
   &__container {
-    @include grid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position:relative;
+    min-height: 50vh;
   }
 
   &__image-container {
+    box-sizing: border-box;
     height: 100%;
+    padding: inherit;
     position: absolute;
     width: 100%;
+    border-radius: 70px;
     z-index: 1;
+
+    &::before {
+      background: rgba(47, 41, 41, 0.40);
+      background-clip: content-box;
+      box-sizing: border-box;
+      content: '';
+      height:100%;
+      padding: inherit;
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      z-index: 99999;
+    }
   }
 
   &__image {
+    position:relative;
     object-fit: cover;
     height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
     width: 100%;
+    z-index:2;
   }
 
   &__text-container {
-    grid-column: 3/9;
-    z-index:2;
+    align-items: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 198px 0;
+    z-index:3;
   }
 
   &__heading {
     @include ts-heading-1;
+    margin-bottom: var(--space-xs);
   }
 
   &__meta {
     @include ts-meta;
+  }
+
+  &__time {
+    display: flex;
+    align-items: center;
+  }
+  
+  &__time-icon {
+    margin-right:4px;
+    color: white;
   }
 }
 </style>
