@@ -214,7 +214,7 @@ function toggleMenu() {
       }
 
       #{$c}__container {
-        translate: 0;
+        transform: translate(0);
       }
     }
 
@@ -225,9 +225,9 @@ function toggleMenu() {
       overflow: hidden;
       padding-top: calc(var(--space-xl) + 40px + 30px);
       position: relative;
-      transition: translate .4s;
+      transition: transform .4s;
       transition-delay: .2s;
-      translate: 100%;
+      transform: translate(100%);
       width: 100%;
       z-index: 2;
     }
