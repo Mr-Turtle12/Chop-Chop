@@ -7,8 +7,7 @@
       :info="'info'"
     />
 
-    <RecentRecipes
-    />
+    <RecentRecipes />
 
     <LikedRecipes />
   </body>

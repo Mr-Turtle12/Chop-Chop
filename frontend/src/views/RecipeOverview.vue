@@ -28,8 +28,8 @@
       </div>
 
       <RecipeSwitcher 
-      :ingredients = recipe.ingredients
-      :steps = recipe.steps 
+        :ingredients="recipe.ingredients"
+        :steps="recipe.steps" 
       />
     </div> 
   </section>
@@ -38,75 +38,75 @@
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeSwitcher from '@/components/RecipeSwitcher.vue'
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const route = useRoute()
 
 var recipe = reactive({
-  name: 'Test Recipe',
-  decription: 'Test Description',
-  steps: [
-    'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
-    'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
-    'In ut quam vitae odio lacinia tincidunt.',
-    'Fusce risus nisl'
-  ],
+    name: 'Test Recipe',
+    decription: 'Test Description',
+    steps: [
+        'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
+        'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
+        'In ut quam vitae odio lacinia tincidunt.',
+        'Fusce risus nisl'
+    ],
     ingredients: [
         'onion', 
         'carrot', 
         'pepper', 
         'pasta', 
         'tomato sauce'
-      ]
-    })
+    ]
+})
 
 onMounted(() => {
-  getRecipeInfo()
+    getRecipeInfo()
 })
 
 
 function getRecipeInfo()
 {
-const socket = new WebSocket("ws://localhost:8765")
-  socket.addEventListener("open", (event) => {
-    socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`);
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
     
-  })
-  socket.addEventListener("message", (event) => {
-    const RecipeJsonMessage = JSON.parse(event.data)
-    parseRecipeFromJson(RecipeJsonMessage)
-  });
+    })
+    socket.addEventListener('message', (event) => {
+        const RecipeJsonMessage = JSON.parse(event.data)
+        parseRecipeFromJson(RecipeJsonMessage)
+    })
 
 }
 
 
 function formatIngredients(RecipeJsonMessage)
 {
-  const ingredients = RecipeJsonMessage["ingredients"]
+    const ingredients = RecipeJsonMessage['ingredients']
   
-  //Get and format all the ingredients 
-  var ingredientsList = []
-  for(const key in ingredients){
-    var ingredientFormatted = ingredients[key]["amount"];
-    ingredientFormatted = ingredientFormatted ? ingredientFormatted : ""
-    if (ingredients[key]["unit"] !== "unit") {
-      ingredientFormatted += " " + ingredients[key]["unit"];
+    //Get and format all the ingredients 
+    var ingredientsList = []
+    for(const key in ingredients){
+        var ingredientFormatted = ingredients[key]['amount']
+        ingredientFormatted = ingredientFormatted ? ingredientFormatted : ''
+        if (ingredients[key]['unit'] !== 'unit') {
+            ingredientFormatted += ' ' + ingredients[key]['unit']
+        }
+        ingredientFormatted += ' ' + ingredients[key]['item']
+        ingredientsList.push(ingredientFormatted)
     }
-    ingredientFormatted += " " + ingredients[key]["item"];
-    ingredientsList.push(ingredientFormatted)
-  }
-  return ingredientsList
+    return ingredientsList
 }
 
 function parseRecipeFromJson(RecipeJsonMessage)
 {
-  recipe.name = RecipeJsonMessage.name
-  recipe.decription = RecipeJsonMessage.description
+    recipe.name = RecipeJsonMessage.name
+    recipe.decription = RecipeJsonMessage.description
 
-  recipe.ingredients = formatIngredients(RecipeJsonMessage)
+    recipe.ingredients = formatIngredients(RecipeJsonMessage)
 
-  recipe.steps = RecipeJsonMessage["commands"]
+    recipe.steps = RecipeJsonMessage['commands']
 
 }
 
