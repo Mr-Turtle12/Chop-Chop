@@ -1,40 +1,73 @@
 from backend.src import objectDetection
 from backend.src import config
-import threading
+from backend.src.controller import utils
 
 
-class Interpreter:
-    def __init__(self, recipe_queue):
-        # set up one or two cameras
-        self.prep_camera = objectDetection.ObjectDetection(config.CAMERA_IDS[0])
-        self.current_step = []
-        if len(config.CAMERA_IDS) > 1:
-            self.cook_camera = objectDetection.ObjectDetection(config.CAMERA_IDS[1])
-        self.recipe_queue = recipe_queue
-        self.Detection_listener = threading.Event()
+# Set up global camera objects
+PREP_CAMERA = None
+COOK_CAMERA = None
 
-    # This loop will do run in another thread and will get the current step passed into it via the queue and set an
-    # event once the step has been detected
-    def detection_loop(self):
-        while True:
-            print(self.current_step)
-            if not self.recipe_queue.empty():
-                self.current_step = self.recipe_queue.get()
-            if self.current_step:
-                if self.check_step():
-                    self.Detection_listener.set()
 
-    def get_detection_listener_state(self):
-        return self.Detection_listener.is_set()
+class InvalidCamera(Exception):
+    """Create a class to throw an error when there isn't a camera initialize"""
 
-    def put_new_step_into_queue(self, step):
-        self.recipe_queue.put(step)
+    "Camera not created"
+    pass
 
-    # Pass into from json the camera name and the objects you want to check e.g [camera, progressionObject , inhibitor]
-    def check_step(self):
-        progressionObject = self.current_step[1]
-        inhibitor = [self.current_step[2], "hand"]
-        if self.current_step[0] == "cook":
-            return self.cook_camera.check_items(progressionObject, inhibitor)
+
+def detection_loop(current_step):
+    """Runs the detection loop until the majority of frame return true, both number of frame and the number that need to be true are set in config.py.
+    Args:
+        current_step (tuple): A tuple containing information about the current step in the formate [camera, progression_object, inhibitor].
+    """
+    create_camera()
+    rolling_average = utils.LimitedQueue()
+    while True:
+        rolling_average.append(check_step(current_step))
+        if rolling_average.get_average():
+            break
+    destroy_camera()
+
+
+def check_step(current_step):
+    """Checks the current step based on the provided parameters.
+    Args:
+        current_step (list): A list containing information about the current step.
+    Returns:
+        bool: Returns a boolean value indicating the result of the check.
+    """
+    progression_object = current_step[1]
+    inhibitor = [current_step[2], "hand"]
+    if current_step[0] == "cook":
+        if COOK_CAMERA is not None:
+            return COOK_CAMERA.check_items(progression_object, inhibitor)
         else:
-            return self.prep_camera.check_items(progressionObject, inhibitor)
+            raise InvalidCamera
+    else:
+        if PREP_CAMERA is not None:
+            return PREP_CAMERA.check_items(progression_object, inhibitor)
+        else:
+            raise InvalidCamera
+
+
+def create_camera():
+    """Creates camera objects based on the configuration."""
+    global PREP_CAMERA
+    global COOK_CAMERA
+    if len(config.CAMERA_IDS) > 1:
+        PREP_CAMERA = objectDetection.ObjectDetection(config.CAMERA_IDS[0])
+        COOK_CAMERA = objectDetection.ObjectDetection(config.CAMERA_IDS[1])
+    elif len(config.CAMERA_IDS) > 0:
+        PREP_CAMERA = objectDetection.ObjectDetection(config.CAMERA_IDS[0])
+    else:
+        raise InvalidCamera
+
+
+def destroy_camera():
+    """Destroys camera objects if they exist."""
+    global PREP_CAMERA
+    global COOK_CAMERA
+    if COOK_CAMERA is not None:
+        COOK_CAMERA.end()
+    if PREP_CAMERA is not None:
+        PREP_CAMERA.end()

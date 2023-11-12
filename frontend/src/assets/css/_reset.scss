@@ -67,6 +67,12 @@ input[type="search"] {
   cursor: pointer;
 }
 
+a:link,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
 button {
   background: transparent;
   border: none;
