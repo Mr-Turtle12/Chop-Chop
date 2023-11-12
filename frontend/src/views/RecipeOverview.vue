@@ -71,7 +71,6 @@ function getRecipeInfo()
 const socket = new WebSocket("ws://localhost:8765")
   socket.addEventListener("open", (event) => {
     socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`);
-    
   })
   socket.addEventListener("message", (event) => {
     const RecipeJsonMessage = JSON.parse(event.data)
@@ -90,7 +89,7 @@ function formatIngredients(RecipeJsonMessage)
   for(const key in ingredients){
     var ingredientFormatted = ingredients[key]["amount"];
     ingredientFormatted = ingredientFormatted ? ingredientFormatted : ""
-    if (ingredients[key]["unit"] !== "unit") {
+    if (ingredients[key]["unit"] !== "unit" && ingredients[key]["unit"] != null) {
       ingredientFormatted += " " + ingredients[key]["unit"];
     }
     ingredientFormatted += " " + ingredients[key]["item"];
