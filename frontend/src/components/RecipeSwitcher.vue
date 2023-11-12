@@ -95,7 +95,8 @@ function toggle() {
 
   &__button {
     @include ts-heading-2;
-    color: #419170;
+    background-color: #419170;
+    color: #fff;
     padding:var(--space-l);
     width: 50%;
 
@@ -107,8 +108,8 @@ function toggle() {
       border-radius: 0px 30px 0px 0px;
     }
     &.is-toggled {
-      color:#fff;
-      background-color: #419170;
+      color:#419170;
+      background-color: #fff;
     }
   }
 
