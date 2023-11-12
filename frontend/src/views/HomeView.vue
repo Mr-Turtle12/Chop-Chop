@@ -2,12 +2,13 @@
   <body>
     <PageHeader />
 
-    <FeaturedRecipe 
+    <FeaturedRecipe
       :recipe-name="'special recipe'"
       :info="'info'"
     />
 
-    <RecentRecipes />
+    <RecentRecipes
+    />
 
     <LikedRecipes />
   </body>
@@ -19,3 +20,5 @@ import FeaturedRecipe from '@/components/FeaturedRecipe.vue'
 import LikedRecipes from '@/components/LikedRecipes.vue'
 import RecentRecipes from '@/components/RecentRecipes.vue'
 </script>
+
+
