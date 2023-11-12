@@ -46,20 +46,13 @@ import { useRouter, useRoute } from 'vue-router'
 const route = useRoute()
 
 var recipe = reactive({
-    name: 'Test Recipe',
-    decription: 'Test Description',
+    name: 'ERROR NAME NOT FOUND',
+    decription: 'ERROR DESCRIPTION NOT FOUND',
     steps: [
-        'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
-        'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
-        'In ut quam vitae odio lacinia tincidunt.',
-        'Fusce risus nisl'
+        'NO STEPS FOUND'
     ],
     ingredients: [
-        'onion', 
-        'carrot', 
-        'pepper', 
-        'pasta', 
-        'tomato sauce'
+        'NO INGREDIENT FOUND'
     ]
 })
 
