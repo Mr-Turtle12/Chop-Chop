@@ -20,6 +20,13 @@
   line-height: normal;
 }
 
+@mixin ts-heading-4 {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 /* Main body font */
 @mixin ts-body {
   font-size: 48px;

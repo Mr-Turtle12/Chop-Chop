@@ -1,19 +1,19 @@
 <template>
-  <section class="c-card-scroll o-section">
-    <div class="c-card-scroll__container o-container">
-      <div class="c-card-scroll__text-container">
-        <h1 class="c-card-scroll__heading">
+  <section class="c-liked-recipes o-section">
+    <div class="c-liked-recipes__container o-container">
+      <div class="c-liked-recipes__text-container">
+        <h1 class="c-liked-recipes__heading">
           <a
-            class="c-card-scroll__heading-link"
+            class="c-liked-recipes__heading-link"
             href="/search"
           >
             Liked Recipes
-            <span class="c-card-scroll__heading-icon">></span>
+            <span class="c-liked-recipes__heading-icon">></span>
           </a>
         </h1>
       </div>
 
-      <div class="c-card-scroll__card-container">
+      <div class="c-liked-recipes__card-container">
         <RecipeCard
           v-for="x in 9"
           :key="x"
@@ -34,7 +34,7 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-  .c-card-scroll {
+  .c-liked-recipes {
   $c : &;
 
   &__text-container {
@@ -48,6 +48,7 @@ defineProps({
     color: #419170;
     grid-column:1/7;
     margin: 0;
+    padding-bottom: var(--space-s);
     width:fit-content;
 
     &:hover,
@@ -65,7 +66,8 @@ defineProps({
   }
 
   &__card-container {
-    @include grid;
+    display:flex;
+    column-gap: var(--gutter);
     overflow: auto;
     white-space: nowrap;
   }
