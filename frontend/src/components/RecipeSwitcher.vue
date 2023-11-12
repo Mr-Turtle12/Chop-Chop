@@ -42,8 +42,11 @@
 </template>
 
 <script setup>
+//import { Console } from 'console';
+
 const recipe = {
     name: 'Test Recipe',
+    decription: 'Test Description',
     steps: [
         'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
         'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
@@ -57,6 +60,30 @@ const recipe = {
         'pasta', 
         'tomato sauce'
     ]
+}
+getRecipeInfo()
+function getRecipeInfo()
+{
+  console.log("Hello")
+  //const recipeId = this.$route.params.recipeId
+  const socket = new WebSocket("ws://localhost:8765");
+  socket.addEventListener("open", (event) => {
+    //console.log(socket.send(`{'command': { 'keyword': 'get','recipe_id': ${route.params.recipeId} }}`));
+    socket.send(`{"command": { "keyword": "get","recipe_id": 1 }}`);
+    
+  })
+  socket.addEventListener("message", (event) => {
+    console.log('WebSocket connection opened:', event.data)
+    const RecipeJsonMessage = JSON.parse(event.data)
+    parseRecipeFromJson(RecipeJsonMessage)
+  });
+
+}
+
+function parseRecipeFromJson(RecipeJsonMessage)
+{
+  recipe.name = RecipeJsonMessage.name
+  recipe.decription = RecipeJsonMessage.description
 }
 
 function toggle(buttonName) {
