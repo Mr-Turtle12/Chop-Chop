@@ -4,14 +4,14 @@
       <div class="c-recipe-switcher__button-container">
         <button
           class="c-recipe-switcher__button c-recipe-switcher__button--ingredients js-ingredient-button is-toggled"
-          @click="toggle()"
+          @click="toggle('ingredient')"
         >
           Ingredients
         </button>
 
         <button
           class="c-recipe-switcher__button c-recipe-switcher__button--recipe js-recipe-button"
-          @click="toggle()"
+          @click="toggle('recipe')"
         >
           Recipe
         </button>
@@ -59,25 +59,26 @@ const recipe = {
     ]
 }
 
-function toggle() {
+function toggle(buttonName) {
     const recipeButton = document.getElementsByClassName('js-recipe-button')[0]
     const ingredientButton = document.getElementsByClassName('js-ingredient-button')[0]
+
     const recipeView = document.getElementsByClassName('js-recipe-view')[0]
     const ingredientView = document.getElementsByClassName('js-ingredient-view')[0]
 
-    if(recipeButton.classList.contains('is-toggled')) {
-        recipeButton.classList.remove('is-toggled')
-        ingredientButton.classList.add('is-toggled')
-
-        recipeView.classList.remove('is-toggled')
-        ingredientView.classList.add('is-toggled')
-    }
-    else {
+    if(buttonName == 'recipe' && !recipeButton.classList.contains('is-toggled')) {
         recipeButton.classList.add('is-toggled')
         ingredientButton.classList.remove('is-toggled')
 
         ingredientView.classList.remove('is-toggled')
         recipeView.classList.add('is-toggled')
+    }
+    else if(buttonName == 'ingredient' && !ingredientButton.classList.contains('is-toggled')){
+        recipeButton.classList.remove('is-toggled')
+        ingredientButton.classList.add('is-toggled')
+
+        recipeView.classList.remove('is-toggled')
+        ingredientView.classList.add('is-toggled')
     }
 }
 </script>
