@@ -249,8 +249,8 @@ function toggleMenu() {
 
     &__search-icon {
       position: absolute;
-      top: 10px;
-      right: 12px;
+      top: 13px;
+      right: 20px;
     }
 
     &__button-container {
@@ -265,7 +265,7 @@ function toggleMenu() {
       @include ts-heading-1;
       color: white;
     }
-    
+
     &__button-link {
       width:fit-content;
 
