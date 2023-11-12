@@ -19,7 +19,7 @@
 
       <ul class="c-recipe-switcher__ingredient-container o-container js-ingredient-view is-toggled">
         <li 
-          v-for="ingredient in recipe.ingredients"
+          v-for="ingredient in ingredients"
           :key="ingredient"
           class="c-recipe-switcher__ingredient"
         >
@@ -29,7 +29,7 @@
 
       <ul class="c-recipe-switcher__recipe-container js-recipe-view o-container">
         <li
-          v-for="(step, index) in recipe.steps"
+          v-for="(step, index) in steps"
           :key="step"
           class="c-recipe-switcher__recipe-step"
         >
@@ -44,74 +44,10 @@
 <script setup>
 //import { Console } from 'console';
 
-
-
-var recipe = reactive({
-  name: 'Test Recipe',
-  decription: 'Test Description',
-  steps: [
-    'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
-    'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
-    'In ut quam vitae odio lacinia tincidunt.',
-    'Fusce risus nisl'
-  ],
-    ingredients: [
-        'onion', 
-        'carrot', 
-        'pepper', 
-        'pasta', 
-        'tomato sauce'
-      ]
-    })
-    
-onBeforeMount(() => {
-  getRecipeInfo()
+defineProps({
+  ingredients: {type : String, default: 'test ingredient'},
+  steps: {type : String, default: 'test step'}
 })
-function getRecipeInfo()
-{
-  //const recipeId = this.$route.params.recipeId
-  const socket = new WebSocket("ws://localhost:8765");
-  socket.addEventListener("open", (event) => {
-    //console.log(socket.send(`{'command': { 'keyword': 'get','recipe_id': ${route.params.recipeId} }}`));
-    socket.send(`{"command": { "keyword": "get","recipe_id": 1 }}`);
-    
-  })
-  socket.addEventListener("message", (event) => {
-    const RecipeJsonMessage = JSON.parse(event.data)
-    parseRecipeFromJson(RecipeJsonMessage)
-  });
-
-}
-
-
-function formatIngredients(RecipeJsonMessage)
-{
-  const ingredients = RecipeJsonMessage["ingredients"]
-  
-  //Get and format all the ingredients 
-  var ingredientsList = []
-  for(const key in ingredients){
-    var ingredientFormatted = ingredients[key]["amount"];
-
-    if (ingredients[key]["unit"] !== "unit") {
-      ingredientFormatted += " " + ingredients[key]["unit"];
-    }
-    ingredientFormatted += " " + ingredients[key]["item"];
-    ingredientsList.push(ingredientFormatted)
-  }
-  return ingredientsList
-}
-
-function parseRecipeFromJson(RecipeJsonMessage)
-{
-  recipe.name = RecipeJsonMessage.name
-  recipe.decription = RecipeJsonMessage.description
-
-  recipe.ingredients = formatIngredients(RecipeJsonMessage)
-
-  recipe.steps = RecipeJsonMessage["commands"]
-
-}
 
 function toggle(buttonName) {
     const recipeButton = document.getElementsByClassName('js-recipe-button')[0]
