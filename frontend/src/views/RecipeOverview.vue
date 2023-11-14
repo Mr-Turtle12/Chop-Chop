@@ -19,7 +19,7 @@
 
         <a
           class="c-recipe__link"
-          href="/recipe"
+          :href="`/recipe/${ route.params.id }`"
           @click="
             startRecipeAPICall()"
         >start recipe</a>

@@ -39,21 +39,35 @@
 </template>
 
 <script setup>
-import {computed, ref } from 'vue'
+import {computed, ref, reactive } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const socket = new WebSocket('ws://localhost:8765')
 
 
-const recipe = {
-    name: 'Test Recipe',
+socket.addEventListener('open', (event) => {
+    socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
+    
+  })
+socket.addEventListener('message', (event) => {
+
+  const data = JSON.parse(event.data);
+    if (data.name) {
+        recipe.name = data.name;
+        recipe.steps = data['commands'];
+    } else {
+        stepIndex.value = data.step;
+    }
+})
+
+var recipe = reactive({
+    name: 'ERROR NAME NOT FOUND',
     steps: [
-        'Fusce risus nisl, viverra et, tempor et, pretium in, sapien.',
-        'Pellentesque dapibus hendrerit tortor.. In ut quam vitae odio lacinia tincidunt.',
-        'In ut quam vitae odio lacinia tincidunt.',
-        'Fusce risus nisl',
-        'Lacinia tincidunt.'
-    ]
-}
+        'NO STEPS FOUND'
+    ],
+})
 
 var stepIndex = ref(0)
 
@@ -66,12 +80,6 @@ function increment() {
         stepIndex.value++
     }
 }
-
-// Listen for messages
-socket.addEventListener('message', (event) => {
-    const data = JSON.parse(event.data)
-    stepIndex.value = data.step
-})
 
 function decrement() {
     if(stepIndex.value != 0) {
