@@ -40,7 +40,7 @@
 
 <script setup>
 import {computed, ref, reactive } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
@@ -50,15 +50,15 @@ const socket = new WebSocket('ws://localhost:8765')
 socket.addEventListener('open', (event) => {
     socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
     
-  })
+})
 socket.addEventListener('message', (event) => {
 
-  const data = JSON.parse(event.data);
+    const data = JSON.parse(event.data)
     if (data.name) {
-        recipe.name = data.name;
-        recipe.steps = data['commands'];
+        recipe.name = data.name
+        recipe.steps = data['commands']
     } else {
-        stepIndex.value = data.step;
+        stepIndex.value = data.step
     }
 })
 

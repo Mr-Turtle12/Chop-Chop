@@ -45,8 +45,8 @@
 //import { Console } from 'console';
 
 defineProps({
-  ingredients: {type : Array[String], default: 'test ingredient'},
-  steps: {type : Array[String], default: 'test step'}
+    ingredients: {type : Array[String], default: 'test ingredient'},
+    steps: {type : Array[String], default: 'test step'}
 })
 
 function toggle(buttonName) {

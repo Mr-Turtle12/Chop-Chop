@@ -13,38 +13,41 @@
         </h1>
       </div>
 
-      <div v-if="recipesLoaded" class="c-recent-recipes__recipes">
+      <div
+        v-if="recipesLoaded"
+        class="c-recent-recipes__recipes"
+      >
         <RecipeCard
           v-for="recipe in recipes"
+          :id="recipe.id"
           :key="recipe.id"
           :recipe-name="recipe.name"
           :info="recipe.info"
-          :id=recipe.id
           :size="'horizontal'"
-          />
+        />
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 import RecipeCard from './RecipeCard.vue'
 
 
-const recipesLoaded = ref(false);
+const recipesLoaded = ref(false)
 const recipes = ref([])
 onMounted(async () => {
-  const socket = new WebSocket("ws://localhost:8765");
-  socket.addEventListener("open", (event) => {
-    socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
-  });
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
+    })
 
-  socket.addEventListener("message", (event) => {
-    const arrayRecipe = JSON.parse(event.data);
-    recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, info: recipe.description , id:recipe.id}));
-    recipesLoaded.value = true;
-  });
+    socket.addEventListener('message', (event) => {
+        const arrayRecipe = JSON.parse(event.data)
+        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, info: recipe.description , id:recipe.id}))
+        recipesLoaded.value = true
+    })
 })
 </script>
 
