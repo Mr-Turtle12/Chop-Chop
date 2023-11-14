@@ -122,6 +122,8 @@ function toggle(buttonName) {
     flex-direction: column;
     gap: 32px;
     min-height: 50vh;
+    max-height: 100vh;
+    overflow-y: scroll;
     padding-top: var(--space-xl);
     padding-bottom: var(--space-xl);
 
