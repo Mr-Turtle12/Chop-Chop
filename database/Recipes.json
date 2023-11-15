@@ -36,7 +36,7 @@
         },
         {
           "command": "Dice the carrots",
-          "progressionObject": "Diced-Carrot",
+          "progressionObject": "Chopped-Carrots",
           "inhibitor": "Carrot",
           "camera": "prep"
         },
