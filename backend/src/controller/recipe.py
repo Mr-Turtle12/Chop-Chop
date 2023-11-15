@@ -8,7 +8,7 @@ class Recipe:
         self.current_recipe = utils.fetch_recipe_by_id(
             recipe_id, utils.get_json(utils.get_database_address("Recipes"))
         )
-        self.current_step = 1
+        self.current_step = 0
 
     def get_recipe_step(self, step_number):
         """Gets the step for the provided step number.
@@ -19,8 +19,8 @@ class Recipe:
         """
         if self.current_recipe:
             steps = self.current_recipe.get("steps", [])
-            if 1 <= step_number <= len(steps):
-                return steps[step_number - 1]
+            if 0 <= step_number <= len(steps):
+                return steps[step_number]
         return None
 
     def increment_step(self):
