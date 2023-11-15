@@ -1,5 +1,0 @@
-- Carrots
-- Diced-Carrots
-- Red-Onion
-- Chopped-Red-Onion
-- White-Onion
