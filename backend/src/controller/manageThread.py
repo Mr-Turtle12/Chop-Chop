@@ -5,9 +5,11 @@ from backend.src.controller import controller, utils
 class ManageThread:
     """Class to manage threads for interpreting steps."""
 
-    def __init__(self, current_step):
+    def __init__(self, camera_list, current_step):
         self.interpreter_instance = None
         self.thread = None
+        self.prep_camera = camera_list["prep_camera"]
+        self.cook_camera = camera_list["cook_camera"]
         self.init_interpreter_thread(current_step)
 
     def init_interpreter_thread(self, current_step):
@@ -17,7 +19,11 @@ class ManageThread:
         """
         thread = utils.BaseThread(
             name="StepJob",
-            target=lambda: (interpreter.detection_loop(current_step)),
+            target=lambda: (
+                interpreter.detection_loop(
+                    self.prep_camera, self.cook_camera, current_step
+                )
+            ),
             callback=self.end_thread,
             callback_args=(current_step,),
         )

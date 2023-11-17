@@ -1,5 +1,8 @@
 import json
+from backend.src.config import CONFIDENCE_THRESHOLD, CAMERA_IDS
 from backend.src.controller import recipe, utils, manageThread
+from ..interpreter.interpreter import InvalidCamera
+from backend.src.objectDetection import objectDetection
 
 
 class Controller:
@@ -9,6 +12,26 @@ class Controller:
         self.current_recipe = None
         self.thread_instance = None
         self.step_changed_flag = utils.StepChangeFlag()
+        self.camera_list = {"prep_camera": None, "cook_camera": None}
+
+    def create_camera_list(self):
+        """Creates camera objects based on the configuration."""
+
+        # kill old cameras
+        for camera in self.camera_list.values():
+            if camera is not None:
+                camera.end()
+
+        camera_list = {"prep_camera": None, "cook_camera": None}
+
+        if len(CAMERA_IDS) == 1:
+            camera_list["prep_camera"] = objectDetection.ObjectDetection(CAMERA_IDS[0])
+
+        if len(CAMERA_IDS) == 2:
+            camera_list["prep_camera"] = objectDetection.ObjectDetection(CAMERA_IDS[0])
+            camera_list["cook_camera"] = objectDetection.ObjectDetection(CAMERA_IDS[1])
+
+        self.camera_list = camera_list
 
     def new_recipe(self, recipe_id):
         """Starts a new recipe with the given recipe ID.
@@ -16,8 +39,9 @@ class Controller:
             recipe_id (int): The ID of the recipe to start.
         """
         self.current_recipe = recipe.Recipe(recipe_id)
+        self.create_camera_list()
         self.thread_instance = manageThread.ManageThread(
-            self.get_progression_requirements_for_current_step()
+            self.camera_list, self.get_progression_requirements_for_current_step()
         )
 
     def update_flag(self):
