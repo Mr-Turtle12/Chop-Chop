@@ -10,11 +10,13 @@
   </nav>
       
   <RecipeCarousel />
+  <TimerCard />
 </template>
 
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeCarousel from '@/components/RecipeCarousel.vue'
+import TimerCard from '@/components/TimerCard.vue'
 
 const y = ['step1', 'step2', 'step3', 'step4']
 </script>

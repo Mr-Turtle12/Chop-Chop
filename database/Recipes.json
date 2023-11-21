@@ -209,6 +209,27 @@
           "camera": "prep"
         }
       ]
+    },
+    {
+      "id": "4",
+      "image" : "Timer Test.png",
+      "name": "Timer Test",
+      "description": "Timer must work !!!",
+      "prepTime": "2 minutes",
+      "cookTime": "none",
+      "ingredients": [
+        { "item": "Slices of Bread", "amount": "2", "unit": "unit" },
+        { "item": "Butter" },
+        { "item": "Strawberry Jam" }
+      ],
+      "steps": [
+        {
+          "command": "Wait 4 minutes for onions to being to fry",
+          "progressionObject": "timer",
+          "inhibitor": "4",
+          "camera": "cook"
+        }
+      ]
     }
   ]
 }

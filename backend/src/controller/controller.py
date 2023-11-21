@@ -59,6 +59,9 @@ class Controller:
             "commands": [
                 step.get("command", "") for step in target_recipe.get("steps", [])
             ],
+            "progressionObject": [
+                step.get("progressionObject", "") for step in target_recipe.get("steps", [])
+            ],
         }
 
         return json.dumps(metadata)

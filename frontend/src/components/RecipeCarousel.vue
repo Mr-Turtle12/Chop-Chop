@@ -57,6 +57,8 @@ socket.addEventListener('message', (event) => {
     if (data.name) {
         recipe.name = data.name
         recipe.steps = data['commands']
+        recipe.progressionObject = data['progressionObject']
+        
     } else {
         stepIndex.value = data.step
     }
@@ -67,6 +69,9 @@ var recipe = reactive({
     steps: [
         'NO STEPS FOUND'
     ],
+    progressionObject: [
+      'NO PROGRESSION OBJECT'
+    ]
 })
 
 var stepIndex = ref(0)
@@ -74,6 +79,11 @@ var stepIndex = ref(0)
 var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
 var currentStep = computed(() => recipe.steps[stepIndex.value])
 var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
+
+var currentProgressionObject = computed(() => recipe.progressionObject[stepIndex.value + 1])
+
+
+
 
 function increment() {
     if(stepIndex.value != recipe.steps.length - 1) {
