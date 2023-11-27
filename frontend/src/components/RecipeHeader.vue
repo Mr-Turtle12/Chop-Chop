@@ -10,7 +10,7 @@
 
       <a
         class="c-recipe-header__title-wrapper"
-        href="`/recipe-overview/${ id }`"
+        :href="`/recipe-overview/${ route.params.id }`"
       >
         <h1 class="c-recipe-header__recipe-title">
           {{ recipe.name }}
@@ -43,14 +43,6 @@ socket.addEventListener('open', (event) => {
     socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
     
 })
-
-// function startRecipeAPICall(){
-//     const socket = new WebSocket('ws://localhost:8765')
-//     socket.addEventListener('open', (event) => {
-//         socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
-    
-//     })
-// }
 
 function getRecipeInfo()
 {
