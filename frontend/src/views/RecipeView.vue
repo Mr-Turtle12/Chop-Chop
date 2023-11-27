@@ -1,19 +1,22 @@
 <template>
   <!-- <PageHeader /> -->
 
-  <nav>
+  <!-- <nav>
     <img
       class="back-arrow"
       src="@/assets/back-arrow-icon.svg"
       @click="$router.back()"
     >
-  </nav>
+  </nav> -->
+
+  <RecipeHeader />
       
   <RecipeCarousel />
 </template>
 
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
+import RecipeHeader from '@/components/RecipeHeader.vue'
 import RecipeCarousel from '@/components/RecipeCarousel.vue'
 
 const y = ['step1', 'step2', 'step3', 'step4']
