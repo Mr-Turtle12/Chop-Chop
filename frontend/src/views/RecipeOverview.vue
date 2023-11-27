@@ -19,7 +19,7 @@
 
         <a
           class="c-recipe__link"
-          href="/recipe"
+          :href="`/recipe/${ route.params.id }`"
           @click="
             startRecipeAPICall()"
         >start recipe</a>
@@ -61,7 +61,7 @@ onMounted(() => {
 })
 
 function startRecipeAPICall(){
-  const socket = new WebSocket('ws://localhost:8765')
+    const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
         socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
     
@@ -94,7 +94,7 @@ function formatIngredients(RecipeJsonMessage)
     for(const key in ingredients){
         var ingredientFormatted = ingredients[key]['amount']
         ingredientFormatted = ingredientFormatted ? ingredientFormatted : ''
-        if (ingredients[key]['unit'] !== 'unit' && ingredients[key]["unit"] != null) {
+        if (ingredients[key]['unit'] !== 'unit' && ingredients[key]['unit'] != null) {
             ingredientFormatted += ' ' + ingredients[key]['unit']
         }
         ingredientFormatted += ' ' + ingredients[key]['item']

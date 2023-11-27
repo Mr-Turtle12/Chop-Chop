@@ -11,7 +11,7 @@ const routes = [
         component: HomeView
     },
     {
-        path: '/recipe',
+        path: '/recipe/:id',
         name: 'recipe',
         component: RecipeView,
         meta: { transition: 'slide-left'}

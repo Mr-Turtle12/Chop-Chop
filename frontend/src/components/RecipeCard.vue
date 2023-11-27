@@ -5,7 +5,7 @@
   >
     <img
       class="c-card__image"
-      :src= image
+      :src="image"
     >
     
     <div class="c-card__info">
