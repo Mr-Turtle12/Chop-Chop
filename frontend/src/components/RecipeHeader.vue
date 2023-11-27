@@ -81,7 +81,7 @@ defineProps({
     height: 150px;
     width: 150px;
     position: relative;
-    margin-right: var(--space-xs);
+    margin-right: var(--space-m);
   }
 
   &__logo {
