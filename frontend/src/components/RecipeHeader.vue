@@ -13,7 +13,7 @@
         href="`/recipe-overview/${ id }`"
       >
         <h1 class="c-recipe-header__recipe-title">
-          test title
+          {{ recipe.name }}
         </h1>
       </a>
     </div>
@@ -22,6 +22,47 @@
 
 <script setup>
 import Logo from '@/assets/logo-svg.vue'
+
+import { onMounted, reactive } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+
+
+const route = useRoute()
+
+var recipe = reactive({
+    name: 'ERROR NAME NOT FOUND',
+})
+
+onMounted(() => {
+    getRecipeInfo()
+})
+
+function startRecipeAPICall(){
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
+    
+    })
+}
+
+function getRecipeInfo()
+{
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
+    
+    })
+    socket.addEventListener('message', (event) => {
+        const RecipeJsonMessage = JSON.parse(event.data)
+        parseRecipeFromJson(RecipeJsonMessage)
+    })
+
+}
+
+function parseRecipeFromJson(RecipeJsonMessage)
+{
+    recipe.name = RecipeJsonMessage.name
+}
 
 defineProps({
     id : {type: Number, default: 1}
