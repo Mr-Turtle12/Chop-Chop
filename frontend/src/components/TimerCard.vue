@@ -7,6 +7,7 @@
           <circle
             class="progress-ring-circle background-circle"
             :stroke="backgroundStrokeColor"
+            :stroke-dasharray="circumference"
             stroke-width="8"
             fill="transparent"
             r="50"
@@ -25,7 +26,6 @@
             cx="60"
             cy="60"
             transform="rotate(-90 60 60)"
-
           ></circle>
           <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" class="timer-text">
             {{ formatTime(hours, minutes, seconds) }}
@@ -37,10 +37,19 @@
 </template>
 
 <script setup>
-import { ref, watch,computed } from 'vue';
+import { ref, watch, computed, onMounted, onUnmounted, defineProps, defineEmits } from 'vue';
 
-let remainingTime = ref(70000);
-const totalTime = 70000;
+const props = defineProps({
+  initialTime: {
+    type: Number,
+    required: true
+  }
+});
+
+const { emit } = defineEmits(['countdownEnd']);
+
+let remainingTime = ref(props.initialTime);
+const totalTime = props.initialTime;
 
 const hours = ref(0);
 const minutes = ref(0);
@@ -73,22 +82,28 @@ function updateProgress() {
 
 watch(remainingTime, updateTime);
 
-const countdownInterval = setInterval(() => {
-  remainingTime.value -= 1000;
-  if (remainingTime.value <= 0) {
-    clearInterval(countdownInterval);
-  }
-}, 1000);
+let countdownInterval;
 
-function onCountdownEnd() {
-  console.log('End');
+function startCountdown() {
+  countdownInterval = setInterval(() => {
+    remainingTime.value -= 1000;
+    if (remainingTime.value <= 0) {
+      clearInterval(countdownInterval);
+      emit('countdownEnd');
+    }
+  }, 1000);
 }
 
+onMounted(startCountdown);
+onUnmounted(() => {
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
+});
 
 const progressStrokeColor = computed(() => {
   return '#3498db'; // Blue color for background circle
 });
-
 
 const backgroundStrokeColor = computed(() => {
   return `rgb(204, 204, 204, ${1 - progress.value})`; // Grey color for progress circle

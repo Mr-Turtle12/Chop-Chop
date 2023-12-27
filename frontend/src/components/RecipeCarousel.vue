@@ -83,8 +83,6 @@ var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
 var currentProgressionObject = computed(() => recipe.progressionObject[stepIndex.value + 1])
 
 
-
-
 function increment() {
     if(stepIndex.value != recipe.steps.length - 1) {
         stepIndex.value++

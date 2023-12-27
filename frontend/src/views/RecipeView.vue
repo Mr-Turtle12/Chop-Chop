@@ -10,7 +10,9 @@
         >
       </nav>
       <div class="timer-container">
-        <TimerCard class="recipe-timer"/>
+        <div v-for="(time, index) in timerTimes" :key="index" class="recipe-timer">
+          <TimerCard :initialTime="time" @countdownEnd="handleCountdownEnd" />
+        </div>
       </div>
     </div>
     <RecipeCarousel class="recipe-carousel" />
@@ -21,8 +23,29 @@
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeCarousel from '@/components/RecipeCarousel.vue'
 import TimerCard from '@/components/TimerCard.vue'
+import { ref } from 'vue'
 
-const y = ['step1', 'step2', 'step3', 'step4']
+const timerTimes = ref([]); // No initial timers
+
+// Function to add a TimerCard with a specific time
+function addTimerCard(time) {
+  timerTimes.value.push(time);
+}
+
+function handleCountdownEnd() {
+  // Handle countdown end event here
+  console.log('Countdown has ended!');
+  // You can perform any actions you want when the countdown ends
+}
+
+// Example: Add TimerCards with different times after some delay
+/*
+setTimeout(() => {
+  addTimerCard(80000); // Adding a timer card with 80000 milliseconds (80 seconds)
+  addTimerCard(60000); // Adding another timer card with 60000 milliseconds (60 seconds)
+}, 5000);
+*/
+
 </script>
 
 <style scoped lang="scss">
@@ -53,7 +76,8 @@ img.back-arrow {
 }
 
 .timer-container {
-  height: 100px; /* Set the fixed height for the TimerCard container */
+  display: flex;
+  flex-direction: column;
   margin-left: 3rem; /* Adjust margin for the arrow */
 }
 
