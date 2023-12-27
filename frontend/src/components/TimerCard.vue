@@ -24,6 +24,8 @@
             r="50"
             cx="60"
             cy="60"
+            transform="rotate(-90 60 60)"
+
           ></circle>
           <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" class="timer-text">
             {{ formatTime(hours, minutes, seconds) }}
@@ -35,7 +37,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch,computed } from 'vue';
 
 let remainingTime = ref(70000);
 const totalTime = 70000;
