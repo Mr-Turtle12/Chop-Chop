@@ -1,16 +1,20 @@
 <template>
-  <!-- <PageHeader /> -->
-
-  <nav>
-    <img
-      class="back-arrow"
-      src="@/assets/back-arrow-icon.svg"
-      @click="$router.back()"
-    >
-  </nav>
-      
-  <RecipeCarousel />
-  <TimerCard />
+  <div class="container">
+    <div class="horizontal-container">
+      <nav>
+        <img
+          class="back-arrow"
+          src="@/assets/back-arrow-icon.svg"
+          @click="$router.back()"
+          alt="Back Arrow"
+        >
+      </nav>
+      <div class="timer-container">
+        <TimerCard class="recipe-timer"/>
+      </div>
+    </div>
+    <RecipeCarousel class="recipe-carousel" />
+  </div>
 </template>
 
 <script setup>
@@ -22,22 +26,42 @@ const y = ['step1', 'step2', 'step3', 'step4']
 </script>
 
 <style scoped lang="scss">
-nav {
-  height: 10vh;
-  align-items: center;
+/* Styles for your existing components */
+
+.container {
+  display: flex;
+  flex-direction: column;
 }
+
+.horizontal-container {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  padding: 1rem;
+  position: relative; /* Position relative for absolute positioning of arrow */
+}
+
+nav {
+  position: absolute; /* Position the arrow absolutely */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+}
+
 img.back-arrow {
   height: 2rem;
   width: 2rem;
-  float: left;
-  margin-top: 1rem;
-  margin-left: 1rem;
+  margin: 1rem;
 }
-div.vertical-carousel {
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  flex-direction: column;
+
+.timer-container {
+  height: 100px; /* Set the fixed height for the TimerCard container */
+  margin-left: 3rem; /* Adjust margin for the arrow */
+}
+
+.recipe-carousel {
+  margin-top: 0; /* Remove top margin */
+  padding-top: 0; /* Remove top padding */
+}
+.recipe-timer {
+  margin-top: 0.1rem; /* Adjust the top margin to reduce the space */
 }
 </style>

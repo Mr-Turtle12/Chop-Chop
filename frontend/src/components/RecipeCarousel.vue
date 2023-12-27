@@ -104,7 +104,7 @@ function decrement() {
 
   &__container {
     @include grid;
-    height: 100%;
+    height: 90%;
   }
 
   &__button-container {

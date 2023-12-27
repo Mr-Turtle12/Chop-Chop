@@ -2,7 +2,7 @@
   <section class="c-timer-card o-section">
     <div class="c-timer-card__container o-container">
       <div class="circular-timer">
-        <svg class="progress-ring" width="120" height="120">
+        <svg class="progress-ring" width="120" height="120" viewBox="0 0 120 120">
           <!-- Background circle -->
           <circle
             class="progress-ring-circle background-circle"
@@ -96,7 +96,6 @@ const backgroundStrokeColor = computed(() => {
 </script>
 
 <style scoped>
-/* Your styles here */
 .timer-text {
   font-size: 1.5em;
   fill: #333;
@@ -108,7 +107,6 @@ const backgroundStrokeColor = computed(() => {
 
 .progress-ring {
   display: block;
-  /*transform: rotate(90deg);*/
 }
 
 .background-circle {
