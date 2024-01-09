@@ -1,13 +1,12 @@
 from backend.src.controller import utils
+import sqlite3
 
 
 class Recipe:
     """Class to manage any information about the recipe once it has been chosen."""
 
     def __init__(self, recipe_id):
-        self.current_recipe = utils.fetch_recipe_by_id(
-            recipe_id, utils.get_json(utils.get_database_address("Recipes"))
-        )
+        self.recipe_id = recipe_id
         self.current_step = 0
 
     def get_recipe_step(self, step_number):
@@ -17,11 +16,13 @@ class Recipe:
         Returns:
             dict or None: The step if found, otherwise None.
         """
-        if self.current_recipe:
-            steps = self.current_recipe.get("steps", [])
-            if 0 <= step_number <= len(steps):
-                return steps[step_number]
-        return None
+        return utils.SQLiteQuery(
+            (
+                "SELECT progressionObject , inhibtor, camera FROM steps WHERE recipe_id = ? & step = ?",
+                (self.current_step, step_number),
+            ),
+            True,
+        )
 
     def increment_step(self):
         """Increments the current step by one."""
@@ -44,8 +45,14 @@ class Recipe:
         Returns:
             dict or None: The command for the step if found, otherwise None.
         """
-        step = self.get_recipe_step(step_number)
-        return {"command": step.get("command", "")} if step else None
+        step = utils.SQLiteQuery(
+            (
+                "SELECT command FROM steps WHERE recipe_id = ? & step = ?",
+                (self.current_step, step_number),
+            ),
+            True,
+        )
+        return {"command": step} if step else None
 
     def get_command_for_current_step(self):
         """Gets the command for the current step.
@@ -61,14 +68,13 @@ class Recipe:
         Returns:
             list or None: The progression requirements for the step if found, otherwise None.
         """
-        step = self.get_recipe_step(step_number)
-        if step:
-            return [
-                step.get("camera", ""),
-                step.get("progressionObject", ""),
-                step.get("inhibitor", ""),
-            ]
-        return None
+        return utils.SQLiteQuery(
+            "SELECT camera, progressionObject , inhibitor  FROM steps WHERE recipe_id = "
+            + str(self.current_step)
+            + " & step = "
+            + str(step_number),
+            True,
+        )
 
     def get_progression_requirements_for_current_step(self):
         """Gets the progression requirements for the current step.
@@ -76,25 +82,3 @@ class Recipe:
             list or None: The progression requirements for the current step if found, otherwise None.
         """
         return self.get_progression_requirements_for_step(self.current_step)
-
-    def get_recipe_metadata(self):
-        """Gets the metadata for the current recipe.
-        Returns:
-            dict or None: The metadata for the current recipe if found, otherwise None.
-        """
-        if not self.current_recipe:
-            return None
-
-        metadata = {
-            "image": self.current_recipe.get("image", ""),
-            "name": self.current_recipe.get("name", ""),
-            "description": self.current_recipe.get("description", ""),
-            "ingredients": self.current_recipe.get("ingredients", []),
-            "commands": [],
-        }
-
-        for step_num in range(1, len(metadata["steps"])):
-            command = self.get_command_for_step(step_num)
-            metadata["commands"].append(command)
-
-        return metadata
