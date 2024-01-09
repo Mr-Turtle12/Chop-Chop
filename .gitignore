@@ -1,0 +1,4 @@
+# Bad folder plz dont want :(
+.idea/
+.pytest_cache/
+logs/
