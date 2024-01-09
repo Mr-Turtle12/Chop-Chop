@@ -39,11 +39,6 @@ function handleCountdownEnd() {
   console.log('Countdown has ended!');
 }
 
-/*
- * How to add a timer \/
- * addTimerCard({time in miliseconds }, {String Note});
- */
-
 
 </script>
 
