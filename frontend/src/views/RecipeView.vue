@@ -10,8 +10,10 @@
         >
       </nav>
       <div class="timer-container">
-        <div v-for="(time, index) in timerTimes" :key="index" class="recipe-timer">
-          <TimerCard :initialTime="time" @countdownEnd="handleCountdownEnd" />
+        <div class="timer-wrapper">
+          <div v-for="(item, index) in timerItems" :key="index" class="recipe-timer">
+            <TimerCard :initialTime="item.time" :timerString="item.note" @countdownEnd="handleCountdownEnd" />
+          </div>
         </div>
       </div>
     </div>
@@ -25,11 +27,11 @@ import RecipeCarousel from '@/components/RecipeCarousel.vue'
 import TimerCard from '@/components/TimerCard.vue'
 import { ref } from 'vue'
 
-const timerTimes = ref([]); // No initial timers
+const timerItems = ref([]); // No initial timers
 
-// Function to add a TimerCard with a specific time
-function addTimerCard(time) {
-  timerTimes.value.push(time);
+// Function to add a TimerCard with a specific time and note
+function addTimerCard(time, note) {
+  timerItems.value.push({ time, note });
 }
 
 function handleCountdownEnd() {
@@ -38,19 +40,11 @@ function handleCountdownEnd() {
   // You can perform any actions you want when the countdown ends
 }
 
-// Example: Add TimerCards with different times after some delay
-/*
-setTimeout(() => {
-  addTimerCard(80000); // Adding a timer card with 80000 milliseconds (80 seconds)
-  addTimerCard(60000); // Adding another timer card with 60000 milliseconds (60 seconds)
-}, 5000);
-*/
+addTimerCard(80000, "Onions");
 
 </script>
 
 <style scoped lang="scss">
-/* Styles for your existing components */
-
 .container {
   display: flex;
   flex-direction: column;
@@ -76,16 +70,29 @@ img.back-arrow {
 }
 
 .timer-container {
-  display: flex;
-  flex-direction: column;
   margin-left: 3rem; /* Adjust margin for the arrow */
+  margin-top: -2rem; /* Move the timer container up */
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.timer-wrapper {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
 }
 
 .recipe-carousel {
   margin-top: 0; /* Remove top margin */
   padding-top: 0; /* Remove top padding */
+  margin-top: 5rem;
 }
+
 .recipe-timer {
   margin-top: 0.1rem; /* Adjust the top margin to reduce the space */
+  margin-right: 1rem; /* Add spacing between timers */
 }
+
+
 </style>
