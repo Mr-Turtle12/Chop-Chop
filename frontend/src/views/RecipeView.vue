@@ -34,13 +34,16 @@ function addTimerCard(time, note) {
   timerItems.value.push({ time, note });
 }
 
+// Handle countdown end event here
 function handleCountdownEnd() {
-  // Handle countdown end event here
   console.log('Countdown has ended!');
-  // You can perform any actions you want when the countdown ends
 }
 
-addTimerCard(80000, "Onions");
+/*
+ * How to add a timer \/
+ * addTimerCard({time in miliseconds }, {String Note});
+ */
+
 
 </script>
 
