@@ -12,7 +12,7 @@
       <div class="timer-container">
         <div class="timer-wrapper">
           <div v-for="(item, index) in timerItems" :key="index" class="recipe-timer">
-            <TimerCard :initialTime="item.time" :timerString="item.note" @countdownEnd="handleCountdownEnd" />
+            <TimerCard :initialTime="item.time" :timerString="item.note" @countdown-end="handleCountdownEnd" />
           </div>
         </div>
       </div>

@@ -53,7 +53,8 @@ const props = defineProps({
   }
 });
 
-const { emit } = defineEmits(['countdownEnd']);
+const emit = defineEmits(['countdownEnd']); // Define emitted events
+
 
 let remainingTime = ref(props.initialTime);
 const totalTime = props.initialTime;
