@@ -35,10 +35,9 @@ function addTimerCard(time, note) {
 }
 
 // Handle countdown end event here
-function handleCountdownEnd() {
-  console.log('Countdown has ended!');
+function handleCountdownEnd(timerString) {
+  console.log('%s Countdown has ended!',timerString);
 }
-
 
 </script>
 

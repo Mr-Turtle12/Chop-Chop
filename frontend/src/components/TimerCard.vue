@@ -97,7 +97,7 @@ function startCountdown() {
     remainingTime.value -= 1000;
     if (remainingTime.value <= 0) {
       clearInterval(countdownInterval);
-      emit('countdownEnd');
+      emit('countdownEnd',props.timerString);
     }
   }, 1000);
 }
