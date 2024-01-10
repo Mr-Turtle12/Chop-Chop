@@ -1,9 +1,7 @@
-import json
-import sqlite3
-import os
 import threading
 from collections import deque
 from backend.src import config
+from backend.src.utils import SQLQueries
 
 
 def log(message, type):
@@ -26,24 +24,8 @@ def does_recipe_id_exist(recipe_id):
     print("check if id exist")
 
 
-def SQLiteQuery(Query, one):
-    # Connect to the SQLite database
-    conn = sqlite3.connect(config.DATABASE)
-    cursor = conn.cursor()
-    # Fetch recipe data from the database
-    cursor.execute(Query)
-    if one:
-        target_recipe = cursor.fetchone()
-    else:
-        target_recipe = cursor.fetchall()
-
-    conn.close()
-    return target_recipe if target_recipe else None
-
-
 def get_ingredients(recipe_id):
-    SQLCommand = "SELECT * FROM ingredients WHERE recipe_id=" + str(recipe_id)
-    ingredients = SQLiteQuery(SQLCommand, False)
+    ingredients = SQLQueries.get_ingredients(recipe_id)
     # Transform ingredients into a list of dictionaries
     ingredient_list = [
         {"item": i[2], "amount": i[3], "unit": i[4]} for i in ingredients
@@ -53,8 +35,7 @@ def get_ingredients(recipe_id):
 
 
 def get_commands(recipe_id):
-    SQLCommand = "SELECT command FROM steps WHERE recipe_id=" + str(recipe_id)
-    commands = SQLiteQuery(SQLCommand, False)
+    commands = SQLQueries.get_command(recipe_id)
     # Flatten the list of commands
     command_list = [command[0] for command in commands]
 

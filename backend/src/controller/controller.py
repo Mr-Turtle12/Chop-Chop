@@ -1,6 +1,7 @@
 import base64
 import json
-from backend.src.controller import recipe, utils, manageThread
+from backend.src.controller import recipe, manageThread
+from backend.src.utils import utils, SQLQueries
 
 
 class Controller:
@@ -39,7 +40,7 @@ class Controller:
     def get_recipe_metadata(self, recipe_id):
         SQLCommand = "SELECT * FROM recipes WHERE id= " + str(recipe_id)
 
-        target_recipe = utils.SQLiteQuery(SQLCommand, True)
+        target_recipe = SQLQueries.get_all_metadata_from(recipe_id)
         if not target_recipe:
             return None
         metadata = {
@@ -74,9 +75,7 @@ class Controller:
         Returns:
             list: A list of dictionaries containing metadata for all recipes.
         """
-        recipes = utils.SQLiteQuery(
-            "SELECT id , image , name , description FROM recipes", False
-        )
+        recipes = SQLQueries.get_all_metadata()
         if not recipes:
             return json.dumps({})
         all_metadata = [

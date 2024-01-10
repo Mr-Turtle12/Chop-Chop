@@ -5,7 +5,7 @@ import json
 from backend.src.api.Request import Request
 from backend.src.config import WEBSOCKET_UPDATE_INTERVAL
 from backend.src.controller.controller import CONTROLLER_INSTANCE
-from backend.src.controller.utils import log
+from backend.src.utils.utils import log
 
 
 async def consumer_handler(websocket):

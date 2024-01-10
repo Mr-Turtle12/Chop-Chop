@@ -1,5 +1,4 @@
-from backend.src.controller import utils
-import sqlite3
+from backend.src.utils import utils
 
 
 class Recipe:
