@@ -4,9 +4,9 @@
   <section class="c-recipe-image o-section">
     <div class="c-recipe-image__image-container">
       <img
-        class="c-recipe-image__image"
-        src="@/assets/recipe-4.png"
-      >
+      class="c-recipe-image__image"
+      :src= "recipe.img"
+    >
     </div>
   </section>
 
@@ -48,6 +48,7 @@ const route = useRoute()
 var recipe = reactive({
     name: 'ERROR NAME NOT FOUND',
     decription: 'ERROR DESCRIPTION NOT FOUND',
+    img:  require('@/assets/ImageNotFound.png'),
     steps: [
         'NO STEPS FOUND'
     ],
@@ -103,11 +104,12 @@ function formatIngredients(RecipeJsonMessage)
     return ingredientsList
 }
 
+
 function parseRecipeFromJson(RecipeJsonMessage)
 {
     recipe.name = RecipeJsonMessage.name
     recipe.decription = RecipeJsonMessage.description
-
+    recipe.img = RecipeJsonMessage.image;
     recipe.ingredients = formatIngredients(RecipeJsonMessage)
 
     recipe.steps = RecipeJsonMessage['commands']

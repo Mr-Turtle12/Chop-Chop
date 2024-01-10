@@ -1,3 +1,4 @@
+import base64
 import json
 from backend.src.controller import recipe, utils, manageThread
 
@@ -42,13 +43,15 @@ class Controller:
         if not target_recipe:
             return None
         metadata = {
-            "image": target_recipe[1],
+            "image": "data:image/JPEG;base64,"
+            + base64.b64encode(target_recipe[1]).decode("utf-8"),
             "name": target_recipe[2],
             "description": target_recipe[3],
             "ingredients": utils.get_ingredients(recipe_id),
             "commands": utils.get_commands(recipe_id),
         }
-        return metadata
+        print(metadata["image"])
+        return json.dumps(metadata)
 
     def progress_next_step(self):
         """Progresses to the next step in the recipe."""
@@ -80,7 +83,8 @@ class Controller:
         all_metadata = [
             {
                 "id": recipe[0],
-                "image": recipe[1],
+                "image": "data:image/JPEG;base64,"
+                + base64.b64encode(recipe[1]).decode("utf-8"),
                 "name": recipe[2],
                 "description": recipe[3],
             }
