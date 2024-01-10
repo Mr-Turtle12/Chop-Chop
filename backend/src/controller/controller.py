@@ -69,6 +69,15 @@ class Controller:
             )
         self.update_flag()
 
+    def set_favourite(self, recipe_id, favourited):
+        query = utils.SQLiteQuery(
+            "UPDATE recipes SET favourit = "
+            + str(int(favourited))
+            + " WHERE id = "
+            + str(recipe_id),
+            False,
+        )
+
     def get_all_recipe_metadata(self):
         """Gets metadata for all recipes.
         Returns:
