@@ -50,7 +50,6 @@ class Controller:
             "ingredients": utils.get_ingredients(recipe_id),
             "commands": utils.get_commands(recipe_id),
         }
-        print(metadata["image"])
         return json.dumps(metadata)
 
     def progress_next_step(self):

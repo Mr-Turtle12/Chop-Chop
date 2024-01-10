@@ -31,7 +31,6 @@ def SQLiteQuery(Query, one):
     conn = sqlite3.connect(config.DATABASE)
     cursor = conn.cursor()
     # Fetch recipe data from the database
-    print(Query)
     cursor.execute(Query)
     if one:
         target_recipe = cursor.fetchone()
