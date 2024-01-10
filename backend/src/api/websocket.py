@@ -44,6 +44,15 @@ async def consumer_handler(websocket):
                 CONTROLLER_INSTANCE.set_step(step_number)
                 await websocket.send(f"set step {step_number}")
 
+            case ("favourite", recipe_id):
+                log(f">>> Saved {recipe_id} as favourite ", "API")
+                CONTROLLER_INSTANCE.set_favourite(recipe_id, True)
+                await websocket.send(f"Saved {recipe_id} as favourite")
+            case ("unfavourite", recipe_id):
+                log(f">>> make {recipe_id} not a favourite ", "API")
+                CONTROLLER_INSTANCE.set_favourite(recipe_id, False)
+                await websocket.send(f"make {recipe_id} not a favourite")
+
             case _:
                 log("!!! unknown command", "API")
                 await websocket.send("Unknown command")
