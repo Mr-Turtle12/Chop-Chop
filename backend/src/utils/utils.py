@@ -1,3 +1,5 @@
+import base64
+import json
 import threading
 from collections import deque
 from backend.src import config
@@ -40,6 +42,25 @@ def get_commands(recipe_id):
     command_list = [command[0] for command in commands]
 
     return command_list
+
+
+def convert_image(imageBlob):
+    return ("data:image/JPEG;base64," + base64.b64encode(imageBlob).decode("utf-8"),)
+
+
+def convert_metadata(SQLRecipes):
+    if not SQLRecipes:
+        return json.dumps({})
+    all_metadata = [
+        {
+            "id": recipe[0],
+            "image": convert_image(recipe[1]),
+            "name": recipe[2],
+            "description": recipe[3],
+        }
+        for recipe in SQLRecipes
+    ]
+    return json.dumps(all_metadata)
 
 
 class LimitedQueue:

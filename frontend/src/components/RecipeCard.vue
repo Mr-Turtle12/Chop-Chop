@@ -7,7 +7,7 @@
       class="c-card__image"
       :src="image"
     >
-    
+
     <div class="c-card__info">
       <h1 class="c-card__heading">{{ recipeName }}</h1>
 
@@ -31,6 +31,7 @@ defineProps({
     size: { type: String, default: 'vertical' },
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
+    isFavorite: {type: Boolean, default: true},
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1}
 
@@ -42,6 +43,19 @@ defineProps({
   $c : &;
   text-decoration:none;
 
+  &_favorite {
+  cursor: pointer;
+  margin-left: auto;
+}
+
+&_favorite-icon {
+  font-size: 24px;
+  color: #ccc; /* Default color for inactive state */
+}
+
+&_favorite-icon--active {
+  color: #e74c3c; /* Color for active/favorited state */
+}
   &__time {
     @include ts-meta;
     display: flex;

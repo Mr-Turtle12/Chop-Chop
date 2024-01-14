@@ -38,17 +38,15 @@ class Controller:
         return self.current_recipe.get_progression_requirements_for_current_step()
 
     def get_recipe_metadata(self, recipe_id):
-        SQLCommand = "SELECT * FROM recipes WHERE id= " + str(recipe_id)
-
         target_recipe = SQLQueries.get_all_metadata_from(recipe_id)
         if not target_recipe:
             return None
         metadata = {
-            "image": "data:image/JPEG;base64,"
-            + base64.b64encode(target_recipe[1]).decode("utf-8"),
+            "image": utils.convert_image(target_recipe[1]),
             "name": target_recipe[2],
             "description": target_recipe[3],
             "ingredients": utils.get_ingredients(recipe_id),
+            "isFavourite": bool(target_recipe[8]),
             "commands": utils.get_commands(recipe_id),
         }
         return json.dumps(metadata)
@@ -70,14 +68,8 @@ class Controller:
             )
         self.update_flag()
 
-    def set_favourite(self, recipe_id, favourited):
-        query = utils.SQLiteQuery(
-            "UPDATE recipes SET favourit = "
-            + str(int(favourited))
-            + " WHERE id = "
-            + str(recipe_id),
-            False,
-        )
+    def set_favourite(self, recipe_id, type):
+        SQLQueries.set_favourite(recipe_id, type)
 
     def get_all_recipe_metadata(self):
         """Gets metadata for all recipes.
@@ -85,19 +77,11 @@ class Controller:
             list: A list of dictionaries containing metadata for all recipes.
         """
         recipes = SQLQueries.get_all_metadata()
-        if not recipes:
-            return json.dumps({})
-        all_metadata = [
-            {
-                "id": recipe[0],
-                "image": "data:image/JPEG;base64,"
-                + base64.b64encode(recipe[1]).decode("utf-8"),
-                "name": recipe[2],
-                "description": recipe[3],
-            }
-            for recipe in recipes
-        ]
-        return json.dumps(all_metadata)
+        return utils.convert_metadata(recipes)
+
+    def get_favourite_metadata(self):
+        recipes = SQLQueries.get_favourite()
+        return utils.convert_metadata(recipes)
 
 
 # start a instance for the controller
