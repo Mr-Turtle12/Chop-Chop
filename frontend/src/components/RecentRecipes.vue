@@ -5,9 +5,9 @@
         <h1 class="c-recent-recipes__heading">
           <a
             class="c-recent-recipes__heading-link"
-            href="/search/Recent"
+            href="/search/Smart"
           >
-            Implemented Recipes
+            Smart Recipes
             <span class="c-recent-recipes__heading-icon">></span>
           </a>
         </h1>

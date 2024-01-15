@@ -30,7 +30,7 @@ const route = useRoute()
 onMounted(async () => {
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
-      if(route.params.search == "Implementation"){
+      if(route.params.search == "Smart"){
         socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
       }else if (route.params.search == "Liked"){
         socket.send('{"command": {"keyword": "get","recipe_id": -1}}')

@@ -54,9 +54,9 @@
           <li class="c-header-menu__button">
             <a
               class="c-header-menu__button-link"
-              href="/search/Implementation"
+              href="/search/Smart"
             >
-              Implementation Recipes
+            Smart Recipes
               <span class="c-header-menu__button-icon">></span>
             </a>
           </li>
