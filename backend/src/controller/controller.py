@@ -1,5 +1,7 @@
+import base64
 import json
-from backend.src.controller import recipe, utils, manageThread
+from backend.src.controller import recipe, manageThread
+from backend.src.utils import utils, SQLQueries
 
 
 class Controller:
@@ -36,34 +38,19 @@ class Controller:
         return self.current_recipe.get_progression_requirements_for_current_step()
 
     def get_recipe_metadata(self, recipe_id):
-        # Fetch the recipes data from the JSON file
-        recipes_data = utils.get_json(utils.get_database_address("Recipes"))
-        recipes = recipes_data.get("recipes", [])
+        SQLCommand = "SELECT * FROM recipes WHERE id= " + str(recipe_id)
 
-        # Find the specified recipe by its ID
-        target_recipe = None
-        for recipe in recipes:
-            if int(recipe.get("id")) == recipe_id:
-                target_recipe = recipe
-                break
-
+        target_recipe = SQLQueries.get_all_metadata_from(recipe_id)
         if not target_recipe:
-            return json.dumps({})  # Recipe not found, return an empty JSON object
-
-        # Construct the metadata for the recipe
+            return None
         metadata = {
-            "image": target_recipe.get("image", ""),
-            "name": target_recipe.get("name", ""),
-            "description": target_recipe.get("description", ""),
-            "ingredients": target_recipe.get("ingredients", []),
-            "commands": [
-                step.get("command", "") for step in target_recipe.get("steps", [])
-            ],
-            "progressionObject": [
-                step.get("progressionObject", "") for step in target_recipe.get("steps", [])
-            ],
+            "image": "data:image/JPEG;base64,"
+            + base64.b64encode(target_recipe[1]).decode("utf-8"),
+            "name": target_recipe[2],
+            "description": target_recipe[3],
+            "ingredients": utils.get_ingredients(recipe_id),
+            "commands": utils.get_commands(recipe_id),
         }
-
         return json.dumps(metadata)
 
     def progress_next_step(self):
@@ -88,15 +75,16 @@ class Controller:
         Returns:
             list: A list of dictionaries containing metadata for all recipes.
         """
-        recipes = utils.get_json(utils.get_database_address("Recipes")).get(
-            "recipes", []
-        )
+        recipes = SQLQueries.get_all_metadata()
+        if not recipes:
+            return json.dumps({})
         all_metadata = [
             {
-                "id": recipe.get("id", ""),
-                "image": recipe.get("image", ""),
-                "name": recipe.get("name", ""),
-                "description": recipe.get("description", ""),
+                "id": recipe[0],
+                "image": "data:image/JPEG;base64,"
+                + base64.b64encode(recipe[1]).decode("utf-8"),
+                "name": recipe[2],
+                "description": recipe[3],
             }
             for recipe in recipes
         ]

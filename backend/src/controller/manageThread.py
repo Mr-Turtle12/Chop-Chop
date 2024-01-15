@@ -1,5 +1,6 @@
 from backend.src.interpreter import interpreter
-from backend.src.controller import controller, utils
+from backend.src.controller import controller
+from backend.src.utils import utils
 
 
 class ManageThread:

@@ -1,6 +1,6 @@
 from ultralytics import YOLO
 import supervision as sv
-from backend.src.controller.utils import log
+from backend.src.utils.utils import log
 
 
 class Detection:

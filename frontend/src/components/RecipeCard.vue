@@ -31,7 +31,7 @@ defineProps({
     size: { type: String, default: 'vertical' },
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
-    image: { type: String, default: require('@/assets/recipe-1.png') },
+    image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1}
 
 })
