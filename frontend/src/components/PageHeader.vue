@@ -44,7 +44,7 @@
           <li class="c-header-menu__button">
             <a
               class="c-header-menu__button-link"
-              href="/search"
+              href="/search/All"
             >
               All Recipes
               <span class="c-header-menu__button-icon">></span>
@@ -54,9 +54,9 @@
           <li class="c-header-menu__button">
             <a
               class="c-header-menu__button-link"
-              href="/search"
+              href="/search/Implementation"
             >
-              Recent Recipes
+              Implementation Recipes
               <span class="c-header-menu__button-icon">></span>
             </a>
           </li>
@@ -64,7 +64,7 @@
           <li class="c-header-menu__button">
             <a
               class="c-header-menu__button-link"
-              href="/search"
+              href="/search/Liked"
             >
               Liked Recipes
               <span class="c-header-menu__button-icon">></span>

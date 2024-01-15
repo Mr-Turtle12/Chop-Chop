@@ -5,7 +5,7 @@
         <h1 class="c-recent-recipes__heading">
           <a
             class="c-recent-recipes__heading-link"
-            href="/search"
+            href="/search/Recent"
           >
             Implemented Recipes
             <span class="c-recent-recipes__heading-icon">></span>
@@ -35,13 +35,16 @@
 import { onMounted, ref } from 'vue'
 import RecipeCard from './RecipeCard.vue'
 
+import { useRouter, useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
 onMounted(async () => {
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
-        socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
+        socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
     })
 
     socket.addEventListener('message', (event) => {

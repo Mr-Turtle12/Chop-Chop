@@ -37,6 +37,13 @@ def get_favourite():
     return query
 
 
+def get_AIs():
+    query = SQLiteQuery(
+        "SELECT id , image , name , description FROM recipes WHERE AI = 1", "all"
+    )
+    return query
+
+
 def get_command(recipe_id):
     SQLCommand = "SELECT command FROM steps WHERE recipe_id=" + str(recipe_id)
     return SQLiteQuery(SQLCommand, "all")
