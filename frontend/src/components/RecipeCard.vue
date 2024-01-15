@@ -14,7 +14,7 @@
           toggleFavourite($event)"
       >
         <BookmarkSVG
-          class="c-card__bookmark-icon js-bookmark-icon"
+          :class="`c-card__bookmark-icon js-bookmark-icon ${isFavorite ? 'favourite' : ''}`"
         />
       </div>
     </div>
@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { defineProps, reactive } from "vue";
+import { defineProps } from 'vue'
 import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
 
@@ -49,20 +49,10 @@ const props = defineProps({
     size: { type: String, default: 'vertical' },
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
-    isFavorite: {type: Boolean, default: true},
+    isFavorite: {type: Boolean, default: false},
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1}
-
 })
-// function toggleFavourite($event) {
-//     const bookmarkIcon = $event.target.parentElement
-    
-//     if (bookmarkIcon.classList.contains('favourite')) {
-//         bookmarkIcon.classList.remove('favourite')
-//     } else {
-//         bookmarkIcon.classList.add('favourite')
-//     }
-// }
 
 const toggleFavourite = ($event) => {
 
