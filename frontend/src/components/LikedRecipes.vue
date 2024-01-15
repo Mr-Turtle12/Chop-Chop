@@ -5,7 +5,7 @@
         <h1 class="c-liked-recipes__heading">
           <a
             class="c-liked-recipes__heading-link"
-            href="/search/Liked"
+            href="/search"
           >
             Liked Recipes
             <span class="c-liked-recipes__heading-icon">></span>

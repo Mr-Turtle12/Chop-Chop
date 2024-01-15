@@ -83,10 +83,6 @@ class Controller:
         recipes = SQLQueries.get_favourite()
         return utils.convert_metadata(recipes)
 
-    def get_AI_metadata(self):
-        recipe = SQLQueries.get_AIs()
-        return utils.convert_metadata(recipe)
-
 
 # start a instance for the controller
 CONTROLLER_INSTANCE = Controller()
