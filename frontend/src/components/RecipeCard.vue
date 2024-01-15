@@ -41,10 +41,11 @@
 </template>
 
 <script setup>
+import { defineProps, reactive } from "vue";
 import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
 
-defineProps({
+const props = defineProps({
     size: { type: String, default: 'vertical' },
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
@@ -53,7 +54,6 @@ defineProps({
     id : {type: Number, default: 1}
 
 })
-
 // function toggleFavourite($event) {
 //     const bookmarkIcon = $event.target.parentElement
     
@@ -74,11 +74,11 @@ const toggleFavourite = ($event) => {
         bookmarkIcon.classList.add('favourite')
     }
     
-    isFavorite = !isFavorite
+    props.isFavorite = !props.isFavorite
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
         // console.log('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}');
-        socket.send('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}')
+        socket.send('{"command": {"keyword": "favourite", "type": '+props.isFavorite+' ,"recipe_id": '+ props.id +  '}}')
     })
 }
 </script>
