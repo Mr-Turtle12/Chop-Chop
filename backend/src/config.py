@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 
 # Logging:
 timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
@@ -14,3 +15,5 @@ DETECT_THRESHOLD = 7
 CAMERA_IDS = [0]
 # API settings
 WEBSOCKET_UPDATE_INTERVAL = 1
+# Database location
+DATABASE = "../../database/recipes.db"

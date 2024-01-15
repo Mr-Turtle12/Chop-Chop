@@ -2,7 +2,7 @@
 from backend.src.controller import CONTROLLER_INSTANCE
 from backend.src.api.websocket import start_websocket
 import os
-from backend.src.controller.utils import log
+from backend.src.utils.utils import log
 
 
 def main():

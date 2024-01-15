@@ -1,6 +1,6 @@
 from backend.src import objectDetection
 from backend.src import config
-from backend.src.controller import utils
+from backend.src.utils import utils
 
 
 # Set up global camera objects

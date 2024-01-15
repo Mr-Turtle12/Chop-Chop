@@ -1,8 +1,7 @@
-import json
-import os
 import threading
 from collections import deque
 from backend.src import config
+from backend.src.utils import SQLQueries
 
 
 def log(message, type):
@@ -25,47 +24,22 @@ def does_recipe_id_exist(recipe_id):
     print("check if id exist")
 
 
-def get_database_address(json_file_name):
-    """Returns the database address for the specified JSON file.
-    Args:
-        json_file_name (str): The name of the JSON file.
-    Returns:
-        str: The complete address of the JSON file.
-    """
-    return os.getenv("chop-chop-database") + "/" + json_file_name + ".json"
+def get_ingredients(recipe_id):
+    ingredients = SQLQueries.get_ingredients(recipe_id)
+    # Transform ingredients into a list of dictionaries
+    ingredient_list = [
+        {"item": i[2], "amount": i[3], "unit": i[4]} for i in ingredients
+    ]
+
+    return ingredient_list
 
 
-def get_json(file):
-    """Loads and returns JSON data from the specified file.
-    Args:
-        file (str): The path to the JSON file.
-    Returns:
-        dict: The JSON data from the file.
-    """
-    try:
-        with open(file, "r") as json_file:
-            recipe_data = json.load(json_file)
-            return recipe_data
-    except FileNotFoundError:
-        print(f"File not found: {file}")
-        return {}
-    except json.JSONDecodeError as e:
-        print(f"Error decoding JSON: {e}")
-        return {}
+def get_commands(recipe_id):
+    commands = SQLQueries.get_command(recipe_id)
+    # Flatten the list of commands
+    command_list = [command[0] for command in commands]
 
-
-def fetch_recipe_by_id(recipe_id, recipe_data):
-    """Fetches a recipe by its ID from the provided recipe data.
-    Args:
-        recipe_id (int): The ID of the recipe to fetch.
-        recipe_data (dict): The data containing the recipes.
-    Returns:
-        dict or None: The recipe if found, otherwise None.
-    """
-    for recipe in recipe_data.get("recipes", []):
-        if int(recipe.get("id")) == recipe_id:
-            return recipe
-    return None
+    return command_list
 
 
 class LimitedQueue:

@@ -20,6 +20,7 @@
         <RecipeCard
           v-for="recipe in recipes"
           :id="recipe.id"
+          :image="recipe.image"
           :key="recipe.id"
           :recipe-name="recipe.name"
           :info="recipe.info"
@@ -45,7 +46,7 @@ onMounted(async () => {
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, info: recipe.description , id:recipe.id}))
+        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id}))
         recipesLoaded.value = true
     })
 })
