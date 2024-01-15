@@ -16,18 +16,23 @@
       <div class="c-recipe-carousel__button-container">
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--previous"
-          @click="
-            decrement()"
+          @click="decrement"
         >
           <img
             src="@/assets/navigation-arrow.svg"
           >
         </button>
 
+        <button 
+          class="toggle-button" 
+          @click="togglePlay">
+            <span v-if="isPlaying">&#9612;&#9612;</span>
+            <span v-else>&#9654;</span>
+        </button>
+
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--next"
-          @click="
-            increment()"
+          @click="increment"
         >
           <img
             src="@/assets/navigation-arrow.svg"
@@ -39,60 +44,56 @@
 </template>
 
 <script setup>
-import {computed, ref, reactive } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref, reactive } from 'vue';
+import { useRoute } from 'vue-router';
 
-const route = useRoute()
+const route = useRoute();
+const isPlaying = ref(false);
 
-const socket = new WebSocket('ws://localhost:8765')
-
+const socket = new WebSocket('ws://localhost:8765');
 
 socket.addEventListener('open', (event) => {
-    socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
-    
-})
+  socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`);
+});
+
 socket.addEventListener('message', (event) => {
+  const data = JSON.parse(event.data);
+  if (data.name) {
+    recipe.name = data.name;
+    recipe.steps = data['commands'];
+    recipe.progressionObject = data['progressionObject'];
+  } else {
+    stepIndex.value = data.step;
+  }
+});
 
-    const data = JSON.parse(event.data)
-    if (data.name) {
-        recipe.name = data.name
-        recipe.steps = data['commands']
-        recipe.progressionObject = data['progressionObject']
-        
-    } else {
-        stepIndex.value = data.step
-    }
-})
+const recipe = reactive({
+  name: 'ERROR NAME NOT FOUND',
+  steps: ['NO STEPS FOUND'],
+  progressionObject: ['NO PROGRESSION OBJECT'],
+});
 
-var recipe = reactive({
-    name: 'ERROR NAME NOT FOUND',
-    steps: [
-        'NO STEPS FOUND'
-    ],
-    progressionObject: [
-      'NO PROGRESSION OBJECT'
-    ]
-})
+const stepIndex = ref(0);
 
-var stepIndex = ref(0)
-
-var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
-var currentStep = computed(() => recipe.steps[stepIndex.value])
-var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
-
-var currentProgressionObject = computed(() => recipe.progressionObject[stepIndex.value + 1])
-
+const previousStep = computed(() => recipe.steps[stepIndex.value - 1]);
+const currentStep = computed(() => recipe.steps[stepIndex.value]);
+const nextStep = computed(() => recipe.steps[stepIndex.value + 1]);
+const currentProgressionObject = computed(() => recipe.progressionObject[stepIndex.value + 1]);
 
 function increment() {
-    if(stepIndex.value != recipe.steps.length - 1) {
-        stepIndex.value++
-    }
+  if (stepIndex.value !== recipe.steps.length - 1) {
+    stepIndex.value++;
+  }
 }
 
 function decrement() {
-    if(stepIndex.value != 0) {
-        stepIndex.value--
-    }
+  if (stepIndex.value !== 0) {
+    stepIndex.value--;
+  }
+}
+
+function togglePlay() {
+  isPlaying.value = !isPlaying.value;
 }
 </script>
 
@@ -146,5 +147,27 @@ function decrement() {
       @include ts-heading-1;
     }
   }
+}
+.toggle-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  transition: background-color 0.3s;
+}
+
+.playing {
+  background-color: red;
+  color: white;
+}
+
+.toggle-button:hover {
+  background-color: darkred;
+}
+
+.playing:hover {
+  background-color: darkgreen;
 }
 </style>
