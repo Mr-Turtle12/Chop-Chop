@@ -1,15 +1,31 @@
 <template>
-  <a
+  <div
     :class="`c-card c-card--${ size }`"
-    :href="`/recipe-overview/${ id }`"
   >
-    <img
-      class="c-card__image"
-      :src="image"
-    >
+    <div class="c-card__image-wrapper">
+      <img
+        class="c-card__image"
+        :src="image"
+      >
 
-    <div class="c-card__info">
-      <h1 class="c-card__heading">{{ recipeName }}</h1>
+      <div
+        class="c-card__bookmark-icon-wrapper"
+        @click="
+          toggleFavourite($event)"
+      >
+        <BookmarkSVG
+          class="c-card__bookmark-icon js-bookmark-icon"
+        />
+      </div>
+    </div>
+
+    <a
+      class="c-card__info"
+      :href="`/recipe-overview/${ id }`"
+    >
+      <h1 class="c-card__heading">
+        {{ recipeName }}
+      </h1>
 
       <div class="c-card__meta">
         <div class="c-card__time">
@@ -20,12 +36,13 @@
           <p>{{ info }}</p>
         </div>
       </div>
-    </div>
-  </a>
+    </a>
+  </div>
 </template>
 
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
+import BookmarkSVG from '@/assets/bookmark-svg.vue'
 
 defineProps({
     size: { type: String, default: 'vertical' },
@@ -36,6 +53,34 @@ defineProps({
     id : {type: Number, default: 1}
 
 })
+
+// function toggleFavourite($event) {
+//     const bookmarkIcon = $event.target.parentElement
+    
+//     if (bookmarkIcon.classList.contains('favourite')) {
+//         bookmarkIcon.classList.remove('favourite')
+//     } else {
+//         bookmarkIcon.classList.add('favourite')
+//     }
+// }
+
+const toggleFavourite = ($event) => {
+
+    const bookmarkIcon = $event.target.parentElement
+    
+    if (bookmarkIcon.classList.contains('favourite')) {
+        bookmarkIcon.classList.remove('favourite')
+    } else {
+        bookmarkIcon.classList.add('favourite')
+    }
+    
+    isFavorite = !isFavorite
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        // console.log('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}');
+        socket.send('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}')
+    })
+}
 </script>
 
 <style scoped lang="scss">
@@ -43,19 +88,19 @@ defineProps({
   $c : &;
   text-decoration:none;
 
-  &_favorite {
-  cursor: pointer;
-  margin-left: auto;
-}
+  &__bookmark-icon-wrapper {
+    position: absolute;
+    right: var(--space-xxs);
+    top: var(--space-xxs);
+  }
+  
+  &__bookmark-icon {
+    color: #fff;
+    &.favourite {
+      color: #419170;
+    }
+  }
 
-&_favorite-icon {
-  font-size: 24px;
-  color: #ccc; /* Default color for inactive state */
-}
-
-&_favorite-icon--active {
-  color: #e74c3c; /* Color for active/favorited state */
-}
   &__time {
     @include ts-meta;
     display: flex;
@@ -132,12 +177,19 @@ defineProps({
         }
       }
 
+      #{$c}__image-wrapper {
+    height: 100%;
+    width: 50%;
+    position: relative;
+  }
+
       #{$c}__image {
-        height:auto;
-        width:50%;
+        height: 100%;
+        width: 100%;
         object-fit: cover;
         border-radius: 30px 0px 0px 30px;
         aspect-ratio: 16/9;
+        position: absolute;
       }
 
       #{$c}__info {
