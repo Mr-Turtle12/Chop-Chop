@@ -33,7 +33,7 @@
             class="c-card__time-icon"
           />
 
-          <p>{{ info }}</p>
+          <p>1 hour</p>
         </div>
       </div>
     </a>
@@ -78,6 +78,7 @@ const toggleFavourite = ($event) => {
 .c-card {
   $c : &;
   text-decoration:none;
+  text-wrap: wrap;
 
   &__bookmark-icon-wrapper {
     position: absolute;
