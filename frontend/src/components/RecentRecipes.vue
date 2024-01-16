@@ -25,7 +25,8 @@
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'horizontal'"
-          :isFavorite="recipe.favourite"
+          :isFavorite ="recipe.favourite"
+          @update:isFavorite="updateIsFavorite"
         />
       </div>
     </div>
@@ -35,7 +36,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import RecipeCard from './RecipeCard.vue'
-
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
@@ -47,10 +47,16 @@ onMounted(async () => {
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, favourite:recipe.favourite}))
+        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, favourite:recipe.isFavourite}))
         recipesLoaded.value = true
     })
 })
+const updateIsFavorite = (newIsFavorite, recipeId) => {
+    const recipeIndex = recipes.value.findIndex(recipe => recipe.id === recipeId);
+    if (recipeIndex !== -1) {
+        recipes.value[recipeIndex].favourite = newIsFavorite;
+    }
+}
 </script>
 
 <style scoped lang="scss">

@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, defineEmits  } from 'vue'
 import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
 
@@ -49,11 +49,11 @@ const props = defineProps({
     size: { type: String, default: 'vertical' },
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
-    isFavorite: {type: Boolean, default: false},
+    isFavorite: {type: Boolean, default: true},
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1}
 })
-
+const emits = defineEmits();
 const toggleFavourite = ($event) => {
 
     const bookmarkIcon = $event.target.parentElement
@@ -64,7 +64,8 @@ const toggleFavourite = ($event) => {
         bookmarkIcon.classList.add('favourite')
     }
     
-    props.isFavorite = !props.isFavorite
+    emits('update:isFavorite', !props.isFavorite, props.id);
+    console.log(props.isFavorite)
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
         // console.log('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}');
