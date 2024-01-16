@@ -28,7 +28,7 @@
           @click="toggleFavourite"
         >
           <BookmarkSVG
-            :class="`c-recipe__bookmark-icon js-bookmark-icon ${recipe.isFavorite ? 'favourite' : ''}`"
+            :class="`c-recipe__bookmark-icon js-bookmark-icon ${recipe.isFavourite ? 'favourite' : ''}`"
           />
         </div>
 

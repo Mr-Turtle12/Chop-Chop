@@ -53,7 +53,8 @@ const props = defineProps({
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1}
 })
-const emits = defineEmits();
+
+const emits = defineEmits()
 const toggleFavourite = ($event) => {
 
     const bookmarkIcon = $event.target.parentElement
@@ -64,7 +65,7 @@ const toggleFavourite = ($event) => {
         bookmarkIcon.classList.add('favourite')
     }
     
-    emits('update:isFavorite', !props.isFavorite, props.id);
+    emits('update:isFavorite', !props.isFavorite, props.id)
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
         // console.log('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}');
