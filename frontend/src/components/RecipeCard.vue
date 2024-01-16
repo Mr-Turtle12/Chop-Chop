@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits  } from 'vue'
+import { defineEmits  } from 'vue'
 import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
 
@@ -65,7 +65,6 @@ const toggleFavourite = ($event) => {
     }
     
     emits('update:isFavorite', !props.isFavorite, props.id);
-    console.log(props.isFavorite)
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
         // console.log('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}');
