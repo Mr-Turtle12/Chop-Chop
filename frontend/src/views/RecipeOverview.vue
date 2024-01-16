@@ -28,7 +28,7 @@
           @click="toggleFavourite"
         >
           <BookmarkSVG
-            :class="`c-recipe__bookmark-icon js-bookmark-icon ${recipe.isFavourite ? 'favourite' : ''}`"
+            :class="`c-recipe__bookmark-icon js-bookmark-icon ${recipe.isFavourite ? 'c-recipe__bookmark-icon--favourite' : ''}`"
           />
         </div>
 
@@ -181,8 +181,15 @@ const toggleFavourite = ($event) => {
     color: #fff;
     height: 52px;
     width: 46px;
-    &.favourite {
+
+    &--favourite {
       color: #419170;
+    }
+
+    // if bookmarked is not favourited add hover effect
+    &:not(&--favourite):hover,
+    &:not(&--favourite):focus {
+      color:#CEE4DB;
     }
   }
 

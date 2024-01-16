@@ -14,7 +14,7 @@
           toggleFavourite($event)"
       >
         <BookmarkSVG
-          :class="`c-card__bookmark-icon js-bookmark-icon ${isFavorite ? 'favourite' : ''}`"
+          :class="`c-card__bookmark-icon js-bookmark-icon ${isFavorite ? 'c-card__bookmark-icon--favourite' : ''}`"
         />
       </div>
     </div>
@@ -87,8 +87,15 @@ const toggleFavourite = ($event) => {
   
   &__bookmark-icon {
     color: #fff;
-    &.favourite {
+
+    &--favourite {
       color: #419170;
+    }
+
+    // if bookmarked is not favourited add hover effect
+    &:not(&--favourite):hover,
+    &:not(&--favourite):focus {
+      color:#CEE4DB;
     }
   }
 
