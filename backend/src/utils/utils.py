@@ -45,7 +45,7 @@ def get_commands(recipe_id):
 
 
 def convert_image(imageBlob):
-    return ("data:image/JPEG;base64," + base64.b64encode(imageBlob).decode("utf-8"),)
+    return "data:image/JPEG;base64," + base64.b64encode(imageBlob).decode("utf-8")
 
 
 def convert_metadata(SQLRecipes):
@@ -57,6 +57,7 @@ def convert_metadata(SQLRecipes):
             "image": convert_image(recipe[1]),
             "name": recipe[2],
             "description": recipe[3],
+            "isFavourite": bool(recipe[4]),
         }
         for recipe in SQLRecipes
     ]
