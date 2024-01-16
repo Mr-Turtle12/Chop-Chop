@@ -159,21 +159,21 @@ const toggleFavourite = ($event) => {
   &--horizontal {
     display:flex;
 
-    &:hover,
-    &:focus {
-      #{$c}__info {
-      background-color: #419170;
-    }
+    // &:hover,
+    // &:focus {
+    //   #{$c}__info {
+    //   background-color: #419170;
+    // }
 
-      #{$c}__heading,
-      #{$c}__meta {
-          color: #fff;
-        }
+    //   #{$c}__heading,
+    //   #{$c}__meta {
+    //       color: #fff;
+    //     }
         
-      #{$c}__time-icon {
-          color: #fff;
-        }
-      }
+    //   #{$c}__time-icon {
+    //       color: #fff;
+    //     }
+    //   }
 
       #{$c}__image-wrapper {
     height: 100%;
@@ -196,6 +196,20 @@ const toggleFavourite = ($event) => {
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         padding: 30px;
         width:50%;
+
+        &:hover,
+        &:focus {
+          background-color: #419170;
+
+          #{$c}__heading,
+          #{$c}__meta {
+            color: #fff;
+          }
+          
+          #{$c}__time-icon {
+            color: #fff;
+          }
+        }
       }
 
       #{$c}__heading {
