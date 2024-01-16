@@ -7,7 +7,7 @@
             class="c-liked-recipes__heading-link"
             href="/search"
           >
-            Liked Recipes
+            Bookmarked Recipes
             <span class="c-liked-recipes__heading-icon">></span>
           </a>
         </h1>
@@ -20,8 +20,8 @@
         <RecipeCard
           v-for="recipe in recipes"
           :id="recipe.id"
-          :image="recipe.image"
           :key="recipe.id"
+          :image="recipe.image"
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'vertical'"
