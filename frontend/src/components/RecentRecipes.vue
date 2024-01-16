@@ -25,7 +25,7 @@
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'horizontal'"
-          :isFavorite="recipe.favourite"
+          :is-favourite="recipe.favourite"
         />
       </div>
     </div>
