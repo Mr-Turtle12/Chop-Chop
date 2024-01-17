@@ -34,6 +34,7 @@ function addTimerCard(time, note) {
   timerItems.value.push({ time, note });
 }
 
+
 // Handle countdown end event here
 function handleCountdownEnd(timerString) {
   console.log('%s Countdown has ended!',timerString);

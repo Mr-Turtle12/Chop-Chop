@@ -26,8 +26,8 @@
         <button 
           class="toggle-button" 
           @click="togglePlay">
-            <span v-if="isPlaying">&#9612;&#9612;</span>
-            <span v-else>&#9654;</span>
+            <span v-if="isPlaying"><img src="@/assets/Pause_button.svg"></span>
+            <span v-else><img src="@/assets/Play_button.svg"></span>
         </button>
 
         <button
@@ -48,7 +48,7 @@ import { computed, ref, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const isPlaying = ref(false);
+const isPlaying = ref(true);
 
 const socket = new WebSocket('ws://localhost:8765');
 
@@ -57,13 +57,15 @@ socket.addEventListener('open', (event) => {
 });
 
 socket.addEventListener('message', (event) => {
-  const data = JSON.parse(event.data);
-  if (data.name) {
-    recipe.name = data.name;
-    recipe.steps = data['commands'];
-    recipe.progressionObject = data['progressionObject'];
-  } else {
-    stepIndex.value = data.step;
+  if(isPlaying.value){
+    const data = JSON.parse(event.data);
+    if (data.name) {
+      recipe.name = data.name;
+      recipe.steps = data['commands'];
+      recipe.progressionObject = data['progressionObject'];
+    } else {
+      stepIndex.value = data.step;
+    }
   }
 });
 
@@ -81,17 +83,20 @@ const nextStep = computed(() => recipe.steps[stepIndex.value + 1]);
 const currentProgressionObject = computed(() => recipe.progressionObject[stepIndex.value + 1]);
 
 function increment() {
+  isPlaying.value = false;
   if (stepIndex.value !== recipe.steps.length - 1) {
     stepIndex.value++;
   }
 }
 
 function decrement() {
+  isPlaying.value = false;
   if (stepIndex.value !== 0) {
     stepIndex.value--;
   }
 }
 
+//Should toogle bool here
 function togglePlay() {
   isPlaying.value = !isPlaying.value;
 }
@@ -149,8 +154,8 @@ function togglePlay() {
   }
 }
 .toggle-button {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -158,16 +163,4 @@ function togglePlay() {
   transition: background-color 0.3s;
 }
 
-.playing {
-  background-color: red;
-  color: white;
-}
-
-.toggle-button:hover {
-  background-color: darkred;
-}
-
-.playing:hover {
-  background-color: darkgreen;
-}
 </style>
