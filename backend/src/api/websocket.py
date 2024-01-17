@@ -37,6 +37,10 @@ async def consumer_handler(websocket):
                 log(">>> get all recipes' info which has AI", "API")
                 await websocket.send(SQLQueries.get_AIs_metadata())
 
+            case ("get", -3):
+                log(">>> get Random recipes", "API")
+                await websocket.send(SQLQueries.get_Random_metadata())
+
             # returns specific info for one recipe
             case ("get", recipe_id):
                 log(f">>> recipe {recipe_id} info", "API")
