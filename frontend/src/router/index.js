@@ -17,7 +17,7 @@ const routes = [
         meta: { transition: 'slide-left'}
     },
     {
-        path: '/search',
+        path: '/search/:search',
         name: 'search',
         component: SearchView,
         meta: { transition: 'slide-left'}

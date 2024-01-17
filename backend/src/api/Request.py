@@ -8,7 +8,7 @@ class Request:
         self.recipe_id: int = command.get("recipe_id", None)
         self.keyword: str = command["keyword"]
         self.step_number: int = command.get("step_number", None)
-
+        self.favourite: bool = command.get("type", None)
         self.matcher = self.__matcher()
 
     def __matcher(self):
@@ -18,6 +18,8 @@ class Request:
                 return (self.keyword, self.recipe_id)
             case "set":
                 return (self.keyword, self.step_number)
+            case "favourite":
+                return (self.keyword, (self.recipe_id, self.favourite))
             case _:
                 return None
 

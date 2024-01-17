@@ -5,9 +5,9 @@
         <h1 class="c-recent-recipes__heading">
           <a
             class="c-recent-recipes__heading-link"
-            href="/search"
+            href="/search/Smart"
           >
-            Implemented Recipes
+            Smart Recipes
             <span class="c-recent-recipes__heading-icon">></span>
           </a>
         </h1>
@@ -17,15 +17,17 @@
         v-if="recipesLoaded"
         class="c-recent-recipes__recipes"
       >
-        <RecipeCard
-          v-for="recipe in recipes"
-          :id="recipe.id"
-          :image="recipe.image"
-          :key="recipe.id"
-          :recipe-name="recipe.name"
-          :info="recipe.info"
-          :size="'horizontal'"
-        />
+      <RecipeCard
+        v-for="recipe in recipes"
+        :id="recipe.id"
+        :key="recipe.id"
+        :image="recipe.image"
+        :recipe-name="recipe.name"
+        :info="recipe.info"
+        :size="'horizontal'"
+        :isFavourite="recipe.isFavourite"
+        @favouriteChange="handleFavouriteChange"
+      />
       </div>
     </div>
   </section>
@@ -35,21 +37,24 @@
 import { onMounted, ref } from 'vue'
 import RecipeCard from './RecipeCard.vue'
 
-
 const recipesLoaded = ref(false)
 const recipes = ref([])
+const emits = defineEmits();
 onMounted(async () => {
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
-        socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
+      socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
     })
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id}))
+        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
         recipesLoaded.value = true
     })
 })
+const handleFavouriteChange = () => {
+  emits('favourite-change');
+};
 </script>
 
 <style scoped lang="scss">

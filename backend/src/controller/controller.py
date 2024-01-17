@@ -39,17 +39,15 @@ class Controller:
         return self.current_recipe.get_progression_requirements_for_current_step()
 
     def get_recipe_metadata(self, recipe_id):
-        SQLCommand = "SELECT * FROM recipes WHERE id= " + str(recipe_id)
-
         target_recipe = SQLQueries.get_all_metadata_from(recipe_id)
         if not target_recipe:
             return None
         metadata = {
-            "image": "data:image/JPEG;base64,"
-            + base64.b64encode(target_recipe[1]).decode("utf-8"),
+            "image": utils.convert_image(target_recipe[1]),
             "name": target_recipe[2],
             "description": target_recipe[3],
             "ingredients": utils.get_ingredients(recipe_id),
+            "isFavourite": bool(target_recipe[8]),
             "commands": utils.get_commands(recipe_id),
         }
         return json.dumps(metadata)
@@ -70,26 +68,6 @@ class Controller:
                 self.get_progression_requirements_for_current_step()
             )
         self.update_flag()
-
-    def get_all_recipe_metadata(self):
-        """Gets metadata for all recipes.
-        Returns:
-            list: A list of dictionaries containing metadata for all recipes.
-        """
-        recipes = SQLQueries.get_all_metadata()
-        if not recipes:
-            return json.dumps({})
-        all_metadata = [
-            {
-                "id": recipe[0],
-                "image": "data:image/JPEG;base64,"
-                + base64.b64encode(recipe[1]).decode("utf-8"),
-                "name": recipe[2],
-                "description": recipe[3],
-            }
-            for recipe in recipes
-        ]
-        return json.dumps(all_metadata)
 
 
 # start a instance for the controller

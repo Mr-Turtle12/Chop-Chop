@@ -4,15 +4,14 @@
   <section class="c-recipe-image o-section">
     <div class="c-recipe-image__image-container">
       <img
-      class="c-recipe-image__image"
-      :src= "recipe.img"
-    >
+        class="c-recipe-image__image"
+        :src="recipe.img"
+      >
     </div>
   </section>
-
   <section class="c-recipe o-section">
     <div class="c-recipe__container o-container">
-      <div class="c-recipe__top">
+      <div class="c-recipe__top">    
         <h1 class="c-recipe__heading">
           {{ recipe.name }}
         </h1>
@@ -23,6 +22,15 @@
           @click="
             startRecipeAPICall()"
         >start recipe</a>
+
+        <div
+          class="c-recipe__bookmark-icon-wrapper"
+          @click="toggleFavourite"
+        >
+          <BookmarkSVG
+            :class="`c-recipe__bookmark-icon js-bookmark-icon ${recipe.isFavourite ? 'c-recipe__bookmark-icon--favourite' : ''}`"
+          />
+        </div>
 
         <p class="c-recipe__meta">
           1 hour
@@ -40,6 +48,9 @@
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeSwitcher from '@/components/RecipeSwitcher.vue'
+import BookmarkSVG from '@/assets/bookmark-svg.vue'
+
+
 import { onMounted, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
@@ -52,6 +63,7 @@ var recipe = reactive({
     steps: [
         'NO STEPS FOUND'
     ],
+    isFavourite : false,
     ingredients: [
         'NO INGREDIENT FOUND'
     ]
@@ -109,14 +121,29 @@ function parseRecipeFromJson(RecipeJsonMessage)
 {
     recipe.name = RecipeJsonMessage.name
     recipe.decription = RecipeJsonMessage.description
-    recipe.img = RecipeJsonMessage.image;
+    recipe.img = RecipeJsonMessage.image
     recipe.ingredients = formatIngredients(RecipeJsonMessage)
-
+    recipe.isFavourite = RecipeJsonMessage.isFavourite
     recipe.steps = RecipeJsonMessage['commands']
 
 }
 
-
+const toggleFavourite = ($event) => {
+    const bookmarkIcon = $event.target.parentElement
+    
+    if (bookmarkIcon.classList.contains('favourite')) {
+        bookmarkIcon.classList.remove('favourite')
+    } else {
+        bookmarkIcon.classList.add('favourite')
+    }
+    
+    recipe.isFavourite = !recipe.isFavourite
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        console.log('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}')
+        socket.send('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}')
+    })
+}
 
 </script>
 
@@ -150,6 +177,22 @@ function parseRecipeFromJson(RecipeJsonMessage)
     }
   }
 
+  &__bookmark-icon {
+    color: #fff;
+    height: 52px;
+    width: 46px;
+
+    &--favourite {
+      color: #419170;
+    }
+
+    // if bookmarked is not favourited add hover effect
+    &:not(&--favourite):hover,
+    &:not(&--favourite):focus {
+      color:#CEE4DB;
+    }
+  }
+
   &__meta {
     @include ts-meta;
     color: #419170;
@@ -173,6 +216,42 @@ function parseRecipeFromJson(RecipeJsonMessage)
     object-fit: cover;
     top:0;
     left:0;
+  }
+}
+
+.Fav-star {
+  z-index: 1;
+  padding: 18px;
+  width: 100%;
+  height: 100%;
+  fill: #dee0e0;
+}
+
+@keyframes star {
+  0% {
+    transform: scale(1);
+  }
+  
+  20% {
+    fill: #ffac33;
+    transform: scale(0);
+  }
+  
+  30% {
+    transform: scale(0);
+  }
+  
+  60% {
+    transform: scale(1.1);
+  }
+  
+  70% {
+    transform: scale(0.9);
+  }
+  
+  100% {
+    fill: #ffac33;
+    transform: scale(1);
   }
 }
 </style>

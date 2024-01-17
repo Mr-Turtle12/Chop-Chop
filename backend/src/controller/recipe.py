@@ -1,4 +1,4 @@
-from backend.src.utils import SQLQueries
+from backend.src.utils import utils, SQLQueries
 
 
 class Recipe:
@@ -15,12 +15,14 @@ class Recipe:
         Returns:
             dict or None: The step if found, otherwise None.
         """
-        return SQLQueries.SQLiteQuery(
+        return utils.SQLiteQuery(
             (
-                "SELECT progressionObject , inhibtor, camera FROM steps WHERE recipe_id = ? & step = ?",
-                (self.current_step, step_number),
+                "SELECT progressionObject , inhibtor, camera FROM steps WHERE recipe_id = "
+                + (self.current_step + 1)
+                + "& step = "
+                + (step_number + 1),
             ),
-            True,
+            "one",
         )
 
     def increment_step(self):
@@ -46,10 +48,12 @@ class Recipe:
         """
         step = SQLQueries.SQLiteQuery(
             (
-                "SELECT command FROM steps WHERE recipe_id = ? & step = ?",
-                (self.current_step, step_number),
+                "SELECT command FROM steps WHERE recipe_id = "
+                + (self.current_step + 1)
+                + " AND step = "
+                + (step_number + 1),
             ),
-            True,
+            "one",
         )
         return {"command": step} if step else None
 
@@ -67,13 +71,14 @@ class Recipe:
         Returns:
             list or None: The progression requirements for the step if found, otherwise None.
         """
-        return SQLQueries.SQLiteQuery(
+        temp = SQLQueries.SQLiteQuery(
             "SELECT camera, progressionObject , inhibitor  FROM steps WHERE recipe_id = "
-            + str(self.current_step)
-            + " & step = "
-            + str(step_number),
-            True,
+            + str(self.current_step + 1)
+            + " AND step ="
+            + str(step_number + 1),
+            "one",
         )
+        return temp
 
     def get_progression_requirements_for_current_step(self):
         """Gets the progression requirements for the current step.

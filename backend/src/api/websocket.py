@@ -6,6 +6,7 @@ from backend.src.api.Request import Request
 from backend.src.config import WEBSOCKET_UPDATE_INTERVAL
 from backend.src.controller.controller import CONTROLLER_INSTANCE
 from backend.src.utils.utils import log
+from backend.src.utils import SQLQueries
 
 
 async def consumer_handler(websocket):
@@ -16,7 +17,8 @@ async def consumer_handler(websocket):
     while True:
         request = []
         try:
-            request = Request(json.loads(await websocket.recv()))
+            temp = json.loads(await websocket.recv())
+            request = Request(temp)
         except json.JSONDecodeError:
             log("!!! Poorly formatted JSON", "API")
             await websocket.send("Poorly formatted JSON")
@@ -25,7 +27,15 @@ async def consumer_handler(websocket):
             # returns basic info for all recipes
             case ("get", 0):
                 log(">>> all recipes' info", "API")
-                await websocket.send(CONTROLLER_INSTANCE.get_all_recipe_metadata())
+                await websocket.send(SQLQueries.get_all_metadata())
+            # returns basic info for favourite recipes
+            case ("get", -1):
+                log(">>> get all favourite recipes' info", "API")
+                await websocket.send(SQLQueries.get_favourites_metadata())
+
+            case ("get", -2):
+                log(">>> get all recipes' info which has AI", "API")
+                await websocket.send(SQLQueries.get_AIs_metadata())
 
             # returns specific info for one recipe
             case ("get", recipe_id):
@@ -44,7 +54,13 @@ async def consumer_handler(websocket):
                 CONTROLLER_INSTANCE.set_step(step_number)
                 await websocket.send(f"set step {step_number}")
 
+            case ("favourite", (recipe_id, type)):
+                log(f">>> changing favourite setting for {recipe_id}", "API")
+                SQLQueries.set_favourite(recipe_id, type)
+                await websocket.send(f"changing favourite setting for {recipe_id}")
+
             case _:
+                log(request.matcher, "API")
                 log("!!! unknown command", "API")
                 await websocket.send("Unknown command")
 
