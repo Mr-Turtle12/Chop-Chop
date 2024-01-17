@@ -17,17 +17,17 @@
         v-if="recipesLoaded"
         class="c-recent-recipes__recipes"
       >
-        <RecipeCard
-          v-for="recipe in recipes"
-          :id="recipe.id"
-          :key="recipe.id"
-          :image="recipe.image"
-          :recipe-name="recipe.name"
-          :info="recipe.info"
-          :size="'horizontal'"
-          :is-favorite="recipe.favourite"
-          @update:isFavorite="updateIsFavorite"
-        />
+      <RecipeCard
+        v-for="recipe in recipes"
+        :id="recipe.id"
+        :key="recipe.id"
+        :image="recipe.image"
+        :recipe-name="recipe.name"
+        :info="recipe.info"
+        :size="'horizontal'"
+        :isFavourite="recipe.isFavourite"
+        @favouriteChange="handleFavouriteChange"
+      />
       </div>
     </div>
   </section>
@@ -39,6 +39,7 @@ import RecipeCard from './RecipeCard.vue'
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
+const emits = defineEmits();
 onMounted(async () => {
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
@@ -47,16 +48,13 @@ onMounted(async () => {
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, favourite:recipe.isFavourite}))
+        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
         recipesLoaded.value = true
     })
 })
-const updateIsFavorite = (newIsFavorite, recipeId) => {
-    const recipeIndex = recipes.value.findIndex(recipe => recipe.id === recipeId)
-    if (recipeIndex !== -1) {
-        recipes.value[recipeIndex].favourite = newIsFavorite
-    }
-}
+const handleFavouriteChange = () => {
+  emits('favourite-change');
+};
 </script>
 
 <style scoped lang="scss">

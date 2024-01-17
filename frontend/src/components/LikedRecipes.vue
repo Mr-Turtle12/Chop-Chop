@@ -25,6 +25,7 @@
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'vertical'"
+          @favouriteChange="handleFavouriteChange"
         />
       </div>
     </div>
@@ -42,6 +43,7 @@ defineProps({
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
+const emits = defineEmits();
 onMounted(async () => {
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
@@ -54,6 +56,9 @@ onMounted(async () => {
         recipesLoaded.value = true
     })
 })
+const handleFavouriteChange = () => {
+  emits('favouriteChange');
+};
 
 </script>
 

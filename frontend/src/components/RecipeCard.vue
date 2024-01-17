@@ -14,7 +14,7 @@
           toggleFavourite($event)"
       >
         <BookmarkSVG
-          :class="`c-card__bookmark-icon js-bookmark-icon ${isFavorite ? 'c-card__bookmark-icon--favourite' : ''}`"
+          :class="`c-card__bookmark-icon js-bookmark-icon ${isLocalFavourite ? 'c-card__bookmark-icon--favourite' : ''}`"
         />
       </div>
     </div>
@@ -41,35 +41,34 @@
 </template>
 
 <script setup>
-import { defineEmits  } from 'vue'
 import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
+import { defineEmits } from 'vue';
 
 const props = defineProps({
     size: { type: String, default: 'vertical' },
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
-    isFavorite: {type: Boolean, default: true},
+    isFavourite: {type: Boolean, default: true},
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1}
 })
+var isLocalFavourite  = props.isFavourite;
+const emits = defineEmits();
 
-const emits = defineEmits()
 const toggleFavourite = ($event) => {
 
     const bookmarkIcon = $event.target.parentElement
-    
-    if (bookmarkIcon.classList.contains('favourite')) {
-        bookmarkIcon.classList.remove('favourite')
+    if (bookmarkIcon.classList.contains('c-card__bookmark-icon--favourite')) {
+        bookmarkIcon.classList.remove('c-card__bookmark-icon--favourite')
     } else {
-        bookmarkIcon.classList.add('favourite')
+        bookmarkIcon.classList.add('c-card__bookmark-icon--favourite')
     }
-    
-    emits('update:isFavorite', !props.isFavorite, props.id)
+    isLocalFavourite = !isLocalFavourite
     const socket = new WebSocket('ws://localhost:8765')
+    emits('favouriteChange');
     socket.addEventListener('open', (event) => {
-        // console.log('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}');
-        socket.send('{"command": {"keyword": "favourite", "type": '+props.isFavorite+' ,"recipe_id": '+ props.id +  '}}')
+        socket.send('{"command": {"keyword": "favourite", "type": '+isLocalFavourite+' ,"recipe_id": '+ props.id +  '}}')
     })
 }
 </script>
