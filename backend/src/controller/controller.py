@@ -79,6 +79,10 @@ class Controller:
         recipes = SQLQueries.get_all_metadata()
         return utils.convert_metadata(recipes)
 
+    def get_AI_metadata(self):
+        recipe = SQLQueries.get_AIs()
+        return utils.convert_metadata(recipe)
+
     def get_favourite_metadata(self):
         recipes = SQLQueries.get_favourite()
         return utils.convert_metadata(recipes)

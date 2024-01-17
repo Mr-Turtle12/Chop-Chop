@@ -5,9 +5,9 @@
         <h1 class="c-recent-recipes__heading">
           <a
             class="c-recent-recipes__heading-link"
-            href="/search"
+            href="/search/Smart"
           >
-            Implemented Recipes
+            Smart Recipes
             <span class="c-recent-recipes__heading-icon">></span>
           </a>
         </h1>
@@ -43,7 +43,7 @@ const emits = defineEmits();
 onMounted(async () => {
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
-        socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
+      socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
     })
 
     socket.addEventListener('message', (event) => {

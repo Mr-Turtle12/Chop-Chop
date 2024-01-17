@@ -43,7 +43,6 @@
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
-import { defineEmits } from 'vue';
 
 const props = defineProps({
     size: { type: String, default: 'vertical' },
