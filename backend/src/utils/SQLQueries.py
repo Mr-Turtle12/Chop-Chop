@@ -55,6 +55,14 @@ def get_all_metadata():
     )
 
 
+def get_AIs():
+    query = SQLiteQuery(
+        "SELECT id , image , name , description , favourite FROM recipes WHERE AI = 1",
+        "all",
+    )
+    return query
+
+
 def get_ingredients(recipe_id):
     SQLCommand = "SELECT * FROM ingredients WHERE recipe_id=" + str(recipe_id)
     return SQLiteQuery(SQLCommand, "all")

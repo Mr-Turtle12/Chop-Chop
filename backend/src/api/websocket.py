@@ -32,6 +32,10 @@ async def consumer_handler(websocket):
                 log(">>> get all favourite recipes' info", "API")
                 await websocket.send(CONTROLLER_INSTANCE.get_favourite_metadata())
 
+            case ("get", -2):
+                log(">>> get all recipes' info which has AI", "API")
+                await websocket.send(CONTROLLER_INSTANCE.get_AI_metadata())
+
             # returns specific info for one recipe
             case ("get", recipe_id):
                 log(f">>> recipe {recipe_id} info", "API")
