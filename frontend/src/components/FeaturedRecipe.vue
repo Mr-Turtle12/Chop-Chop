@@ -12,7 +12,7 @@
         <h1 class="c-featured-recipe__heading">
           <a
             class="c-featured-recipe__heading-link"
-            href="/recipe-overview"
+            href="`/recipe-overview/${ id }`"
           >{{ recipeName }}
           </a>
         </h1>
@@ -37,6 +37,19 @@ import ClockSVG from '@/assets/clock-svg.vue'
 defineProps({
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
+})
+
+onMounted(async () => {
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+      socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
+    })
+
+    socket.addEventListener('message', (event) => {
+        const arrayRecipe = JSON.parse(event.data)
+        recipes.value = arrayRecipe.map(recipe => ({ recipeName: recipe.name, info: recipe.description , id:recipe.id}))
+        recipesLoaded.value = true
+    })
 })
 </script>
 
