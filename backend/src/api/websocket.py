@@ -16,7 +16,8 @@ async def consumer_handler(websocket):
     while True:
         request = []
         try:
-            request = Request(json.loads(await websocket.recv()))
+            temp = json.loads(await websocket.recv())
+            request = Request(temp)
         except json.JSONDecodeError:
             log("!!! Poorly formatted JSON", "API")
             await websocket.send("Poorly formatted JSON")
@@ -26,6 +27,10 @@ async def consumer_handler(websocket):
             case ("get", 0):
                 log(">>> all recipes' info", "API")
                 await websocket.send(CONTROLLER_INSTANCE.get_all_recipe_metadata())
+            # returns basic info for favourite recipes
+            case ("get", -1):
+                log(">>> get all favourite recipes' info", "API")
+                await websocket.send(CONTROLLER_INSTANCE.get_favourite_metadata())
 
             # returns specific info for one recipe
             case ("get", recipe_id):
@@ -44,7 +49,13 @@ async def consumer_handler(websocket):
                 CONTROLLER_INSTANCE.set_step(step_number)
                 await websocket.send(f"set step {step_number}")
 
+            case ("favourite", (recipe_id, type)):
+                log(f">>> changing favourite setting for {recipe_id}", "API")
+                CONTROLLER_INSTANCE.set_favourite(recipe_id, type)
+                await websocket.send(f"changing favourite setting for {recipe_id}")
+
             case _:
+                log(request.matcher, "API")
                 log("!!! unknown command", "API")
                 await websocket.send("Unknown command")
 

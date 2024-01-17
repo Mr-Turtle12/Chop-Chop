@@ -7,17 +7,25 @@
             class="c-liked-recipes__heading-link"
             href="/search"
           >
-            Liked Recipes
+            Bookmarked Recipes
             <span class="c-liked-recipes__heading-icon">></span>
           </a>
         </h1>
       </div>
 
-      <div class="c-liked-recipes__card-container">
+      <div
+        v-if="recipesLoaded"
+        class="c-liked-recipes__card-container"
+      >
         <RecipeCard
-          v-for="x in 9"
-          :key="x"
+          v-for="recipe in recipes"
+          :id="recipe.id"
+          :key="recipe.id"
+          :image="recipe.image"
+          :recipe-name="recipe.name"
+          :info="recipe.info"
           :size="'vertical'"
+          @favouriteChange="handleFavouriteChange"
         />
       </div>
     </div>
@@ -27,9 +35,30 @@
 <script setup>
 // import VerticalCard from './VerticalCard.vue'
 import RecipeCard from './RecipeCard.vue'
+import { onMounted, ref } from 'vue'
+
 defineProps({
     apiUrl: { type: String, default: 'http://localhost:8000' }
 })
+
+const recipesLoaded = ref(false)
+const recipes = ref([])
+const emits = defineEmits();
+onMounted(async () => {
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send('{"command": {"keyword": "get","recipe_id": -1}}')
+    })
+
+    socket.addEventListener('message', (event) => {
+        const arrayRecipe = JSON.parse(event.data)
+        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id}))
+        recipesLoaded.value = true
+    })
+})
+const handleFavouriteChange = () => {
+  emits('favouriteChange');
+};
 
 </script>
 

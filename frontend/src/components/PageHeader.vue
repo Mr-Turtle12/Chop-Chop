@@ -66,7 +66,7 @@
               class="c-header-menu__button-link"
               href="/search"
             >
-              Liked Recipes
+              Bookmarked Recipes
               <span class="c-header-menu__button-icon">></span>
             </a>
           </li>
