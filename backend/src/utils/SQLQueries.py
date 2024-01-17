@@ -1,5 +1,6 @@
 import sqlite3
 from backend.src import config
+from backend.src.utils import utils
 
 
 def SQLiteQuery(Query, type):
@@ -30,12 +31,12 @@ def set_favourite(recipe_id, favourite):
     return SQLiteQuery(update_query, "commit")
 
 
-def get_favourite():
+def get_favourites_metadata():
     query = SQLiteQuery(
         "SELECT id , image , name , description , favourite FROM recipes WHERE favourite = 1",
         "all",
     )
-    return query
+    return utils.convert_metadata(query)
 
 
 def get_command(recipe_id):
@@ -50,17 +51,19 @@ def get_all_metadata_from(recipe_id):
 
 
 def get_all_metadata():
-    return SQLiteQuery(
-        "SELECT id , image , name , description , favourite FROM recipes", "all"
+    return utils.convert_metadata(
+        SQLiteQuery(
+            "SELECT id , image , name , description , favourite FROM recipes", "all"
+        )
     )
 
 
-def get_AIs():
+def get_AIs_metadata():
     query = SQLiteQuery(
         "SELECT id , image , name , description , favourite FROM recipes WHERE AI = 1",
         "all",
     )
-    return query
+    return utils.convert_metadata(query)
 
 
 def get_ingredients(recipe_id):

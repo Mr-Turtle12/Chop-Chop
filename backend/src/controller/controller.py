@@ -68,25 +68,6 @@ class Controller:
             )
         self.update_flag()
 
-    def set_favourite(self, recipe_id, type):
-        SQLQueries.set_favourite(recipe_id, type)
-
-    def get_all_recipe_metadata(self):
-        """Gets metadata for all recipes.
-        Returns:
-            list: A list of dictionaries containing metadata for all recipes.
-        """
-        recipes = SQLQueries.get_all_metadata()
-        return utils.convert_metadata(recipes)
-
-    def get_AI_metadata(self):
-        recipe = SQLQueries.get_AIs()
-        return utils.convert_metadata(recipe)
-
-    def get_favourite_metadata(self):
-        recipes = SQLQueries.get_favourite()
-        return utils.convert_metadata(recipes)
-
 
 # start a instance for the controller
 CONTROLLER_INSTANCE = Controller()
