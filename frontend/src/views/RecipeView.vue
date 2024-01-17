@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <RecipeCarousel class="recipe-carousel" />
+    <RecipeCarousel class="recipe-carousel" :recipe="recipe" :stepIndex="stepIndex"/>
   </div>
 </template>
 
@@ -25,7 +25,43 @@
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeCarousel from '@/components/RecipeCarousel.vue'
 import TimerCard from '@/components/TimerCard.vue'
-import { ref } from 'vue'
+import { ref,reactive } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const socket = new WebSocket('ws://localhost:8765')
+var stepIndex = ref(0)
+
+var recipe = reactive({
+    name: 'ERROR NAME NOT FOUND',
+    steps: [
+        'NO STEPS FOUND'
+    ],
+    progressionObject: [
+      'NO PROGRESSION OBJECT'
+    ]
+})
+
+socket.addEventListener('open', (event) => {
+    socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
+    
+})
+socket.addEventListener('message', (event) => {
+
+    const data = JSON.parse(event.data)
+    if (data.name) {
+        recipe.name = data.name
+        recipe.steps = data['commands']
+        
+    } else {
+        stepIndex.value = data.step
+    }
+})
+
+
+
+
 
 const timerItems = ref([]); // No initial timers
 

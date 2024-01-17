@@ -1,4 +1,4 @@
-from backend.src.utils import utils
+from backend.src.utils import SQLQueries
 
 
 class Recipe:
@@ -15,7 +15,7 @@ class Recipe:
         Returns:
             dict or None: The step if found, otherwise None.
         """
-        return utils.SQLiteQuery(
+        return SQLQueries.SQLiteQuery(
             (
                 "SELECT progressionObject , inhibtor, camera FROM steps WHERE recipe_id = ? & step = ?",
                 (self.current_step, step_number),
@@ -44,7 +44,7 @@ class Recipe:
         Returns:
             dict or None: The command for the step if found, otherwise None.
         """
-        step = utils.SQLiteQuery(
+        step = SQLQueries.SQLiteQuery(
             (
                 "SELECT command FROM steps WHERE recipe_id = ? & step = ?",
                 (self.current_step, step_number),
@@ -67,7 +67,7 @@ class Recipe:
         Returns:
             list or None: The progression requirements for the step if found, otherwise None.
         """
-        return utils.SQLiteQuery(
+        return SQLQueries.SQLiteQuery(
             "SELECT camera, progressionObject , inhibitor  FROM steps WHERE recipe_id = "
             + str(self.current_step)
             + " & step = "

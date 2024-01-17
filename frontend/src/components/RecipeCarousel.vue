@@ -39,59 +39,41 @@
 </template>
 
 <script setup>
-import {computed, ref, reactive } from 'vue'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-
-const socket = new WebSocket('ws://localhost:8765')
+import {computed,defineProps,reactive,ref} from 'vue'
 
 
-socket.addEventListener('open', (event) => {
-    socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
-    
-})
-socket.addEventListener('message', (event) => {
-
-    const data = JSON.parse(event.data)
-    if (data.name) {
-        recipe.name = data.name
-        recipe.steps = data['commands']
-        recipe.progressionObject = data['progressionObject']
-        
-    } else {
-        stepIndex.value = data.step
-    }
+const props = defineProps({
+  recipe:{
+    type: Object,
+    required: true
+  },
+  stepIndex:{
+    type: Number,
+    required: true
+  }
 })
 
-var recipe = reactive({
-    name: 'ERROR NAME NOT FOUND',
-    steps: [
-        'NO STEPS FOUND'
-    ],
-    progressionObject: [
-      'NO PROGRESSION OBJECT'
-    ]
-})
 
-var stepIndex = ref(0)
+var recipe = ref(props.recipe);
+var stepIndex = ref(props.stepIndex);
 
-var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
-var currentStep = computed(() => recipe.steps[stepIndex.value])
-var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
+
+var previousStep = computed(() => recipe.value.steps[stepIndex.value - 1])
+var currentStep = computed(() => recipe.value.steps[stepIndex.value])
+var nextStep = computed(() => recipe.value.steps[stepIndex.value + 1])
 
 var currentProgressionObject = computed(() => recipe.progressionObject[stepIndex.value + 1])
 
 
 function increment() {
-    if(stepIndex.value != recipe.steps.length - 1) {
-        stepIndex.value++
+    if(stepIndex.value != recipe.value.steps.length - 1) {
+      stepIndex.value++
     }
 }
 
 function decrement() {
     if(stepIndex.value != 0) {
-        stepIndex.value--
+      stepIndex.value--
     }
 }
 </script>
