@@ -17,17 +17,24 @@
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--previous"
           @click="
-            decrement()"
+            decrementPeek()"
         >
           <img
             src="@/assets/navigation-arrow.svg"
           >
         </button>
 
+        <button 
+          class="c-recipe-carousel__button c-recipe-carousel__button--return" 
+          @click="onClickReturn">
+          <span v-if="isPeeking"><img src="@/assets/return-button-icon.svg"></span>
+        </button>
+
+
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--next"
           @click="
-            increment()"
+            incrementPeek()"
         >
           <img
             src="@/assets/navigation-arrow.svg"
@@ -42,10 +49,12 @@
 import {computed, ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
+const route = useRoute();
 
 const socket = new WebSocket('ws://localhost:8765')
 
+const isPeeking = ref(false);
+var prePeekingIndex = 0;
 
 socket.addEventListener('open', (event) => {
     socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
@@ -59,6 +68,7 @@ socket.addEventListener('message', (event) => {
         recipe.steps = data['commands']
     } else {
         stepIndex.value = data.step
+        prePeekingIndex = stepIndex.value;
     }
 })
 
@@ -75,17 +85,26 @@ var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
 var currentStep = computed(() => recipe.steps[stepIndex.value])
 var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
 
-function increment() {
+function incrementPeek() {
+  isPeeking.value = true;
     if(stepIndex.value != recipe.steps.length - 1) {
         stepIndex.value++
     }
 }
 
-function decrement() {
+function decrementPeek() {
+  isPeeking.value = true;
     if(stepIndex.value != 0) {
         stepIndex.value--
     }
 }
+
+function onClickReturn(){
+  stepIndex.value = prePeekingIndex;
+  isPeeking.value = false;
+  console.log("Returning");
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -110,6 +129,10 @@ function decrement() {
 
     &--next {
       transform: rotate(180deg);
+    }
+
+    &--return {
+      align-items: center;
     }
   }
   
@@ -138,5 +161,6 @@ function decrement() {
       @include ts-heading-1;
     }
   }
+
 }
 </style>
