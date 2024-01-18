@@ -18,12 +18,14 @@ class ManageThread:
         """
         thread = utils.BaseThread(
             name="StepJob",
-            target=lambda: (interpreter.detection_loop(current_step)),
+            target=lambda: (interpreter.detection_loop(current_step, flag)),
             callback=self.end_thread,
-            callback_args=(current_step,),
-            flag=flag,
+            callback_args=(flag,),
         )
         thread.start()
 
-    def end_thread(self, current_step):
-        controller.CONTROLLER_INSTANCE.progress_next_step()
+    def end_thread(self, flag):
+        if not flag.is_set():
+            controller.CONTROLLER_INSTANCE.progress_next_step()
+        else:
+            flag.clear()

@@ -17,8 +17,7 @@ async def consumer_handler(websocket):
     while True:
         request = []
         try:
-            temp = json.loads(await websocket.recv())
-            request = Request(temp)
+            request = Request(json.loads(await websocket.recv()))
         except json.JSONDecodeError:
             log("!!! Poorly formatted JSON", "API")
             await websocket.send("Poorly formatted JSON")
@@ -59,9 +58,9 @@ async def consumer_handler(websocket):
                 SQLQueries.set_favourite(recipe_id, type)
                 await websocket.send(f"changing favourite setting for {recipe_id}")
 
-            case ("end"):
+            case "end":
                 log(f">>> end the recipe", "API")
-                CONTROLLER_INSTANCE.end_flag()
+                CONTROLLER_INSTANCE.update_end_flag()
                 await websocket.send(f"Ended current recipe")
 
             case _:

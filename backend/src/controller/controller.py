@@ -27,8 +27,8 @@ class Controller:
     def update_flag(self):
         self.step_changed_flag.state = True
 
-    def end_flag(self):
-        self.end_flag.state.set()
+    def update_end_flag(self):
+        self.end_flag.set()
 
     def get_command_for_step(self, step_number):
         return self.current_recipe.get_command_for_step(step_number)

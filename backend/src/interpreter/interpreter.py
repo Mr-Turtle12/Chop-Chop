@@ -23,7 +23,7 @@ def detection_loop(current_step, flag):
     create_camera()
     rolling_average = utils.LimitedQueue()
     while True:
-        if flag.state.is_set():
+        if flag.is_set():
             break
         rolling_average.append(check_step(current_step))
         if rolling_average.get_average():
