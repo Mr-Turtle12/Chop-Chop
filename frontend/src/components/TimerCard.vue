@@ -30,10 +30,10 @@
           <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" class="timer-text">
             {{ formatTime(hours, minutes, seconds) }}
           </text>
-          <text x="50%" y="70%" text-anchor="middle" alignment-baseline="middle" class="timer-string" v-if="timerString">
+        </svg>
+        <text x="50%" y="70%" text-anchor="middle" alignment-baseline="middle" class="timer-string" v-if="timerString">
             {{ timerString }}
           </text>
-        </svg>
       </div>
     </div>
   </section>
@@ -130,6 +130,9 @@ const backgroundStrokeColor = computed(() => {
 }
 .circular-timer {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .progress-ring {

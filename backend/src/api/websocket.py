@@ -76,8 +76,9 @@ async def producer_handler(websocket):
         if CONTROLLER_INSTANCE.step_changed_flag.state:
             new_step = CONTROLLER_INSTANCE.current_recipe.current_step
             new_inhibitors = CONTROLLER_INSTANCE.get_progression_requirements_for_current_step()
+            print("inhib")
             print(new_inhibitors)
-            response = {"step": new_step, "progression": new_inhibitors}
+            response = {"step": new_step, "inhibitors":{"camera": new_inhibitors[0], "progressionObject": new_inhibitors[1], "inhibitor": new_inhibitors[2]}}
             log(f">>> updated step {new_step}", "API")
             await websocket.send(json.dumps(response))
             CONTROLLER_INSTANCE.step_changed_flag.state = False

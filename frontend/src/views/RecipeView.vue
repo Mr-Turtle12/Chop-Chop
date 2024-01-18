@@ -51,11 +51,16 @@ socket.addEventListener('message', (event) => {
 
     const data = JSON.parse(event.data)
     if (data.name) {
-        recipe.name = data.name
-        recipe.steps = data['commands']
+        recipe.name = data.name;
+        recipe.steps = data['commands'];
+        console.log("ahhhhh");
         
     } else {
-        stepIndex.value = data.step
+        stepIndex.value = data.step;
+        if(data.inhibitors.progressionObject == "timer"){
+          addTimerCard((parseInt(data.inhibitors.inhibitor)*60000),recipe.steps[stepIndex.value]);
+        }
+        console.log("New Step");
     }
 })
 

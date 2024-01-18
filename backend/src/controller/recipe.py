@@ -73,9 +73,9 @@ class Recipe:
         """
         temp = SQLQueries.SQLiteQuery(
             "SELECT camera, progressionObject , inhibitor  FROM steps WHERE recipe_id = "
-            + str(self.current_step + 1)
+            + str(self.recipe_id)
             + " AND step ="
-            + str(step_number + 1),
+            + str(step_number+1),
             "one",
         )
         return temp
