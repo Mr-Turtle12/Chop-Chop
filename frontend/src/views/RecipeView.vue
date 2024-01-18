@@ -5,7 +5,7 @@
     <img
       class="back-arrow"
       src="@/assets/back-arrow-icon.svg"
-      @click="$router.back()"
+      @click="EndRecipe()"
     >
   </nav>
       
@@ -17,6 +17,16 @@ import PageHeader from '@/components/PageHeader.vue'
 import RecipeCarousel from '@/components/RecipeCarousel.vue'
 
 const y = ['step1', 'step2', 'step3', 'step4']
+
+
+function EndRecipe(){
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "end"}}`)
+    })
+    $router.back()
+
+}
 </script>
 
 <style scoped lang="scss">

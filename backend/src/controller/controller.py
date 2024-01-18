@@ -11,6 +11,7 @@ class Controller:
         self.current_recipe = None
         self.thread_instance = None
         self.step_changed_flag = utils.StepChangeFlag()
+        self.end_flag = utils.EndFlag()
 
     def new_recipe(self, recipe_id):
         """Starts a new recipe with the given recipe ID.
@@ -18,12 +19,16 @@ class Controller:
             recipe_id (int): The ID of the recipe to start.
         """
         self.current_recipe = recipe.Recipe(recipe_id)
+
         self.thread_instance = manageThread.ManageThread(
-            self.get_progression_requirements_for_current_step()
+            self.get_progression_requirements_for_current_step(), self.end_flag
         )
 
     def update_flag(self):
         self.step_changed_flag.state = True
+
+    def end_flag(self):
+        self.end_flag.state.set()
 
     def get_command_for_step(self, step_number):
         return self.current_recipe.get_command_for_step(step_number)

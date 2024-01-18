@@ -97,7 +97,7 @@ class LimitedQueue:
 class BaseThread(threading.Thread):
     """A base thread class with callback functionality."""
 
-    def __init__(self, callback=None, callback_args=None, *args, **kwargs):
+    def __init__(self, callback=None, callback_args=None, flag=None, *args, **kwargs):
         target = kwargs.pop("target")
         super(BaseThread, self).__init__(
             target=self.target_with_callback, *args, **kwargs
@@ -105,6 +105,7 @@ class BaseThread(threading.Thread):
         self.callback = callback
         self.method = target
         self.callback_args = callback_args
+        self.flag = flag
 
     def target_with_callback(self):
         """Executes the thread's target method and the callback method if available."""
@@ -116,3 +117,8 @@ class BaseThread(threading.Thread):
 class StepChangeFlag:
     def __init__(self):
         self.state = False
+
+
+class EndFlag:
+    def __init__(self):
+        self.state = threading.Event
