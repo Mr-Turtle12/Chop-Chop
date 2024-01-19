@@ -14,6 +14,7 @@
             cx="60"
             cy="60"
           ></circle>
+          
           <!-- Progress circle -->
           <circle
             class="progress-ring-circle"
@@ -27,21 +28,27 @@
             cy="60"
             transform="rotate(-90 60 60)"
           ></circle>
-          <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" class="timer-text">
+
+
+          <!-- Text time element -->
+          <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" :class="timerTextClass" :style="{ fill: textColor }">
             {{ formatTime(hours, minutes, seconds) }}
           </text>
         </svg>
+        <!-- Time Note -->
         <text x="50%" y="70%" text-anchor="middle" alignment-baseline="middle" class="timer-string" v-if="timerString">
-            {{ timerString }}
-          </text>
+          {{ timerString }}
+        </text>
       </div>
     </div>
   </section>
 </template>
 
+
 <script setup>
 import { ref, watch, computed, onMounted, onUnmounted, defineProps, defineEmits } from 'vue';
 
+//incoming time length and note
 const props = defineProps({
   initialTime: {
     type: Number,
@@ -54,26 +61,82 @@ const props = defineProps({
   
 });
 
-const emit = defineEmits(['countdownEnd']); // Define emitted events
-
-
 let remainingTime = ref(props.initialTime);
 const totalTime = props.initialTime;
 
 const hours = ref(0);
 const minutes = ref(0);
 const seconds = ref(0);
+let countdownInterval;
+
+const emit = defineEmits(['countdownEnd']); // Define emitted events
 
 const radius = 50;
 const circumference = 2 * Math.PI * radius;
 const progress = ref(0);
 
+const flashText = ref(false);
+
+onMounted(startCountdown);
+onUnmounted(() => {
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
+});
+
+
+/*
+ * Setup dynamic colours here
+ */
+
+const textColor = computed(() => {
+  return remainingTime.value === 0 ? '#e74c3c' : '#333'; // Red color when completed, otherwise black
+});
+
+const progressStrokeColor = computed(() => {
+  return '#3498db'; // Blue color for background circle
+});
+
+const backgroundStrokeColor = computed(() => {
+  if(remainingTime.value === 0){
+    return '#333';
+  }
+  return `rgb(204, 204, 204, ${1 - progress.value})`; // Grey color for progress circle
+});
+
+/*
+ * Class switchers
+ */
+const timerTextClass = computed(() => {
+  return {
+    'timer-text': true,
+    'timer-text-flash': flashText.value,
+  };
+});
+
+/*
+ * String formatting
+ */
 function formatTime(h, m, s) {
   return `${pad(h)}:${pad(m)}:${pad(s)}`;
 }
 
 function pad(value) {
   return value.toString().padStart(2, '0');
+}
+
+/*
+ * Timer logic
+ */
+
+function startCountdown() {
+  countdownInterval = setInterval(() => {
+    remainingTime.value -= 1000;
+    if (remainingTime.value <= 0) {
+      clearInterval(countdownInterval);
+      emit('countdownEnd',props.timerString);
+    }
+  }, 1000);
 }
 
 function updateTime() {
@@ -89,34 +152,15 @@ function updateProgress() {
   progress.value = 1 - remainingTime.value / totalTime;
 }
 
-watch(remainingTime, updateTime);
-
-let countdownInterval;
-
-function startCountdown() {
-  countdownInterval = setInterval(() => {
-    remainingTime.value -= 1000;
-    if (remainingTime.value <= 0) {
-      clearInterval(countdownInterval);
-      emit('countdownEnd',props.timerString);
-    }
-  }, 1000);
-}
-
-onMounted(startCountdown);
-onUnmounted(() => {
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
+watch(remainingTime, (newVal, oldVal) => {
+  console.log('remainingTime changed:', newVal, oldVal);
+  updateTime();
+  if (newVal === 0) {
+    flashText.value = true;
   }
 });
 
-const progressStrokeColor = computed(() => {
-  return '#3498db'; // Blue color for background circle
-});
 
-const backgroundStrokeColor = computed(() => {
-  return `rgb(204, 204, 204, ${1 - progress.value})`; // Grey color for progress circle
-});
 </script>
 
 <style scoped>
@@ -125,10 +169,15 @@ const backgroundStrokeColor = computed(() => {
   fill: #333;
   font-weight: bold;
 }
+.timer-text-flash {
+  animation: flash 1s infinite alternate;
+}
+
 .timer-string {
   font-size: 1em;
   fill: #777;
 }
+
 .circular-timer {
   position: relative;
   display: flex;
@@ -143,8 +192,23 @@ const backgroundStrokeColor = computed(() => {
 .background-circle {
   stroke-width: 8;
 }
-
 .progress-ring-circle {
   stroke-linecap: round;
+  transition: stroke 0.5s; /* Add transition for smooth color change */
 }
+.completed-circle {
+  stroke-linecap: round;
+  transition: stroke 0.5s; /* Add transition for smooth color change */
+}
+
+@keyframes flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
 </style>

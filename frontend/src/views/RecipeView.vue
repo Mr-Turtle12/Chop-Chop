@@ -81,8 +81,10 @@ function handleCountdownEnd(timerString) {
 
   // Remove the timer from the array
   if (index !== -1) {
-    timerItems.value.splice(index, 1);
-}
+    setTimeout(() => {
+      timerItems.value.splice(index, 1);
+    }, 5000); // Flashing duration: 1000ms (1 second)  
+  }
 }
 
 </script>
