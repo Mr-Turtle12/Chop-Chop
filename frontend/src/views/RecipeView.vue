@@ -53,18 +53,15 @@ socket.addEventListener('message', (event) => {
     if (data.name) {
         recipe.name = data.name;
         recipe.steps = data['commands'];
-        console.log("ahhhhh");
         
     } else {
         stepIndex.value = data.step;
+        console.log("current step index" + stepIndex.value);
         if(data.inhibitors.progressionObject == "timer"){
           addTimerCard((parseInt(data.inhibitors.inhibitor)*60000),recipe.steps[stepIndex.value]);
         }
-        console.log("New Step");
     }
 })
-
-
 
 
 
@@ -72,12 +69,20 @@ const timerItems = ref([]); // No initial timers
 
 // Function to add a TimerCard with a specific time and note
 function addTimerCard(time, note) {
-  timerItems.value.push({ time, note });
+  timerItems.value.push({ time, note}); //pass array index here
 }
 
 // Handle countdown end event here
 function handleCountdownEnd(timerString) {
-  console.log('%s Countdown has ended!',timerString);
+  console.log('%s Countdown has ended!', timerString);
+
+  // Find the index of the timer in the array
+  const index = timerItems.value.findIndex((timer) => timer.note === timerString);
+
+  // Remove the timer from the array
+  if (index !== -1) {
+    timerItems.value.splice(index, 1);
+}
 }
 
 </script>

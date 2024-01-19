@@ -50,7 +50,8 @@ const props = defineProps({
   timerString: {
     type: String,
     default: ''
-  }
+  },
+  
 });
 
 const emit = defineEmits(['countdownEnd']); // Define emitted events

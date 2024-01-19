@@ -39,43 +39,41 @@
 </template>
 
 <script setup>
-import {computed,defineProps,reactive,ref} from 'vue'
-
+import { computed, defineProps, toRef } from 'vue';
 
 const props = defineProps({
-  recipe:{
+  recipe: {
     type: Object,
-    required: true
+    required: true,
   },
-  stepIndex:{
+  stepIndex: {
     type: Number,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
+const recipe = toRef(props, 'recipe');
+const stepIndex = toRef(props, 'stepIndex');
 
-var recipe = ref(props.recipe);
-var stepIndex = ref(props.stepIndex);
+const previousStep = computed(() => recipe.value.steps[stepIndex.value - 1]);
+const currentStep = computed(() => recipe.value.steps[stepIndex.value]);
+const nextStep = computed(() => recipe.value.steps[stepIndex.value + 1]);
 
-
-var previousStep = computed(() => recipe.value.steps[stepIndex.value - 1])
-var currentStep = computed(() => recipe.value.steps[stepIndex.value])
-var nextStep = computed(() => recipe.value.steps[stepIndex.value + 1])
-
-var currentProgressionObject = computed(() => recipe.progressionObject[stepIndex.value + 1])
-
+const currentProgressionObject = computed(() => recipe.value.progressionObject[stepIndex.value + 1]);
 
 function increment() {
-    if(stepIndex.value != recipe.value.steps.length - 1) {
-      stepIndex.value++
-    }
+  if (stepIndex.value !== recipe.value.steps.length - 1) {
+    stepIndex.value++;
+  }
 }
 
 function decrement() {
-    if(stepIndex.value != 0) {
-      stepIndex.value--
-    }
+  if (stepIndex.value !== 0) {
+    stepIndex.value--;
+  }
 }
+
+
 </script>
 
 <style scoped lang="scss">
