@@ -56,8 +56,6 @@ socket.addEventListener('message', (event) => {
             recipe.steps = data['commands'];
         } else {
             stepIndex.value = data.step;
-            console.log("current step index: " + stepIndex.value);
-
             if (data.inhibitors.progressionObject == "timer") {
                 addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value);
 
