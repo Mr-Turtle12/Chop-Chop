@@ -17,7 +17,7 @@
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--previous"
           @click="
-            decrement()"
+            decrementPeek()"
         >
           <img
             src="@/assets/navigation-arrow.svg"
@@ -25,9 +25,16 @@
         </button>
 
         <button
+          class="c-recipe-carousel__button c-recipe-carousel__button--return"
+          @click="onClickReturn">
+          <span v-if="isPeeking"><img src="@/assets/return-button-icon.svg"></span>
+        </button>
+
+
+        <button
           class="c-recipe-carousel__button c-recipe-carousel__button--next"
           @click="
-            increment()"
+            incrementPeek()"
         >
           <img
             src="@/assets/navigation-arrow.svg"
@@ -52,6 +59,8 @@ const props = defineProps({
   },
 });
 
+const isPeeking = ref(false);
+var prePeekingIndex = 0;
 const recipe = toRef(props, 'recipe');
 const stepIndex = toRef(props, 'stepIndex');
 
@@ -61,18 +70,35 @@ const nextStep = computed(() => recipe.value.steps[stepIndex.value + 1]);
 
 const currentProgressionObject = computed(() => recipe.value.progressionObject[stepIndex.value + 1]);
 
-function increment() {
-  if (stepIndex.value !== recipe.value.steps.length - 1) {
-    stepIndex.value++;
+function incrementPeek() {
+  if(!isPeeking.value)
+  {
+    prePeekingIndex = stepIndex.value;
   }
+  isPeeking.value = true;
+    if(stepIndex.value != recipe.steps.length - 1) {
+        stepIndex.value++
+    }
 }
 
-function decrement() {
-  if (stepIndex.value !== 0) {
-    stepIndex.value--;
+function decrementPeek() {
+  if(!isPeeking.value)
+  {
+    prePeekingIndex = stepIndex.value;
   }
+  isPeeking.value = true;
+    if(stepIndex.value != 0) {
+        stepIndex.value--
+    }
 }
 
+
+
+function onClickReturn(){
+  stepIndex.value = prePeekingIndex;
+  isPeeking.value = false;
+  console.log("Returning");
+}
 
 </script>
 
@@ -98,6 +124,10 @@ function decrement() {
 
     &--next {
       transform: rotate(180deg);
+    }
+
+    &--return {
+      align-items: center;
     }
   }
   
@@ -126,5 +156,6 @@ function decrement() {
       @include ts-heading-1;
     }
   }
+
 }
 </style>
