@@ -54,6 +54,11 @@ async def consumer_handler(websocket):
                 CONTROLLER_INSTANCE.set_step(step_number)
                 await websocket.send(f"set step {step_number}")
 
+            case ("timer-end", timer_id):
+                log(f">>> timer {timer_id} ended", "API")
+                CONTROLLER_INSTANCE.progress_next_step()
+                await websocket.send(f"time-ended {timer_id}")
+
             case ("favourite", (recipe_id, type)):
                 log(f">>> changing favourite setting for {recipe_id}", "API")
                 SQLQueries.set_favourite(recipe_id, type)

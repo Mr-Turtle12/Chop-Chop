@@ -58,11 +58,16 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  stepGeneratedOn:{
+    type: Number,
+    required: true
+  }
   
 });
 
 let remainingTime = ref(props.initialTime);
 const totalTime = props.initialTime;
+const stepGeneratedOn = props.stepGeneratedOn;
 
 const hours = ref(0);
 const minutes = ref(0);
@@ -134,7 +139,7 @@ function startCountdown() {
     remainingTime.value -= 1000;
     if (remainingTime.value <= 0) {
       clearInterval(countdownInterval);
-      emit('countdownEnd',props.timerString);
+      emit('countdownEnd',props.stepGeneratedOn);
     }
   }, 1000);
 }
@@ -153,7 +158,6 @@ function updateProgress() {
 }
 
 watch(remainingTime, (newVal, oldVal) => {
-  console.log('remainingTime changed:', newVal, oldVal);
   updateTime();
   if (newVal === 0) {
     flashText.value = true;
