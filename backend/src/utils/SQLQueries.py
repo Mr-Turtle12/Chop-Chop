@@ -1,11 +1,10 @@
 import sqlite3
-from backend.src import config
 from backend.src.utils import utils
 
 
 def SQLiteQuery(Query, type):
     # Connect to the SQLite database
-    conn = sqlite3.connect(config.DATABASE)
+    conn = sqlite3.connect("../../../database/recipes.db")
     cursor = conn.cursor()
     # Fetch recipe data from the database
     cursor.execute(Query)
@@ -23,7 +22,7 @@ def SQLiteQuery(Query, type):
 
 def set_favourite(recipe_id, favourite):
     update_query = (
-        "UPDATE recipes SET favourite = "
+        f"UPDATE recipes SET favourite = "
         + str(int(favourite))
         + " WHERE id = "
         + str(recipe_id)
@@ -69,3 +68,43 @@ def get_AIs_metadata():
 def get_ingredients(recipe_id):
     SQLCommand = "SELECT * FROM ingredients WHERE recipe_id=" + str(recipe_id)
     return SQLiteQuery(SQLCommand, "all")
+
+
+def insert_recipe_into_database(json_data):
+    for recipe in json_data["recipes"]:
+        # Insert recipe information
+        SQLCommandRecipe = (
+            "INSERT INTO recipes (image, name, description, prepTime, cookTime, AI, favourite) "
+            f"VALUES ('{recipe['image']}', '{recipe['name']}', '{recipe['description']}', '{recipe['prepTime']}', "
+            f"'{recipe['cookTime']}', '{0}', '{0}')"
+        )
+        SQLiteQuery(SQLCommandRecipe, "commit")
+
+        # Get the last inserted recipe ID
+        recipe_id = SQLiteQuery("SELECT id FROM recipes ORDER BY id DESC", "one")[0]
+
+        # Insert ingredients
+        for ingredient in recipe["ingredients"]:
+            SQLCommandIngredient = f"""
+                INSERT INTO ingredients (recipe_id, item, amount, unit)
+                VALUES ({recipe_id}, '{ingredient["item"]}', '{ingredient["amount"]}', '{ingredient["unit"]}')
+            """
+            SQLiteQuery(SQLCommandIngredient, "commit")
+
+        # Insert steps
+        for step in recipe["steps"]:
+            SQLCommandStep = f"""
+                INSERT INTO steps (recipe_id, step, command)
+                VALUES ({recipe_id}, '{step["step"]}', '{step["command"]}')
+            """
+            SQLiteQuery(SQLCommandStep, "commit")
+
+
+input_data = {
+    "recipes": [
+        {
+        },
+    ]
+}
+
+insert_recipe_into_database(input_data)
