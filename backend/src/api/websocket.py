@@ -56,6 +56,7 @@ async def consumer_handler(websocket):
 
             case ("timer-end", timer_id):
                 log(f">>> timer {timer_id} ended", "API")
+                # in the future we should handle this \/ differently.... but this will do for now
                 CONTROLLER_INSTANCE.progress_next_step()
                 await websocket.send(f"time-ended {timer_id}")
 
