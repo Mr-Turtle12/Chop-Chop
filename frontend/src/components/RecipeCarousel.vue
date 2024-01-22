@@ -109,11 +109,12 @@ function onClickReturn(){
 
 <style scoped lang="scss">
 .c-recipe-carousel {
-  height: calc(100vh - (var(--space-xl)*2)); // might need to change, sets height of the carousel to be 100% minus the header and margins
+  height: calc(100vh - var(--space-s) - 150px - (var(--space-xl) * 2)); // height of screen - header height - section spacing 
+  margin-top: var(--space-xl);
 
   &__container {
     @include grid;
-    height: 100%;
+    height: 100%
   }
 
   &__button-container {
