@@ -56,7 +56,6 @@ onMounted(async () => {
 
     socket.addEventListener('message', (event) => {
          recipes.value = JSON.parse(event.data)
-        console.log(recipes.name);
         recipesLoaded.value = true
     })
 })
