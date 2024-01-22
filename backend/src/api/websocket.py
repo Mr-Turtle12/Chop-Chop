@@ -57,6 +57,12 @@ async def consumer_handler(websocket):
                 CONTROLLER_INSTANCE.set_step(step_number)
                 await websocket.send(f"set step {step_number}")
 
+            case ("timer-end", timer_id):
+                log(f">>> timer {timer_id} ended", "API")
+                # in the future we should handle this \/ differently.... but this will do for now
+                CONTROLLER_INSTANCE.progress_next_step()
+                await websocket.send(f"time-ended {timer_id}")
+
             case ("favourite", (recipe_id, type)):
                 log(f">>> changing favourite setting for {recipe_id}", "API")
                 SQLQueries.set_favourite(recipe_id, type)
@@ -83,7 +89,10 @@ async def producer_handler(websocket):
     while True:  # run forever
         if CONTROLLER_INSTANCE.step_changed_flag.state:
             new_step = CONTROLLER_INSTANCE.current_recipe.current_step
-            response = {"step": new_step}
+            new_inhibitors = CONTROLLER_INSTANCE.get_progression_requirements_for_current_step()
+            print("inhib")
+            print(new_inhibitors)
+            response = {"step": new_step, "inhibitors":{"camera": new_inhibitors[0], "progressionObject": new_inhibitors[1], "inhibitor": new_inhibitors[2]}}
             log(f">>> updated step {new_step}", "API")
             await websocket.send(json.dumps(response))
             CONTROLLER_INSTANCE.step_changed_flag.state = False
