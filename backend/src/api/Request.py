@@ -23,6 +23,8 @@ class Request:
                 return (self.keyword, (self.recipe_id, self.favourite))
             case "timer-end":
                 return (self.keyword, self.timer_id)
+            case "end":
+                return self.keyword
             case _:
                 return None
 

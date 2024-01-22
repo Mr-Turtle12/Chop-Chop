@@ -1,15 +1,14 @@
 <template>
-  <div class="container">
-    <div class="horizontal-container">
-      <nav>
-        <img
-          class="back-arrow"
-          src="@/assets/back-arrow-icon.svg"
-          @click="$router.back()"
-          alt="Back Arrow"
-        >
-      </nav>
-      <div class="timer-container">
+  <!-- <PageHeader /> -->
+
+  <nav>
+    <img
+      class="back-arrow"
+      src="@/assets/back-arrow-icon.svg"
+      @click="EndRecipe()"
+    >
+  </nav>
+  <div class="timer-container">
         <div class="timer-wrapper">
           <div v-for="(item, index) in timerItems" :key="index" class="recipe-timer">
             <TimerCard :initialTime="item.time" :timerString="item.note" :stepGeneratedOn ="item.stepIndex" @countdown-end="handleCountdownEnd" />
@@ -24,11 +23,10 @@
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeCarousel from '@/components/RecipeCarousel.vue'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 import TimerCard from '@/components/TimerCard.vue'
 import { ref,reactive } from 'vue'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
 
 const socket = new WebSocket('ws://localhost:8765')
 var stepIndex = ref(0)
@@ -45,7 +43,7 @@ var recipe = reactive({
 
 socket.addEventListener('open', (event) => {
     socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
-    
+
 })
 socket.addEventListener('message', (event) => {
     try {
@@ -88,6 +86,16 @@ function handleCountdownEnd(stepGeneratedOn) {
       socket.send(`{"command": { "keyword": "timer-end","timer_id": ${stepGeneratedOn} }}`)
     }, 7000);
   }
+}
+
+const props = defineProps(['$router'])
+
+
+const EndRecipe = () => {
+    socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "end"}}`)
+    })
+    router.back()
 }
 
 </script>

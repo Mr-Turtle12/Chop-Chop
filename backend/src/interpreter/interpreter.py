@@ -15,7 +15,7 @@ class InvalidCamera(Exception):
     pass
 
 
-def detection_loop(current_step):
+def detection_loop(current_step, flag):
     """Runs the detection loop until the majority of frame return true, both number of frame and the number that need to be true are set in config.py.
     Args:
         current_step (tuple): A tuple containing information about the current step in the formate [camera, progression_object, inhibitor].
@@ -23,6 +23,8 @@ def detection_loop(current_step):
     create_camera()
     rolling_average = utils.LimitedQueue()
     while True:
+        if flag.is_set():
+            break
         rolling_average.append(check_step(current_step))
         if rolling_average.get_average():
             break

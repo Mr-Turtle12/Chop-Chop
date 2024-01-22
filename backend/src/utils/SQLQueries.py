@@ -1,3 +1,4 @@
+import json
 import sqlite3
 from backend.src import config
 from backend.src.utils import utils
@@ -69,3 +70,24 @@ def get_AIs_metadata():
 def get_ingredients(recipe_id):
     SQLCommand = "SELECT * FROM ingredients WHERE recipe_id=" + str(recipe_id)
     return SQLiteQuery(SQLCommand, "all")
+
+
+def get_Random_metadata():
+    target_recipe = SQLiteQuery(
+        "SELECT id , image , name , description  FROM recipes ORDER BY RANDOM()",
+        "one",
+    )
+    if not target_recipe:
+        return None
+    metadata = {
+        "id": target_recipe[0],
+        "image": utils.convert_image(target_recipe[1]),
+        "name": target_recipe[2],
+        "description": target_recipe[3],
+    }
+    return json.dumps(metadata)
+
+
+def is_smart(recipe_id):
+    query = SQLiteQuery("SELECT AI FROM recipes WHERE id = " + str(recipe_id), "one")
+    return query[0]

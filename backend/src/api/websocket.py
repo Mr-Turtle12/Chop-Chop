@@ -17,8 +17,7 @@ async def consumer_handler(websocket):
     while True:
         request = []
         try:
-            temp = json.loads(await websocket.recv())
-            request = Request(temp)
+            request = Request(json.loads(await websocket.recv()))
         except json.JSONDecodeError:
             log("!!! Poorly formatted JSON", "API")
             await websocket.send("Poorly formatted JSON")
@@ -36,6 +35,10 @@ async def consumer_handler(websocket):
             case ("get", -2):
                 log(">>> get all recipes' info which has AI", "API")
                 await websocket.send(SQLQueries.get_AIs_metadata())
+
+            case ("get", -3):
+                log(">>> get Random recipes", "API")
+                await websocket.send(SQLQueries.get_Random_metadata())
 
             # returns specific info for one recipe
             case ("get", recipe_id):
@@ -64,6 +67,11 @@ async def consumer_handler(websocket):
                 log(f">>> changing favourite setting for {recipe_id}", "API")
                 SQLQueries.set_favourite(recipe_id, type)
                 await websocket.send(f"changing favourite setting for {recipe_id}")
+
+            case "end":
+                log(f">>> end the recipe", "API")
+                CONTROLLER_INSTANCE.update_end_flag()
+                await websocket.send(f"Ended current recipe")
 
             case _:
                 log(request.matcher, "API")
