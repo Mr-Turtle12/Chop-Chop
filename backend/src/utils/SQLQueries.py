@@ -86,3 +86,8 @@ def get_Random_metadata():
         "description": target_recipe[3],
     }
     return json.dumps(metadata)
+
+
+def is_smart(recipe_id):
+    query = SQLiteQuery("SELECT AI FROM recipes WHERE id = " + str(recipe_id), "one")
+    return query[0]
