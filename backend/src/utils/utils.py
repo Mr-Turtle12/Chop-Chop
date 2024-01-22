@@ -116,3 +116,7 @@ class BaseThread(threading.Thread):
 class StepChangeFlag:
     def __init__(self):
         self.state = False
+
+
+def EndFlag():
+    return threading.Event()

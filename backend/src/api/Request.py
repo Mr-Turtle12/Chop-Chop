@@ -20,6 +20,8 @@ class Request:
                 return (self.keyword, self.step_number)
             case "favourite":
                 return (self.keyword, (self.recipe_id, self.favourite))
+            case "end":
+                return self.keyword
             case _:
                 return None
 

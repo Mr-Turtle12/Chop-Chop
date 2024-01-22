@@ -1,3 +1,4 @@
+import json
 import sqlite3
 from backend.src.utils import utils
 
@@ -102,9 +103,24 @@ def insert_recipe_into_database(json_data):
 
 input_data = {
     "recipes": [
-        {
-        },
+        {},
     ]
 }
 
 insert_recipe_into_database(input_data)
+
+
+def get_Random_metadata():
+    target_recipe = SQLiteQuery(
+        "SELECT id , image , name , description  FROM recipes ORDER BY RANDOM()",
+        "one",
+    )
+    if not target_recipe:
+        return None
+    metadata = {
+        "id": target_recipe[0],
+        "image": utils.convert_image(target_recipe[1]),
+        "name": target_recipe[2],
+        "description": target_recipe[3],
+    }
+    return json.dumps(metadata)
