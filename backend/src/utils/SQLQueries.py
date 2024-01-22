@@ -74,7 +74,7 @@ def get_ingredients(recipe_id):
 
 def get_Random_metadata():
     target_recipe = SQLiteQuery(
-        "SELECT id , image , name , description  FROM recipes ORDER BY RANDOM()",
+        "SELECT id , image , name , description ,  FROM recipes ORDER BY RANDOM()",
         "one",
     )
     if not target_recipe:

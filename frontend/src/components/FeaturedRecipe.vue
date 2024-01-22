@@ -27,7 +27,7 @@
               class="c-featured-recipe__time-icon"
             />
 
-            <p>{{ recipes.info }}</p>
+            <p>Prep: {{ recipes.prepTime }} <br>Cook: {{ recipes.cookTime }}</p>
           </div>
         </div>
       </div>

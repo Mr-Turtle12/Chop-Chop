@@ -33,7 +33,7 @@
         </div>
 
         <p class="c-recipe__meta">
-          1 hour
+          <p>Prep: {{ recipe.prepTime }} <br>Cook: {{ recipe.cookTime }}</p>
         </p>
       </div>
 
@@ -66,7 +66,9 @@ var recipe = reactive({
     isFavourite : false,
     ingredients: [
         'NO INGREDIENT FOUND'
-    ]
+    ],
+    prepTime : 'ERROR NO TIME',
+    cookTime : 'ERROR NO TIME'
 })
 
 onMounted(() => {
@@ -125,6 +127,8 @@ function parseRecipeFromJson(RecipeJsonMessage)
     recipe.ingredients = formatIngredients(RecipeJsonMessage)
     recipe.isFavourite = RecipeJsonMessage.isFavourite
     recipe.steps = RecipeJsonMessage['commands']
+    recipe.prepTime = RecipeJsonMessage['prepTime']
+    recipe.cookTime = RecipeJsonMessage['cookTime']
 
 }
 

@@ -25,6 +25,8 @@
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'vertical'"
+          :prep-time="recipe.prepTime"
+          :cook-time="recipe.cookTime"
           @favouriteChange="handleFavouriteChange"
         />
       </div>
@@ -52,7 +54,7 @@ onMounted(async () => {
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id}))
+        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, prepTime:recipe.prepTime , cookTime:recipe.cookTime}))
         recipesLoaded.value = true
     })
 })
