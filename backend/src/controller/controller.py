@@ -62,7 +62,7 @@ class Controller:
         self.current_recipe.increment_step()
         if SQLQueries.is_smart(self.current_recipe.recipe_id):
             self.thread_instance = manageThread.ManageThread(
-                self.get_progression_requirements_for_current_step()
+                self.get_progression_requirements_for_current_step(), self.end_flag
             )
         self.update_flag()
 
@@ -71,7 +71,7 @@ class Controller:
             self.current_recipe.set_current_step(step_numer)
             if SQLQueries.is_smart(self.current_recipe.recipe_id):
                 self.thread_instance = manageThread.ManageThread(
-                    self.get_progression_requirements_for_current_step()
+                    self.get_progression_requirements_for_current_step(), self.end_flag
                 )
         self.update_flag()
 
