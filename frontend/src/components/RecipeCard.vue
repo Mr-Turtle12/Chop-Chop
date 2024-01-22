@@ -52,8 +52,8 @@ const props = defineProps({
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1}
 })
-var isLocalFavourite  = props.isFavourite;
-const emits = defineEmits();
+var isLocalFavourite  = props.isFavourite
+const emits = defineEmits()
 
 const toggleFavourite = ($event) => {
 
@@ -65,7 +65,7 @@ const toggleFavourite = ($event) => {
     }
     isLocalFavourite = !isLocalFavourite
     const socket = new WebSocket('ws://localhost:8765')
-    emits('favouriteChange');
+    emits('favouriteChange')
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+isLocalFavourite+' ,"recipe_id": '+ props.id +  '}}')
     })

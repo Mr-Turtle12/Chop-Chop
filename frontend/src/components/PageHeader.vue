@@ -70,6 +70,16 @@
               <span class="c-header-menu__button-icon">></span>
             </a>
           </li>
+
+          <li class="c-header-menu__button">
+            <a
+              class="c-header-menu__button-link"
+              href="/add-recipe"
+            >
+              Add Recipe
+              <span class="c-header-menu__button-icon">></span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -258,7 +268,7 @@ function toggleMenu() {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 100px;
+      gap: 30px;
     }
 
     &__button {
