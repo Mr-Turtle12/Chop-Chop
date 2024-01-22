@@ -69,3 +69,8 @@ def get_AIs_metadata():
 def get_ingredients(recipe_id):
     SQLCommand = "SELECT * FROM ingredients WHERE recipe_id=" + str(recipe_id)
     return SQLiteQuery(SQLCommand, "all")
+
+
+def is_smart(recipe_id):
+    query = SQLiteQuery("SELECT AI FROM recipes WHERE id = " + str(recipe_id), "one")
+    return query[0]

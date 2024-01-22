@@ -18,9 +18,10 @@ class Controller:
             recipe_id (int): The ID of the recipe to start.
         """
         self.current_recipe = recipe.Recipe(recipe_id)
-        self.thread_instance = manageThread.ManageThread(
-            self.get_progression_requirements_for_current_step()
-        )
+        if SQLQueries.is_smart(self.current_recipe.recipe_id):
+            self.thread_instance = manageThread.ManageThread(
+                self.get_progression_requirements_for_current_step()
+            )
 
     def update_flag(self):
         self.step_changed_flag.state = True
@@ -54,18 +55,19 @@ class Controller:
     def progress_next_step(self):
         """Progresses to the next step in the recipe."""
         self.current_recipe.increment_step()
-        self.thread_instance = manageThread.ManageThread(
-            self.get_progression_requirements_for_current_step()
-        )
+        if SQLQueries.is_smart(self.current_recipe.recipe_id):
+            self.thread_instance = manageThread.ManageThread(
+                self.get_progression_requirements_for_current_step()
+            )
         self.update_flag()
-        # Notify frontend
 
     def set_step(self, step_numer):
         if self.current_recipe is not None:
             self.current_recipe.set_current_step(step_numer)
-            self.thread_instance = manageThread.ManageThread(
-                self.get_progression_requirements_for_current_step()
-            )
+            if SQLQueries.is_smart(self.current_recipe.recipe_id):
+                self.thread_instance = manageThread.ManageThread(
+                    self.get_progression_requirements_for_current_step()
+                )
         self.update_flag()
 
 
