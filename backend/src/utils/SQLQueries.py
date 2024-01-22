@@ -1,11 +1,12 @@
 import json
 import sqlite3
 from backend.src.utils import utils
+from backend.src.config import DATABASE
 
 
 def SQLiteQuery(Query, type):
     # Connect to the SQLite database
-    conn = sqlite3.connect("../../../database/recipes.db")
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     # Fetch recipe data from the database
     cursor.execute(Query)
@@ -99,15 +100,6 @@ def insert_recipe_into_database(json_data):
                 VALUES ({recipe_id}, '{step["step"]}', '{step["command"]}')
             """
             SQLiteQuery(SQLCommandStep, "commit")
-
-
-input_data = {
-    "recipes": [
-        {},
-    ]
-}
-
-insert_recipe_into_database(input_data)
 
 
 def get_Random_metadata():
