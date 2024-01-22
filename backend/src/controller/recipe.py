@@ -71,14 +71,13 @@ class Recipe:
         Returns:
             list or None: The progression requirements for the step if found, otherwise None.
         """
-        temp = SQLQueries.SQLiteQuery(
+        return SQLQueries.SQLiteQuery(
             "SELECT camera, progressionObject , inhibitor  FROM steps WHERE recipe_id = "
-            + str(self.current_step + 1)
+            + str(self.recipe_id)
             + " AND step ="
             + str(step_number + 1),
             "one",
         )
-        return temp
 
     def get_progression_requirements_for_current_step(self):
         """Gets the progression requirements for the current step.
