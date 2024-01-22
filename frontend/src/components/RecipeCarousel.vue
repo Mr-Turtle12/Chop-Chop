@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, toRef } from 'vue';
+import { computed, defineProps, toRef, ref } from 'vue';
 
 const props = defineProps({
   recipe: {
@@ -60,47 +60,42 @@ const props = defineProps({
 });
 
 const isPeeking = ref(false);
-var prePeekingIndex = 0;
 const recipe = toRef(props, 'recipe');
 const stepIndex = toRef(props, 'stepIndex');
+const localStepDelta = ref(0);
 
-const previousStep = computed(() => recipe.value.steps[stepIndex.value - 1]);
-const currentStep = computed(() => recipe.value.steps[stepIndex.value]);
-const nextStep = computed(() => recipe.value.steps[stepIndex.value + 1]);
+const previousStep = computed(() => {
+  const index = stepIndex.value + localStepDelta.value - 1;
+  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
+});
 
-const currentProgressionObject = computed(() => recipe.value.progressionObject[stepIndex.value + 1]);
+const currentStep = computed(() => {
+  const index = stepIndex.value + localStepDelta.value;
+  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
+});
+
+const nextStep = computed(() => {
+  const index = stepIndex.value + localStepDelta.value + 1;
+  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
+});
 
 function incrementPeek() {
-  if(!isPeeking.value)
-  {
-    prePeekingIndex = stepIndex.value;
-  }
   isPeeking.value = true;
-    if(stepIndex.value != recipe.steps.length - 1) {
-        stepIndex.value++
-    }
+  localStepDelta.value++;
 }
 
 function decrementPeek() {
-  if(!isPeeking.value)
-  {
-    prePeekingIndex = stepIndex.value;
-  }
   isPeeking.value = true;
-    if(stepIndex.value != 0) {
-        stepIndex.value--
-    }
+  localStepDelta.value--;
 }
 
-
-
-function onClickReturn(){
-  stepIndex.value = prePeekingIndex;
+function onClickReturn() {
+  localStepDelta.value = 0;
   isPeeking.value = false;
-  console.log("Returning");
 }
-
 </script>
+
+
 
 <style scoped lang="scss">
 .c-recipe-carousel {
