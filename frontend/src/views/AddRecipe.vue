@@ -1,7 +1,9 @@
 <template>
   <PageHeader />
   
-  <body>
-    <p>add recipe</p>
-  </body>
+  <p>add recipe</p>
 </template>
+
+<script setup>
+import PageHeader from '@/components/PageHeader.vue'
+</script>

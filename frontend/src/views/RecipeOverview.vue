@@ -9,6 +9,7 @@
       >
     </div>
   </section>
+  
   <section class="c-recipe o-section">
     <div class="c-recipe__container o-container">
       <div class="c-recipe__top">    
