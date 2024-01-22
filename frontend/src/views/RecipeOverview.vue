@@ -25,11 +25,11 @@
         <div class="c-recipe__info-right">
           <div class="c-recipe__meta-container">
             <p class="c-recipe__meta">
-              Prep:
+              Prep: {{ recipe.prepTime }}
             </p>
 
             <p class="c-recipe__meta">
-              Cook:
+              Cook: {{ recipe.cookTime }}
             </p>
           </div>
         </div>
@@ -142,6 +142,8 @@ function parseRecipeFromJson(RecipeJsonMessage)
     recipe.name = RecipeJsonMessage.name
     recipe.decription = RecipeJsonMessage.description
     recipe.img = RecipeJsonMessage.image
+    recipe.prepTime = RecipeJsonMessage.prepTime
+    recipe.cookTime = RecipeJsonMessage.cookTime
     recipe.ingredients = formatIngredients(RecipeJsonMessage)
     recipe.isFavourite = RecipeJsonMessage.isFavourite
     recipe.steps = RecipeJsonMessage['commands']
@@ -214,6 +216,10 @@ const toggleFavourite = ($event) => {
       width:30px;
       mask-size: cover;
     }
+  }
+
+  &__meta + &__meta {
+    margin-top: var(--space-xs);
   }
 
   &__info-bottom {
