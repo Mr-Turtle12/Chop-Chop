@@ -11,30 +11,50 @@
   </section>
   <section class="c-recipe o-section">
     <div class="c-recipe__container o-container">
-      <div class="c-recipe__top">    
-        <h1 class="c-recipe__heading">
-          {{ recipe.name }}
-        </h1>
+      <div class="c-recipe__info-container">   
+        <div class="c-recipe__info-left">
+          <h1 class="c-recipe__heading">
+            {{ recipe.name }}
+          </h1>
 
-        <a
-          class="c-recipe__link"
-          :href="`/recipe/${ route.params.id }`"
-          @click="
-            startRecipeAPICall()"
-        >start recipe</a>
+          <p class="c-recipe__description">
+            {{ recipe.decription }}
+          </p>
+        </div> 
 
-        <div
-          class="c-recipe__bookmark-icon-wrapper"
-          @click="toggleFavourite"
-        >
-          <BookmarkSVG
-            :class="`c-recipe__bookmark-icon js-bookmark-icon ${recipe.isFavourite ? 'c-recipe__bookmark-icon--favourite' : ''}`"
-          />
+        <div class="c-recipe__info-right">
+          <div class="c-recipe__meta-container">
+            <p class="c-recipe__meta">
+              Prep:
+            </p>
+
+            <p class="c-recipe__meta">
+              Cook:
+            </p>
+          </div>
         </div>
 
-        <p class="c-recipe__meta">
-          1 hour
-        </p>
+        <div class="c-recipe__info-bottom">
+          <div
+            class="c-recipe__bookmark-button-container"
+            @click="toggleFavourite"
+          >
+            <BookmarkSVG
+              :class="`c-recipe__bookmark-icon js-bookmark-icon ${recipe.isFavourite ? 'c-recipe__bookmark-icon--favourite' : ''}`"
+            />
+
+            <p class="c-recipe__bookmark-title">
+              Bookmark Recipe
+            </p>
+          </div>
+        
+          <a
+            class="c-recipe__link"
+            :href="`/recipe/${ route.params.id }`"
+            @click="
+              startRecipeAPICall()"
+          >start recipe</a>
+        </div>
       </div>
 
       <RecipeSwitcher 
@@ -149,32 +169,68 @@ const toggleFavourite = ($event) => {
 
 <style scoped lang="scss">
 .c-recipe {
-  &__top {
+  &__info-container {
     @include grid;
+  }
+
+  &__info-left {
+    grid-column:1/9;
   }
 
   &__heading {
     @include ts-heading-1;
     color: #419170;
-    grid-column:1/7;
   }
 
-  &__link {
+  &__description {
     @include ts-heading-3;
-    grid-column: 10/-1;
-    border-radius: 10px;
-    border: 2px solid #419170;
-    background-color: #FFF;
     color: #419170;
+    margin-top:var(--space-s);
+  }
+
+  &__info-right {
+    grid-column: 9/-1;
+  }
+
+  &__meta-container {
+    background: #419170;
+    border-radius: 10px;
+    padding: var(--space-m);
+    box-sizing: border-box;
+  }
+
+  &__meta {
+    @include ts-meta;
+    color: #fff;
     display: flex;
     align-items: center;
-    justify-content: center;
 
-    &:hover,
-    &:focus {
-      background-color: #419170;
-      color: #fff;    
+    &::before {
+      content:'';
+      mask:url('@/assets/clock.svg');
+      background: #fff;
+      display:inline-block;
+      height:30px;
+      width:30px;
+      mask-size: cover;
     }
+  }
+
+  &__info-bottom {
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__bookmark-button-container {
+    @include ts-heading-3;
+    color:#419170;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #419170;
   }
 
   &__bookmark-icon {
@@ -193,12 +249,21 @@ const toggleFavourite = ($event) => {
     }
   }
 
-  &__meta {
-    @include ts-meta;
+  &__link {
+    @include ts-heading-3;
+    grid-column: 10/-1;
+    border-radius: 10px;
+    border: 2px solid #419170;
+    background-color: #FFF;
     color: #419170;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    &::before {
-      content:url('@/assets/clock.svg');
+    &:hover,
+    &:focus {
+      background-color: #419170;
+      color: #fff;    
     }
   }
 }
