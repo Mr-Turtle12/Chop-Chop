@@ -53,7 +53,7 @@ socket.addEventListener('open', (event) => {
 socket.addEventListener('message', (event) => {
     try {
         const data = JSON.parse(event.data);
-
+        console.log(stepIndex.value);
         if (data.name) {
             recipe.name = data.name;
             recipe.steps = data['commands'];
