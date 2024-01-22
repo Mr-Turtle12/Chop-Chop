@@ -23,11 +23,7 @@
 
         <div class="c-featured-recipe__meta">
           <div class="c-featured-recipe__time">
-            <ClockSVG
-              class="c-featured-recipe__time-icon"
-            />
-
-            <p>Prep: {{ recipes.prepTime }} <br>Cook: {{ recipes.cookTime }}</p>
+            <p>{{ recipes.description }}</p>
           </div>
         </div>
       </div>

@@ -54,7 +54,8 @@ def get_all_metadata_from(recipe_id):
 def get_all_metadata():
     return utils.convert_metadata(
         SQLiteQuery(
-            "SELECT id , image , name , description , favourite FROM recipes", "all"
+            "SELECT id , image , name , description , favourite FROM recipes",
+            "all",
         )
     )
 
@@ -74,7 +75,7 @@ def get_ingredients(recipe_id):
 
 def get_Random_metadata():
     target_recipe = SQLiteQuery(
-        "SELECT id , image , name , description ,  FROM recipes ORDER BY RANDOM()",
+        "SELECT id , image , name , description  FROM recipes ORDER BY RANDOM()",
         "one",
     )
     if not target_recipe:

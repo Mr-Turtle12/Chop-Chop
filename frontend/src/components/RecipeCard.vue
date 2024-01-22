@@ -29,11 +29,8 @@
 
       <div class="c-card__meta">
         <div class="c-card__time">
-          <ClockSVG
-            class="c-card__time-icon"
-          />
 
-          <p>Prep: {{ prepTime }} <br>Cook: {{ cookTime }}</p>
+          <p>{{info}}</p>
         </div>
       </div>
     </a>
@@ -50,8 +47,6 @@ const props = defineProps({
     info: { type: String, default: 'info' },
     isFavourite: {type: Boolean, default: true},
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
-    prepTime: {type: String, default: '0 minutes'},
-    cookTime: {type: String, default: '0 minutes'},
     id : {type: Number, default: 1}
 })
 var isLocalFavourite  = props.isFavourite;

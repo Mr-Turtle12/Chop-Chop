@@ -45,7 +45,10 @@ def get_commands(recipe_id):
 
 
 def convert_image(imageBlob):
-    return "data:image/JPEG;base64," + base64.b64encode(imageBlob).decode("utf-8")
+    if imageBlob:
+        return "data:image/JPEG;base64," + base64.b64encode(imageBlob).decode("utf-8")
+    else:
+        return ""
 
 
 def convert_metadata(SQLRecipes):
