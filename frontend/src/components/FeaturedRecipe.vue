@@ -1,10 +1,14 @@
 <template>
-  <section class="c-featured-recipe o-section">  
+  <section class="c-featured-recipe o-section"> 
+    <div
+        v-if="recipesLoaded"
+        class="c-featured-recipe__card-container"
+      > 
     <div class="c-featured-recipe__container o-container">
       <div class="c-featured-recipe__image-container">
         <img
           class="c-featured-recipe__image"
-          src="@/assets/recipe-1.png"
+          :src="recipes.image"
         >
       </div>
     
@@ -12,8 +16,8 @@
         <h1 class="c-featured-recipe__heading">
           <a
             class="c-featured-recipe__heading-link"
-            href="/recipe-overview"
-          >{{ recipeName }}
+            :href="`/recipe-overview/${ recipes.id }`"
+          >{{recipes.name}} 
           </a>
         </h1>
 
@@ -23,9 +27,10 @@
               class="c-featured-recipe__time-icon"
             />
 
-            <p>{{ info }}</p>
+            <p>{{ recipes.info }}</p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </section>
@@ -33,10 +38,26 @@
 
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
+import { onMounted, ref } from 'vue'
 
 defineProps({
     recipeName: { type: String, default: 'recipe name' },
     info: { type: String, default: 'info' },
+})
+
+const recipes = ref([])
+const recipesLoaded = ref(false)
+
+onMounted(async () => {
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send('{"command": {"keyword": "get","recipe_id": -3}}')
+    })
+
+    socket.addEventListener('message', (event) => {
+         recipes.value = JSON.parse(event.data)
+        recipesLoaded.value = true
+    })
 })
 </script>
 
@@ -109,6 +130,12 @@ defineProps({
   &__time-icon {
     margin-right:4px;
     color: white;
+  }
+  &__card-container {
+    display:flex;
+    column-gap: var(--gutter);
+    overflow: auto;
+    white-space: nowrap;
   }
 }
 </style>
