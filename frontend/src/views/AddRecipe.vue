@@ -151,17 +151,26 @@
             name="ingredientUnit"
             class="c-add-recipe__input c-add-recipe__input--ingredient-unit"
           >
-            <option value="volvo">
-              Volvo
+            <option value="number">
+              number
             </option>
-            <option value="saab">
-              Saab
+            <option value="tsp">
+              tsp
             </option>
-            <option value="mercedes">
-              Mercedes
+            <option value="tbsp">
+              tbsp
             </option>
-            <option value="audi">
-              Audi
+            <option value="grams">
+              grams
+            </option>
+            <option value="kg">
+              kg
+            </option>
+            <option value="ml">
+              ml
+            </option>
+            <option value="litre">
+              litre
             </option>
           </select>
 
