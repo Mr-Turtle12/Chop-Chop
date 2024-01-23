@@ -178,7 +178,30 @@
       </form>
 
       <form class="c-add-recipe__recipe-form js-recipe-form">
-        <p>recipe</p>
+        <div class="c-add-recipe__recipe-headings">
+          <h2 class="c-add-recipe__recipe-heading">
+            Steps
+          </h2>
+        </div>
+          
+        <ol class="c-add-recipe__recipe-container js-recipe-container">
+          <li class="c-add-recipe__recipe-step">
+            <textarea
+              id="recipeStep"
+              class=" c-add-recipe__input c-add-recipe__input--recipe-step"
+              name="recipeStep"
+              rows="2"
+              col="1"
+            />
+          </li>
+        </ol>
+
+        <button
+          class="c-add-recipe__add-step-button js-add-step-button"
+          @click="addRecipeStep()"
+        >
+          Add Step
+        </button>
       </form>
 
       <input
@@ -219,6 +242,12 @@ function toggle(buttonName) {
 
 function addIngredient() {
     const originalElement = document.querySelector('.js-ingredient-container')
+    const clonedElement = originalElement.cloneNode(true)
+    originalElement.parentNode.appendChild(clonedElement)
+}
+
+function addRecipeStep() {
+    const originalElement = document.querySelector('.js-recipe-container')
     const clonedElement = originalElement.cloneNode(true)
     originalElement.parentNode.appendChild(clonedElement)
 }
@@ -273,6 +302,11 @@ function addIngredient() {
     }
   }
 
+  &__ingredient-form, 
+  &__recipe-form {
+    flex-direction: column;
+  }
+
   // Overview form //
   &__overview-form {
     gap: var(--space-xxl);
@@ -304,10 +338,6 @@ function addIngredient() {
   }
 
   // Ingredient form //
-  &__ingredient-form {
-    flex-direction: column;
-  }
-
   &__ingredient-headings {
     @include grid;
     grid-column:1/-1;
@@ -334,7 +364,8 @@ function addIngredient() {
     @include grid;
   }
 
-  &__add-ingredient-button {
+  &__add-ingredient-button,
+  &__add-step-button {
     @include ts-heading-4;
     margin-top: var(--space-m);
     display: block;
@@ -351,6 +382,26 @@ function addIngredient() {
     }
   }
 
+  // Recipe form //
+  &__recipe-heading {
+    @include ts-heading-4;
+    color: #419170;
+  }
+
+  &__recipe-container {
+    @include grid;
+  }
+
+  &__recipe-step {
+    grid-column: 1/-1;
+
+    &::marker {
+      @include ts-heading-4;
+      color:#419170;
+    }
+  }
+
+  // Input stylings //
   &__label {
     @include ts-heading-4;
     color: #419170;
@@ -386,20 +437,24 @@ function addIngredient() {
 
     &--ingredient-quantity {
     grid-column: 1/3;
-  }
+    }
 
-  &--ingredient-unit {
-    grid-column: 3/6;
-  }
+    &--ingredient-unit {
+      grid-column: 3/6;
+    }
 
-  &--ingredient-name {
-    grid-column: 6/-1;
-  }
+    &--ingredient-name {
+      grid-column: 6/-1;
+    }
 
     &--select {
       border: solid 1px #419170;
       border-radius: 2px;
       width: 50%;
+    }
+
+    &--recipe-step {
+      width:100%;
     }
   }
 
