@@ -212,9 +212,10 @@ const toggleFavourite = ($event) => {
       mask:url('@/assets/clock.svg');
       background: #fff;
       display:inline-block;
-      height:30px;
-      width:30px;
+      height:28px;
+      width:28px;
       mask-size: cover;
+      margin-right: var(--space-xs);
     }
   }
 
@@ -234,30 +235,29 @@ const toggleFavourite = ($event) => {
     background: #fff;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: var(--space-xxs);
     border-radius: 10px;
     border: 2px solid #419170;
+
+    &:hover,
+    &:focus {
+      background-color:#419170;
+      color:#fff;
+    }
   }
 
   &__bookmark-icon {
     color: #fff;
-    height: 52px;
-    width: 46px;
+    margin-right: var(--space-xxs);
 
     &--favourite {
       color: #419170;
-    }
-
-    // if bookmarked is not favourited add hover effect
-    &:not(&--favourite):hover,
-    &:not(&--favourite):focus {
-      color:#CEE4DB;
+      stroke: solid 1px #fff;
     }
   }
 
   &__link {
     @include ts-heading-3;
-    grid-column: 10/-1;
     border-radius: 10px;
     border: 2px solid #419170;
     background-color: #FFF;
@@ -265,6 +265,7 @@ const toggleFavourite = ($event) => {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: var(--space-xxs);
 
     &:hover,
     &:focus {
@@ -287,42 +288,6 @@ const toggleFavourite = ($event) => {
     object-fit: cover;
     top:0;
     left:0;
-  }
-}
-
-.Fav-star {
-  z-index: 1;
-  padding: 18px;
-  width: 100%;
-  height: 100%;
-  fill: #dee0e0;
-}
-
-@keyframes star {
-  0% {
-    transform: scale(1);
-  }
-  
-  20% {
-    fill: #ffac33;
-    transform: scale(0);
-  }
-  
-  30% {
-    transform: scale(0);
-  }
-  
-  60% {
-    transform: scale(1.1);
-  }
-  
-  70% {
-    transform: scale(0.9);
-  }
-  
-  100% {
-    fill: #ffac33;
-    transform: scale(1);
   }
 }
 </style>
