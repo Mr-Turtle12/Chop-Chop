@@ -164,7 +164,7 @@
             id="ingredientName"
             class=" c-add-recipe__input c-add-recipe__input--ingredient-name"
             name="ingredientName"
-            rows="2"
+            rows="1"
             col="1"
           />
         </div>
@@ -359,6 +359,7 @@ function addIngredient() {
   &__input {
     border: solid 1px #419170;
     margin-top: var(--space-xs);
+    padding:var(--space-xxs);
     position: relative;
 
     &:focus {
