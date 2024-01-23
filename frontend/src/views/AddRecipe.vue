@@ -57,13 +57,13 @@
               <div class="c-add-recipe__input-time-container">
                 <input
                   id="cookTimeHour"
-                  type="text"
+                  type="number"
                   class="c-add-recipe__input c-add-recipe__input--hour"
                 > 
 
                 <input
                   id="cookTimeMinute"
-                  type="text"
+                  type="number"
                   class="c-add-recipe__input c-add-recipe__input--minute"
                 > 
               </div>
@@ -78,13 +78,13 @@
               <div class="c-add-recipe__input-time-container">
                 <input
                   id="cookTimeHour"
-                  type="text"
+                  type="number"
                   class="c-add-recipe__input c-add-recipe__input--hour"
                 > 
 
                 <input
                   id="cookTimeMinute"
-                  type="text"
+                  type="number"
                   class="c-add-recipe__input c-add-recipe__input--minute"
                 > 
               </div>
