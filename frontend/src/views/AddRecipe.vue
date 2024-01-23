@@ -54,16 +54,19 @@
                 class="c-add-recipe__label"
               >Prep Time:</label><br>
 
-              <select
-                id="prepTime"
-                class="c-add-recipe__input c-add-recipe__input--select"
-                type="text"
-                name="prepTime"
-              >
-                <option value="thing">
-                  thing
-                </option>
-              </select>
+              <div class="c-add-recipe__input-time-container">
+                <input
+                  id="cookTimeHour"
+                  type="text"
+                  class="c-add-recipe__input c-add-recipe__input--hour"
+                > 
+
+                <input
+                  id="cookTimeMinute"
+                  type="text"
+                  class="c-add-recipe__input c-add-recipe__input--minute"
+                > 
+              </div>
             </div>
 
             <div class="c-add-recipe__overview-left c-add-recipe__overview-left--half">
@@ -72,17 +75,19 @@
                 class="c-add-recipe__label"
               >Cook Time:</label><br>
 
-              <input
-                id="cookTimeHour"
-                type="text"
-                class="c-add-recipe__input c-add-recipe__input--hour"
-              > 
+              <div class="c-add-recipe__input-time-container">
+                <input
+                  id="cookTimeHour"
+                  type="text"
+                  class="c-add-recipe__input c-add-recipe__input--hour"
+                > 
 
-              <input
-                id="cookTimeMinute"
-                type="text"
-                class="c-add-recipe__input c-add-recipe__input--minute"
-              > 
+                <input
+                  id="cookTimeMinute"
+                  type="text"
+                  class="c-add-recipe__input c-add-recipe__input--minute"
+                > 
+              </div>
             </div>
           </div>
 
@@ -331,6 +336,11 @@ function addRecipeStep() {
     }
   }
 
+  &__input-time-container {
+    display:flex;
+    gap: var(--space-xxs);
+  }
+
   &__overview-right-container {
     display:flex;
     flex-direction: column;
@@ -418,6 +428,8 @@ function addRecipeStep() {
     }
 
     &--hour {
+      width: 25%; 
+      
       &:after {
         position: absolute;
         right: 0;
@@ -427,6 +439,8 @@ function addRecipeStep() {
     }
 
     &--minute {
+      width: 25%; 
+
       &:after {
         position: absolute;
         right: 0;
