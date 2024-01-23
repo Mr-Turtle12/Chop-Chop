@@ -47,10 +47,6 @@ ul {
   list-style: none;
 }
 
-input {
-  margin: 0;
-}
-
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -63,8 +59,11 @@ input[type="search"] {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
-  border: 0;
   cursor: pointer;
+}
+
+textarea {
+  resize: none;
 }
 
 a:link,
