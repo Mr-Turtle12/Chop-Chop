@@ -231,6 +231,8 @@
 import PageHeader from '@/components/PageHeader.vue'
 
 function toggle(buttonName) {
+    console.log('buttonName: ' + buttonName)
+
     const buttons = {
         overview: document.querySelector('.js-overview-button'),
         recipe: document.querySelector('.js-recipe-button'),
@@ -243,11 +245,18 @@ function toggle(buttonName) {
         ingredient: document.querySelector('.js-ingredient-form'),
     }
 
+    // loop through each button
     Object.keys(buttons).forEach(key => {
         const button = buttons[key]
         const view = views[key]
+        var isToggled = false
 
-        const isToggled = key === buttonName && !button.classList.contains('is-toggled')
+        console.log('key: ' + key)  //ingredient, recipe or overview
+
+        if(key != buttonName) {
+            isToggled = key === buttonName && !button.classList.contains('is-toggled')
+        }
+
 
         button.classList.toggle('is-toggled', isToggled)
         view.classList.toggle('is-toggled', isToggled)
