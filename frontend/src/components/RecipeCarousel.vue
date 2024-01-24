@@ -24,8 +24,8 @@
           >
         </button>
 
-        <button 
-          class="c-recipe-carousel__button c-recipe-carousel__button--return" 
+        <button
+          class="c-recipe-carousel__button c-recipe-carousel__button--return"
           @click="onClickReturn">
           <span v-if="isPeeking"><img src="@/assets/return-button-icon.svg"></span>
         </button>
@@ -46,66 +46,56 @@
 </template>
 
 <script setup>
-import {computed, ref, reactive } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, defineProps, toRef, ref } from 'vue';
 
-const route = useRoute();
-
-const socket = new WebSocket('ws://localhost:8765')
+const props = defineProps({
+  recipe: {
+    type: Object,
+    required: true,
+  },
+  stepIndex: {
+    type: Number,
+    required: true,
+  },
+});
 
 const isPeeking = ref(false);
-var prePeekingIndex = 0;
+const recipe = toRef(props, 'recipe');
+const stepIndex = toRef(props, 'stepIndex');
+const localStepDelta = ref(0);
 
-socket.addEventListener('open', (event) => {
-    socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
-    
-})
-socket.addEventListener('message', (event) => {
+const previousStep = computed(() => {
+  const index = stepIndex.value + localStepDelta.value - 1;
+  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
+});
 
-    const data = JSON.parse(event.data)
-    if (data.name) {
-        recipe.name = data.name
-        recipe.steps = data['commands']
-    } else {
-        stepIndex.value = data.step
-        prePeekingIndex = stepIndex.value;
-    }
-})
+const currentStep = computed(() => {
+  const index = stepIndex.value + localStepDelta.value;
+  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
+});
 
-var recipe = reactive({
-    name: 'ERROR NAME NOT FOUND',
-    steps: [
-        'NO STEPS FOUND'
-    ],
-})
-
-var stepIndex = ref(0)
-
-var previousStep = computed(() => recipe.steps[stepIndex.value - 1])
-var currentStep = computed(() => recipe.steps[stepIndex.value])
-var nextStep = computed(() => recipe.steps[stepIndex.value + 1])
+const nextStep = computed(() => {
+  const index = stepIndex.value + localStepDelta.value + 1;
+  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
+});
 
 function incrementPeek() {
   isPeeking.value = true;
-    if(stepIndex.value != recipe.steps.length - 1) {
-        stepIndex.value++
-    }
+  localStepDelta.value++;
 }
 
 function decrementPeek() {
   isPeeking.value = true;
-    if(stepIndex.value != 0) {
-        stepIndex.value--
-    }
+  localStepDelta.value--;
 }
 
-function onClickReturn(){
-  stepIndex.value = prePeekingIndex;
+function onClickReturn() {
+  localStepDelta.value = 0;
   isPeeking.value = false;
-  console.log("Returning");
 }
-
 </script>
+
+
 
 <style scoped lang="scss">
 .c-recipe-carousel {
@@ -113,7 +103,7 @@ function onClickReturn(){
 
   &__container {
     @include grid;
-    height: 100%;
+    height: 90%;
   }
 
   &__button-container {

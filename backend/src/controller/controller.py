@@ -25,6 +25,7 @@ class Controller:
                 self.get_progression_requirements_for_current_step(), self.end_flag
             )
 
+
     def update_flag(self):
         self.step_changed_flag.state = True
 

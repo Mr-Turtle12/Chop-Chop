@@ -12,7 +12,8 @@
   },
   "main": "background.js",
   "dependencies": {
-    "vue": "^3.2.13",
+    "@chenfengyuan/vue-countdown": "^2.1.2",
+    "vue": "^3.3.8",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
