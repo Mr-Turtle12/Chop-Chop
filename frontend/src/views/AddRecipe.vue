@@ -108,9 +108,20 @@
               col="1"
             />
 
-            <label for="recipeImage" class="c-add-recipe__label">Image:</label>
-            <input type="file" @change="handleFileChange" />
-            <img v-if="base64Image" :src="base64Image" alt="Uploaded Image" :style="{ maxWidth: '50%', maxHeight: '50%' }">
+            <label
+              for="recipeImage"
+              class="c-add-recipe__label"
+            >Image:</label>
+            <input
+              type="file"
+              @change="handleFileChange"
+            >
+            <img
+              v-if="base64Image"
+              :src="base64Image"
+              alt="Uploaded Image"
+              :style="{ maxWidth: '50%', maxHeight: '50%' }"
+            >
           </div>   
         </form>
       </div>
@@ -130,49 +141,51 @@
           </h2>
         </div>
           
-        <div class="c-add-recipe__ingredient-container js-ingredient-container">
-          <input
-            id="ingredientQuantity"
-            type="text"
-            class="c-add-recipe__input c-add-recipe__input--ingredient-quantity"
-          >
+        <ul class="c-add-recipe__ingredient-container js-ingredient-container">
+          <li class="c-add-recipe__ingredient js-ingredient">
+            <input
+              id="ingredientQuantity"
+              type="text"
+              class="c-add-recipe__input c-add-recipe__input--ingredient-quantity"
+            >
 
-          <select
-            id="ingredientUnit"
-            name="ingredientUnit"
-            class="c-add-recipe__input c-add-recipe__input--ingredient-unit"
-          >
-            <option value="number">
-              number
-            </option>
-            <option value="tsp">
-              tsp
-            </option>
-            <option value="tbsp">
-              tbsp
-            </option>
-            <option value="grams">
-              grams
-            </option>
-            <option value="kg">
-              kg
-            </option>
-            <option value="ml">
-              ml
-            </option>
-            <option value="litre">
-              litre
-            </option>
-          </select>
+            <select
+              id="ingredientUnit"
+              name="ingredientUnit"
+              class="c-add-recipe__input c-add-recipe__input--ingredient-unit"
+            >
+              <option value="number">
+                number
+              </option>
+              <option value="tsp">
+                tsp
+              </option>
+              <option value="tbsp">
+                tbsp
+              </option>
+              <option value="grams">
+                grams
+              </option>
+              <option value="kg">
+                kg
+              </option>
+              <option value="ml">
+                ml
+              </option>
+              <option value="litre">
+                litre
+              </option>
+            </select>
 
-          <textarea
-            id="ingredientName"
-            class=" c-add-recipe__input c-add-recipe__input--ingredient-name"
-            name="ingredientName"
-            rows="1"
-            col="1"
-          />
-        </div>
+            <textarea
+              id="ingredientName"
+              class=" c-add-recipe__input c-add-recipe__input--ingredient-name"
+              name="ingredientName"
+              rows="1"
+              col="1"
+            />
+          </li>
+        </ul>
 
         <button
           class="c-add-recipe__add-ingredient-button js-add-ingredient-button"
@@ -190,7 +203,7 @@
         </div>
           
         <ol class="c-add-recipe__recipe-container js-recipe-container">
-          <li class="c-add-recipe__recipe-step">
+          <li class="c-add-recipe__recipe-step js-recipe-step">
             <textarea
               id="recipeStep"
               class=" c-add-recipe__input c-add-recipe__input--recipe-step"
@@ -221,10 +234,10 @@
 
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 
-const base64Image = ref(null);
+const base64Image = ref(null)
 
 function toggle(buttonName) {
     console.log('buttonName: ' + buttonName)
@@ -249,9 +262,7 @@ function toggle(buttonName) {
 
         console.log('key: ' + key)  //ingredient, recipe or overview
 
-        if(key != buttonName) {
-            isToggled = key === buttonName && !button.classList.contains('is-toggled')
-        }
+        isToggled = key === buttonName && !button.classList.contains('is-toggled')
 
 
         button.classList.toggle('is-toggled', isToggled)
@@ -260,74 +271,74 @@ function toggle(buttonName) {
 }
 
 function addIngredient() {
-    event.preventDefault();
-    const originalElement = document.querySelector('.js-ingredient-container')
-    const clonedElement = originalElement.cloneNode(true)
-    originalElement.querySelector('.c-add-recipe__input--ingredient-quantity').value = "";
-    originalElement.querySelector('.c-add-recipe__input--ingredient-unit').value = "number";
-    originalElement.querySelector('.c-add-recipe__input--ingredient-name').value = "";
-    originalElement.parentNode.appendChild(clonedElement)
+    event.preventDefault()
+    const ingredientContainer = document.querySelector('.js-ingredient-container')
+    const ingredient = document.querySelector('.js-ingredient')
+    const newIngredient = ingredient.cloneNode(true)
+
+    ingredientContainer.appendChild(newIngredient)
 }
 
 function addRecipeStep() {
-    event.preventDefault();
-    const originalElement = document.querySelector('.js-recipe-container')
-    originalElement.querySelector('.c-add-recipe__input--recipe-step').value = "";
-    const clonedElement = originalElement.cloneNode(true)
+    event.preventDefault()
+
+    const recipeContainer = document.querySelector('.js-recipe-container')
+    const recipeStep = document.querySelector('.js-recipe-step')
+    const newRecipeStep = recipeStep.cloneNode(true)
     
-    originalElement.parentNode.appendChild(clonedElement)
+    recipeContainer.appendChild(newRecipeStep)
 }
 
 const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      base64Image.value = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-};
+    const file = event.target.files[0]
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            base64Image.value = e.target.result
+        }
+        reader.readAsDataURL(file)
+    }
+}
 
 
 const submitForm = () => {
-  // Collect form data and structure it into the desired JSON format
-  const formData = {
-    image: base64Image.value || "", // Assuming base64Image is optional
-    name: document.getElementById('recipeName').value || "",
-    description: document.getElementById('recipeDescription').value || "",
-    prepTime: `${document.getElementById('prepTimeHour').value || 0} hours ${document.getElementById('prepTimeMinute').value || 0} minutes`,
-    cookTime: `${document.getElementById('cookTimeHour').value || 0} hours ${document.getElementById('cookTimeMinute').value || 0} minutes`,
-    ingredients: [],
-    steps: [],
-  };
-
-  // Extract ingredient data from the form
-  const ingredientContainers = document.querySelectorAll('.js-ingredient-container');
-  ingredientContainers.forEach(container => {
-    const quantity = container.querySelector('.c-add-recipe__input--ingredient-quantity').value || "";
-    const unit = container.querySelector('.c-add-recipe__input--ingredient-unit').value || "";
-    const name = container.querySelector('.c-add-recipe__input--ingredient-name').value || "";
-
-    if (quantity && unit && name) {
-      formData.ingredients.push({ item: name, amount: quantity, unit });
+    // Collect form data and structure it into the desired JSON format
+    const formData = {
+        image: base64Image.value || '', // Assuming base64Image is optional
+        name: document.getElementById('recipeName').value || '',
+        description: document.getElementById('recipeDescription').value || '',
+        prepTime: `${document.getElementById('prepTimeHour').value || 0} hours ${document.getElementById('prepTimeMinute').value || 0} minutes`,
+        cookTime: `${document.getElementById('cookTimeHour').value || 0} hours ${document.getElementById('cookTimeMinute').value || 0} minutes`,
+        ingredients: [],
+        steps: [],
     }
-  });
 
-  // Extract recipe step data from the form
-  const stepContainers = document.querySelectorAll('.c-add-recipe__recipe-container .c-add-recipe__input--recipe-step');
-  stepContainers.forEach((step, index) => {
-    const command = step.value || "";
-    if (command) {
-      formData.steps.push({ step: index + 1, command });
-    }
-  });
+    // Extract ingredient data from the form
+    const ingredientContainers = document.querySelectorAll('.js-ingredient-container')
+    ingredientContainers.forEach(container => {
+        const quantity = container.querySelector('.c-add-recipe__input--ingredient-quantity').value || ''
+        const unit = container.querySelector('.c-add-recipe__input--ingredient-unit').value || ''
+        const name = container.querySelector('.c-add-recipe__input--ingredient-name').value || ''
 
-  // Convert formData to JSON string
-  const jsonData = JSON.stringify(formData, null, 2);
-  console.log(jsonData);
+        if (quantity && unit && name) {
+            formData.ingredients.push({ item: name, amount: quantity, unit })
+        }
+    })
 
-};
+    // Extract recipe step data from the form
+    const stepContainers = document.querySelectorAll('.c-add-recipe__recipe-container .c-add-recipe__input--recipe-step')
+    stepContainers.forEach((step, index) => {
+        const command = step.value || ''
+        if (command) {
+            formData.steps.push({ step: index + 1, command })
+        }
+    })
+
+    // Convert formData to JSON string
+    const jsonData = JSON.stringify(formData, null, 2)
+    console.log(jsonData)
+
+}
 
 </script>
 
@@ -443,7 +454,7 @@ const submitForm = () => {
     }
   }
 
-  &__ingredient-container {
+  &__ingredient {
     @include grid;
   }
 
@@ -471,13 +482,7 @@ const submitForm = () => {
     color: #419170;
   }
 
-  &__recipe-container {
-    @include grid;
-  }
-
   &__recipe-step {
-    grid-column: 1/-1;
-
     &::marker {
       @include ts-heading-4;
       color:#419170;
