@@ -37,3 +37,6 @@ Run the backend:
 ```
 // replace me
 ```
+
+## Citations
+fengyuanchen - VUE timer - https://github.com/fengyuanchen/vue-countdown

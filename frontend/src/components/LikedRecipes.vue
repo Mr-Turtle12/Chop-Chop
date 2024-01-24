@@ -51,9 +51,20 @@ onMounted(async () => {
     })
 
     socket.addEventListener('message', (event) => {
-        const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id}))
-        recipesLoaded.value = true
+      const arrayRecipe = JSON.parse(event.data);
+
+      // Check if arrayRecipe is an array
+      if (Array.isArray(arrayRecipe)) {
+          recipes.value = arrayRecipe.map(recipe => ({
+              name: recipe.name,
+              image: recipe.image,
+              info: recipe.description,
+              id: recipe.id
+          }));
+          recipesLoaded.value = true;
+      } else {
+          console.error('Invalid data structure received from WebSocket:', arrayRecipe);
+      }
     })
 })
 const handleFavouriteChange = () => {

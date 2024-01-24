@@ -27,5 +27,6 @@ class ManageThread:
     def end_thread(self, flag):
         if not flag.is_set():
             controller.CONTROLLER_INSTANCE.progress_next_step()
+            print("incriment")
         else:
             flag.clear()
