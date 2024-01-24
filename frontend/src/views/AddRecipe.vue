@@ -56,13 +56,13 @@
 
               <div class="c-add-recipe__input-time-container">
                 <input
-                  id="cookTimeHour"
+                  id="prepTimeHour"
                   type="number"
                   class="c-add-recipe__input c-add-recipe__input--hour"
                 > 
 
                 <input
-                  id="cookTimeMinute"
+                  id="prepTimeMinute"
                   type="number"
                   class="c-add-recipe__input c-add-recipe__input--minute"
                 > 
@@ -71,7 +71,7 @@
 
             <div class="c-add-recipe__overview-left c-add-recipe__overview-left--half">
               <label
-                for="cookTimeHour"
+                for="cookTime"
                 class="c-add-recipe__label"
               >Cook Time:</label><br>
 
@@ -108,18 +108,9 @@
               col="1"
             />
 
-            <label
-              for="recipeImage"
-              class="c-add-recipe__label"
-            >Image:</label>
-
-            <textarea
-              id="recipeImage"
-              class="c-add-recipe__input"
-              name="recipeImage"
-              rows="4"
-              col="1"
-            />
+            <label for="recipeImage" class="c-add-recipe__label">Image:</label>
+            <input type="file" @change="handleFileChange" />
+            <img v-if="base64Image" :src="base64Image" alt="Uploaded Image" :style="{ maxWidth: '50%', maxHeight: '50%' }">
           </div>   
         </form>
       </div>
@@ -222,6 +213,7 @@
         class="c-add-recipe__submit-button"
         type="submit"
         value="submit button"
+        @click="submitForm()"
       > 
     </div>
   </section>
@@ -229,6 +221,10 @@
 
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
+import { ref } from 'vue';
+
+
+const base64Image = ref(null);
 
 function toggle(buttonName) {
     const buttons = {
@@ -255,16 +251,75 @@ function toggle(buttonName) {
 }
 
 function addIngredient() {
+    event.preventDefault();
     const originalElement = document.querySelector('.js-ingredient-container')
     const clonedElement = originalElement.cloneNode(true)
+    originalElement.querySelector('.c-add-recipe__input--ingredient-quantity').value = "";
+    originalElement.querySelector('.c-add-recipe__input--ingredient-unit').value = "number";
+    originalElement.querySelector('.c-add-recipe__input--ingredient-name').value = "";
     originalElement.parentNode.appendChild(clonedElement)
 }
 
 function addRecipeStep() {
+    event.preventDefault();
     const originalElement = document.querySelector('.js-recipe-container')
+    originalElement.querySelector('.c-add-recipe__input--recipe-step').value = "";
     const clonedElement = originalElement.cloneNode(true)
+    
     originalElement.parentNode.appendChild(clonedElement)
 }
+
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      base64Image.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+
+const submitForm = () => {
+  // Collect form data and structure it into the desired JSON format
+  const formData = {
+    image: base64Image.value || "", // Assuming base64Image is optional
+    name: document.getElementById('recipeName').value || "",
+    description: document.getElementById('recipeDescription').value || "",
+    prepTime: `${document.getElementById('prepTimeHour').value || 0} hours ${document.getElementById('prepTimeMinute').value || 0} minutes`,
+    cookTime: `${document.getElementById('cookTimeHour').value || 0} hours ${document.getElementById('cookTimeMinute').value || 0} minutes`,
+    ingredients: [],
+    steps: [],
+  };
+
+  // Extract ingredient data from the form
+  const ingredientContainers = document.querySelectorAll('.js-ingredient-container');
+  ingredientContainers.forEach(container => {
+    const quantity = container.querySelector('.c-add-recipe__input--ingredient-quantity').value || "";
+    const unit = container.querySelector('.c-add-recipe__input--ingredient-unit').value || "";
+    const name = container.querySelector('.c-add-recipe__input--ingredient-name').value || "";
+
+    if (quantity && unit && name) {
+      formData.ingredients.push({ item: name, amount: quantity, unit });
+    }
+  });
+
+  // Extract recipe step data from the form
+  const stepContainers = document.querySelectorAll('.c-add-recipe__recipe-container .c-add-recipe__input--recipe-step');
+  stepContainers.forEach((step, index) => {
+    const command = step.value || "";
+    if (command) {
+      formData.steps.push({ step: index + 1, command });
+    }
+  });
+
+  // Convert formData to JSON string
+  const jsonData = JSON.stringify(formData, null, 2);
+  console.log(jsonData);
+
+};
+
 </script>
 
 <style scoped lang="scss">
