@@ -64,18 +64,24 @@ class LimitedQueue:
 def wordChecker(word):
     limited_queue = LimitedQueue()
 
-    file_path = "dictionary.txt"
+    file_path = "../../../database/dictionary.txt"
     word = " " + word.upper()
 
     with open(file_path, "r") as file:
         for line in file:
             temp = " " + line.strip().upper()
             dis = Distance(temp, word)
-            if dis != -1:
+            if 0 < dis <= 2:
                 limited_queue.append([line.strip(), dis])
-    limited_queue.display()
+
+    if limited_queue.queue:
+        corrected_word = limited_queue.queue[0][0]
+        return corrected_word
+    else:
+        return None
 
 
-while True:
-    word = input("Please enter a misspelt word:").strip()
-    wordChecker(word)
+
+
+
+

@@ -2,11 +2,12 @@ import json
 import sqlite3
 from backend.src.utils import utils
 from backend.src.config import DATABASE
+from backend.src.utils import SpellChecker
 
 
 def SQLiteQuery(Query, type):
     # Connect to the SQLite database
-    conn = sqlite3.connect("../../../database/recipes.db")
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     # Fetch recipe data from the database
     cursor.execute(Query)
@@ -73,12 +74,21 @@ def get_ingredients(recipe_id):
 
 
 def search(query):
+    SQLCommand = "SELECT name FROM recipes WHERE name LIKE '%" + query + "%'"
+    result = SQLiteQuery(SQLCommand, "all")
+
+    if not result:
+        corrected_query = SpellChecker.wordChecker(query)
+        if corrected_query:
+            query = corrected_query
+
     SQLCommand = "SELECT name FROM recipes WHERE name LIKE '%" + query + "%' ORDER BY " \
                  "CASE WHEN name LIKE '" + query + "%' THEN 1 " \
                  "WHEN name LIKE '% " + query + "%' THEN 2 " \
                  "WHEN name LIKE '%" + query + "' THEN 3 ELSE 4 END, name;"
-    return SQLiteQuery(SQLCommand, "all")
+    result = SQLiteQuery(SQLCommand, "all")
 
+    return result
 
 
 def insert_recipe_into_database(json_data):
@@ -132,6 +142,4 @@ def is_smart(recipe_id):
     return query[0]
 
 
-if __name__ == "__main__":
-    search_result = search("")
-    print(search_result)
+
