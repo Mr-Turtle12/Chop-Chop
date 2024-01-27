@@ -39,7 +39,7 @@ var stepIndex = ref(0)
 var recipe = reactive({
     name: 'ERROR NAME NOT FOUND',
     steps: [
-        'NO STEPS FOUND'
+        'loading recipe...'
     ],
     progressionObject: [
       'NO PROGRESSION OBJECT'
@@ -93,9 +93,7 @@ function handleCountdownEnd(stepGeneratedOn) {
 }
 
 const EndRecipe = () => {
-    socket.addEventListener('open', (event) => {
-        socket.send(`{"command": { "keyword": "end"}}`)
-    })
+    socket.send(`{"command": { "keyword": "end"}}`)
     router.back()
 }
 

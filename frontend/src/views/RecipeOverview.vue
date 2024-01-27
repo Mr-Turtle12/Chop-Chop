@@ -61,7 +61,7 @@ var recipe = reactive({
     decription: 'ERROR DESCRIPTION NOT FOUND',
     img:  require('@/assets/ImageNotFound.png'),
     steps: [
-        'NO STEPS FOUND'
+        'Loading recipe...'
     ],
     isFavourite : false,
     ingredients: [
