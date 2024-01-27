@@ -44,6 +44,10 @@ async def consumer_handler(websocket):
                 log(f">>> recipe {recipe_id} info", "API")
                 await websocket.send(CONTROLLER_INSTANCE.get_recipe_metadata(recipe_id))
 
+            case ("get-search", search_name):
+                log(f">>> search for {search_name}", "API")
+                await websocket.send(SQLQueries.search(search_name))
+
             # "loads" the recipe to the controller
             case ("start", recipe_id):
                 log(f">>> starting recipe {recipe_id}", "API")
