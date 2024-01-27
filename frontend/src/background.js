@@ -16,6 +16,7 @@ async function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
+      
             // Use pluginOptions.nodeIntegration, leave this alone
             // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
             nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
@@ -24,27 +25,15 @@ async function createWindow() {
     })
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {
-        // Load the url of the dev server if in development mode
+    // Load the url of the dev server if in development mode
         await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
         if (!process.env.IS_TEST) win.webContents.openDevTools()
     } else {
-        createProtocol('app');
-        
-        // Extract command-line arguments
-        const args = process.argv.slice(2);
-
-        // Default WebSocket URL
-        let websocketUrl = 'ws://default-url.com';
-
-        // Check if the --websocket-url flag is present and update the WebSocket URL
-        const websocketIndex = args.indexOf('--websocket-url');
-        if (websocketIndex !== -1 && args.length > websocketIndex + 1) {
-            websocketUrl = args[websocketIndex + 1];
-        }
-
-        // Load the index.html with the WebSocket URL
-        win.loadURL(`app://./index.html?websocketUrl=${encodeURIComponent(websocketUrl)}`);
+        createProtocol('app')
+        // Load the index.html when not in development
+        win.loadURL('app://./index.html')
     }
+    
 }
 
 // Quit when all windows are closed.
@@ -74,6 +63,7 @@ app.on('ready', async () => {
             console.error('Vue Devtools failed to install:', e.toString())
         }
     }
+    store.dispatch('setWebsocketUrl',websocketUrl);
     createWindow()
 })
 

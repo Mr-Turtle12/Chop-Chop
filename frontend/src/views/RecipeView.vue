@@ -28,12 +28,14 @@ import TimerCard from '@/components/TimerCard.vue'
 
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 import { ref,reactive } from 'vue'
 const route = useRoute();
 const router = useRouter()
+const store = useStore()
 
-const socket = new WebSocket('ws://localhost:8765')
+const socket = new WebSocket(store.state.websocketUrl)
 var stepIndex = ref(0)
 
 var recipe = reactive({

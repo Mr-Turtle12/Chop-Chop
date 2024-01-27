@@ -24,15 +24,18 @@
 import RecipeCard from './RecipeCard.vue'
 import { onMounted, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useStore } from 'vuex';
+
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
-
+const store = useStore()
 const route = useRoute()
 var name = ""
 onMounted(async () => {
-    const socket = new WebSocket('ws://localhost:8765')
-    socket.addEventListener('open', (event) => {
+      const socket = new WebSocket(store.state.websocketUrl)
+
+      socket.addEventListener('open', (event) => {
       if(route.params.search == "Smart"){
         name = "Smart recipes"
         socket.send('{"command": {"keyword": "get","recipe_id": -2}}')

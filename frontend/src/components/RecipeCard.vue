@@ -43,6 +43,10 @@
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
+import { useStore } from 'vuex';
+
+const store = useStore()
+
 
 const props = defineProps({
     size: { type: String, default: 'vertical' },
@@ -64,7 +68,7 @@ const toggleFavourite = ($event) => {
         bookmarkIcon.classList.add('c-card__bookmark-icon--favourite')
     }
     isLocalFavourite = !isLocalFavourite
-    const socket = new WebSocket('ws://localhost:8765')
+    const socket = new WebSocket(store.state.websocketUrl)
     emits('favouriteChange');
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+isLocalFavourite+' ,"recipe_id": '+ props.id +  '}}')
