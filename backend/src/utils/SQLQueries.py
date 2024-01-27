@@ -6,7 +6,7 @@ from backend.src.config import DATABASE
 
 def SQLiteQuery(Query, type):
     # Connect to the SQLite database
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect("../../../database/recipes.db")
     cursor = conn.cursor()
     # Fetch recipe data from the database
     cursor.execute(Query)
@@ -72,6 +72,15 @@ def get_ingredients(recipe_id):
     return SQLiteQuery(SQLCommand, "all")
 
 
+def search(query):
+    SQLCommand = "SELECT name FROM recipes WHERE name LIKE '%" + query + "%' ORDER BY " \
+                 "CASE WHEN name LIKE '" + query + "%' THEN 1 " \
+                 "WHEN name LIKE '% " + query + "%' THEN 2 " \
+                 "WHEN name LIKE '%" + query + "' THEN 3 ELSE 4 END, name;"
+    return SQLiteQuery(SQLCommand, "all")
+
+
+
 def insert_recipe_into_database(json_data):
     for recipe in json_data["recipes"]:
         # Insert recipe information
@@ -121,3 +130,8 @@ def get_Random_metadata():
 def is_smart(recipe_id):
     query = SQLiteQuery("SELECT AI FROM recipes WHERE id = " + str(recipe_id), "one")
     return query[0]
+
+
+if __name__ == "__main__":
+    search_result = search("")
+    print(search_result)
