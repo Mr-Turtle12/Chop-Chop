@@ -17,9 +17,7 @@ async def consumer_handler(websocket):
     while True:
         request = []
         try:
-            temp = await websocket.recv()
-            print(temp)
-            request = Request(json.loads(temp))
+            request = Request(json.loads(await websocket.recv()))
         except json.JSONDecodeError:
             log("!!! Poorly formatted JSON", "API")
             await websocket.send("Poorly formatted JSON")
@@ -46,7 +44,7 @@ async def consumer_handler(websocket):
                 log(f">>> recipe {recipe_id} info", "API")
                 await websocket.send(CONTROLLER_INSTANCE.get_recipe_metadata(recipe_id))
 
-            case ("getSearch", search_name):
+            case ("get-search", search_name):
                 log(f">>> search for {search_name}", "API")
                 await websocket.send(SQLQueries.search(search_name))
 

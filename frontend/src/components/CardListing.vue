@@ -44,7 +44,7 @@ onMounted(async () => {
         socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
       } else{
         name = "Search for '" + route.params.search + "'"
-        socket.send('{"command": {"keyword": "getSearch","search_name": "'+route.params.search+'" }}')
+        socket.send('{"command": {"keyword": "get-search","search_name": "'+route.params.search+'" }}')
       }
     })
 
