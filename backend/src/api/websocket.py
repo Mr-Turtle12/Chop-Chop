@@ -52,7 +52,7 @@ async def consumer_handler(websocket):
                 await websocket.send("Started")
 
             # Sets current step (to be implemented later)
-            case ("step", step_number):
+            case ("set", step_number):
                 log(f">>> step set {step_number}", "API")
                 CONTROLLER_INSTANCE.set_step(step_number)
                 await websocket.send(f"set step {step_number}")
