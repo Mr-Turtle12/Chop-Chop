@@ -26,7 +26,7 @@ class Request:
                 return (self.keyword, self.timer_id)
             case "end":
                 return self.keyword
-            case "getSearch":
+            case "get-search":
                 return (self.keyword, self.search_name)
             case _:
                 return None
