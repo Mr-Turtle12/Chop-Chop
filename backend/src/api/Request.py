@@ -10,6 +10,7 @@ class Request:
         self.step_number: int = command.get("step_number", None)
         self.favourite: bool = command.get("type", None)
         self.timer_id: int = command.get("timer_id", None)
+        self.search_name: str = command.get("search_name", None)
         self.matcher = self.__matcher()
 
     def __matcher(self):
@@ -25,6 +26,8 @@ class Request:
                 return (self.keyword, self.timer_id)
             case "end":
                 return self.keyword
+            case "getSearch":
+                return (self.keyword, self.search_name)
             case _:
                 return None
 

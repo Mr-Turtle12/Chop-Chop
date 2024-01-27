@@ -64,7 +64,7 @@ class LimitedQueue:
 def wordChecker(word):
     limited_queue = LimitedQueue()
 
-    file_path = "../../../database/dictionary.txt"
+    file_path = "../../database/dictionary.txt"
     word = " " + word.upper()
 
     with open(file_path, "r") as file:
@@ -79,9 +79,3 @@ def wordChecker(word):
         return corrected_word
     else:
         return None
-
-
-
-
-
-

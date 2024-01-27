@@ -83,13 +83,15 @@ def search(query):
         if corrected_query:
             query = corrected_query
 
-    SQLCommand = "SELECT name FROM recipes WHERE name LIKE '%" + query + "%' ORDER BY " \
-                 "CASE WHEN name LIKE '" + query + "%' THEN 1 " \
-                 "WHEN name LIKE '% " + query + "%' THEN 2 " \
-                 "WHEN name LIKE '%" + query + "%' THEN 3 ELSE 4 END, name;"
+    SQLCommand = (
+        "SELECT * FROM recipes WHERE name LIKE '%" + query + "%' ORDER BY "
+        "CASE WHEN name LIKE '" + query + "%' THEN 1 "
+        "WHEN name LIKE '% " + query + "%' THEN 2 "
+        "WHEN name LIKE '%" + query + "%' THEN 3 ELSE 4 END, name;"
+    )
     result = SQLiteQuery(SQLCommand, "all")
 
-    return result
+    return utils.convert_metadata(result)
 
 
 def insert_recipe_into_database(json_data):

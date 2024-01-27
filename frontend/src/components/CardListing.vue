@@ -42,12 +42,21 @@ onMounted(async () => {
       }else if (route.params.search == "All"){
         name = "All recipes"
         socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
+      } else{
+        name = "Search for '" + route.params.search + "'"
+        socket.send('{"command": {"keyword": "getSearch","search_name": "'+route.params.search+'" }}')
       }
     })
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
+        if (Array.isArray(arrayRecipe)) {
+          recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
+        }else{
+          name = "No recipes found"
+          recipes.value = null
+
+        }
         recipesLoaded.value = true
     })
 })

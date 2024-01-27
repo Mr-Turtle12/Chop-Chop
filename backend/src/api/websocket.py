@@ -17,11 +17,12 @@ async def consumer_handler(websocket):
     while True:
         request = []
         try:
-            request = Request(json.loads(await websocket.recv()))
+            temp = await websocket.recv()
+            print(temp)
+            request = Request(json.loads(temp))
         except json.JSONDecodeError:
             log("!!! Poorly formatted JSON", "API")
             await websocket.send("Poorly formatted JSON")
-
         match request.matcher:
             # returns basic info for all recipes
             case ("get", 0):
@@ -44,6 +45,10 @@ async def consumer_handler(websocket):
             case ("get", recipe_id):
                 log(f">>> recipe {recipe_id} info", "API")
                 await websocket.send(CONTROLLER_INSTANCE.get_recipe_metadata(recipe_id))
+
+            case ("getSearch", search_name):
+                log(f">>> search for {search_name}", "API")
+                await websocket.send(SQLQueries.search(search_name))
 
             # "loads" the recipe to the controller
             case ("start", recipe_id):
@@ -89,10 +94,19 @@ async def producer_handler(websocket):
     while True:  # run forever
         if CONTROLLER_INSTANCE.step_changed_flag.state:
             new_step = CONTROLLER_INSTANCE.current_recipe.current_step
-            new_inhibitors = CONTROLLER_INSTANCE.get_progression_requirements_for_current_step()
+            new_inhibitors = (
+                CONTROLLER_INSTANCE.get_progression_requirements_for_current_step()
+            )
             print("inhib")
             print(new_inhibitors)
-            response = {"step": new_step, "inhibitors":{"camera": new_inhibitors[0], "progressionObject": new_inhibitors[1], "inhibitor": new_inhibitors[2]}}
+            response = {
+                "step": new_step,
+                "inhibitors": {
+                    "camera": new_inhibitors[0],
+                    "progressionObject": new_inhibitors[1],
+                    "inhibitor": new_inhibitors[2],
+                },
+            }
             log(f">>> updated step {new_step}", "API")
             await websocket.send(json.dumps(response))
             CONTROLLER_INSTANCE.step_changed_flag.state = False
