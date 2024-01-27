@@ -7,6 +7,7 @@ from backend.src.utils import SpellChecker
 
 def SQLiteQuery(Query, type):
     # Connect to the SQLite database
+    # "../../../database/recipes.db"
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     # Fetch recipe data from the database
@@ -85,7 +86,7 @@ def search(query):
     SQLCommand = "SELECT name FROM recipes WHERE name LIKE '%" + query + "%' ORDER BY " \
                  "CASE WHEN name LIKE '" + query + "%' THEN 1 " \
                  "WHEN name LIKE '% " + query + "%' THEN 2 " \
-                 "WHEN name LIKE '%" + query + "' THEN 3 ELSE 4 END, name;"
+                 "WHEN name LIKE '%" + query + "%' THEN 3 ELSE 4 END, name;"
     result = SQLiteQuery(SQLCommand, "all")
 
     return result
@@ -140,6 +141,3 @@ def get_Random_metadata():
 def is_smart(recipe_id):
     query = SQLiteQuery("SELECT AI FROM recipes WHERE id = " + str(recipe_id), "one")
     return query[0]
-
-
-
