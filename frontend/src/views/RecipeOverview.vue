@@ -52,7 +52,7 @@ import BookmarkSVG from '@/assets/bookmark-svg.vue'
 import { useStore } from 'vuex';
 
 
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -145,6 +145,10 @@ const toggleFavourite = ($event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}')
     })
 }
+
+onBeforeUnmount(() => {
+  socket.close();
+});
 
 </script>
 

@@ -35,7 +35,7 @@
 <script setup>
 // import VerticalCard from './VerticalCard.vue'
 import RecipeCard from './RecipeCard.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex';
 
 const store = useStore()
@@ -48,8 +48,9 @@ defineProps({
 const recipesLoaded = ref(false)
 const recipes = ref([])
 const emits = defineEmits();
+const socket = new WebSocket(store.state.websocketUrl)
+
 onMounted(async () => {
-    const socket = new WebSocket(store.state.websocketUrl)
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "get","recipe_id": -1}}')
     })
@@ -74,6 +75,10 @@ onMounted(async () => {
 const handleFavouriteChange = () => {
   emits('favouriteChange');
 };
+
+onBeforeUnmount(() => {
+  socket.close();
+});
 
 </script>
 

@@ -30,7 +30,7 @@ import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
-import { ref,reactive } from 'vue'
+import { ref,reactive,onBeforeUnmount } from 'vue'
 const route = useRoute();
 const router = useRouter()
 const store = useStore()
@@ -55,11 +55,9 @@ socket.addEventListener('open', (event) => {
 socket.addEventListener('message', (event) => {
     try {
         const data = JSON.parse(event.data);
-        console.log(stepIndex.value);
         if (data.name) {
             recipe.name = data.name;
             recipe.steps = data['commands'];
-            console.log(recipe.steps);
         } else {
             stepIndex.value = data.step;
             if (data.inhibitors.progressionObject == "timer") {
@@ -100,6 +98,10 @@ const EndRecipe = () => {
     })
     router.back()
 }
+
+onBeforeUnmount(() => {
+  socket.close();
+});
 
 </script>
 

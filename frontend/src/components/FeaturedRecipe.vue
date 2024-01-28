@@ -38,7 +38,7 @@
 
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex';
 
 const store = useStore()
@@ -51,8 +51,8 @@ defineProps({
 const recipes = ref([])
 const recipesLoaded = ref(false)
 
+const socket = new WebSocket(store.state.websocketUrl)
 onMounted(async () => {
-  const socket = new WebSocket(store.state.websocketUrl)
   socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "get","recipe_id": -3}}')
     })
@@ -62,6 +62,11 @@ onMounted(async () => {
         recipesLoaded.value = true
     })
 })
+
+onBeforeUnmount(() => {
+  socket.close();
+});
+
 </script>
 
 <style scoped lang="scss">
