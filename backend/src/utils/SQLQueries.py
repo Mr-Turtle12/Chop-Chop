@@ -73,33 +73,32 @@ def get_ingredients(recipe_id):
 
 
 def insert_recipe_into_database(json_data):
-    for recipe in json_data["recipes"]:
-        # Insert recipe information
-        SQLCommandRecipe = (
-            "INSERT INTO recipes (image, name, description, prepTime, cookTime, AI, favourite) "
-            f"VALUES ('{recipe['image']}', '{recipe['name']}', '{recipe['description']}', '{recipe['prepTime']}', "
-            f"'{recipe['cookTime']}', '{0}', '{0}')"
-        )
-        SQLiteQuery(SQLCommandRecipe, "commit")
+    # Insert recipe information
+    SQLCommandRecipe = (
+        "INSERT INTO recipes (image, name, description, prepTime, cookTime, AI, favourite) "
+        f"VALUES ('{json_data['image']}', '{json_data['name']}', '{json_data['description']}', '{json_data['prepTime']}', "
+        f"'{json_data['cookTime']}', '{0}', '{0}')"
+    )
+    SQLiteQuery(SQLCommandRecipe, "commit")
 
-        # Get the last inserted recipe ID
-        recipe_id = SQLiteQuery("SELECT id FROM recipes ORDER BY id DESC", "one")[0]
+    # Get the last inserted recipe ID
+    recipe_id = SQLiteQuery("SELECT id FROM recipes ORDER BY id DESC", "one")[0]
 
-        # Insert ingredients
-        for ingredient in recipe["ingredients"]:
-            SQLCommandIngredient = f"""
+    # Insert ingredients
+    for ingredient in json_data["ingredients"]:
+        SQLCommandIngredient = f"""
                 INSERT INTO ingredients (recipe_id, item, amount, unit)
                 VALUES ({recipe_id}, '{ingredient["item"]}', '{ingredient["amount"]}', '{ingredient["unit"]}')
             """
-            SQLiteQuery(SQLCommandIngredient, "commit")
+        SQLiteQuery(SQLCommandIngredient, "commit")
 
-        # Insert steps
-        for step in recipe["steps"]:
-            SQLCommandStep = f"""
+    # Insert steps
+    for step in json_data["steps"]:
+        SQLCommandStep = f"""
                 INSERT INTO steps (recipe_id, step, command)
                 VALUES ({recipe_id}, '{step["step"]}', '{step["command"]}')
             """
-            SQLiteQuery(SQLCommandStep, "commit")
+        SQLiteQuery(SQLCommandStep, "commit")
 
 
 def get_Random_metadata():
