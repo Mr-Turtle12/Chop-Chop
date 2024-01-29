@@ -401,6 +401,7 @@ const submitForm = () => {
     padding: var(--space-m);
     &.is-toggled {
       display:flex;
+      min-height: 50vh;
     }
   }
 
