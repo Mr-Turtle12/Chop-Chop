@@ -300,6 +300,14 @@ const handleFileChange = (event) => {
     }
 }
 
+function startRecipeAPICall(){
+    const socket = new WebSocket('ws://localhost:8765')
+    socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "new_recipe","recipe_metadata": ${jsonData.params.id} }}`)
+    
+    })
+
+}
 
 const submitForm = () => {
     // Collect form data and structure it into the desired JSON format
@@ -338,6 +346,11 @@ const submitForm = () => {
     const jsonData = JSON.stringify(formData, null, 2)
     console.log(jsonData)
 
+    const socket = new WebSocket('ws://localhost:8765')
+
+    socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "new_recipe","recipe_metadata": ${jsonData} }}`)
+    })
 }
 
 </script>
