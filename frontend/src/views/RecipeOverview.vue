@@ -160,7 +160,7 @@ onBeforeUnmount(() => {
 
   &__heading {
     @include ts-heading-1;
-    color: #419170;
+    color: var(--dark-green);
     grid-column:1/7;
   }
 
@@ -168,27 +168,27 @@ onBeforeUnmount(() => {
     @include ts-heading-3;
     grid-column: 10/-1;
     border-radius: 10px;
-    border: 2px solid #419170;
-    background-color: #FFF;
-    color: #419170;
+    border: 2px solid var(--dark-green);
+    background-color: var(--white);
+    color: var(--dark-green);
     display: flex;
     align-items: center;
     justify-content: center;
 
     &:hover,
     &:focus {
-      background-color: #419170;
-      color: #fff;    
+      background-color: var(--dark-green);
+      color: var(--white);    
     }
   }
 
   &__bookmark-icon {
-    color: #fff;
+    color: var(--white);
     height: 52px;
     width: 46px;
 
     &--favourite {
-      color: #419170;
+      color: var(--dark-green);
     }
 
     // if bookmarked is not favourited add hover effect
@@ -200,7 +200,7 @@ onBeforeUnmount(() => {
 
   &__meta {
     @include ts-meta;
-    color: #419170;
+    color: var(--dark-green);
 
     &::before {
       content:url('@/assets/clock.svg');
@@ -221,42 +221,6 @@ onBeforeUnmount(() => {
     object-fit: cover;
     top:0;
     left:0;
-  }
-}
-
-.Fav-star {
-  z-index: 1;
-  padding: 18px;
-  width: 100%;
-  height: 100%;
-  fill: #dee0e0;
-}
-
-@keyframes star {
-  0% {
-    transform: scale(1);
-  }
-  
-  20% {
-    fill: #ffac33;
-    transform: scale(0);
-  }
-  
-  30% {
-    transform: scale(0);
-  }
-  
-  60% {
-    transform: scale(1.1);
-  }
-  
-  70% {
-    transform: scale(0.9);
-  }
-  
-  100% {
-    fill: #ffac33;
-    transform: scale(1);
   }
 }
 </style>

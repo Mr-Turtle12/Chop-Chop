@@ -77,7 +77,7 @@ function toggle(buttonName) {
 .c-recipe-switcher {
   $c : &;
 
-  background-color: #fff;
+  background-color: var(--white);
   border-radius: 30px;
 
   &__button-container {
@@ -87,7 +87,7 @@ function toggle(buttonName) {
   &__button {
     @include ts-heading-2;
     background-color: var(--dark-green);;
-    color: #fff;
+    color: var(--white);
     padding:var(--space-l);
     width: 50%;
 
@@ -100,7 +100,7 @@ function toggle(buttonName) {
     }
     &.is-toggled {
       color:var(--dark-green);;
-      background-color: #fff;
+      background-color: var(--white);
     }
   }
 

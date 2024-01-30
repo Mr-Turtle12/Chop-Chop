@@ -114,7 +114,7 @@ onBeforeUnmount(() => {
 
   &__text-container {
     align-items: center;
-    color: white;
+    color: var(--white);
     display: flex;
     flex-direction: column;
     padding: 198px 0;
@@ -137,7 +137,7 @@ onBeforeUnmount(() => {
   
   &__time-icon {
     margin-right:4px;
-    color: white;
+    color: var(--white);
   }
   &__card-container {
     display:flex;

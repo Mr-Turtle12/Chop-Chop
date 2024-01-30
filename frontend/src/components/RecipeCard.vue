@@ -156,13 +156,13 @@ onBeforeUnmount(() => {
 
   #{$c}__heading {
     @include ts-heading-4;
-    color: white;
+    color: var(--white);
     padding-bottom: var(--space-xs);
   }
 
   #{$c}__time,
   #{$c}__time-icon {
-    color: white;
+    color: var(--white);
   }
 }
 
@@ -186,7 +186,7 @@ onBeforeUnmount(() => {
 
       #{$c}__info {
         border-radius: 0px 30px 30px 0px;
-        background: #FFF;
+        background: var(--white);
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         padding: 30px;
         width:50%;
@@ -197,11 +197,11 @@ onBeforeUnmount(() => {
 
           #{$c}__heading,
           #{$c}__meta {
-            color: #fff;
+            color: var(--white);
           }
           
           #{$c}__time-icon {
-            color: #fff;
+            color: var(--white);
           }
         }
       }
