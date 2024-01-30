@@ -90,6 +90,10 @@ onBeforeUnmount(() => {
         transform: translateX(10px);
       }
     }
+
+    @include media("<=tablet") {
+      grid-column: 1/-1;
+    }
   }
 
   &__heading-icon {
@@ -102,6 +106,10 @@ onBeforeUnmount(() => {
     display:grid;
     grid-template-columns: repeat(2,1fr);
     grid-gap: 2rem;
+
+    @include media("<=tablet") {
+      grid-template-columns: repeat(1,1fr);
+    }
   }
 }
 </style>
