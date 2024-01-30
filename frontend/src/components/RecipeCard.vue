@@ -45,7 +45,7 @@ import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
 import {onBeforeUnmount} from 'vue'
 
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 const store = useStore()
 
@@ -59,8 +59,8 @@ const props = defineProps({
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1}
 })
-var isLocalFavourite  = props.isFavourite;
-const emits = defineEmits();
+var isLocalFavourite  = props.isFavourite
+const emits = defineEmits()
 
 const toggleFavourite = ($event) => {
 
@@ -71,15 +71,15 @@ const toggleFavourite = ($event) => {
         bookmarkIcon.classList.add('c-card__bookmark-icon--favourite')
     }
     isLocalFavourite = !isLocalFavourite
-    emits('favouriteChange');
+    emits('favouriteChange')
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+isLocalFavourite+' ,"recipe_id": '+ props.id +  '}}')
     })
 }
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 
@@ -99,7 +99,7 @@ onBeforeUnmount(() => {
     color: #fff;
 
     &--favourite {
-      color: #419170;
+      color: var(--dark-green);
     }
 
     // if bookmarked is not favourited add hover effect
@@ -169,27 +169,11 @@ onBeforeUnmount(() => {
   &--horizontal {
     display:flex;
 
-    // &:hover,
-    // &:focus {
-    //   #{$c}__info {
-    //   background-color: #419170;
-    // }
-
-    //   #{$c}__heading,
-    //   #{$c}__meta {
-    //       color: #fff;
-    //     }
-        
-    //   #{$c}__time-icon {
-    //       color: #fff;
-    //     }
-    //   }
-
       #{$c}__image-wrapper {
-    height: 100%;
-    width: 50%;
-    position: relative;
-  }
+        height: 100%;
+        width: 50%;
+        position: relative;
+      }
 
       #{$c}__image {
         height: 100%;
@@ -209,7 +193,7 @@ onBeforeUnmount(() => {
 
         &:hover,
         &:focus {
-          background-color: #419170;
+          background-color: var(--dark-green);
 
           #{$c}__heading,
           #{$c}__meta {
@@ -224,17 +208,17 @@ onBeforeUnmount(() => {
 
       #{$c}__heading {
         @include ts-heading-3;
-        color: #419170;
+        color: var(--dark-green);;
         margin-bottom:var(--space-xs);
       }
 
       #{$c}__meta {
         @include ts-meta;
-        color: #419170;
+        color: var(--dark-green);;
       }
   
       #{$c}__time-icon {
-        color: #419170;
+        color: var(--dark-green);;
       }
   }
 }

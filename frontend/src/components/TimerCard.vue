@@ -2,7 +2,12 @@
   <section class="c-timer-card o-section">
     <div class="c-timer-card__container o-container">
       <div class="circular-timer">
-        <svg class="progress-ring" width="120" height="120" viewBox="0 0 120 120">
+        <svg
+          class="progress-ring"
+          width="120"
+          height="120"
+          viewBox="0 0 120 120"
+        >
           <!-- Background circle -->
           <circle
             class="progress-ring-circle background-circle"
@@ -13,7 +18,7 @@
             r="50"
             cx="60"
             cy="60"
-          ></circle>
+          />
           
           <!-- Progress circle -->
           <circle
@@ -27,16 +32,30 @@
             cx="60"
             cy="60"
             transform="rotate(-90 60 60)"
-          ></circle>
+          />
 
 
           <!-- Text time element -->
-          <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" :class="timerTextClass" :style="{ fill: textColor }">
+          <text
+            x="50%"
+            y="50%"
+            text-anchor="middle"
+            alignment-baseline="middle"
+            :class="timerTextClass"
+            :style="{ fill: textColor }"
+          >
             {{ formatTime(hours, minutes, seconds) }}
           </text>
         </svg>
         <!-- Time Note -->
-        <text x="50%" y="70%" text-anchor="middle" alignment-baseline="middle" class="timer-string" v-if="timerString">
+        <text
+          v-if="timerString"
+          x="50%"
+          y="70%"
+          text-anchor="middle"
+          alignment-baseline="middle"
+          class="timer-string"
+        >
           {{ timerString }}
         </text>
       </div>
@@ -46,48 +65,48 @@
 
 
 <script setup>
-import { ref, watch, computed, onMounted, onUnmounted, defineProps, defineEmits } from 'vue';
+import { ref, watch, computed, onMounted, onUnmounted, defineProps, defineEmits } from 'vue'
 
 //incoming time length and note
 const props = defineProps({
-  initialTime: {
-    type: Number,
-    required: true
-  },
-  timerString: {
-    type: String,
-    default: ''
-  },
-  stepGeneratedOn:{
-    type: Number,
-    required: true
-  }
+    initialTime: {
+        type: Number,
+        required: true
+    },
+    timerString: {
+        type: String,
+        default: ''
+    },
+    stepGeneratedOn:{
+        type: Number,
+        required: true
+    }
   
-});
+})
 
-let remainingTime = ref(props.initialTime);
-const totalTime = props.initialTime;
-const stepGeneratedOn = props.stepGeneratedOn;
+let remainingTime = ref(props.initialTime)
+const totalTime = props.initialTime
+const stepGeneratedOn = props.stepGeneratedOn
 
-const hours = ref(0);
-const minutes = ref(0);
-const seconds = ref(0);
-let countdownInterval;
+const hours = ref(0)
+const minutes = ref(0)
+const seconds = ref(0)
+let countdownInterval
 
-const emit = defineEmits(['countdownEnd']); // Define emitted events
+const emit = defineEmits(['countdownEnd']) // Define emitted events
 
-const radius = 50;
-const circumference = 2 * Math.PI * radius;
-const progress = ref(0);
+const radius = 50
+const circumference = 2 * Math.PI * radius
+const progress = ref(0)
 
-const flashText = ref(false);
+const flashText = ref(false)
 
-onMounted(startCountdown);
+onMounted(startCountdown)
 onUnmounted(() => {
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
-  }
-});
+    if (countdownInterval) {
+        clearInterval(countdownInterval)
+    }
+})
 
 
 /*
@@ -95,39 +114,39 @@ onUnmounted(() => {
  */
 
 const textColor = computed(() => {
-  return remainingTime.value === 0 ? '#e74c3c' : '#333'; // Red color when completed, otherwise black
-});
+    return remainingTime.value === 0 ? '#e74c3c' : '#333' // Red color when completed, otherwise black
+})
 
 const progressStrokeColor = computed(() => {
-  return '#3498db'; // Blue color for background circle
-});
+    return '#3498db' // Blue color for background circle
+})
 
 const backgroundStrokeColor = computed(() => {
-  if(remainingTime.value === 0){
-    return '#333';
-  }
-  return `rgb(204, 204, 204, ${1 - progress.value})`; // Grey color for progress circle
-});
+    if(remainingTime.value === 0){
+        return '#333'
+    }
+    return `rgb(204, 204, 204, ${1 - progress.value})` // Grey color for progress circle
+})
 
 /*
  * Class switchers
  */
 const timerTextClass = computed(() => {
-  return {
-    'timer-text': true,
-    'timer-text-flash': flashText.value,
-  };
-});
+    return {
+        'timer-text': true,
+        'timer-text-flash': flashText.value,
+    }
+})
 
 /*
  * String formatting
  */
 function formatTime(h, m, s) {
-  return `${pad(h)}:${pad(m)}:${pad(s)}`;
+    return `${pad(h)}:${pad(m)}:${pad(s)}`
 }
 
 function pad(value) {
-  return value.toString().padStart(2, '0');
+    return value.toString().padStart(2, '0')
 }
 
 /*
@@ -135,34 +154,34 @@ function pad(value) {
  */
 
 function startCountdown() {
-  countdownInterval = setInterval(() => {
-    remainingTime.value -= 1000;
-    if (remainingTime.value <= 0) {
-      clearInterval(countdownInterval);
-      emit('countdownEnd',props.stepGeneratedOn);
-    }
-  }, 1000);
+    countdownInterval = setInterval(() => {
+        remainingTime.value -= 1000
+        if (remainingTime.value <= 0) {
+            clearInterval(countdownInterval)
+            emit('countdownEnd',props.stepGeneratedOn)
+        }
+    }, 1000)
 }
 
 function updateTime() {
-  hours.value = Math.floor(remainingTime.value / (60 * 60 * 1000));
-  let remaining = remainingTime.value % (60 * 60 * 1000);
-  minutes.value = Math.floor(remaining / (60 * 1000));
-  remaining %= (60 * 1000);
-  seconds.value = Math.floor(remaining / 1000);
-  updateProgress();
+    hours.value = Math.floor(remainingTime.value / (60 * 60 * 1000))
+    let remaining = remainingTime.value % (60 * 60 * 1000)
+    minutes.value = Math.floor(remaining / (60 * 1000))
+    remaining %= (60 * 1000)
+    seconds.value = Math.floor(remaining / 1000)
+    updateProgress()
 }
 
 function updateProgress() {
-  progress.value = 1 - remainingTime.value / totalTime;
+    progress.value = 1 - remainingTime.value / totalTime
 }
 
 watch(remainingTime, (newVal, oldVal) => {
-  updateTime();
-  if (newVal === 0) {
-    flashText.value = true;
-  }
-});
+    updateTime()
+    if (newVal === 0) {
+        flashText.value = true
+    }
+})
 
 
 </script>

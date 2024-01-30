@@ -26,7 +26,8 @@
 
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--return"
-          @click="onClickReturn">
+          @click="onClickReturn"
+        >
           <span v-if="isPeeking"><img src="@/assets/return-button-icon.svg"></span>
         </button>
 
@@ -46,52 +47,52 @@
 </template>
 
 <script setup>
-import { computed, defineProps, toRef, ref } from 'vue';
+import { computed, defineProps, toRef, ref } from 'vue'
 
 const props = defineProps({
-  recipe: {
-    type: Object,
-    required: true,
-  },
-  stepIndex: {
-    type: Number,
-    required: true,
-  },
-});
+    recipe: {
+        type: Object,
+        required: true,
+    },
+    stepIndex: {
+        type: Number,
+        required: true,
+    },
+})
 
-const isPeeking = ref(false);
-const recipe = toRef(props, 'recipe');
-const stepIndex = toRef(props, 'stepIndex');
-const localStepDelta = ref(0);
+const isPeeking = ref(false)
+const recipe = toRef(props, 'recipe')
+const stepIndex = toRef(props, 'stepIndex')
+const localStepDelta = ref(0)
 
 const previousStep = computed(() => {
-  const index = stepIndex.value + localStepDelta.value - 1;
-  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
-});
+    const index = stepIndex.value + localStepDelta.value - 1
+    return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
+})
 
 const currentStep = computed(() => {
-  const index = stepIndex.value + localStepDelta.value;
-  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
-});
+    const index = stepIndex.value + localStepDelta.value
+    return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
+})
 
 const nextStep = computed(() => {
-  const index = stepIndex.value + localStepDelta.value + 1;
-  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
-});
+    const index = stepIndex.value + localStepDelta.value + 1
+    return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
+})
 
 function incrementPeek() {
-  isPeeking.value = true;
-  localStepDelta.value++;
+    isPeeking.value = true
+    localStepDelta.value++
 }
 
 function decrementPeek() {
-  isPeeking.value = true;
-  localStepDelta.value--;
+    isPeeking.value = true
+    localStepDelta.value--
 }
 
 function onClickReturn() {
-  localStepDelta.value = 0;
-  isPeeking.value = false;
+    localStepDelta.value = 0
+    isPeeking.value = false
 }
 </script>
 
@@ -138,7 +139,7 @@ function onClickReturn() {
   }
 
   &__step {
-    color: #419170;
+    color: var(--dark-green);;
     text-align: center;
 
     &--previous, 

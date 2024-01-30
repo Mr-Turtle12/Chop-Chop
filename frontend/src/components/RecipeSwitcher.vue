@@ -86,7 +86,7 @@ function toggle(buttonName) {
 
   &__button {
     @include ts-heading-2;
-    background-color: #419170;
+    background-color: var(--dark-green);;
     color: #fff;
     padding:var(--space-l);
     width: 50%;
@@ -99,7 +99,7 @@ function toggle(buttonName) {
       border-radius: 0px 30px 0px 0px;
     }
     &.is-toggled {
-      color:#419170;
+      color:var(--dark-green);;
       background-color: #fff;
     }
   }
@@ -107,7 +107,7 @@ function toggle(buttonName) {
   &__ingredient-container,
   &__recipe-container {
     @include ts-heading-3;
-    color: #419170;
+    color: var(--dark-green);;
     display: none;
     flex-direction: column;
     gap: 32px;
@@ -128,7 +128,7 @@ function toggle(buttonName) {
 
   &__recipe-step {
     @include ts-heading-3;
-    color: #419170;
+    color: var(--dark-green);;
 
     & > span {
       margin-right: var(--space-xxs);

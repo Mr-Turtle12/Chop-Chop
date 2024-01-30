@@ -11,9 +11,8 @@
   --gutter: 2rem; // 32px
 
   /*colours*/
-  --clr-main: #faead8;
-  --clr-highlight: #419170;
-  --clr-heart: #de3c3c;
+  --cream: #faead8;
+  --dark-green: #419170;
 
   /*fonts*/
   --body-font-family: 'Londrina Solid', sans-serif;
@@ -26,7 +25,7 @@
 }
 
 body {
-  background-color: var(--clr-main);
+  background-color: var(--cream);
   margin: 0;
 }
 

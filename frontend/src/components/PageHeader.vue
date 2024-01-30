@@ -34,10 +34,12 @@
             type="text"
             placeholder="Search.."
           >
-          <button class="c-header-menu__search-icon" @click="handleSearch">
+          <button
+            class="c-header-menu__search-icon"
+            @click="handleSearch"
+          >
             <SearchIcon />
           </button>
-
         </div>
 
         <ul class="c-header-menu__button-container">
@@ -96,9 +98,9 @@ function toggleMenu() {
     }
 }
 function handleSearch() {
-    const searchTerm = document.querySelector('.c-header-menu__search-bar').value.trim();
+    const searchTerm = document.querySelector('.c-header-menu__search-bar').value.trim()
     if (searchTerm !== '') {
-        window.location.href = `/search/${searchTerm}`;
+        window.location.href = `/search/${searchTerm}`
     }
 }
 
@@ -152,7 +154,7 @@ function handleSearch() {
     }
 
     &__line {
-      background-color: #419170;
+      background-color: var(--dark-green);
       display: block;
       height: 4px;
       position: absolute;
@@ -226,7 +228,7 @@ function handleSearch() {
     }
 
     &__container {
-      background: #419170;
+      background: var(--dark-green);
       margin-left: var(--space-l);
       max-width: 50vw;
       overflow: hidden;
