@@ -11,30 +11,50 @@
   </section>
   <section class="c-recipe o-section">
     <div class="c-recipe__container o-container">
-      <div class="c-recipe__top">    
-        <h1 class="c-recipe__heading">
-          {{ recipe.name }}
-        </h1>
+      <div class="c-recipe__info-container">   
+        <div class="c-recipe__info-left">
+          <h1 class="c-recipe__heading">
+            {{ recipe.name }}
+          </h1>
 
-        <a
-          class="c-recipe__link"
-          :href="`/recipe/${ route.params.id }`"
-          @click="
-            startRecipeAPICall()"
-        >start recipe</a>
+          <p class="c-recipe__description">
+            {{ recipe.decription }}
+          </p>
+        </div> 
 
-        <div
-          class="c-recipe__bookmark-icon-wrapper"
-          @click="toggleFavourite"
-        >
-          <BookmarkSVG
-            :class="`c-recipe__bookmark-icon js-bookmark-icon ${recipe.isFavourite ? 'c-recipe__bookmark-icon--favourite' : ''}`"
-          />
+        <div class="c-recipe__info-right">
+          <div class="c-recipe__meta-container">
+            <p class="c-recipe__meta">
+              Prep: {{ recipe.prepTime }}
+            </p>
+
+            <p class="c-recipe__meta">
+              Cook: {{ recipe.cookTime }}
+            </p>
+          </div>
         </div>
 
-        <p class="c-recipe__meta">
-          1 hour
-        </p>
+        <div class="c-recipe__info-bottom">
+          <div
+            class="c-recipe__bookmark-button-container"
+            @click="toggleFavourite"
+          >
+            <BookmarkSVG
+              :class="`c-recipe__bookmark-icon js-bookmark-icon ${recipe.isFavourite ? 'c-recipe__bookmark-icon--favourite' : ''}`"
+            />
+
+            <p class="c-recipe__bookmark-title">
+              Bookmark Recipe
+            </p>
+          </div>
+        
+          <a
+            class="c-recipe__link"
+            :href="`/recipe/${ route.params.id }`"
+            @click="
+              startRecipeAPICall()"
+          >start recipe</a>
+        </div>
       </div>
 
       <RecipeSwitcher 
@@ -124,6 +144,8 @@ function parseRecipeFromJson(RecipeJsonMessage)
     recipe.name = RecipeJsonMessage.name
     recipe.decription = RecipeJsonMessage.description
     recipe.img = RecipeJsonMessage.image
+    recipe.prepTime = RecipeJsonMessage.prepTime
+    recipe.cookTime = RecipeJsonMessage.cookTime
     recipe.ingredients = formatIngredients(RecipeJsonMessage)
     recipe.isFavourite = RecipeJsonMessage.isFavourite
     recipe.steps = RecipeJsonMessage['commands']
@@ -154,8 +176,12 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .c-recipe {
-  &__top {
+  &__info-container {
     @include grid;
+  }
+
+  &__info-left {
+    grid-column:1/9;
   }
 
   &__heading {
@@ -164,46 +190,93 @@ onBeforeUnmount(() => {
     grid-column:1/7;
   }
 
-  &__link {
+  &__description {
     @include ts-heading-3;
-    grid-column: 10/-1;
-    border-radius: 10px;
-    border: 2px solid var(--dark-green);
-    background-color: var(--white);
-    color: var(--dark-green);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover,
-    &:focus {
-      background-color: var(--dark-green);
-      color: var(--white);    
-    }
+    color: #419170;
+    margin-top:var(--space-s);
   }
 
-  &__bookmark-icon {
-    color: var(--white);
-    height: 52px;
-    width: 46px;
+  &__info-right {
+    grid-column: 9/-1;
+  }
 
-    &--favourite {
-      color: var(--dark-green);
-    }
-
-    // if bookmarked is not favourited add hover effect
-    &:not(&--favourite):hover,
-    &:not(&--favourite):focus {
-      color:var(--light-green);
-    }
+  &__meta-container {
+    background: #419170;
+    border-radius: 10px;
+    padding: var(--space-m);
+    box-sizing: border-box;
   }
 
   &__meta {
     @include ts-meta;
-    color: var(--dark-green);
+    color: #fff;
+    display: flex;
+    align-items: center;
 
     &::before {
-      content:url('@/assets/clock.svg');
+      content:'';
+      mask:url('@/assets/clock.svg');
+      background: #fff;
+      display:inline-block;
+      height:28px;
+      width:28px;
+      mask-size: cover;
+      margin-right: var(--space-xs);
+    }
+  }
+
+  &__meta + &__meta {
+    margin-top: var(--space-xs);
+  }
+
+  &__info-bottom {
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__bookmark-button-container {
+    @include ts-heading-3;
+    color:#419170;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: var(--space-xxs);
+    border-radius: 10px;
+    border: 2px solid #419170;
+
+    &:hover,
+    &:focus {
+      background-color:#419170;
+      color:#fff;
+    }
+  }
+
+  &__bookmark-icon {
+    color: #fff;
+    margin-right: var(--space-xxs);
+
+    &--favourite {
+      color: #419170;
+      stroke: solid 1px #fff;
+    }
+  }
+
+  &__link {
+    @include ts-heading-3;
+    border-radius: 10px;
+    border: 2px solid #419170;
+    background-color: #FFF;
+    color: #419170;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxs);
+
+    &:hover,
+    &:focus {
+      background-color: #419170;
+      color: #fff;    
     }
   }
 }
