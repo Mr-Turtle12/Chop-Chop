@@ -238,7 +238,6 @@ import { ref } from 'vue'
 
 
 const base64Image = ref(null)
-
 function toggle(buttonName) {
     console.log('buttonName: ' + buttonName)
 
@@ -271,20 +270,34 @@ function toggle(buttonName) {
 }
 
 function addIngredient() {
-    event.preventDefault()
-    const ingredientContainer = document.querySelector('.js-ingredient-container')
-    const ingredient = document.querySelector('.js-ingredient')
-    const newIngredient = ingredient.cloneNode(true)
+    event.preventDefault();
 
-    ingredientContainer.appendChild(newIngredient)
+    const ingredientContainer = document.querySelector('.js-ingredient-container');
+    const ingredientTemplate = document.querySelector('.js-ingredient'); // Template to clone
+
+    // Clone the template
+    const newIngredient = ingredientTemplate.cloneNode(true);
+
+    // Clear input values in the cloned ingredient
+    const inputs = newIngredient.querySelectorAll('.c-add-recipe__input');
+    inputs.forEach(input => {
+        input.value = '';
+    });
+
+    // Append the cloned ingredient to the container
+    ingredientContainer.appendChild(newIngredient);
 }
+
 
 function addRecipeStep() {
     event.preventDefault()
 
     const recipeContainer = document.querySelector('.js-recipe-container')
     const recipeStep = document.querySelector('.js-recipe-step')
+
     const newRecipeStep = recipeStep.cloneNode(true)
+
+    newRecipeStep.querySelector('.c-add-recipe__input--recipe-step').value = '';    
     
     recipeContainer.appendChild(newRecipeStep)
 }
@@ -300,15 +313,6 @@ const handleFileChange = (event) => {
     }
 }
 
-function startRecipeAPICall(){
-    const socket = new WebSocket('ws://localhost:8765')
-    socket.addEventListener('open', (event) => {
-        socket.send(`{"command": { "keyword": "new_recipe","recipe_metadata": ${jsonData.params.id} }}`)
-    
-    })
-
-}
-
 const submitForm = () => {
     // Collect form data and structure it into the desired JSON format
     const formData = {
@@ -322,12 +326,12 @@ const submitForm = () => {
     }
 
     // Extract ingredient data from the form
-    const ingredientContainers = document.querySelectorAll('.js-ingredient-container')
+    const ingredientContainers = document.querySelectorAll('.js-ingredient')
     ingredientContainers.forEach(container => {
         const quantity = container.querySelector('.c-add-recipe__input--ingredient-quantity').value || ''
         const unit = container.querySelector('.c-add-recipe__input--ingredient-unit').value || ''
         const name = container.querySelector('.c-add-recipe__input--ingredient-name').value || ''
-
+        console.log(name);
         if (quantity && unit && name) {
             formData.ingredients.push({ item: name, amount: quantity, unit })
         }
@@ -345,7 +349,6 @@ const submitForm = () => {
     // Convert formData to JSON string
     const jsonData = JSON.stringify(formData, null, 2)
     console.log(jsonData)
-
     const socket = new WebSocket('ws://localhost:8765')
 
     socket.addEventListener('open', (event) => {

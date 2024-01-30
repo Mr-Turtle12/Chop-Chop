@@ -1,3 +1,4 @@
+import base64
 import json
 import sqlite3
 from backend.src.utils import utils
@@ -73,13 +74,29 @@ def get_ingredients(recipe_id):
 
 
 def insert_recipe_into_database(json_data):
+    image_data = base64.b64decode(json_data["image"])
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
     # Insert recipe information
     SQLCommandRecipe = (
         "INSERT INTO recipes (image, name, description, prepTime, cookTime, AI, favourite) "
-        f"VALUES ('{json_data['image']}', '{json_data['name']}', '{json_data['description']}', '{json_data['prepTime']}', "
-        f"'{json_data['cookTime']}', '{0}', '{0}')"
+        "VALUES (?, ?, ?, ?, ?, ?, ?)"
     )
-    SQLiteQuery(SQLCommandRecipe, "commit")
+    cursor.execute(
+        SQLCommandRecipe,
+        (
+            image_data,
+            json_data["name"],
+            json_data["description"],
+            json_data["prepTime"],
+            json_data["cookTime"],
+            0,
+            0,
+        ),
+    )
+
+    conn.commit()
+    conn.close()
 
     # Get the last inserted recipe ID
     recipe_id = SQLiteQuery("SELECT id FROM recipes ORDER BY id DESC", "one")[0]

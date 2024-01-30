@@ -5,7 +5,7 @@
     <div class="c-recipe-image__image-container">
       <img
         class="c-recipe-image__image"
-        :src="recipe.img"
+        :src="recipe.img" :alt = "require('@/assets/ImageNotFound.png')"
       >
     </div>
   </section>

@@ -8,7 +8,7 @@
       <div class="c-featured-recipe__image-container">
         <img
           class="c-featured-recipe__image"
-          :src="recipes.image"
+          :src="recipes.image" :alt = "ImageNotFound"
         >
       </div>
     
@@ -38,6 +38,7 @@
 
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
+import ImageNotFound from '@/assets/ImageNotFound.png'
 import { onMounted, ref } from 'vue'
 
 defineProps({
