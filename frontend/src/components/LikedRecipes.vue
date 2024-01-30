@@ -106,6 +106,10 @@ onBeforeUnmount(() => {
         transform: translateX(10px);
       }
     }
+
+    @include media('<=tablet') {
+      color: var(--black);
+    }
   }
 
   &__heading-icon {

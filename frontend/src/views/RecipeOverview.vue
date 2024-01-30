@@ -194,7 +194,7 @@ onBeforeUnmount(() => {
     // if bookmarked is not favourited add hover effect
     &:not(&--favourite):hover,
     &:not(&--favourite):focus {
-      color:#CEE4DB;
+      color:var(--light-green);
     }
   }
 

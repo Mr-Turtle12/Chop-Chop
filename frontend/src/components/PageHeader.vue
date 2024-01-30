@@ -132,7 +132,7 @@ function handleSearch() {
     &.is-cross {
       #{$c}__line {
         top: 11px;
-        background-color:white;
+        background-color:var(--white);
 
         &--top {
           transform: rotate(-45deg);
@@ -250,7 +250,7 @@ function handleSearch() {
 
     &__search-bar {
       @include ts-meta;
-      background-color: white;
+      background-color: var(--white);
       border-radius: 30px;
       padding: 16px 50px 16px 16px;
       width: 100%;
@@ -272,7 +272,7 @@ function handleSearch() {
 
     &__button {
       @include ts-heading-1;
-      color: white;
+      color: var(--white);
     }
 
     &__button-link {
