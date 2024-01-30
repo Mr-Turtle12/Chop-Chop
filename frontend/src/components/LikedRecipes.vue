@@ -95,7 +95,7 @@ onBeforeUnmount(() => {
   &__heading {
     @include ts-heading-2;
     color: var(--dark-green);
-    grid-column:1/7;
+    grid-column:1/9;
     margin: 0;
     padding-bottom: var(--space-s);
     width:fit-content;
@@ -108,7 +108,7 @@ onBeforeUnmount(() => {
     }
 
     @include media('<=tablet') {
-      color: var(--black);
+      grid-column:1/-1;
     }
   }
 
