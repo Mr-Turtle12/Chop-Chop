@@ -81,12 +81,18 @@ const nextStep = computed(() => {
 
 function incrementPeek() {
   isPeeking.value = true;
-  localStepDelta.value++;
+  console.log(recipe.value.steps.length);
+  console.log(localStepDelta);
+  if(localStepDelta.value < recipe.value.steps.length - 1){
+    localStepDelta.value++;
+  }
 }
 
 function decrementPeek() {
   isPeeking.value = true;
-  localStepDelta.value--;
+  if(localStepDelta.value > 0){
+    localStepDelta.value--;
+  }
 }
 
 function onClickReturn() {
