@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
   }
   
   &__bookmark-icon {
-    color: #fff;
+    color: var(--white);
 
     &--favourite {
       color: var(--dark-green);
@@ -105,7 +105,7 @@ onBeforeUnmount(() => {
     // if bookmarked is not favourited add hover effect
     &:not(&--favourite):hover,
     &:not(&--favourite):focus {
-      color:#CEE4DB;
+      color:var(--light-green);
     }
   }
 
