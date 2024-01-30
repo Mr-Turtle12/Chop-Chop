@@ -1,36 +1,36 @@
 <template>
   <section class="c-featured-recipe o-section"> 
     <div
-        v-if="recipesLoaded"
-        class="c-featured-recipe__card-container"
-      > 
-    <div class="c-featured-recipe__container o-container">
-      <div class="c-featured-recipe__image-container">
-        <img
-          class="c-featured-recipe__image"
-          :src="recipes.image"
-        >
-      </div>
+      v-if="recipesLoaded"
+      class="c-featured-recipe__card-container"
+    > 
+      <div class="c-featured-recipe__container o-container">
+        <div class="c-featured-recipe__image-container">
+          <img
+            class="c-featured-recipe__image"
+            :src="recipes.image"
+          >
+        </div>
     
-      <div class="c-featured-recipe__text-container">
-        <h1 class="c-featured-recipe__heading">
-          <a
-            class="c-featured-recipe__heading-link"
-            :href="`/recipe-overview/${ recipes.id }`"
-          >{{recipes.name}} 
-          </a>
-        </h1>
+        <div class="c-featured-recipe__text-container">
+          <h1 class="c-featured-recipe__heading">
+            <a
+              class="c-featured-recipe__heading-link"
+              :href="`/recipe-overview/${ recipes.id }`"
+            >{{ recipes.name }} 
+            </a>
+          </h1>
 
-        <div class="c-featured-recipe__meta">
-          <div class="c-featured-recipe__time">
-            <ClockSVG
-              class="c-featured-recipe__time-icon"
-            />
+          <div class="c-featured-recipe__meta">
+            <div class="c-featured-recipe__time">
+              <ClockSVG
+                class="c-featured-recipe__time-icon"
+              />
 
-            <p>{{ recipes.info }}</p>
+              <p>{{ recipes.info }}</p>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   </section>
@@ -39,7 +39,7 @@
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
 import { onMounted, ref, onBeforeUnmount } from 'vue'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 const store = useStore()
 
@@ -53,19 +53,19 @@ const recipesLoaded = ref(false)
 
 const socket = new WebSocket(store.state.websocketUrl)
 onMounted(async () => {
-  socket.addEventListener('open', (event) => {
+    socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "get","recipe_id": -3}}')
     })
 
     socket.addEventListener('message', (event) => {
-         recipes.value = JSON.parse(event.data)
+        recipes.value = JSON.parse(event.data)
         recipesLoaded.value = true
     })
 })
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 

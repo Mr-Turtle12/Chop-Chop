@@ -49,7 +49,7 @@
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeSwitcher from '@/components/RecipeSwitcher.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 
 import { onMounted, reactive, onBeforeUnmount } from 'vue'
@@ -147,8 +147,8 @@ const toggleFavourite = ($event) => {
 }
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 

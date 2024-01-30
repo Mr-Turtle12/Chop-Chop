@@ -2,17 +2,19 @@
   <section class="c-listing o-section">
     <div class="c-listing__container o-container">
       <!-- filters? -->
-      <h1 class="c-listing__heading">{{ name }}</h1>
+      <h1 class="c-listing__heading">
+        {{ name }}
+      </h1>
 
       <div class="c-listing__listing">
         <RecipeCard
           v-for="recipe in recipes"
           :id="recipe.id"
-          :image="recipe.image"
           :key="recipe.id"
+          :image="recipe.image"
           :recipe-name="recipe.name"
           :info="recipe.info"
-          :isFavourite = "recipe.isFavourite"
+          :is-favourite="recipe.isFavourite"
           :size="'vertical'"
         />
       </div>
@@ -24,40 +26,40 @@
 import RecipeCard from './RecipeCard.vue'
 import { onMounted, ref, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
 const store = useStore()
 const route = useRoute()
-var name = ""
+var name = ''
 const socket = new WebSocket(store.state.websocketUrl)
 onMounted(async () => {
 
-      socket.addEventListener('open', (event) => {
-      if(route.params.search == "Smart"){
-        name = "Smart recipes"
-        socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
-      }else if (route.params.search == "Bookmarked"){
-        name = "Bookmarked recipes"
-        socket.send('{"command": {"keyword": "get","recipe_id": -1}}')
-      }else if (route.params.search == "All"){
-        name = "All recipes"
-        socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
-      } else{
-        name = "Search for '" + route.params.search + "'"
-        socket.send('{"command": {"keyword": "get-search","search_name": "'+route.params.search+'" }}')
-      }
+    socket.addEventListener('open', (event) => {
+        if(route.params.search == 'Smart'){
+            name = 'Smart recipes'
+            socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
+        }else if (route.params.search == 'Bookmarked'){
+            name = 'Bookmarked recipes'
+            socket.send('{"command": {"keyword": "get","recipe_id": -1}}')
+        }else if (route.params.search == 'All'){
+            name = 'All recipes'
+            socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
+        } else{
+            name = 'Search for \'' + route.params.search + '\''
+            socket.send('{"command": {"keyword": "get-search","search_name": "'+route.params.search+'" }}')
+        }
     })
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
         if (Array.isArray(arrayRecipe)) {
-          recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
+            recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
         }else{
-          name = "No recipes found"
-          recipes.value = null
+            name = 'No recipes found'
+            recipes.value = null
 
         }
         recipesLoaded.value = true
@@ -65,8 +67,8 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 
@@ -78,7 +80,7 @@ onBeforeUnmount(() => {
   }
   &__heading {
     @include ts-heading-2;
-    color: #419170;
+    color: var(--dark-green);
     grid-column:1/7;
     margin: 3;
     padding-bottom: var(--space-s);
