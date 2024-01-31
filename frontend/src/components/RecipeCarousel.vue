@@ -7,6 +7,11 @@
         </li>
         <li class="c-recipe-carousel__step c-recipe-carousel__step--current">
           {{ currentStep }}
+          <template v-if="nextStep == null">
+            <div class="enjoy-meal-container">
+              <button class="return-button" @click="onClickEnd">Finish</button>
+            </div>
+          </template>
         </li>
         <li class="c-recipe-carousel__step c-recipe-carousel__step--next">
           {{ nextStep }}
@@ -16,12 +21,10 @@
       <div class="c-recipe-carousel__button-container">
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--previous"
-          @click="
-            decrementPeek()"
-        >
-          <img
-            src="@/assets/navigation-arrow.svg"
+          :class="{ 'disabled': !previousStep }"
+          @click="decrementPeek"
           >
+            <img src="@/assets/navigation-arrow.svg">
         </button>
 
         <button
@@ -33,6 +36,7 @@
 
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--next"
+          :class="{ 'disabled': !nextStep }"
           @click="
             incrementPeek()"
         >
@@ -47,6 +51,15 @@
 
 <script setup>
 import { computed, defineProps, toRef, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+const store = useStore()
+const router = useRouter()
+
+const socket = new WebSocket(store.state.websocketUrl)
+
+
 
 const props = defineProps({
   recipe: {
@@ -80,17 +93,15 @@ const nextStep = computed(() => {
 });
 
 function incrementPeek() {
-  isPeeking.value = true;
-  console.log(recipe.value.steps.length);
-  console.log(localStepDelta);
   if(localStepDelta.value < recipe.value.steps.length - 1){
+    isPeeking.value = true;
     localStepDelta.value++;
   }
 }
 
 function decrementPeek() {
-  isPeeking.value = true;
   if(localStepDelta.value > 0){
+    isPeeking.value = true;
     localStepDelta.value--;
   }
 }
@@ -99,11 +110,47 @@ function onClickReturn() {
   localStepDelta.value = 0;
   isPeeking.value = false;
 }
+
+function onClickEnd(){
+  socket.send(`{"command": { "keyword": "end"}}`)
+  router.back()
+}
+
+
+
 </script>
 
 
 
 <style scoped lang="scss">
+
+.enjoy-meal-container {
+  text-align: center;
+  margin: 20px;
+}
+
+.return-button {
+  background-color: #419170;
+  color: white;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 50px;
+}
+
+.return-button:hover {
+  background-color: #45a049;
+}
+
+.c-recipe-carousel__button {
+  &.disabled {
+    opacity: 0.3; // Adjust the opacity to your liking
+    cursor: not-allowed;
+  }
+}
+
 .c-recipe-carousel {
   height: calc(100vh - (var(--space-xl)*2)); // might need to change, sets height of the carousel to be 100% minus the header and margins
 
