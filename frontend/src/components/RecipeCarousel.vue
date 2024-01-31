@@ -94,15 +94,19 @@ const nextStep = computed(() => {
 
 function incrementPeek() {
   if(localStepDelta.value < recipe.value.steps.length - 1){
-    isPeeking.value = true;
     localStepDelta.value++;
+    if(recipe.value.isSmart){
+      isPeeking.value = true;
+    }
   }
 }
 
 function decrementPeek() {
   if(localStepDelta.value > 0){
-    isPeeking.value = true;
     localStepDelta.value--;
+    if(recipe.value.isSmart){
+      isPeeking.value = true;
+    }
   }
 }
 

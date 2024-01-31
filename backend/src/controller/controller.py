@@ -52,6 +52,7 @@ class Controller:
         target_recipe = SQLQueries.get_all_metadata_from(recipe_id)
         if not target_recipe:
             return None
+        print(bool(SQLQueries.is_smart(recipe_id)))
         metadata = {
             "image": utils.convert_image(target_recipe[1]),
             "name": target_recipe[2],
@@ -59,6 +60,7 @@ class Controller:
             "ingredients": utils.get_ingredients(recipe_id),
             "isFavourite": bool(target_recipe[8]),
             "commands": utils.get_commands(recipe_id),
+            "isSmart": bool(SQLQueries.is_smart(recipe_id)),
         }
         return json.dumps(metadata)
 

@@ -45,7 +45,8 @@ var recipe = reactive({
     ],
     progressionObject: [
       'NO PROGRESSION OBJECT'
-    ]
+    ],
+    isSmart: false
 })
 
 socket.addEventListener('open', (event) => {
@@ -58,6 +59,7 @@ socket.addEventListener('message', (event) => {
         if (data.name) {
             recipe.name = data.name;
             recipe.steps = data['commands'];
+
         } else {
             stepIndex.value = data.step;
             if (data.inhibitors.progressionObject == "timer") {
