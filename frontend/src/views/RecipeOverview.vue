@@ -215,7 +215,7 @@ onBeforeUnmount(() => {
     box-sizing: border-box;
 
     @include media("<=tablet") {
-      padding: var(--space-s);
+      padding: var(--space-xs);
       display:flex;
       flex-direction: row;
       align-items: center;

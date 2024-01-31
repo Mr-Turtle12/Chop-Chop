@@ -7,7 +7,7 @@
     grid-template-columns: repeat(6, 1fr);
   }
 
-  // @include media("<=mobile") {
-  //   grid-template-columns: repeat(4, 1fr);
-  // }
+  @include media("<=phone") {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
