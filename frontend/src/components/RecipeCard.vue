@@ -71,7 +71,16 @@ const toggleFavourite = ($event) => {
         bookmarkIcon.classList.add('c-card__bookmark-icon--favourite')
     }
     isLocalFavourite = !isLocalFavourite
+<<<<<<< HEAD
     emits('favouriteChange')
+=======
+<<<<<<< HEAD
+    emits('favouriteChange');
+=======
+    const socket = new WebSocket('ws://localhost:8765')
+    emits('favouriteChange')
+>>>>>>> 3caf625 (fixed a few frontend css bugs)
+>>>>>>> bc3fbd3 (fixed a few frontend css bugs)
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+isLocalFavourite+' ,"recipe_id": '+ props.id +  '}}')
     })

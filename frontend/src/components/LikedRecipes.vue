@@ -47,9 +47,17 @@ defineProps({
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
+<<<<<<< HEAD
 const emits = defineEmits()
+=======
+<<<<<<< HEAD
+const emits = defineEmits();
+>>>>>>> bc3fbd3 (fixed a few frontend css bugs)
 const socket = new WebSocket(store.state.websocketUrl)
 
+=======
+const emits = defineEmits()
+>>>>>>> 3caf625 (fixed a few frontend css bugs)
 onMounted(async () => {
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "get","recipe_id": -1}}')
