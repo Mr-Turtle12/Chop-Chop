@@ -123,6 +123,9 @@ const toggleFavourite = ($event) => {
     #{$c}__info {
       height: 50%;
     }
+    #{$c}__heading {
+      white-space: normal;
+    }
   }
 
   #{$c}__image {
@@ -151,6 +154,9 @@ const toggleFavourite = ($event) => {
     @include ts-heading-4;
     color: white;
     padding-bottom: var(--space-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   #{$c}__time,
