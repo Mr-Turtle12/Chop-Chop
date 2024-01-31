@@ -117,13 +117,25 @@ onBeforeUnmount(() => {
     color: var(--white);
     display: flex;
     flex-direction: column;
-    padding: 198px 0;
+    padding: var(--space-xxl) 0;
     z-index:3;
+
+    @include media("<=tablet") {
+      padding: var(--space-m) 0;
+    }
   }
 
   &__heading {
     @include ts-heading-1;
     margin-bottom: var(--space-xs);
+    text-align: center;
+    text-wrap: wrap;
+    padding-left:var(--space-xxs);
+    padding-right:var(--space-xxs);
+
+    @include media("<=tablet") {
+      @include ts-heading-2;
+    }
   }
 
   &__meta {
