@@ -56,9 +56,11 @@ socket.addEventListener('open', (event) => {
 socket.addEventListener('message', (event) => {
     try {
         const data = JSON.parse(event.data);
+        console.log()
         if (data.name) {
             recipe.name = data.name;
             recipe.steps = data['commands'];
+            recipe.isSmart = data.isSmart;
 
         } else {
             stepIndex.value = data.step;
