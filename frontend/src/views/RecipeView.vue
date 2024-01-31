@@ -28,22 +28,25 @@ import TimerCard from '@/components/TimerCard.vue'
 
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
-import { ref,reactive } from 'vue'
+import { ref,reactive,onBeforeUnmount } from 'vue'
 const route = useRoute();
 const router = useRouter()
+const store = useStore()
 
-const socket = new WebSocket('ws://localhost:8765')
+const socket = new WebSocket(store.state.websocketUrl)
 var stepIndex = ref(0)
 
 var recipe = reactive({
     name: 'ERROR NAME NOT FOUND',
     steps: [
-        'NO STEPS FOUND'
+        'loading recipe...'
     ],
     progressionObject: [
       'NO PROGRESSION OBJECT'
-    ]
+    ],
+    isSmart: false
 })
 
 socket.addEventListener('open', (event) => {
@@ -53,11 +56,12 @@ socket.addEventListener('open', (event) => {
 socket.addEventListener('message', (event) => {
     try {
         const data = JSON.parse(event.data);
-        console.log(stepIndex.value);
+        console.log()
         if (data.name) {
             recipe.name = data.name;
             recipe.steps = data['commands'];
-            console.log(recipe.steps);
+            recipe.isSmart = data.isSmart;
+
         } else {
             stepIndex.value = data.step;
             if (data.inhibitors.progressionObject == "timer") {
@@ -93,11 +97,13 @@ function handleCountdownEnd(stepGeneratedOn) {
 }
 
 const EndRecipe = () => {
-    socket.addEventListener('open', (event) => {
-        socket.send(`{"command": { "keyword": "end"}}`)
-    })
+    socket.send(`{"command": { "keyword": "end"}}`)
     router.back()
 }
+
+onBeforeUnmount(() => {
+  socket.close();
+});
 
 </script>
 

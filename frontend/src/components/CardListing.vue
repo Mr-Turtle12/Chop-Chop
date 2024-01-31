@@ -22,17 +22,20 @@
 
 <script setup>
 import RecipeCard from './RecipeCard.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useStore } from 'vuex';
+
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
-
+const store = useStore()
 const route = useRoute()
 var name = ""
+const socket = new WebSocket(store.state.websocketUrl)
 onMounted(async () => {
-    const socket = new WebSocket('ws://localhost:8765')
-    socket.addEventListener('open', (event) => {
+
+      socket.addEventListener('open', (event) => {
       if(route.params.search == "Smart"){
         name = "Smart recipes"
         socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
@@ -42,15 +45,28 @@ onMounted(async () => {
       }else if (route.params.search == "All"){
         name = "All recipes"
         socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
+      } else{
+        name = "Search for '" + route.params.search + "'"
+        socket.send('{"command": {"keyword": "get-search","search_name": "'+route.params.search+'" }}')
       }
     })
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
+        if (Array.isArray(arrayRecipe)) {
+          recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
+        }else{
+          name = "No recipes found"
+          recipes.value = null
+
+        }
         recipesLoaded.value = true
     })
 })
+
+onBeforeUnmount(() => {
+  socket.close();
+});
 
 </script>
 

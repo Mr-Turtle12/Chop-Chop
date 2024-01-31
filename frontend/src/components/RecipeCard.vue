@@ -44,6 +44,13 @@
 import ClockSVG from '@/assets/clock-svg.vue'
 import ImageNotFound from '@/assets/ImageNotFound.png'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
+import {onBeforeUnmount} from 'vue'
+
+import { useStore } from 'vuex';
+
+const store = useStore()
+
+const socket = new WebSocket(store.state.websocketUrl)
 
 const props = defineProps({
     size: { type: String, default: 'vertical' },
@@ -71,6 +78,11 @@ const toggleFavourite = ($event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+isLocalFavourite+' ,"recipe_id": '+ props.id +  '}}')
     })
 }
+
+onBeforeUnmount(() => {
+  socket.close();
+});
+
 </script>
 
 <style scoped lang="scss">

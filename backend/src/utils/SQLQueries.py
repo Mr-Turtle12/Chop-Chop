@@ -3,11 +3,13 @@ import json
 import sqlite3
 from backend.src.utils import utils
 from backend.src.config import DATABASE
+from backend.src.utils import SpellChecker
 
 
 def SQLiteQuery(Query, type):
     # Connect to the SQLite database
-    conn = sqlite3.connect(DATABASE)
+    # "../../../database/recipes.db"
+    conn = sqlite3.connect(DATABASE + "/recipes.db")
     cursor = conn.cursor()
     # Fetch recipe data from the database
     cursor.execute(Query)
@@ -71,6 +73,26 @@ def get_AIs_metadata():
 def get_ingredients(recipe_id):
     SQLCommand = "SELECT * FROM ingredients WHERE recipe_id=" + str(recipe_id)
     return SQLiteQuery(SQLCommand, "all")
+
+
+def search(query):
+    SQLCommand = "SELECT name FROM recipes WHERE name LIKE '%" + query + "%'"
+    result = SQLiteQuery(SQLCommand, "all")
+
+    if not result:
+        corrected_query = SpellChecker.wordChecker(query)
+        if corrected_query:
+            query = corrected_query
+
+    SQLCommand = (
+        "SELECT * FROM recipes WHERE name LIKE '%" + query + "%' ORDER BY "
+        "CASE WHEN name LIKE '" + query + "%' THEN 1 "
+        "WHEN name LIKE '% " + query + "%' THEN 2 "
+        "WHEN name LIKE '%" + query + "%' THEN 3 ELSE 4 END, name;"
+    )
+    result = SQLiteQuery(SQLCommand, "all")
+
+    return utils.convert_metadata(result)
 
 
 def insert_recipe_into_database(json_data):

@@ -11,6 +11,7 @@ class Request:
         self.favourite: bool = command.get("type", None)
         self.timer_id: int = command.get("timer_id", None)
         self.recipe_metadata: str = command.get("recipe_metadata", None)
+        self.search_name: str = command.get("search_name", None)
         self.matcher = self.__matcher()
 
     def __matcher(self):
@@ -28,6 +29,8 @@ class Request:
                 return (self.keyword, self.recipe_metadata)
             case "end":
                 return self.keyword
+            case "get-search":
+                return (self.keyword, self.search_name)
             case _:
                 return None
 

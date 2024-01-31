@@ -34,14 +34,19 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import RecipeCard from './RecipeCard.vue'
+import { useStore } from 'vuex';
+
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
+const store = useStore()
+
 const emits = defineEmits();
+const socket = new WebSocket(store.state.websocketUrl)
 onMounted(async () => {
-    const socket = new WebSocket('ws://localhost:8765')
+
     socket.addEventListener('open', (event) => {
       socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
     })
@@ -55,6 +60,11 @@ onMounted(async () => {
 const handleFavouriteChange = () => {
   emits('favourite-change');
 };
+
+onBeforeUnmount(() => {
+  socket.close();
+});
+
 </script>
 
 <style scoped lang="scss">

@@ -50,24 +50,29 @@
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeSwitcher from '@/components/RecipeSwitcher.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
+import { useStore } from 'vuex';
 
 
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const route = useRoute()
+const store = useStore()
+const socket = new WebSocket(store.state.websocketUrl)
+
 
 var recipe = reactive({
     name: 'ERROR NAME NOT FOUND',
     decription: 'ERROR DESCRIPTION NOT FOUND',
     img:  require('@/assets/ImageNotFound.png'),
     steps: [
-        'NO STEPS FOUND'
+        'Loading recipe...'
     ],
     isFavourite : false,
     ingredients: [
         'NO INGREDIENT FOUND'
-    ]
+    ],
+    isSmart: false
 })
 
 onMounted(() => {
@@ -75,7 +80,6 @@ onMounted(() => {
 })
 
 function startRecipeAPICall(){
-    const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
         socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
     
@@ -86,7 +90,6 @@ function startRecipeAPICall(){
 
 function getRecipeInfo()
 {
-    const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
         socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
     
@@ -126,7 +129,7 @@ function parseRecipeFromJson(RecipeJsonMessage)
     recipe.ingredients = formatIngredients(RecipeJsonMessage)
     recipe.isFavourite = RecipeJsonMessage.isFavourite
     recipe.steps = RecipeJsonMessage['commands']
-
+    recipe.isSmart = RecipeJsonMessage.isSmart
 }
 
 const toggleFavourite = ($event) => {
@@ -139,12 +142,15 @@ const toggleFavourite = ($event) => {
     }
     
     recipe.isFavourite = !recipe.isFavourite
-    const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
         console.log('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}')
         socket.send('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}')
     })
 }
+
+onBeforeUnmount(() => {
+  socket.close();
+});
 
 </script>
 

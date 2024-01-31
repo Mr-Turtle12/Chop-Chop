@@ -34,10 +34,10 @@
             type="text"
             placeholder="Search.."
           >
-
-          <button class="c-header-menu__search-icon">
+          <button class="c-header-menu__search-icon" @click="handleSearch">
             <SearchIcon />
           </button>
+
         </div>
 
         <ul class="c-header-menu__button-container">
@@ -105,6 +105,13 @@ function toggleMenu() {
         document.body.classList.add('is-scroll-locked')
     }
 }
+function handleSearch() {
+    const searchTerm = document.querySelector('.c-header-menu__search-bar').value.trim();
+    if (searchTerm !== '') {
+        window.location.href = `/search/${searchTerm}`;
+    }
+}
+
 </script>
 
 <style scoped lang="scss">

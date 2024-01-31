@@ -1,6 +1,7 @@
 import base64
 import json
 from backend.src.controller import recipe, manageThread
+from backend.src.interpreter import create_camera, destroy_camera
 from backend.src.utils import utils, SQLQueries
 
 
@@ -12,6 +13,7 @@ class Controller:
         self.thread_instance = None
         self.step_changed_flag = utils.StepChangeFlag()
         self.end_flag = utils.EndFlag()
+        self.Cameras = None
 
     def new_recipe(self, recipe_id):
         """Starts a new recipe with the given recipe ID.
@@ -20,11 +22,13 @@ class Controller:
         """
         self.current_recipe = recipe.Recipe(recipe_id)
         self.end_flag.clear()
+        self.Cameras = create_camera()
         if SQLQueries.is_smart(self.current_recipe.recipe_id):
             self.thread_instance = manageThread.ManageThread(
-                self.get_progression_requirements_for_current_step(), self.end_flag
+                self.get_progression_requirements_for_current_step(),
+                self.end_flag,
+                self.Cameras,
             )
-
 
     def update_flag(self):
         self.step_changed_flag.state = True
@@ -55,6 +59,7 @@ class Controller:
             "ingredients": utils.get_ingredients(recipe_id),
             "isFavourite": bool(target_recipe[8]),
             "commands": utils.get_commands(recipe_id),
+            "isSmart": bool(SQLQueries.is_smart(recipe_id)),
         }
         return json.dumps(metadata)
 
@@ -63,7 +68,9 @@ class Controller:
         self.current_recipe.increment_step()
         if SQLQueries.is_smart(self.current_recipe.recipe_id):
             self.thread_instance = manageThread.ManageThread(
-                self.get_progression_requirements_for_current_step(), self.end_flag
+                self.get_progression_requirements_for_current_step(),
+                self.end_flag,
+                self.Cameras,
             )
         self.update_flag()
 
@@ -72,7 +79,9 @@ class Controller:
             self.current_recipe.set_current_step(step_numer)
             if SQLQueries.is_smart(self.current_recipe.recipe_id):
                 self.thread_instance = manageThread.ManageThread(
-                    self.get_progression_requirements_for_current_step(), self.end_flag
+                    self.get_progression_requirements_for_current_step(),
+                    self.end_flag,
+                    self.Cameras,
                 )
         self.update_flag()
 
