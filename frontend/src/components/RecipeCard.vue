@@ -45,7 +45,7 @@ import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
 import {onBeforeUnmount} from 'vue'
 
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 const store = useStore()
 
@@ -59,8 +59,8 @@ const props = defineProps({
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1}
 })
-var isLocalFavourite  = props.isFavourite;
-const emits = defineEmits();
+var isLocalFavourite  = props.isFavourite
+const emits = defineEmits()
 
 const toggleFavourite = ($event) => {
 
@@ -71,15 +71,15 @@ const toggleFavourite = ($event) => {
         bookmarkIcon.classList.add('c-card__bookmark-icon--favourite')
     }
     isLocalFavourite = !isLocalFavourite
-    emits('favouriteChange');
+    emits('favouriteChange')
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+isLocalFavourite+' ,"recipe_id": '+ props.id +  '}}')
     })
 }
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 
@@ -125,11 +125,16 @@ onBeforeUnmount(() => {
     border-radius: 20px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
   &:hover,
   &:focus {
     #{$c}__info {
       height: 50%;
+    }
+
+    #{$c}__heading {
+      white-space: normal;
     }
   }
 
@@ -139,6 +144,7 @@ onBeforeUnmount(() => {
     width: 100%;
     object-fit: cover;
     aspect-ratio: 16/9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   }
   
   #{$c}__info {
@@ -158,6 +164,9 @@ onBeforeUnmount(() => {
     @include ts-heading-4;
     color: white;
     padding-bottom: var(--space-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   #{$c}__time,
@@ -198,6 +207,7 @@ onBeforeUnmount(() => {
         border-radius: 30px 0px 0px 30px;
         aspect-ratio: 16/9;
         position: absolute;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
       }
 
       #{$c}__info {
