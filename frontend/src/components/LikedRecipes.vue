@@ -43,7 +43,7 @@ defineProps({
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
-const emits = defineEmits();
+const emits = defineEmits()
 onMounted(async () => {
     const socket = new WebSocket('ws://localhost:8765')
     socket.addEventListener('open', (event) => {
@@ -51,25 +51,25 @@ onMounted(async () => {
     })
 
     socket.addEventListener('message', (event) => {
-      const arrayRecipe = JSON.parse(event.data);
+        const arrayRecipe = JSON.parse(event.data)
 
-      // Check if arrayRecipe is an array
-      if (Array.isArray(arrayRecipe)) {
-          recipes.value = arrayRecipe.map(recipe => ({
-              name: recipe.name,
-              image: recipe.image,
-              info: recipe.description,
-              id: recipe.id
-          }));
-          recipesLoaded.value = true;
-      } else {
-          console.error('Invalid data structure received from WebSocket:', arrayRecipe);
-      }
+        // Check if arrayRecipe is an array
+        if (Array.isArray(arrayRecipe)) {
+            recipes.value = arrayRecipe.map(recipe => ({
+                name: recipe.name,
+                image: recipe.image,
+                info: recipe.description,
+                id: recipe.id
+            }))
+            recipesLoaded.value = true
+        } else {
+            console.error('Invalid data structure received from WebSocket:', arrayRecipe)
+        }
     })
 })
 const handleFavouriteChange = () => {
-  emits('favouriteChange');
-};
+    emits('favouriteChange')
+}
 
 </script>
 
@@ -109,7 +109,14 @@ const handleFavouriteChange = () => {
     display:flex;
     column-gap: var(--gutter);
     overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     white-space: nowrap;
+    padding-bottom: var(--space-xxs);
+  }
+
+  &__card-container::-webkit-scrollbar {
+    display: none;
   }
 }
 </style>
