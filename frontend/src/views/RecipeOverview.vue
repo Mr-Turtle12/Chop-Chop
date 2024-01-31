@@ -182,6 +182,10 @@ onBeforeUnmount(() => {
 
   &__info-left {
     grid-column:1/9;
+
+    @include media("<=tablet") {
+      grid-column: 1/-1;
+    }
   }
 
   &__heading {
@@ -192,82 +196,110 @@ onBeforeUnmount(() => {
 
   &__description {
     @include ts-heading-3;
-    color: #419170;
+    color: var(--dark-green);
     margin-top:var(--space-s);
   }
 
   &__info-right {
     grid-column: 9/-1;
+
+    @include media("<=tablet") {
+      grid-column: 1/-1;
+    }
   }
 
   &__meta-container {
-    background: #419170;
+    background: var(--dark-green);
     border-radius: 10px;
     padding: var(--space-m);
     box-sizing: border-box;
+
+    @include media("<=tablet") {
+      padding: var(--space-s);
+      display:flex;
+      flex-direction: row;
+      align-items: center;
+    }
   }
 
   &__meta {
     @include ts-meta;
-    color: #fff;
+    color: var(--white);
     display: flex;
     align-items: center;
 
     &::before {
       content:'';
       mask:url('@/assets/clock.svg');
-      background: #fff;
+      background: var(--white);
       display:inline-block;
       height:28px;
       width:28px;
       mask-size: cover;
       margin-right: var(--space-xs);
     }
+
+    @include media("<=tablet") {
+      width:50%;
+    }
   }
 
   &__meta + &__meta {
     margin-top: var(--space-xs);
+
+    @include media("<=tablet") {
+      margin-top:0;
+    }
   }
 
   &__info-bottom {
     grid-column: 1/-1;
     display: flex;
     justify-content: space-between;
+    gap:var(--space-xxs);
+
+    @include media("<=tablet") {
+      flex-direction: column;
+    }
   }
 
   &__bookmark-button-container {
     @include ts-heading-3;
-    color:#419170;
-    background: #fff;
+    color:var(--dark-green);
+    background: var(--white);
     display: flex;
     align-items: center;
     padding: var(--space-xxs);
     border-radius: 10px;
-    border: 2px solid #419170;
+    border: 2px solid var(--dark-green);
 
     &:hover,
     &:focus {
-      background-color:#419170;
-      color:#fff;
+      background-color:var(--dark-green);
+      color:var(--white);
+    }
+
+    @include media("<=tablet") {
+      justify-content: center;
     }
   }
 
   &__bookmark-icon {
-    color: #fff;
+    color: var(--white);
     margin-right: var(--space-xxs);
 
     &--favourite {
-      color: #419170;
-      stroke: solid 1px #fff;
+      color: var(--dark-green);
+      stroke: solid 1px var(--white);
     }
   }
 
   &__link {
     @include ts-heading-3;
     border-radius: 10px;
-    border: 2px solid #419170;
-    background-color: #FFF;
-    color: #419170;
+    border: 2px solid var(--dark-green);
+    background-color: var(--white);
+    color: var(--dark-green);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -275,8 +307,8 @@ onBeforeUnmount(() => {
 
     &:hover,
     &:focus {
-      background-color: #419170;
-      color: #fff;    
+      background-color: var(--dark-green);
+      color: var(--white);
     }
   }
 }

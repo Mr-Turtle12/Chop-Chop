@@ -2,4 +2,12 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-gap: var(--gutter);
+
+  @include media("<=tablet") {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  // @include media("<=mobile") {
+  //   grid-template-columns: repeat(4, 1fr);
+  // }
 }
