@@ -223,7 +223,7 @@ onBeforeUnmount(() => {
   }
 
   &__meta {
-    @include ts-meta;
+    @include ts-heading-4;
     color: var(--white);
     display: flex;
     align-items: center;
