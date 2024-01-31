@@ -2,7 +2,7 @@ import http.server
 import socketserver
 import os
 
-from backend.src.config import SERVER_IP
+from backend.src.config import SERVER_IP, DATABASE
 
 
 class MyCustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -10,8 +10,8 @@ class MyCustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         # Extract the path part after "/photos/"
         path = path.split("/photos/", 1)[-1]
         # Construct the absolute path to the file
-        base_path = os.path.abspath(os.path.join(os.getcwd(), "..", "..", "database"))
-        return os.path.join(base_path, "photos", path)
+        print(os.path.join(DATABASE, "photos", path))
+        return os.path.join(DATABASE, "photos", path)
 
 
 # Start the HTTP server
