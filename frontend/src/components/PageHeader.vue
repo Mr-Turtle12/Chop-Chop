@@ -7,7 +7,7 @@
           href="/"
         >
         
-          <Logo class="c-page-header__logo" />
+          <Logo class="c-page-header__logo c-page-header__logo--long" />
         </a>
 
         <button
@@ -115,9 +115,11 @@ function handleSearch() {
   }
 
   &__logo {
-    @include media("<=tablet") {
-      height:50px;
-      width:300px;
+    &--long {
+      @include media("<=tablet") {
+        height:50px;
+        width:300px;
+      }
     }
   }
 }
@@ -233,10 +235,6 @@ function handleSearch() {
         transform: translate(0);
       }
     }
-
-    // @include media("<=tablet") {
-    //   height:100%;
-    // }
 
     &__container {
       background: var(--dark-green);
