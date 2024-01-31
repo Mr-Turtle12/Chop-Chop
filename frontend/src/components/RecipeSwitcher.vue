@@ -102,12 +102,17 @@ function toggle(buttonName) {
       color:var(--dark-green);;
       background-color: var(--white);
     }
+
+    @include media("<=tablet") {
+      @include ts-heading-3;
+      padding: var(--space-s);
+    }
   }
 
   &__ingredient-container,
   &__recipe-container {
     @include ts-heading-3;
-    color: var(--dark-green);;
+    color: var(--dark-green);
     display: none;
     flex-direction: column;
     gap: 32px;
@@ -118,12 +123,22 @@ function toggle(buttonName) {
     &.is-toggled {
       display:flex;
     }
+
+    @include media("<=tablet") {
+      @include ts-heading-4;
+      padding-top: var(--space-m);
+      padding-bottom: var(--space-m);
+    }
   }
 
   &__ingredient {
     background: rgba(65, 145, 112, 0.20);
     padding: var(--space-s);
     border-radius: 10px;
+
+    @include media("<=tablet") {
+      padding:var(--space-xs);
+    }
   }
 
   &__recipe-step {
@@ -132,6 +147,10 @@ function toggle(buttonName) {
 
     & > span {
       margin-right: var(--space-xxs);
+    }
+
+    @include media("<=tablet") {
+      @include ts-heading-4;
     }
   }
 }
