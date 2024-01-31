@@ -1,5 +1,3 @@
-const path = require('path')
-
 module.exports = {
     css: {
         loaderOptions: {
@@ -14,24 +12,5 @@ module.exports = {
             },
         },
     },
-    configureWebpack: {
-        resolve: {
-            fallback: {
-                fs: false,
-                path: require.resolve('path-browserify'),
-            },
-        },
-    },
-    pluginOptions: {
-        electronBuilder: {
-            nodeIntegration: true, // Make sure to set nodeIntegration to true
-            builderOptions: {
-                // Add this section to handle __dirname issue
-                extraResources: {
-                    from: './resources',
-                    to: 'resources',
-                },
-            },
-        },
-    },
-}
+  },
+};
