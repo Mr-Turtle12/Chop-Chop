@@ -25,7 +25,7 @@
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'vertical'"
-          @favouriteChange="handleFavouriteChange"
+          @favourite-change="handleFavouriteChange"
         />
       </div>
     </div>
@@ -36,7 +36,7 @@
 // import VerticalCard from './VerticalCard.vue'
 import RecipeCard from './RecipeCard.vue'
 import { onMounted, ref, onBeforeUnmount } from 'vue'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 const store = useStore()
 
@@ -47,7 +47,7 @@ defineProps({
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
-const emits = defineEmits();
+const emits = defineEmits()
 const socket = new WebSocket(store.state.websocketUrl)
 
 onMounted(async () => {
@@ -56,29 +56,29 @@ onMounted(async () => {
     })
 
     socket.addEventListener('message', (event) => {
-      const arrayRecipe = JSON.parse(event.data);
+        const arrayRecipe = JSON.parse(event.data)
 
-      // Check if arrayRecipe is an array
-      if (Array.isArray(arrayRecipe)) {
-          recipes.value = arrayRecipe.map(recipe => ({
-              name: recipe.name,
-              image: recipe.image,
-              info: recipe.description,
-              id: recipe.id
-          }));
-          recipesLoaded.value = true;
-      } else {
-          console.error('Invalid data structure received from WebSocket:', arrayRecipe);
-      }
+        // Check if arrayRecipe is an array
+        if (Array.isArray(arrayRecipe)) {
+            recipes.value = arrayRecipe.map(recipe => ({
+                name: recipe.name,
+                image: recipe.image,
+                info: recipe.description,
+                id: recipe.id
+            }))
+            recipesLoaded.value = true
+        } else {
+            console.error('Invalid data structure received from WebSocket:', arrayRecipe)
+        }
     })
 })
 const handleFavouriteChange = () => {
-  emits('favouriteChange');
-};
+    emits('favouriteChange')
+}
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 
@@ -119,6 +119,13 @@ onBeforeUnmount(() => {
     column-gap: var(--gutter);
     overflow: auto;
     white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-bottom: var(--space-xxs);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 </style>
