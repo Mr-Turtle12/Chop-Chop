@@ -77,7 +77,16 @@ onBeforeUnmount(() => {
   &__listing {
     @include grid;
     grid-template-columns: repeat(5, 1fr);
+
+    @include media("<=desktop") {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @include media("<=tablet") {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
+
   &__heading {
     @include ts-heading-2;
     color: var(--dark-green);
