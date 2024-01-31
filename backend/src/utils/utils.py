@@ -44,8 +44,8 @@ def get_commands(recipe_id):
     return command_list
 
 
-def convert_image(imageBlob):
-    return "data:image/JPEG;base64," + base64.b64encode(imageBlob).decode("utf-8")
+def convert_image(title):
+    return "http://" + config.SERVER_IP + ":8000/photos/" + title
 
 
 def convert_metadata(SQLRecipes):

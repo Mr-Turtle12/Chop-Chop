@@ -17,3 +17,5 @@ CAMERA_IDS = [0]
 WEBSOCKET_UPDATE_INTERVAL = 1
 # Database location
 DATABASE = "../../database/recipes.db"
+# localhost IP
+SERVER_IP = "localhost"
