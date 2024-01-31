@@ -8,7 +8,7 @@ from backend.src.utils import SpellChecker
 def SQLiteQuery(Query, type):
     # Connect to the SQLite database
     # "../../../database/recipes.db"
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(DATABASE + "/recipes.db")
     cursor = conn.cursor()
     # Fetch recipe data from the database
     cursor.execute(Query)
