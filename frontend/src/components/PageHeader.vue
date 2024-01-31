@@ -283,12 +283,16 @@ function handleSearch() {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 100px;
+      gap: 50px;
     }
 
     &__button {
       @include ts-heading-1;
       color: var(--white);
+
+      @include media("<=tablet") {
+        @include ts-heading-2;
+      }
     }
 
     &__button-link {
