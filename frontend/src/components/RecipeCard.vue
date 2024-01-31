@@ -208,17 +208,21 @@ onBeforeUnmount(() => {
 
       #{$c}__heading {
         @include ts-heading-3;
-        color: var(--dark-green);;
+        color: var(--dark-green);
         margin-bottom:var(--space-xs);
+
+        @include media("<=tablet") {
+          @include ts-heading-4;
+        }
       }
 
       #{$c}__meta {
         @include ts-meta;
-        color: var(--dark-green);;
+        color: var(--dark-green);
       }
   
       #{$c}__time-icon {
-        color: var(--dark-green);;
+        color: var(--dark-green);
       }
   }
 }
