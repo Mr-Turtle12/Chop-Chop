@@ -45,6 +45,7 @@
                 name="recipeName"
                 rows="4"
                 col="1"
+                maxlength="144"
               />
             </div>
 
@@ -111,23 +112,14 @@
               name="recipeDescription"
               rows="4"
               col="1"
+              maxlength="144"
             />
 
-            <label
-              for="recipeImage"
-              class="c-add-recipe__label"
-            >Image:</label>
-            <input
-              type="file"
-              @change="handleFileChange"
-            >
-            <img
-              v-if="base64Image"
-              :src="base64Image"
-              alt="Uploaded Image"
-              :style="{ maxWidth: '50%', maxHeight: '50%' }"
-            >
-          </div>   
+            
+            <label for="recipeImage" class="c-add-recipe__label">Image:</label>
+            <input type="file" id="recipeImage" ref="fileInput" accept="image/*" @change="handleFileChange">
+            <img v-if="base64Image" :src="base64Image" alt="Uploaded Image" :style="{ maxWidth: '50%', maxHeight: '50%' }">
+          </div> 
         </form>
       </div>
 
@@ -188,6 +180,7 @@
               name="ingredientName"
               rows="1"
               col="1"
+              maxlength="144"
             />
           </li>
         </ul>
@@ -215,6 +208,7 @@
               name="recipeStep"
               rows="2"
               col="1"
+              maxlength="144"
             />
           </li>
         </ol>
@@ -241,8 +235,10 @@
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
 import { ref  } from 'vue'
+import { useStore } from 'vuex';
 
 
+const store = useStore()
 const base64Image = ref(null)
 function toggle(buttonName) {
     console.log('buttonName: ' + buttonName)
@@ -321,10 +317,29 @@ const handleFileChange = (event) => {
     }
 }
 
+const getFileExtension = (fileType) => {
+    // Split the fileType string by '/' and get the second part which contains the file extension
+    const parts = fileType.split('/');
+    console.log(parts[1]);
+    if (parts.length === 2) {
+        return '.' + parts[1];
+    }
+    // Default to '.png' if file type is not supported or unknown
+    return '.png';
+}
 const submitForm = () => {
     // Collect form data and structure it into the desired JSON format
+
+    const form = new FormData();
+    const fileInput = document.getElementById('recipeImage');
+    let filename = ""; // Change to let to allow reassignment
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0]; // Define file first
+        filename = document.getElementById('recipeName').value.replace(/\s+/g, '_') + getFileExtension(file.type);
+        form.append('image', file, filename);
+    }
     const formData = {
-        image: base64Image.value || '', // Assuming base64Image is optional
+        image: filename || '', // Assuming base64Image is optional
         name: document.getElementById('recipeName').value || '',
         description: document.getElementById('recipeDescription').value || '',
         prepTime: (parseInt(document.getElementById('prepTimeHour').value || 0) * 60) + parseInt(document.getElementById('prepTimeMinute').value || 0), // Convert prep time to minutes
@@ -353,7 +368,7 @@ const submitForm = () => {
             formData.steps.push({ step: index + 1, command })
         }
     })
-    const emptyFields = ['name', 'description', 'ingredients', 'steps'].filter(field => !String(formData[field]).trim());
+    const emptyFields = ['name', 'image' , 'description', 'ingredients', 'steps'].filter(field => !String(formData[field]).trim());
     if (emptyFields.length > 0) {
         document.getElementById('submitErrorMessage').textContent = `You need to fill in ${emptyFields.join(', ')}.`;
         return; // Don't proceed further if essential fields are not filled
@@ -364,18 +379,30 @@ const submitForm = () => {
     // Convert formData to JSON string
     const jsonData = JSON.stringify(formData, null, 2)
     console.log(jsonData)
-    const socket = new WebSocket('ws://localhost:8765')
 
-    socket.addEventListener('open', (event) => {
-        socket.send(`{"command": { "keyword": "new_recipe","recipe_metadata": ${jsonData} }}`)
+    // Make a POST request to the server to upload the image store.state.websocketUrl
+    fetch(`${store.state.HTTPUrl}${filename}`, { 
+        method: 'POST',
+        body: form,
     })
-    socket.addEventListener('message', (event) => {
-      const nextPage = `/recipe-overview/${event.data}`;
-
-      // Navigate to the next page
-      window.location.href = nextPage;
+    .then(response => response.text())
+    .then(data => {
+        // Once the image is uploaded, send the recipe data via WebSocket
+        const socket = new WebSocket(store.state.websocketUrl)
+        socket.addEventListener('open', (event) => {
+            socket.send(`{"command": { "keyword": "new_recipe","recipe_metadata": ${jsonData} }}`)
+        })
+        socket.addEventListener('message', (event) => {
+            const nextPage = `/recipe-overview/${event.data}`;
+            // Navigate to the next page
+            window.location.href = nextPage;
+        })
     })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
+
 
 </script>
 

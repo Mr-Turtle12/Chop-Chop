@@ -97,22 +97,10 @@ def search(query):
 
 
 def insert_recipe_into_database(json_data):
-    # Extract image format from base64 string
-    image_format = json_data["image"].split(";")[0].split("/")[1]
-
-    # Decode base64 image data
-    image_base64 = json_data["image"].split(",")[1]
-
-    # Save image to DATABASE/photos with the specified name format
-    image_name = json_data["name"].replace(" ", "_") + "." + image_format
-    image_path = os.path.join(DATABASE, "photos", image_name)
-    with open(image_path, "wb") as img_file:
-        img_file.write(base64.b64decode(image_base64))
-
     # Insert recipe information
     SQLCommandRecipe = (
         f"INSERT INTO recipes (image, name, description, prepTime, cookTime, AI, favourite) "
-        f"VALUES ('{image_name}', '{json_data['name']}', '{json_data['description']}', '{json_data['prepTime']}', "
+        f"VALUES ('{json_data['image']}', '{json_data['name']}', '{json_data['description']}', '{json_data['prepTime']}', "
         f"'{json_data['cookTime']}', '{0}', '{0}')"
     )
     SQLiteQuery(SQLCommandRecipe, "commit")
