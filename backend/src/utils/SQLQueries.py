@@ -8,7 +8,7 @@ from backend.src.utils import SpellChecker
 def SQLiteQuery(Query, type):
     # Connect to the SQLite database
     # "../../../database/recipes.db"
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(DATABASE + "/recipes.db")
     cursor = conn.cursor()
     # Fetch recipe data from the database
     cursor.execute(Query)
@@ -128,12 +128,20 @@ def insert_recipe_into_database(json_data):
 
 def insert_recipe_into_dictionary(recipe_name):
     recipeName = recipe_name.split()
-    unimportantWords = ['and', 'with', 'a', 'in', '&']
+    unimportantWords = ['and', 'with', 'a', 'in', '&', 'also']
     # "../../../database/dictionary.txt"
-    dictionary = open("../../../database/dictionary.txt", "a")
+    dictionary = open(DATABASE + "/dictionary.txt", "a")
     for word in recipeName:
-        if word not in unimportantWords:
+        if word not in unimportantWords and not check_word(word):
             dictionary.write(word + "\n")
+
+
+def check_word(word):
+    with open(DATABASE + "/dictionary.txt", "r") as file:
+        for line in file:
+            if word.strip() == line.strip():
+                return True
+    return False
 
 
 def get_Random_metadata():
@@ -155,3 +163,7 @@ def get_Random_metadata():
 def is_smart(recipe_id):
     query = SQLiteQuery("SELECT AI FROM recipes WHERE id = " + str(recipe_id), "one")
     return query[0]
+
+
+if __name__ == "__main__":
+    insert_recipe_into_dictionary("Cheese and Biscuits with Mango Chutney and also Salmon")

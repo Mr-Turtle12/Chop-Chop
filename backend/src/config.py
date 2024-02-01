@@ -16,4 +16,5 @@ CAMERA_IDS = [0]
 # API settings
 WEBSOCKET_UPDATE_INTERVAL = 1
 # Database location
-DATABASE = "../../database/recipes.db"
+DATABASE = "../../database"
+# Dictionary location
