@@ -17,4 +17,5 @@ CAMERA_IDS = [0]
 WEBSOCKET_UPDATE_INTERVAL = 1
 # Database location
 DATABASE = "../../database"
-# Dictionary location
+# localhost IP
+SERVER_IP = "localhost"
