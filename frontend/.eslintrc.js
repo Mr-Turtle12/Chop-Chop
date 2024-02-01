@@ -44,6 +44,7 @@ module.exports = {
             'error',
             'never'
         ],
-        'no-unused-vars': 'off'
+        'no-unused-vars': 'off',
+        'vue/valid-define-emits': 'off'
     }
 }
