@@ -59,12 +59,15 @@
                   id="prepTimeHour"
                   type="number"
                   class="c-add-recipe__input c-add-recipe__input--hour"
-                > 
+                  placeholder="Hour"
 
+                > 
                 <input
                   id="prepTimeMinute"
                   type="number"
                   class="c-add-recipe__input c-add-recipe__input--minute"
+                  placeholder="Minute"
+
                 > 
               </div>
             </div>
@@ -80,12 +83,14 @@
                   id="cookTimeHour"
                   type="number"
                   class="c-add-recipe__input c-add-recipe__input--hour"
+                  placeholder="Hour"
                 > 
-
                 <input
                   id="cookTimeMinute"
                   type="number"
                   class="c-add-recipe__input c-add-recipe__input--minute"
+                  placeholder="Minute"
+
                 > 
               </div>
             </div>
@@ -154,8 +159,8 @@
               name="ingredientUnit"
               class="c-add-recipe__input c-add-recipe__input--ingredient-unit"
             >
-              <option value="number">
-                number
+              <option value="unit">
+                unit
               </option>
               <option value="tsp">
                 tsp
@@ -234,7 +239,7 @@
 
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
-import { ref } from 'vue'
+import { ref  } from 'vue'
 
 
 const base64Image = ref(null)
@@ -283,6 +288,8 @@ function addIngredient() {
     inputs.forEach(input => {
         input.value = '';
     });
+    const unitDropdown = newIngredient.querySelector('.c-add-recipe__input--ingredient-unit');
+    unitDropdown.selectedIndex = 0; // This will select the first option
 
     // Append the cloned ingredient to the container
     ingredientContainer.appendChild(newIngredient);
@@ -319,8 +326,8 @@ const submitForm = () => {
         image: base64Image.value || '', // Assuming base64Image is optional
         name: document.getElementById('recipeName').value || '',
         description: document.getElementById('recipeDescription').value || '',
-        prepTime: `${document.getElementById('prepTimeHour').value || 0} hours ${document.getElementById('prepTimeMinute').value || 0} minutes`,
-        cookTime: `${document.getElementById('cookTimeHour').value || 0} hours ${document.getElementById('cookTimeMinute').value || 0} minutes`,
+        prepTime: (parseInt(document.getElementById('prepTimeHour').value || 0) * 60) + parseInt(document.getElementById('prepTimeMinute').value || 0), // Convert prep time to minutes
+        cookTime: (parseInt(document.getElementById('cookTimeHour').value || 0) * 60) + parseInt(document.getElementById('cookTimeMinute').value || 0), // Convert cook time to minutes
         ingredients: [],
         steps: [],
     }
@@ -354,11 +361,29 @@ const submitForm = () => {
     socket.addEventListener('open', (event) => {
         socket.send(`{"command": { "keyword": "new_recipe","recipe_metadata": ${jsonData} }}`)
     })
+    socket.addEventListener('message', (event) => {
+      const nextPage = `/recipe-overview/${event.data}`;
+
+      // Navigate to the next page
+      window.location.href = nextPage;
+    })
 }
 
 </script>
 
 <style scoped lang="scss">
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 .c-add-recipe {
   $c : &;
 
