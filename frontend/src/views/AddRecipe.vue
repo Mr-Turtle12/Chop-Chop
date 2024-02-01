@@ -233,6 +233,7 @@
         value="submit button"
         @click="submitForm()"
       > 
+      <div id="submitErrorMessage" style="color: red;"></div>
     </div>
   </section>
 </template>
@@ -352,7 +353,14 @@ const submitForm = () => {
             formData.steps.push({ step: index + 1, command })
         }
     })
-
+    const emptyFields = ['name', 'description', 'ingredients', 'steps'].filter(field => !String(formData[field]).trim());
+    if (emptyFields.length > 0) {
+        document.getElementById('submitErrorMessage').textContent = `You need to fill in ${emptyFields.join(', ')}.`;
+        return; // Don't proceed further if essential fields are not filled
+    } else {
+        // Clear any previous error messages
+        document.getElementById('submitErrorMessage').textContent = '';
+    }
     // Convert formData to JSON string
     const jsonData = JSON.stringify(formData, null, 2)
     console.log(jsonData)
