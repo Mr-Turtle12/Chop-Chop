@@ -25,7 +25,7 @@
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'vertical'"
-          @favouriteChange="handleFavouriteChange"
+          @favourite-change="handleFavouriteChange"
         />
       </div>
     </div>
@@ -123,6 +123,13 @@ onBeforeUnmount(() => {
     column-gap: var(--gutter);
     overflow: auto;
     white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-bottom: var(--space-xxs);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 </style>

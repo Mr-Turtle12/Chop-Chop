@@ -125,11 +125,16 @@ onBeforeUnmount(() => {
     border-radius: 20px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
   &:hover,
   &:focus {
     #{$c}__info {
       height: 50%;
+    }
+
+    #{$c}__heading {
+      white-space: normal;
     }
   }
 
@@ -139,6 +144,7 @@ onBeforeUnmount(() => {
     width: 100%;
     object-fit: cover;
     aspect-ratio: 16/9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   }
   
   #{$c}__info {
@@ -158,6 +164,9 @@ onBeforeUnmount(() => {
     @include ts-heading-4;
     color: var(--white);
     padding-bottom: var(--space-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   #{$c}__time,
@@ -182,6 +191,7 @@ onBeforeUnmount(() => {
         border-radius: 30px 0px 0px 30px;
         aspect-ratio: 16/9;
         position: absolute;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
       }
 
       #{$c}__info {

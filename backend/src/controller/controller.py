@@ -62,6 +62,7 @@ class Controller:
             "cookTime": target_recipe[5],
             "isFavourite": bool(target_recipe[8]),
             "commands": utils.get_commands(recipe_id),
+            "isSmart": bool(SQLQueries.is_smart(recipe_id)),
         }
         return json.dumps(metadata)
 

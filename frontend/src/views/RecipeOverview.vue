@@ -90,7 +90,8 @@ var recipe = reactive({
     isFavourite : false,
     ingredients: [
         'NO INGREDIENT FOUND'
-    ]
+    ],
+    isSmart: false
 })
 
 onMounted(() => {
@@ -149,7 +150,7 @@ function parseRecipeFromJson(RecipeJsonMessage)
     recipe.ingredients = formatIngredients(RecipeJsonMessage)
     recipe.isFavourite = RecipeJsonMessage.isFavourite
     recipe.steps = RecipeJsonMessage['commands']
-
+    recipe.isSmart = RecipeJsonMessage.isSmart
 }
 
 const toggleFavourite = ($event) => {

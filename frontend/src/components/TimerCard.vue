@@ -65,7 +65,7 @@
 
 
 <script setup>
-import { ref, watch, computed, onMounted, onUnmounted, defineProps, defineEmits } from 'vue'
+import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
 
 //incoming time length and note
 const props = defineProps({
