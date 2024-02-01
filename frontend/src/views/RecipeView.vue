@@ -1,37 +1,26 @@
 <template>
-  <!-- <PageHeader /> -->
-  <div class="container">
-    <div class="horizontal-container">
-      <nav>
-        <img
-          class="back-arrow"
-          src="@/assets/back-arrow-icon.svg"
-          @click="EndRecipe()"
-        >
-      </nav>
-      <div class="timer-container">
-        <div class="timer-wrapper">
-          <div
-            v-for="(item, index) in timerItems"
-            :key="index"
-            class="recipe-timer"
-          >
-            <TimerCard
-              :initial-time="item.time"
-              :timer-string="item.note"
-              :step-generated-on="item.stepIndex"
-              @countdown-end="handleCountdownEnd"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <RecipeCarousel
-      class="recipe-carousel"
-      :recipe="recipe"
-      :step-index="stepIndex"
-    />
-  </div>
+  <nav>
+    <img
+      class="back-arrow"
+      src="@/assets/back-arrow-icon.svg"
+      @click="EndRecipe()"
+    >
+  </nav>
+
+  <!-- <TimerCard
+    v-for="(item, index) in timerItems"
+    :key="index"
+    :initial-time="item.time"
+    :timer-string="item.note"
+    :step-generated-on="item.stepIndex"
+    @countdown-end="handleCountdownEnd"
+  /> -->
+
+  <RecipeCarousel
+    class="recipe-carousel"
+    :recipe="recipe"
+    :step-index="stepIndex"
+  />
 </template>
 
 <script setup>
@@ -88,26 +77,28 @@ socket.addEventListener('message', (event) => {
 })
 
 
-const timerItems = ref([]) // No initial timers
+// const timerItems = ref([]) // No initial timers
 
-// Function to add a TimerCard with a specific time and note
-function addTimerCard(time, note) {
-    timerItems.value.push({ time, note,stepIndex}) //pass array index here
-}
+// addTimerCard(1000000, 'test timer')
 
-// Handle countdown end event here
-function handleCountdownEnd(stepGeneratedOn) {
-    // Find the index of the timer in the array
-    const index = timerItems.value.findIndex((timer) => timer.stepIndex === stepGeneratedOn)
+// // Function to add a TimerCard with a specific time and note
+// function addTimerCard(time, note) {
+//     timerItems.value.push({ time, note,stepIndex}) //pass array index here
+// }
 
-    // Remove the timer from the array
-    if (index !== -1) {
-        setTimeout(() => {
-            timerItems.value.splice(index, 1)
-            socket.send(`{"command": { "keyword": "timer-end","timer_id": ${stepGeneratedOn} }}`)
-        }, 7000)
-    }
-}
+// // Handle countdown end event here
+// function handleCountdownEnd(stepGeneratedOn) {
+//     // Find the index of the timer in the array
+//     const index = timerItems.value.findIndex((timer) => timer.stepIndex === stepGeneratedOn)
+
+//     // Remove the timer from the array
+//     if (index !== -1) {
+//         setTimeout(() => {
+//             timerItems.value.splice(index, 1)
+//             socket.send(`{"command": { "keyword": "timer-end","timer_id": ${stepGeneratedOn} }}`)
+//         }, 7000)
+//     }
+// }
 
 const EndRecipe = () => {
     socket.send('{"command": { "keyword": "end"}}')

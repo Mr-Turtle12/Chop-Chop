@@ -1,6 +1,6 @@
 <template>
-  <section class="c-timer-card o-section">
-    <div class="c-timer-card__container o-container">
+  <section class="c-timer-card">
+    <div class="c-timer-card__container">
       <div class="circular-timer">
         <svg
           class="progress-ring"

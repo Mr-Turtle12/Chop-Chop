@@ -1,10 +1,22 @@
 <template>
   <section class="c-recipe-carousel o-section">
     <div class="c-recipe-carousel__container o-container">
+      <div class="c-recipe-carousel__timer-container">
+        <TimerCard
+          v-for="(item, index) in timerItems"
+          :key="index"
+          :initial-time="item.time"
+          :timer-string="item.note"
+          :step-generated-on="item.stepIndex"
+          @countdown-end="handleCountdownEnd"
+        />
+      </div>
+
       <ul class="c-recipe-carousel__steps js-carousel-steps">
         <li class="c-recipe-carousel__step c-recipe-carousel__step--previous">
           {{ previousStep }}
         </li>
+
         <li class="c-recipe-carousel__step c-recipe-carousel__step--current">
           {{ currentStep }}
           <template v-if="nextStep == null">
@@ -18,6 +30,7 @@
             </div>
           </template>
         </li>
+        
         <li class="c-recipe-carousel__step c-recipe-carousel__step--next">
           {{ nextStep }}
         </li>
@@ -56,6 +69,8 @@
 </template>
 
 <script setup>
+import TimerCard from '@/components/TimerCard.vue'
+
 import { computed, toRef, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -126,14 +141,31 @@ function onClickEnd(){
     router.back()
 }
 
+const timerItems = ref([]) // No initial timers
 
+addTimerCard(1000000, 'test timer')
 
+// Function to add a TimerCard with a specific time and note
+function addTimerCard(time, note) {
+    timerItems.value.push({ time, note,stepIndex}) //pass array index here
+}
+
+// Handle countdown end event here
+function handleCountdownEnd(stepGeneratedOn) {
+    // Find the index of the timer in the array
+    const index = timerItems.value.findIndex((timer) => timer.stepIndex === stepGeneratedOn)
+
+    // Remove the timer from the array
+    if (index !== -1) {
+        setTimeout(() => {
+            timerItems.value.splice(index, 1)
+            socket.send(`{"command": { "keyword": "timer-end","timer_id": ${stepGeneratedOn} }}`)
+        }, 7000)
+    }
+}
 </script>
 
-
-
 <style scoped lang="scss">
-
 .enjoy-meal-container {
   text-align: center;
   margin: 20px;
@@ -167,6 +199,12 @@ function onClickEnd(){
   &__container {
     @include grid;
     height: 90%;
+  }
+
+  &__timer-container {
+    grid-column:1/2;
+    display:flex;
+    align-items: center;
   }
 
   &__button-container {
