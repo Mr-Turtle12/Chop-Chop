@@ -163,7 +163,3 @@ def get_Random_metadata():
 def is_smart(recipe_id):
     query = SQLiteQuery("SELECT AI FROM recipes WHERE id = " + str(recipe_id), "one")
     return query[0]
-
-
-if __name__ == "__main__":
-    insert_recipe_into_dictionary("Cheese and Biscuits with Mango Chutney and also Salmon")
