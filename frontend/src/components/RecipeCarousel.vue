@@ -201,7 +201,7 @@ function onClickEnd(){
   }
 
   &__step {
-    color: #419170;
+    color: var(--dark-green);;
     text-align: center;
 
     &--previous, 

@@ -96,16 +96,16 @@ onBeforeUnmount(() => {
   }
   
   &__bookmark-icon {
-    color: #fff;
+    color: var(--white);
 
     &--favourite {
-      color: #419170;
+      color: var(--dark-green);
     }
 
     // if bookmarked is not favourited add hover effect
     &:not(&--favourite):hover,
     &:not(&--favourite):focus {
-      color:#CEE4DB;
+      color:var(--light-green);
     }
   }
 
@@ -162,7 +162,7 @@ onBeforeUnmount(() => {
 
   #{$c}__heading {
     @include ts-heading-4;
-    color: white;
+    color: var(--white);
     padding-bottom: var(--space-xs);
     white-space: nowrap;
     overflow: hidden;
@@ -171,34 +171,18 @@ onBeforeUnmount(() => {
 
   #{$c}__time,
   #{$c}__time-icon {
-    color: white;
+    color: var(--white);
   }
 }
 
   &--horizontal {
     display:flex;
 
-    // &:hover,
-    // &:focus {
-    //   #{$c}__info {
-    //   background-color: #419170;
-    // }
-
-    //   #{$c}__heading,
-    //   #{$c}__meta {
-    //       color: #fff;
-    //     }
-        
-    //   #{$c}__time-icon {
-    //       color: #fff;
-    //     }
-    //   }
-
       #{$c}__image-wrapper {
-    height: 100%;
-    width: 50%;
-    position: relative;
-  }
+        height: 100%;
+        width: 50%;
+        position: relative;
+      }
 
       #{$c}__image {
         height: 100%;
@@ -212,39 +196,43 @@ onBeforeUnmount(() => {
 
       #{$c}__info {
         border-radius: 0px 30px 30px 0px;
-        background: #FFF;
+        background: var(--white);
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         padding: 30px;
         width:50%;
 
         &:hover,
         &:focus {
-          background-color: #419170;
+          background-color: var(--dark-green);
 
           #{$c}__heading,
           #{$c}__meta {
-            color: #fff;
+            color: var(--white);
           }
           
           #{$c}__time-icon {
-            color: #fff;
+            color: var(--white);
           }
         }
       }
 
       #{$c}__heading {
         @include ts-heading-3;
-        color: #419170;
+        color: var(--dark-green);
         margin-bottom:var(--space-xs);
+
+        @include media("<=tablet") {
+          @include ts-heading-4;
+        }
       }
 
       #{$c}__meta {
         @include ts-meta;
-        color: #419170;
+        color: var(--dark-green);
       }
   
       #{$c}__time-icon {
-        color: #419170;
+        color: var(--dark-green);
       }
   }
 }

@@ -50,6 +50,7 @@ class Controller:
 
     def get_recipe_metadata(self, recipe_id):
         target_recipe = SQLQueries.get_all_metadata_from(recipe_id)
+        print(target_recipe)
         if not target_recipe:
             return None
         metadata = {
@@ -57,6 +58,8 @@ class Controller:
             "name": target_recipe[2],
             "description": target_recipe[3],
             "ingredients": utils.get_ingredients(recipe_id),
+            "prepTime": target_recipe[4],
+            "cookTime": target_recipe[5],
             "isFavourite": bool(target_recipe[8]),
             "commands": utils.get_commands(recipe_id),
             "isSmart": bool(SQLQueries.is_smart(recipe_id)),

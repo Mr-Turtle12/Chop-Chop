@@ -94,8 +94,8 @@ onBeforeUnmount(() => {
 
   &__heading {
     @include ts-heading-2;
-    color: #419170;
-    grid-column:1/7;
+    color: var(--dark-green);
+    grid-column:1/9;
     margin: 0;
     padding-bottom: var(--space-s);
     width:fit-content;
@@ -105,6 +105,10 @@ onBeforeUnmount(() => {
       #{$c}__heading-icon {
         transform: translateX(10px);
       }
+    }
+
+    @include media('<=tablet') {
+      grid-column:1/-1;
     }
   }
 
