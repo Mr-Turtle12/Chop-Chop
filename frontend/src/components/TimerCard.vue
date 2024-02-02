@@ -8,7 +8,6 @@
       >
         <!-- Background circle -->
         <circle
-          class="c-timer-card__progress-ring c-timer-card__progress-ring--background"
           :stroke="backgroundStrokeColor"
           :stroke-dasharray="circumference"
           stroke-width="8"
@@ -20,7 +19,6 @@
           
         <!-- Progress circle -->
         <circle
-          class="c-timer-card__progress-ring c-timer-card__progress-ring--progress"
           :stroke-dasharray="circumference"
           :stroke-dashoffset="circumference * progress"
           :stroke="`#419170`"
@@ -33,7 +31,6 @@
           cy="60"
           transform="rotate(-90 60 60)"
         />
-
 
         <!-- Text time element -->
         <text
