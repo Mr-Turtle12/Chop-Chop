@@ -44,7 +44,8 @@ class Detection:
             log(class_names, "Detect")
         self.last_tag = class_names
         is_progression = progression_object in class_names
-        is_inhibited = all(
+        print(inhibitor)
+        is_inhibited = any(
             inhibitor_element in class_names for inhibitor_element in inhibitor
         )
         return is_progression and not is_inhibited
