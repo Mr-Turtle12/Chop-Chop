@@ -2,6 +2,7 @@
   <section class="c-timer-card">
     <div class="c-timer-card__container">
       <svg
+        class="c-timer-card__timer"
         width="120"
         height="120"
         viewBox="0 0 120 120"

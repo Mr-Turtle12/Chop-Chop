@@ -199,12 +199,21 @@ function handleCountdownEnd(stepGeneratedOn) {
   &__container {
     @include grid;
     height: 90%;
+
+    @include media("<=tablet") {
+      display:flex;
+      flex-direction: column;
+    }
   }
 
   &__timer-container {
     grid-column:1/2;
     display:flex;
     align-items: center;
+
+    @include media("<=tablet") {
+      justify-content: center;
+    }
   }
 
   &__button-container {
@@ -212,6 +221,10 @@ function handleCountdownEnd(stepGeneratedOn) {
     flex-direction: column;
     justify-content: space-between;
     grid-column: 12;
+
+    @include media("<=tablet") {
+      flex-direction: row;
+    }
   }
 
   &__button {
@@ -220,10 +233,20 @@ function handleCountdownEnd(stepGeneratedOn) {
 
     &--next {
       transform: rotate(180deg);
+
+      @include media("<=tablet") {
+        transform:rotate(90deg);
+      }
     }
 
     &--return {
       align-items: center;
+    }
+
+    &--previous {
+      @include media("<=tablet") {
+        transform:rotate(270deg);
+      }
     }
   }
   
@@ -236,6 +259,10 @@ function handleCountdownEnd(stepGeneratedOn) {
     align-items: center;
     list-style-type: none;
     justify-content: space-between;
+
+    @include media("<=tablet") {
+      justify-content : center;
+    }
   }
 
   &__step {
@@ -246,6 +273,10 @@ function handleCountdownEnd(stepGeneratedOn) {
     &--next {
       @include ts-heading-2;
       opacity: 0.6;
+
+      @include media("<=tablet") {
+        display:none;
+      }
     }
 
     &--current {
