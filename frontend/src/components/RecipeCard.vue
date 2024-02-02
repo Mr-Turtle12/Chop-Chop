@@ -43,6 +43,7 @@
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
+import SmartRecipe from '@/assets/SmartRecipe-svg.vue'
 import {onBeforeUnmount} from 'vue'
 
 import { useStore } from 'vuex';
@@ -57,9 +58,11 @@ const props = defineProps({
     info: { type: String, default: 'info' },
     isFavourite: {type: Boolean, default: true},
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
-    id : {type: Number, default: 1}
+    id : {type: Number, default: 1},
+    isSmart: {type: Boolean, default: false}
 })
 var isLocalFavourite  = props.isFavourite;
+var isLocalSmart = props.isSmart;
 const emits = defineEmits();
 
 const toggleFavourite = ($event) => {

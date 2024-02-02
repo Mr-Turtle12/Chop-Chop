@@ -36,7 +36,7 @@ def set_favourite(recipe_id, favourite):
 
 def get_favourites_metadata():
     query = SQLiteQuery(
-        "SELECT id , image , name , description , favourite FROM recipes WHERE favourite = 1",
+        "SELECT id , image , name , description , favourite, AI FROM recipes WHERE favourite = 1",
         "all",
     )
     return utils.convert_metadata(query)
@@ -56,14 +56,14 @@ def get_all_metadata_from(recipe_id):
 def get_all_metadata():
     return utils.convert_metadata(
         SQLiteQuery(
-            "SELECT id , image , name , description , favourite FROM recipes", "all"
+            "SELECT id , image , name , description , favourite, AI FROM recipes", "all"
         )
     )
 
 
 def get_AIs_metadata():
     query = SQLiteQuery(
-        "SELECT id , image , name , description , favourite FROM recipes WHERE AI = 1",
+        "SELECT id , image , name , description , favourite, AI FROM recipes WHERE AI = 1",
         "all",
     )
     return utils.convert_metadata(query)
