@@ -49,6 +49,11 @@ const router = useRouter()
 const store = useStore()
 
 const socket = new WebSocket(store.state.websocketUrl)
+
+socket.addEventListener('open', (event) => {
+        socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
+    
+    })
 var stepIndex = ref(0)
 
 var recipe = reactive({
@@ -67,24 +72,20 @@ socket.addEventListener('open', (event) => {
 
 })
 socket.addEventListener('message', (event) => {
-    try {
-        const data = JSON.parse(event.data)
-        console.log()
-        if (data.name) {
-            recipe.name = data.name
-            recipe.steps = data['commands']
-            recipe.isSmart = data.isSmart
+      const data = JSON.parse(event.data)
+      if (data.name) {
+          recipe.name = data.name
+          recipe.steps = data['commands']
+          recipe.isSmart = data.isSmart
 
-        } else {
-            stepIndex.value = data.step
-            if (data.inhibitors.progressionObject == 'timer') {
-                addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
+      } else if (data.step) {
+        console.log(data.step);
+          stepIndex.value = data.step
+          if (data.inhibitors.progressionObject == 'timer') {
+              addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
 
-            }
-        }
-    } catch (error) {
-        console.error('Error parsing JSON:', error)
-    }
+          }
+      }
 })
 
 
