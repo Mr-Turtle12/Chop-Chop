@@ -9,7 +9,12 @@
           {{ currentStep }}
           <template v-if="nextStep == null">
             <div class="enjoy-meal-container">
-              <button class="return-button" @click="onClickEnd">Finish</button>
+              <button
+                class="return-button"
+                @click="onClickEnd"
+              >
+                Finish
+              </button>
             </div>
           </template>
         </li>
@@ -23,13 +28,14 @@
           class="c-recipe-carousel__button c-recipe-carousel__button--previous"
           :class="{ 'disabled': !previousStep }"
           @click="decrementPeek"
-          >
-            <img src="@/assets/navigation-arrow.svg">
+        >
+          <img src="@/assets/navigation-arrow.svg">
         </button>
 
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--return"
-          @click="onClickReturn">
+          @click="onClickReturn"
+        >
           <span v-if="isPeeking"><img src="@/assets/return-button-icon.svg"></span>
         </button>
 
@@ -50,9 +56,9 @@
 </template>
 
 <script setup>
-import { computed, defineProps, toRef, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { computed, toRef, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 const store = useStore()
 const router = useRouter()
@@ -62,62 +68,62 @@ const socket = new WebSocket(store.state.websocketUrl)
 
 
 const props = defineProps({
-  recipe: {
-    type: Object,
-    required: true,
-  },
-  stepIndex: {
-    type: Number,
-    required: true,
-  },
-});
+    recipe: {
+        type: Object,
+        required: true,
+    },
+    stepIndex: {
+        type: Number,
+        required: true,
+    },
+})
 
-const isPeeking = ref(false);
-const recipe = toRef(props, 'recipe');
-const stepIndex = toRef(props, 'stepIndex');
-const localStepDelta = ref(0);
+const isPeeking = ref(false)
+const recipe = toRef(props, 'recipe')
+const stepIndex = toRef(props, 'stepIndex')
+const localStepDelta = ref(0)
 
 const previousStep = computed(() => {
-  const index = stepIndex.value + localStepDelta.value - 1;
-  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
-});
+    const index = stepIndex.value + localStepDelta.value - 1
+    return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
+})
 
 const currentStep = computed(() => {
-  const index = stepIndex.value + localStepDelta.value;
-  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
-});
+    const index = stepIndex.value + localStepDelta.value
+    return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
+})
 
 const nextStep = computed(() => {
-  const index = stepIndex.value + localStepDelta.value + 1;
-  return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null;
-});
+    const index = stepIndex.value + localStepDelta.value + 1
+    return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
+})
 
 function incrementPeek() {
-  if(localStepDelta.value < recipe.value.steps.length - 1){
-    localStepDelta.value++;
-    if(recipe.value.isSmart){
-      isPeeking.value = true;
+    if(localStepDelta.value < recipe.value.steps.length - 1){
+        localStepDelta.value++
+        if(recipe.value.isSmart){
+            isPeeking.value = true
+        }
     }
-  }
 }
 
 function decrementPeek() {
-  if(localStepDelta.value > 0){
-    localStepDelta.value--;
-    if(recipe.value.isSmart){
-      isPeeking.value = true;
+    if(localStepDelta.value > 0){
+        localStepDelta.value--
+        if(recipe.value.isSmart){
+            isPeeking.value = true
+        }
     }
-  }
 }
 
 function onClickReturn() {
-  localStepDelta.value = 0;
-  isPeeking.value = false;
+    localStepDelta.value = 0
+    isPeeking.value = false
 }
 
 function onClickEnd(){
-  socket.send(`{"command": { "keyword": "end"}}`)
-  router.back()
+    socket.send('{"command": { "keyword": "end"}}')
+    router.back()
 }
 
 
@@ -195,7 +201,7 @@ function onClickEnd(){
   }
 
   &__step {
-    color: #419170;
+    color: var(--dark-green);;
     text-align: center;
 
     &--previous, 

@@ -17,17 +17,17 @@
         v-if="recipesLoaded"
         class="c-recent-recipes__recipes"
       >
-      <RecipeCard
-        v-for="recipe in recipes"
-        :id="recipe.id"
-        :key="recipe.id"
-        :image="recipe.image"
-        :recipe-name="recipe.name"
-        :info="recipe.info"
-        :size="'horizontal'"
-        :isFavourite="recipe.isFavourite"
-        @favouriteChange="handleFavouriteChange"
-      />
+        <RecipeCard
+          v-for="recipe in recipes"
+          :id="recipe.id"
+          :key="recipe.id"
+          :image="recipe.image"
+          :recipe-name="recipe.name"
+          :info="recipe.info"
+          :size="'horizontal'"
+          :is-favourite="recipe.isFavourite"
+          @favouriteChange="handleFavouriteChange"
+        />
       </div>
     </div>
   </section>
@@ -36,19 +36,19 @@
 <script setup>
 import { onMounted, ref, onBeforeUnmount } from 'vue'
 import RecipeCard from './RecipeCard.vue'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
 const store = useStore()
 
-const emits = defineEmits();
+const emits = defineEmits()
 const socket = new WebSocket(store.state.websocketUrl)
 onMounted(async () => {
 
     socket.addEventListener('open', (event) => {
-      socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
+        socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
     })
 
     socket.addEventListener('message', (event) => {
@@ -58,12 +58,12 @@ onMounted(async () => {
     })
 })
 const handleFavouriteChange = () => {
-  emits('favourite-change');
-};
+    emits('favourite-change')
+}
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 
@@ -79,7 +79,7 @@ onBeforeUnmount(() => {
 
   &__heading {
     @include ts-heading-2;
-    color: #419170;
+    color: var(--dark-green);
     grid-column:1/7;
     margin-bottom: var(--space-s);
     width:fit-content;
@@ -89,6 +89,10 @@ onBeforeUnmount(() => {
       #{$c}__heading-icon {
         transform: translateX(10px);
       }
+    }
+
+    @include media("<=tablet") {
+      grid-column: 1/-1;
     }
   }
 
@@ -102,6 +106,10 @@ onBeforeUnmount(() => {
     display:grid;
     grid-template-columns: repeat(2,1fr);
     grid-gap: 2rem;
+
+    @include media("<=tablet") {
+      grid-template-columns: repeat(1,1fr);
+    }
   }
 }
 </style>

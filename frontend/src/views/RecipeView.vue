@@ -10,14 +10,27 @@
         >
       </nav>
       <div class="timer-container">
-            <div class="timer-wrapper">
-              <div v-for="(item, index) in timerItems" :key="index" class="recipe-timer">
-                <TimerCard :initialTime="item.time" :timerString="item.note" :stepGeneratedOn ="item.stepIndex" @countdown-end="handleCountdownEnd" />
-              </div>
-            </div>
+        <div class="timer-wrapper">
+          <div
+            v-for="(item, index) in timerItems"
+            :key="index"
+            class="recipe-timer"
+          >
+            <TimerCard
+              :initial-time="item.time"
+              :timer-string="item.note"
+              :step-generated-on="item.stepIndex"
+              @countdown-end="handleCountdownEnd"
+            />
           </div>
         </div>
-    <RecipeCarousel class="recipe-carousel" :recipe="recipe" :stepIndex="stepIndex"/>
+      </div>
+    </div>
+    <RecipeCarousel
+      class="recipe-carousel"
+      :recipe="recipe"
+      :step-index="stepIndex"
+    />
   </div>
 </template>
 
@@ -26,12 +39,12 @@ import PageHeader from '@/components/PageHeader.vue'
 import RecipeCarousel from '@/components/RecipeCarousel.vue'
 import TimerCard from '@/components/TimerCard.vue'
 
-import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 import { ref,reactive,onBeforeUnmount } from 'vue'
-const route = useRoute();
+const route = useRoute()
 const router = useRouter()
 const store = useStore()
 
@@ -44,7 +57,7 @@ var recipe = reactive({
         'loading recipe...'
     ],
     progressionObject: [
-      'NO PROGRESSION OBJECT'
+        'NO PROGRESSION OBJECT'
     ],
     isSmart: false
 })
@@ -55,55 +68,55 @@ socket.addEventListener('open', (event) => {
 })
 socket.addEventListener('message', (event) => {
     try {
-        const data = JSON.parse(event.data);
+        const data = JSON.parse(event.data)
         console.log()
         if (data.name) {
-            recipe.name = data.name;
-            recipe.steps = data['commands'];
-            recipe.isSmart = data.isSmart;
+            recipe.name = data.name
+            recipe.steps = data['commands']
+            recipe.isSmart = data.isSmart
 
         } else {
-            stepIndex.value = data.step;
-            if (data.inhibitors.progressionObject == "timer") {
-                addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value);
+            stepIndex.value = data.step
+            if (data.inhibitors.progressionObject == 'timer') {
+                addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
 
             }
         }
     } catch (error) {
-        console.error("Error parsing JSON:", error);
+        console.error('Error parsing JSON:', error)
     }
-});
+})
 
 
-const timerItems = ref([]); // No initial timers
+const timerItems = ref([]) // No initial timers
 
 // Function to add a TimerCard with a specific time and note
 function addTimerCard(time, note) {
-  timerItems.value.push({ time, note,stepIndex}); //pass array index here
+    timerItems.value.push({ time, note,stepIndex}) //pass array index here
 }
 
 // Handle countdown end event here
 function handleCountdownEnd(stepGeneratedOn) {
-  // Find the index of the timer in the array
-  const index = timerItems.value.findIndex((timer) => timer.stepIndex === stepGeneratedOn);
+    // Find the index of the timer in the array
+    const index = timerItems.value.findIndex((timer) => timer.stepIndex === stepGeneratedOn)
 
-  // Remove the timer from the array
-  if (index !== -1) {
-    setTimeout(() => {
-      timerItems.value.splice(index, 1);
-      socket.send(`{"command": { "keyword": "timer-end","timer_id": ${stepGeneratedOn} }}`)
-    }, 7000);
-  }
+    // Remove the timer from the array
+    if (index !== -1) {
+        setTimeout(() => {
+            timerItems.value.splice(index, 1)
+            socket.send(`{"command": { "keyword": "timer-end","timer_id": ${stepGeneratedOn} }}`)
+        }, 7000)
+    }
 }
 
 const EndRecipe = () => {
-    socket.send(`{"command": { "keyword": "end"}}`)
+    socket.send('{"command": { "keyword": "end"}}')
     router.back()
 }
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 
