@@ -112,7 +112,7 @@
               name="recipeDescription"
               rows="4"
               col="1"
-              maxlength="144"
+              maxlength="255"
             />
 
             
@@ -144,6 +144,7 @@
               id="ingredientQuantity"
               type="text"
               class="c-add-recipe__input c-add-recipe__input--ingredient-quantity"
+              maxlength="25"
             >
 
             <select
@@ -208,7 +209,7 @@
               name="recipeStep"
               rows="2"
               col="1"
-              maxlength="144"
+              maxlength="255"
             />
           </li>
         </ol>
