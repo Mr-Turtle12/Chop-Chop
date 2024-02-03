@@ -1,7 +1,9 @@
-import cgi
 import http.server
 import socketserver
 import os
+from werkzeug.wrappers import Request
+from werkzeug.datastructures import Headers
+from werkzeug.utils import secure_filename
 
 from backend.src.config import SERVER_IP, DATABASE
 
@@ -14,26 +16,32 @@ class MyCustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return os.path.join(DATABASE, "photos", path)
 
     def do_POST(self):
-        content_type, _ = cgi.parse_header(self.headers["Content-Type"])
-        if content_type == "multipart/form-data":
-            form = cgi.FieldStorage(
-                fp=self.rfile, headers=self.headers, environ={"REQUEST_METHOD": "POST"}
-            )
+        headers_list = list(self.headers.items())
+        headers = Headers(headers_list)
+
+        environ = {
+            "REQUEST_METHOD": "POST",
+            "CONTENT_TYPE": headers.get("Content-Type"),
+            "wsgi.input": self.rfile,
+            "CONTENT_LENGTH": headers.get("Content-Length"),
+        }
+
+        request = Request(environ)
+
+        if request.content_type.startswith("multipart/form-data"):
+            form = request.files
             if "image" in form:
-                image_field = form["image"]
-                if image_field.filename:
-                    filename = os.path.basename(image_field.filename)
-                    file_path = os.path.join(DATABASE, "photos", filename)
-                    with open(file_path, "wb") as f:
-                        f.write(image_field.file.read())
-                    self.send_response(200)
-                    self.send_header("Content-type", "text/plain")
-                    self.send_header(
-                        "Access-Control-Allow-Origin", "http://localhost:8080"
-                    )
-                    self.end_headers()
-                    self.wfile.write(b"Photo saved successfully")
-                    return
+                image_file = form["image"]
+                filename = secure_filename(image_file.filename)
+                file_path = os.path.join(DATABASE, "photos", filename)
+                image_file.save(file_path)
+                self.send_response(200)
+                self.send_header("Content-type", "text/plain")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.end_headers()
+                self.wfile.write(b"Photo saved successfully")
+                return
+
         # If no image data found or request is not multipart/form-data
         self.send_response(400)
         self.end_headers()
