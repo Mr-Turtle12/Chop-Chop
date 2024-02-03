@@ -5,9 +5,9 @@
         <h1 class="c-recent-recipes__heading">
           <a
             class="c-recent-recipes__heading-link"
-            href="/search"
+            href="/search/Smart"
           >
-            Implemented Recipes
+            Smart Recipes
             <span class="c-recent-recipes__heading-icon">></span>
           </a>
         </h1>
@@ -21,9 +21,12 @@
           v-for="recipe in recipes"
           :id="recipe.id"
           :key="recipe.id"
+          :image="recipe.image"
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'horizontal'"
+          :is-favourite="recipe.isFavourite"
+          @favouriteChange="handleFavouriteChange"
         />
       </div>
     </div>
@@ -31,24 +34,37 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import RecipeCard from './RecipeCard.vue'
+import { useStore } from 'vuex'
 
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
+const store = useStore()
+
+const emits = defineEmits()
+const socket = new WebSocket(store.state.websocketUrl)
 onMounted(async () => {
-    const socket = new WebSocket('ws://localhost:8765')
+
     socket.addEventListener('open', (event) => {
-        socket.send('{"command": {"keyword": "get","recipe_id": 0}}')
+        socket.send('{"command": {"keyword": "get","recipe_id": -2}}')
     })
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, info: recipe.description , id:recipe.id}))
+        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
         recipesLoaded.value = true
     })
 })
+const handleFavouriteChange = () => {
+    emits('favourite-change')
+}
+
+onBeforeUnmount(() => {
+    socket.close()
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -63,7 +79,7 @@ onMounted(async () => {
 
   &__heading {
     @include ts-heading-2;
-    color: #419170;
+    color: var(--dark-green);
     grid-column:1/7;
     margin-bottom: var(--space-s);
     width:fit-content;
@@ -73,6 +89,10 @@ onMounted(async () => {
       #{$c}__heading-icon {
         transform: translateX(10px);
       }
+    }
+
+    @include media("<=tablet") {
+      grid-column: 1/-1;
     }
   }
 
@@ -86,6 +106,10 @@ onMounted(async () => {
     display:grid;
     grid-template-columns: repeat(2,1fr);
     grid-gap: 2rem;
+
+    @include media("<=tablet") {
+      grid-template-columns: repeat(1,1fr);
+    }
   }
 }
 </style>

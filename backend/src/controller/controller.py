@@ -1,5 +1,8 @@
+import base64
 import json
-from backend.src.controller import recipe, utils, manageThread
+from backend.src.controller import recipe, manageThread
+from backend.src.interpreter import create_camera, destroy_camera
+from backend.src.utils import utils, SQLQueries
 
 
 class Controller:
@@ -9,6 +12,8 @@ class Controller:
         self.current_recipe = None
         self.thread_instance = None
         self.step_changed_flag = utils.StepChangeFlag()
+        self.end_flag = utils.EndFlag()
+        self.Cameras = None
 
     def new_recipe(self, recipe_id):
         """Starts a new recipe with the given recipe ID.
@@ -16,12 +21,20 @@ class Controller:
             recipe_id (int): The ID of the recipe to start.
         """
         self.current_recipe = recipe.Recipe(recipe_id)
-        self.thread_instance = manageThread.ManageThread(
-            self.get_progression_requirements_for_current_step()
-        )
+        self.end_flag.clear()
+        self.Cameras = create_camera()
+        if SQLQueries.is_smart(self.current_recipe.recipe_id):
+            self.thread_instance = manageThread.ManageThread(
+                self.get_progression_requirements_for_current_step(),
+                self.end_flag,
+                self.Cameras,
+            )
 
     def update_flag(self):
         self.step_changed_flag.state = True
+
+    def update_end_flag(self):
+        self.end_flag.set()
 
     def get_command_for_step(self, step_number):
         return self.current_recipe.get_command_for_step(step_number)
@@ -36,68 +49,44 @@ class Controller:
         return self.current_recipe.get_progression_requirements_for_current_step()
 
     def get_recipe_metadata(self, recipe_id):
-        # Fetch the recipes data from the JSON file
-        recipes_data = utils.get_json(utils.get_database_address("Recipes"))
-        recipes = recipes_data.get("recipes", [])
-
-        # Find the specified recipe by its ID
-        target_recipe = None
-        for recipe in recipes:
-            if int(recipe.get("id")) == recipe_id:
-                target_recipe = recipe
-                break
-
+        target_recipe = SQLQueries.get_all_metadata_from(recipe_id)
+        print(target_recipe)
         if not target_recipe:
-            return json.dumps({})  # Recipe not found, return an empty JSON object
-
-        # Construct the metadata for the recipe
+            return None
         metadata = {
-            "image": target_recipe.get("image", ""),
-            "name": target_recipe.get("name", ""),
-            "description": target_recipe.get("description", ""),
-            "ingredients": target_recipe.get("ingredients", []),
-            "commands": [
-                step.get("command", "") for step in target_recipe.get("steps", [])
-            ],
+            "image": utils.convert_image(target_recipe[1]),
+            "name": target_recipe[2],
+            "description": target_recipe[3],
+            "ingredients": utils.get_ingredients(recipe_id),
+            "prepTime": target_recipe[4],
+            "cookTime": target_recipe[5],
+            "isFavourite": bool(target_recipe[8]),
+            "commands": utils.get_commands(recipe_id),
+            "isSmart": bool(SQLQueries.is_smart(recipe_id)),
         }
-
         return json.dumps(metadata)
 
     def progress_next_step(self):
         """Progresses to the next step in the recipe."""
         self.current_recipe.increment_step()
-        self.thread_instance = manageThread.ManageThread(
-            self.get_progression_requirements_for_current_step()
-        )
+        if SQLQueries.is_smart(self.current_recipe.recipe_id):
+            self.thread_instance = manageThread.ManageThread(
+                self.get_progression_requirements_for_current_step(),
+                self.end_flag,
+                self.Cameras,
+            )
         self.update_flag()
-        # Notify frontend
 
     def set_step(self, step_numer):
         if self.current_recipe is not None:
             self.current_recipe.set_current_step(step_numer)
-            self.thread_instance = manageThread.ManageThread(
-                self.get_progression_requirements_for_current_step()
-            )
+            if SQLQueries.is_smart(self.current_recipe.recipe_id):
+                self.thread_instance = manageThread.ManageThread(
+                    self.get_progression_requirements_for_current_step(),
+                    self.end_flag,
+                    self.Cameras,
+                )
         self.update_flag()
-
-    def get_all_recipe_metadata(self):
-        """Gets metadata for all recipes.
-        Returns:
-            list: A list of dictionaries containing metadata for all recipes.
-        """
-        recipes = utils.get_json(utils.get_database_address("Recipes")).get(
-            "recipes", []
-        )
-        all_metadata = [
-            {
-                "id": recipe.get("id", ""),
-                "image": recipe.get("image", ""),
-                "name": recipe.get("name", ""),
-                "description": recipe.get("description", ""),
-            }
-            for recipe in recipes
-        ]
-        return json.dumps(all_metadata)
 
 
 # start a instance for the controller

@@ -7,7 +7,7 @@
           href="/"
         >
         
-          <Logo />
+          <Logo class="c-page-header__logo c-page-header__logo--long" />
         </a>
 
         <button
@@ -34,8 +34,10 @@
             type="text"
             placeholder="Search.."
           >
-
-          <button class="c-header-menu__search-icon">
+          <button
+            class="c-header-menu__search-icon"
+            @click="handleSearch"
+          >
             <SearchIcon />
           </button>
         </div>
@@ -44,7 +46,7 @@
           <li class="c-header-menu__button">
             <a
               class="c-header-menu__button-link"
-              href="/search"
+              href="/search/All"
             >
               All Recipes
               <span class="c-header-menu__button-icon">></span>
@@ -54,9 +56,9 @@
           <li class="c-header-menu__button">
             <a
               class="c-header-menu__button-link"
-              href="/search"
+              href="/search/Smart"
             >
-              Recent Recipes
+              Smart Recipes
               <span class="c-header-menu__button-icon">></span>
             </a>
           </li>
@@ -64,9 +66,9 @@
           <li class="c-header-menu__button">
             <a
               class="c-header-menu__button-link"
-              href="/search"
+              href="/search/Bookmarked"
             >
-              Liked Recipes
+              Bookmarked Recipes
               <span class="c-header-menu__button-icon">></span>
             </a>
           </li>
@@ -95,6 +97,13 @@ function toggleMenu() {
         document.body.classList.add('is-scroll-locked')
     }
 }
+function handleSearch() {
+    const searchTerm = document.querySelector('.c-header-menu__search-bar').value.trim()
+    if (searchTerm !== '') {
+        window.location.href = `/search/${searchTerm}`
+    }
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -103,6 +112,15 @@ function toggleMenu() {
   &__inner {
     display:flex;
     justify-content: center;
+  }
+
+  &__logo {
+    &--long {
+      @include media("<=tablet") {
+        height:50px;
+        width:300px;
+      }
+    }
   }
 }
 
@@ -123,7 +141,7 @@ function toggleMenu() {
     &.is-cross {
       #{$c}__line {
         top: 11px;
-        background-color:white;
+        background-color:var(--white);
 
         &--top {
           transform: rotate(-45deg);
@@ -145,7 +163,7 @@ function toggleMenu() {
     }
 
     &__line {
-      background-color: #419170;
+      background-color: var(--dark-green);
       display: block;
       height: 4px;
       position: absolute;
@@ -219,7 +237,7 @@ function toggleMenu() {
     }
 
     &__container {
-      background: #419170;
+      background: var(--dark-green);
       margin-left: var(--space-l);
       max-width: 50vw;
       overflow: hidden;
@@ -230,6 +248,11 @@ function toggleMenu() {
       transform: translate(100%);
       width: 100%;
       z-index: 2;
+
+      @include media("<=tablet") {
+        max-width:100vw;
+        margin-left: 0;
+      }
     }
 
     &__search-container {
@@ -241,7 +264,7 @@ function toggleMenu() {
 
     &__search-bar {
       @include ts-meta;
-      background-color: white;
+      background-color: var(--white);
       border-radius: 30px;
       padding: 16px 50px 16px 16px;
       width: 100%;
@@ -258,12 +281,16 @@ function toggleMenu() {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 100px;
+      gap: 50px;
     }
 
     &__button {
       @include ts-heading-1;
-      color: white;
+      color: var(--white);
+
+      @include media("<=tablet") {
+        @include ts-heading-2;
+      }
     }
 
     &__button-link {
