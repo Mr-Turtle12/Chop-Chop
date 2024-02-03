@@ -123,6 +123,26 @@ def insert_recipe_into_database(json_data):
             """
             SQLiteQuery(SQLCommandStep, "commit")
 
+        insert_recipe_into_dictionary(recipe['name'])
+
+
+def insert_recipe_into_dictionary(recipe_name):
+    recipeName = recipe_name.split()
+    unimportantWords = ['and', 'with', 'a', 'in', '&', 'also']
+    # "../../../database/dictionary.txt"
+    dictionary = open(DATABASE + "/dictionary.txt", "a")
+    for word in recipeName:
+        if word not in unimportantWords and not check_word(word):
+            dictionary.write(word + "\n")
+
+
+def check_word(word):
+    with open(DATABASE + "/dictionary.txt", "r") as file:
+        for line in file:
+            if word.strip() == line.strip():
+                return True
+    return False
+
 
 def get_Random_metadata():
     target_recipe = SQLiteQuery(

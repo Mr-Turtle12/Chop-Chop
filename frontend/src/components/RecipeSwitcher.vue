@@ -77,7 +77,7 @@ function toggle(buttonName) {
 .c-recipe-switcher {
   $c : &;
 
-  background-color: #fff;
+  background-color: var(--white);
   border-radius: 30px;
 
   &__button-container {
@@ -86,8 +86,8 @@ function toggle(buttonName) {
 
   &__button {
     @include ts-heading-2;
-    background-color: #419170;
-    color: #fff;
+    background-color: var(--dark-green);;
+    color: var(--white);
     padding:var(--space-l);
     width: 50%;
 
@@ -99,15 +99,20 @@ function toggle(buttonName) {
       border-radius: 0px 30px 0px 0px;
     }
     &.is-toggled {
-      color:#419170;
-      background-color: #fff;
+      color:var(--dark-green);;
+      background-color: var(--white);
+    }
+
+    @include media("<=tablet") {
+      @include ts-heading-3;
+      padding: var(--space-s);
     }
   }
 
   &__ingredient-container,
   &__recipe-container {
     @include ts-heading-3;
-    color: #419170;
+    color: var(--dark-green);
     display: none;
     flex-direction: column;
     gap: 32px;
@@ -120,20 +125,34 @@ function toggle(buttonName) {
     &.is-toggled {
       display:flex;
     }
+
+    @include media("<=tablet") {
+      @include ts-heading-4;
+      padding-top: var(--space-m);
+      padding-bottom: var(--space-m);
+    }
   }
 
   &__ingredient {
     background: rgba(65, 145, 112, 0.20);
     padding: var(--space-s);
     border-radius: 10px;
+
+    @include media("<=tablet") {
+      padding:var(--space-xs);
+    }
   }
 
   &__recipe-step {
     @include ts-heading-3;
-    color: #419170;
+    color: var(--dark-green);;
 
     & > span {
       margin-right: var(--space-xxs);
+    }
+
+    @include media("<=tablet") {
+      @include ts-heading-4;
     }
   }
 }

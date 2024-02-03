@@ -7,7 +7,7 @@
           href="/"
         >
         
-          <Logo />
+          <Logo class="c-page-header__logo c-page-header__logo--long" />
         </a>
 
         <button
@@ -34,10 +34,12 @@
             type="text"
             placeholder="Search.."
           >
-          <button class="c-header-menu__search-icon" @click="handleSearch">
+          <button
+            class="c-header-menu__search-icon"
+            @click="handleSearch"
+          >
             <SearchIcon />
           </button>
-
         </div>
 
         <ul class="c-header-menu__button-container">
@@ -96,9 +98,9 @@ function toggleMenu() {
     }
 }
 function handleSearch() {
-    const searchTerm = document.querySelector('.c-header-menu__search-bar').value.trim();
+    const searchTerm = document.querySelector('.c-header-menu__search-bar').value.trim()
     if (searchTerm !== '') {
-        window.location.href = `/search/${searchTerm}`;
+        window.location.href = `/search/${searchTerm}`
     }
 }
 
@@ -110,6 +112,15 @@ function handleSearch() {
   &__inner {
     display:flex;
     justify-content: center;
+  }
+
+  &__logo {
+    &--long {
+      @include media("<=tablet") {
+        height:50px;
+        width:300px;
+      }
+    }
   }
 }
 
@@ -130,7 +141,7 @@ function handleSearch() {
     &.is-cross {
       #{$c}__line {
         top: 11px;
-        background-color:white;
+        background-color:var(--white);
 
         &--top {
           transform: rotate(-45deg);
@@ -152,7 +163,7 @@ function handleSearch() {
     }
 
     &__line {
-      background-color: #419170;
+      background-color: var(--dark-green);
       display: block;
       height: 4px;
       position: absolute;
@@ -226,7 +237,7 @@ function handleSearch() {
     }
 
     &__container {
-      background: #419170;
+      background: var(--dark-green);
       margin-left: var(--space-l);
       max-width: 50vw;
       overflow: hidden;
@@ -237,6 +248,11 @@ function handleSearch() {
       transform: translate(100%);
       width: 100%;
       z-index: 2;
+
+      @include media("<=tablet") {
+        max-width:100vw;
+        margin-left: 0;
+      }
     }
 
     &__search-container {
@@ -248,7 +264,7 @@ function handleSearch() {
 
     &__search-bar {
       @include ts-meta;
-      background-color: white;
+      background-color: var(--white);
       border-radius: 30px;
       padding: 16px 50px 16px 16px;
       width: 100%;
@@ -265,12 +281,16 @@ function handleSearch() {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 100px;
+      gap: 50px;
     }
 
     &__button {
       @include ts-heading-1;
-      color: white;
+      color: var(--white);
+
+      @include media("<=tablet") {
+        @include ts-heading-2;
+      }
     }
 
     &__button-link {

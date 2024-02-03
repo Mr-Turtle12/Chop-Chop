@@ -49,7 +49,7 @@ import BookmarkSVG from '@/assets/bookmark-svg.vue'
 import SmartRecipeSVG from '@/assets/SmartRecipe-svg.vue'
 import {onBeforeUnmount} from 'vue'
 
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 const store = useStore()
 
@@ -64,9 +64,9 @@ const props = defineProps({
     id : {type: Number, default: 1},
     isSmart: {type: Boolean, default: false}
 })
-var isLocalFavourite  = props.isFavourite;
-var isLocalSmart = props.isSmart;
-const emits = defineEmits();
+var isLocalFavourite  = props.isFavourite
+var isLocalSmart = props.isSmart
+const emits = defineEmits()
 
 const toggleFavourite = ($event) => {
 
@@ -77,15 +77,15 @@ const toggleFavourite = ($event) => {
         bookmarkIcon.classList.add('c-card__bookmark-icon--favourite')
     }
     isLocalFavourite = !isLocalFavourite
-    emits('favouriteChange');
+    emits('favouriteChange')
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+isLocalFavourite+' ,"recipe_id": '+ props.id +  '}}')
     })
 }
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 
@@ -102,16 +102,16 @@ onBeforeUnmount(() => {
   }
   
   &__bookmark-icon {
-    color: #fff;
+    color: var(--white);
 
     &--favourite {
-      color: #419170;
+      color: var(--dark-green);
     }
 
     // if bookmarked is not favourited add hover effect
     &:not(&--favourite):hover,
     &:not(&--favourite):focus {
-      color:#CEE4DB;
+      color:var(--light-green);
     }
   }
 
@@ -131,11 +131,16 @@ onBeforeUnmount(() => {
     border-radius: 20px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
   &:hover,
   &:focus {
     #{$c}__info {
       height: 50%;
+    }
+
+    #{$c}__heading {
+      white-space: normal;
     }
   }
 
@@ -145,6 +150,7 @@ onBeforeUnmount(() => {
     width: 100%;
     object-fit: cover;
     aspect-ratio: 16/9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   }
   
   #{$c}__info {
@@ -162,40 +168,27 @@ onBeforeUnmount(() => {
 
   #{$c}__heading {
     @include ts-heading-4;
-    color: white;
+    color: var(--white);
     padding-bottom: var(--space-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   #{$c}__time,
   #{$c}__time-icon {
-    color: white;
+    color: var(--white);
   }
 }
 
   &--horizontal {
     display:flex;
 
-    // &:hover,
-    // &:focus {
-    //   #{$c}__info {
-    //   background-color: #419170;
-    // }
-
-    //   #{$c}__heading,
-    //   #{$c}__meta {
-    //       color: #fff;
-    //     }
-        
-    //   #{$c}__time-icon {
-    //       color: #fff;
-    //     }
-    //   }
-
       #{$c}__image-wrapper {
-    height: 100%;
-    width: 50%;
-    position: relative;
-  }
+        height: 100%;
+        width: 50%;
+        position: relative;
+      }
 
       #{$c}__image {
         height: 100%;
@@ -204,43 +197,48 @@ onBeforeUnmount(() => {
         border-radius: 30px 0px 0px 30px;
         aspect-ratio: 16/9;
         position: absolute;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
       }
 
       #{$c}__info {
         border-radius: 0px 30px 30px 0px;
-        background: #FFF;
+        background: var(--white);
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         padding: 30px;
         width:50%;
 
         &:hover,
         &:focus {
-          background-color: #419170;
+          background-color: var(--dark-green);
 
           #{$c}__heading,
           #{$c}__meta {
-            color: #fff;
+            color: var(--white);
           }
           
           #{$c}__time-icon {
-            color: #fff;
+            color: var(--white);
           }
         }
       }
 
       #{$c}__heading {
         @include ts-heading-3;
-        color: #419170;
+        color: var(--dark-green);
         margin-bottom:var(--space-xs);
+
+        @include media("<=tablet") {
+          @include ts-heading-4;
+        }
       }
 
       #{$c}__meta {
         @include ts-meta;
-        color: #419170;
+        color: var(--dark-green);
       }
   
       #{$c}__time-icon {
-        color: #419170;
+        color: var(--dark-green);
       }
   }
   .c-card__smart-icon-wrapper {

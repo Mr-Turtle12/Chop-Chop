@@ -26,7 +26,7 @@
           :info="recipe.info"
           :size="'vertical'"
           :isSmart ="recipe.isSmart"
-          @favouriteChange="handleFavouriteChange"
+          @favourite-change="handleFavouriteChange"
         />
       </div>
     </div>
@@ -37,7 +37,7 @@
 // import VerticalCard from './VerticalCard.vue'
 import RecipeCard from './RecipeCard.vue'
 import { onMounted, ref, onBeforeUnmount } from 'vue'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 const store = useStore()
 
@@ -48,7 +48,7 @@ defineProps({
 
 const recipesLoaded = ref(false)
 const recipes = ref([])
-const emits = defineEmits();
+const emits = defineEmits()
 const socket = new WebSocket(store.state.websocketUrl)
 
 onMounted(async () => {
@@ -57,30 +57,30 @@ onMounted(async () => {
     })
 
     socket.addEventListener('message', (event) => {
-      const arrayRecipe = JSON.parse(event.data);
+        const arrayRecipe = JSON.parse(event.data)
 
-      // Check if arrayRecipe is an array
-      if (Array.isArray(arrayRecipe)) {
-          recipes.value = arrayRecipe.map(recipe => ({
-              name: recipe.name,
-              image: recipe.image,
-              info: recipe.description,
-              isSmart: recipe.isSmart,
-              id: recipe.id
-          }));
-          recipesLoaded.value = true;
-      } else {
-          console.error('Invalid data structure received from WebSocket:', arrayRecipe);
-      }
+        // Check if arrayRecipe is an array
+        if (Array.isArray(arrayRecipe)) {
+            recipes.value = arrayRecipe.map(recipe => ({
+                name: recipe.name,
+                image: recipe.image,
+                info: recipe.description,
+                isSmart: recipe.isSmart,
+                id: recipe.id
+            }))
+            recipesLoaded.value = true
+        } else {
+            console.error('Invalid data structure received from WebSocket:', arrayRecipe)
+        }
     })
 })
 const handleFavouriteChange = () => {
-  emits('favouriteChange');
-};
+    emits('favouriteChange')
+}
 
 onBeforeUnmount(() => {
-  socket.close();
-});
+    socket.close()
+})
 
 </script>
 
@@ -96,8 +96,8 @@ onBeforeUnmount(() => {
 
   &__heading {
     @include ts-heading-2;
-    color: #419170;
-    grid-column:1/7;
+    color: var(--dark-green);
+    grid-column:1/9;
     margin: 0;
     padding-bottom: var(--space-s);
     width:fit-content;
@@ -107,6 +107,10 @@ onBeforeUnmount(() => {
       #{$c}__heading-icon {
         transform: translateX(10px);
       }
+    }
+
+    @include media('<=tablet') {
+      grid-column:1/-1;
     }
   }
 
@@ -121,6 +125,13 @@ onBeforeUnmount(() => {
     column-gap: var(--gutter);
     overflow: auto;
     white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-bottom: var(--space-xxs);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 </style>

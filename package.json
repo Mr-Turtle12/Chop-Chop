@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "vex": "^0.0.4",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "include-media": "^2.0.0"
+  }
+}
