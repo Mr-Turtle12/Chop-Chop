@@ -31,7 +31,7 @@ class Controller:
             )
 
     def update_flag(self):
-        self.step_changed_flag.state = True
+        self.step_changed_flag.state = not self.step_changed_flag.state
 
     def update_end_flag(self):
         self.end_flag.set()

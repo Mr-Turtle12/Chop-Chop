@@ -51,8 +51,6 @@
           <a
             class="c-recipe__link"
             :href="`/recipe/${ route.params.id }`"
-            @click="
-              startRecipeAPICall()"
           >start recipe</a>
         </div>
       </div>
@@ -97,14 +95,6 @@ var recipe = reactive({
 onMounted(() => {
     getRecipeInfo()
 })
-
-function startRecipeAPICall(){
-    socket.addEventListener('open', (event) => {
-        socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
-    
-    })
-
-}
 
 
 function getRecipeInfo()
