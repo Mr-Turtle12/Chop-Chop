@@ -26,6 +26,7 @@
         :info="recipe.info"
         :size="'horizontal'"
         :isFavourite="recipe.isFavourite"
+        :isSmart ="true"
         @favouriteChange="handleFavouriteChange"
       />
       </div>

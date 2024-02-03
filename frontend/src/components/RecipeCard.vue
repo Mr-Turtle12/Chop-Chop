@@ -17,6 +17,9 @@
           :class="`c-card__bookmark-icon js-bookmark-icon ${isLocalFavourite ? 'c-card__bookmark-icon--favourite' : ''}`"
         />
       </div>
+      <div v-if="isLocalSmart" class="c-card__smart-icon-wrapper">
+        <SmartRecipeSVG class="c-card__smart-icon" />
+      </div>
     </div>
 
     <a
@@ -43,7 +46,7 @@
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
-import SmartRecipe from '@/assets/SmartRecipe-svg.vue'
+import SmartRecipeSVG from '@/assets/SmartRecipe-svg.vue'
 import {onBeforeUnmount} from 'vue'
 
 import { useStore } from 'vuex';
@@ -240,5 +243,10 @@ onBeforeUnmount(() => {
         color: #419170;
       }
   }
+  .c-card__smart-icon-wrapper {
+  position: absolute;
+  left: var(--space-xxs);
+  top: var(--space-xxs);
+}
 }
 </style>
