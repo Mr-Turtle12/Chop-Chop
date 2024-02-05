@@ -26,6 +26,7 @@ def detection_loop(current_step, flag, cameras):
             break
         rolling_average.append(check_step(current_step, cameras))
         if rolling_average.get_average():
+            utils.log("break due to hitting average", "Detect")
             break
 
 
