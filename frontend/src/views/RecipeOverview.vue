@@ -53,7 +53,9 @@
             :href="`/recipe/${ route.params.id }`"
             @click="
               startRecipeAPICall()"
-          >start recipe</a>
+          >
+            <p class="c-recipe__link-heading">Start Recipe</p>
+          </a>
         </div>
       </div>
 
@@ -177,6 +179,8 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .c-recipe {
+  $c : &;
+  
   &__info-container {
     @include grid;
   }
@@ -300,7 +304,6 @@ onBeforeUnmount(() => {
     border-radius: 10px;
     border: 2px solid var(--dark-green);
     background-color: var(--white);
-    color: var(--dark-green);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -309,8 +312,15 @@ onBeforeUnmount(() => {
     &:hover,
     &:focus {
       background-color: var(--dark-green);
-      color: var(--white);
+
+      #{$c}__link-heading {
+        color: var(--white);
+      }
     }
+  }
+
+  &__link-heading {
+    color: var(--dark-green);
   }
 }
 .c-recipe-image {
