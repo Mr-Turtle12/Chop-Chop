@@ -85,7 +85,7 @@ async def consumer_handler(websocket):
                 case "end":
                     log(f">>> end the recipe", "API")
                     CONTROLLER_INSTANCE.update_end_flag()
-                    await websocket.send(f"Ended current recipe")
+                    await websocket.send(json.dumps({"end": True}))
 
                 case _:
                     log(request.matcher, "API")
