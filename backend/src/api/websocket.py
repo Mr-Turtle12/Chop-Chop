@@ -77,6 +77,11 @@ async def consumer_handler(websocket):
                     SQLQueries.set_favourite(recipe_id, type)
                     await websocket.send(json.dumps({"setting": recipe_id}))
 
+                case ("new_recipe", recipe_metadata):
+                    log(f">>> adding a new recipe for {recipe_metadata}", "API")
+                    await websocket.send(
+                        SQLQueries.insert_recipe_into_database(recipe_metadata)
+                    )
                 case "end":
                     log(f">>> end the recipe", "API")
                     CONTROLLER_INSTANCE.update_end_flag()

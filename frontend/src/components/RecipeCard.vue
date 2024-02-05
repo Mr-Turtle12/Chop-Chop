@@ -5,7 +5,7 @@
     <div class="c-card__image-wrapper">
       <img
         class="c-card__image"
-        :src="image"
+        :src="image" :alt = "ImageNotFound"
       >
 
       <div
@@ -42,6 +42,7 @@
 
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
+import ImageNotFound from '@/assets/ImageNotFound.png'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
 import {onBeforeUnmount} from 'vue'
 

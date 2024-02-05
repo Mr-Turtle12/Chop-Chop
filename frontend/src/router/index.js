@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import SearchView from '@/views/SearchView.vue'
 import RecipeOverview from '@/views/RecipeOverview.vue'
 import RecipeView from '@/views/RecipeView.vue'
+import AddRecipe from '@/views/AddRecipe.vue'
 
 const routes = [
     {
@@ -26,6 +27,12 @@ const routes = [
         path: '/recipe-overview/:id',
         name: 'recipe-overview',
         component: RecipeOverview,
+        meta: { transition: 'slide-left'}
+    },
+    {
+        path: '/:add-recipe',
+        name: 'add-recipe',
+        component: AddRecipe,
         meta: { transition: 'slide-left'}
     },
 ]
