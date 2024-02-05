@@ -145,12 +145,10 @@ def check_word(word):
                 return True
     return False
 
-        insert_recipe_into_dictionary(recipe['name'])
-
 
 def insert_recipe_into_dictionary(recipe_name):
     recipeName = recipe_name.split()
-    unimportantWords = ['and', 'with', 'a', 'in', '&', 'also']
+    unimportantWords = ["and", "with", "a", "in", "&", "also"]
     # "../../../database/dictionary.txt"
     dictionary = open(DATABASE + "/dictionary.txt", "a")
     for word in recipeName:
