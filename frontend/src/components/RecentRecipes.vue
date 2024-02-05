@@ -25,6 +25,7 @@
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'horizontal'"
+          :isSmart ="true"
           :is-favourite="recipe.isFavourite"
           @favouriteChange="handleFavouriteChange"
         />
