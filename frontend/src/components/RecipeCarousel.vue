@@ -146,7 +146,7 @@ function onClickEnd(){
 
 const timerItems = ref([]) // No initial timers
 
-addTimerCard(1000000, 'test timer')
+// addTimerCard(1000000, 'test timer')
 
 socket.addEventListener('message', (event) => {
     try {
