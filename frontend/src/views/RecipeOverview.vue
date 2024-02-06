@@ -54,7 +54,7 @@
             class="c-recipe__link"
             :href="`/recipe/${ route.params.id }`"
           >
-            <p class="c-recipe__link-heading">start recipe</p>
+            <p class="c-recipe__link-heading">Start Recipe</p>
           </a>
         </div>
       </div>
