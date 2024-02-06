@@ -154,7 +154,6 @@ onBeforeUnmount(() => {
   &__card-container {
     display:flex;
     column-gap: var(--gutter);
-    overflow: auto;
     white-space: nowrap;
   }
 }
