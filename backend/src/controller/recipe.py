@@ -15,7 +15,7 @@ class Recipe:
         Returns:
             dict or None: The step if found, otherwise None.
         """
-        return utils.SQLiteQuery(
+        return SQLQueries.SQLiteQuery(
             (
                 "SELECT progressionObject , inhibtor, camera FROM steps WHERE recipe_id = "
                 + (self.current_step + 1)
@@ -75,7 +75,7 @@ class Recipe:
             "SELECT camera, progressionObject , inhibitor  FROM steps WHERE recipe_id = "
             + str(self.recipe_id)
             + " AND step ="
-            + str(step_number+1),
+            + str(step_number + 1),
             "one",
         )
 

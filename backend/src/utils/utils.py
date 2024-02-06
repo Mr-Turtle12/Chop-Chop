@@ -58,6 +58,7 @@ def convert_metadata(SQLRecipes):
             "name": recipe[2],
             "description": recipe[3],
             "isFavourite": bool(recipe[4]),
+            "isSmart": bool(recipe[5])
         }
         for recipe in SQLRecipes
     ]

@@ -6,9 +6,11 @@
       <img
         class="c-recipe-image__image"
         :src="recipe.img"
+        :alt="require('@/assets/ImageNotFound.png')"
       >
     </div>
   </section>
+  
   <section class="c-recipe o-section">
     <div class="c-recipe__container o-container">
       <div class="c-recipe__info-container">   
@@ -51,11 +53,7 @@
           <a
             class="c-recipe__link"
             :href="`/recipe/${ route.params.id }`"
-            @click="
-              startRecipeAPICall()"
-          >
-            <p class="c-recipe__link-heading">Start Recipe</p>
-          </a>
+          >start recipe</a>
         </div>
       </div>
 
@@ -99,14 +97,6 @@ var recipe = reactive({
 onMounted(() => {
     getRecipeInfo()
 })
-
-function startRecipeAPICall(){
-    socket.addEventListener('open', (event) => {
-        socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
-    
-    })
-
-}
 
 
 function getRecipeInfo()

@@ -39,6 +39,11 @@ const router = useRouter()
 const store = useStore()
 
 const socket = new WebSocket(store.state.websocketUrl)
+
+socket.addEventListener('open', (event) => {
+    socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
+    
+})
 var stepIndex = ref(0)
 
 var timerFlag = false

@@ -25,6 +25,7 @@
           :recipe-name="recipe.name"
           :info="recipe.info"
           :size="'vertical'"
+          :isSmart ="recipe.isSmart"
           @favourite-change="handleFavouriteChange"
         />
       </div>
@@ -64,6 +65,7 @@ onMounted(async () => {
                 name: recipe.name,
                 image: recipe.image,
                 info: recipe.description,
+                isSmart: recipe.isSmart,
                 id: recipe.id
             }))
             recipesLoaded.value = true

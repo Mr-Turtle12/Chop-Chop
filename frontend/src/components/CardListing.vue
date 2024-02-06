@@ -15,6 +15,7 @@
           :recipe-name="recipe.name"
           :info="recipe.info"
           :is-favourite="recipe.isFavourite"
+          :isSmart = "recipe.isSmart"
           :size="'vertical'"
         />
       </div>
@@ -56,7 +57,7 @@ onMounted(async () => {
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
         if (Array.isArray(arrayRecipe)) {
-            recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
+          recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite, isSmart:recipe.isSmart}))
         }else{
             name = 'No recipes found'
             recipes.value = null

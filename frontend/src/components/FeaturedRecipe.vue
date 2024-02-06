@@ -1,16 +1,16 @@
 <template>
   <section class="c-featured-recipe o-section"> 
     <div
-      v-if="recipesLoaded"
-      class="c-featured-recipe__card-container"
-    > 
-      <div class="c-featured-recipe__container o-container">
-        <div class="c-featured-recipe__image-container">
-          <img
-            class="c-featured-recipe__image"
-            :src="recipes.image"
-          >
-        </div>
+        v-if="recipesLoaded"
+        class="c-featured-recipe__card-container"
+      > 
+    <div class="c-featured-recipe__container o-container">
+      <div class="c-featured-recipe__image-container">
+        <img
+          class="c-featured-recipe__image"
+          :src="recipes.image" :alt = "ImageNotFound"
+        >
+      </div>
     
         <div class="c-featured-recipe__text-container">
           <h1 class="c-featured-recipe__heading">

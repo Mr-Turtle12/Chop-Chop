@@ -6,7 +6,7 @@
     <div class="c-card__image-wrapper">
       <img
         class="c-card__image"
-        :src="image"
+        :src="image" :alt = "ImageNotFound"
       >
 
       <div
@@ -17,6 +17,9 @@
         <BookmarkSVG
           :class="`c-card__bookmark-icon js-bookmark-icon ${isLocalFavourite ? 'c-card__bookmark-icon--favourite' : ''}`"
         />
+      </div>
+      <div v-if="isLocalSmart" class="c-card__smart-icon-wrapper">
+        <SmartRecipeSVG class="c-card__smart-icon" />
       </div>
     </div>
 
@@ -42,7 +45,9 @@
 
 <script setup>
 import ClockSVG from '@/assets/clock-svg.vue'
+import ImageNotFound from '@/assets/ImageNotFound.png'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
+import SmartRecipeSVG from '@/assets/SmartRecipe-svg.vue'
 import {onBeforeUnmount} from 'vue'
 
 import { useStore } from 'vuex'
@@ -57,9 +62,11 @@ const props = defineProps({
     info: { type: String, default: 'info' },
     isFavourite: {type: Boolean, default: true},
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
-    id : {type: Number, default: 1}
+    id : {type: Number, default: 1},
+    isSmart: {type: Boolean, default: false}
 })
 var isLocalFavourite  = props.isFavourite
+var isLocalSmart = props.isSmart
 const emits = defineEmits()
 
 const toggleFavourite = ($event) => {
@@ -251,5 +258,10 @@ onBeforeUnmount(() => {
         color: var(--dark-green);
       }
   }
+  .c-card__smart-icon-wrapper {
+  position: absolute;
+  left: var(--space-xxs);
+  top: var(--space-xxs);
+}
 }
 </style>
