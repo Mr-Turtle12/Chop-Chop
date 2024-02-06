@@ -80,8 +80,6 @@ const router = useRouter()
 
 const socket = new WebSocket(store.state.websocketUrl)
 
-
-
 const props = defineProps({
     recipe: {
         type: Object,
@@ -91,12 +89,17 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    timerFlag : {
+        type: Boolean,
+        default: false,
+    },
 })
 
 const isPeeking = ref(false)
 const recipe = toRef(props, 'recipe')
 const stepIndex = toRef(props, 'stepIndex')
 const localStepDelta = ref(0)
+const showTimer = props.timerFlag
 
 const previousStep = computed(() => {
     const index = stepIndex.value + localStepDelta.value - 1
@@ -144,6 +147,20 @@ function onClickEnd(){
 const timerItems = ref([]) // No initial timers
 
 addTimerCard(1000000, 'test timer')
+
+socket.addEventListener('message', (event) => {
+    try {
+        const data = JSON.parse(event.data)
+
+        if (data.inhibitors.progressionObject == 'timer') {
+            if(showTimer.value == true) {
+                addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.value.steps[stepIndex.value], stepIndex.value)
+            }
+        }
+    } catch (error) {
+        console.error('Error parsing JSON:', error)
+    }
+})
 
 // Function to add a TimerCard with a specific time and note
 function addTimerCard(time, note) {

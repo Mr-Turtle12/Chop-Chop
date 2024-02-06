@@ -20,6 +20,7 @@
     class="recipe-carousel"
     :recipe="recipe"
     :step-index="stepIndex"
+    :timer-flag="timerFlag || false"
   />
 </template>
 
@@ -40,6 +41,8 @@ const store = useStore()
 const socket = new WebSocket(store.state.websocketUrl)
 var stepIndex = ref(0)
 
+var timerFlag = false
+
 var recipe = reactive({
     name: 'ERROR NAME NOT FOUND',
     steps: [
@@ -55,6 +58,7 @@ socket.addEventListener('open', (event) => {
     socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
 
 })
+
 socket.addEventListener('message', (event) => {
     try {
         const data = JSON.parse(event.data)
@@ -64,13 +68,27 @@ socket.addEventListener('message', (event) => {
             recipe.steps = data['commands']
             recipe.isSmart = data.isSmart
 
-        } else {
+        } 
+        else {
             stepIndex.value = data.step
-            if (data.inhibitors.progressionObject == 'timer') {
-                addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
 
+            if (data.inhibitors.progressionObject == 'timer') {
+                timerFlag = true
             }
         }
+        
+        // else {
+        // stepIndex.value = data.step
+        // if (data.inhibitors.progressionObject == 'timer') {
+        //     // update flag prop 
+        //     // with time 
+        //     // addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
+        //     timerFlag = true
+        //     timerTime = parseInt(data.inhibitors.inhibitor) * 60000
+        //     timerName = recipe.steps[stepIndex.value]
+        //     currentStepIndex = stepIndex.value
+        // }
+        // }
     } catch (error) {
         console.error('Error parsing JSON:', error)
     }

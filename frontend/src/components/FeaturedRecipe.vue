@@ -27,7 +27,7 @@
                 class="c-featured-recipe__time-icon"
               />
 
-              <p>{{ recipes.info }}</p>
+              <p>1 hour</p>
             </div>
           </div>
         </div>

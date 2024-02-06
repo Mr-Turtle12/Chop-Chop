@@ -1,6 +1,7 @@
 <template>
-  <div
+  <a
     :class="`c-card c-card--${ size }`"
+    :href="`/recipe-overview/${ id }`"
   >
     <div class="c-card__image-wrapper">
       <img
@@ -19,9 +20,8 @@
       </div>
     </div>
 
-    <a
+    <div
       class="c-card__info"
-      :href="`/recipe-overview/${ id }`"
     >
       <h1 class="c-card__heading">
         {{ recipeName }}
@@ -36,8 +36,8 @@
           <p>1 hour</p>
         </div>
       </div>
-    </a>
-  </div>
+    </div>
+  </a>
 </template>
 
 <script setup>
@@ -178,6 +178,22 @@ onBeforeUnmount(() => {
   &--horizontal {
     display:flex;
 
+    &:hover, 
+    &:focus {
+      #{$c}__info {
+        background-color: var(--dark-green);
+      }
+
+      #{$c}__heading,
+      #{$c}__meta {
+        color: var(--white);
+      }
+      
+      #{$c}__time-icon {
+        color: var(--white);
+      }
+    }
+
       #{$c}__image-wrapper {
         height: 100%;
         width: 50%;
@@ -201,19 +217,19 @@ onBeforeUnmount(() => {
         padding: 30px;
         width:50%;
 
-        &:hover,
-        &:focus {
-          background-color: var(--dark-green);
+        // &:hover,
+        // &:focus {
+        //   background-color: var(--dark-green);
 
-          #{$c}__heading,
-          #{$c}__meta {
-            color: var(--white);
-          }
+        //   #{$c}__heading,
+        //   #{$c}__meta {
+        //     color: var(--white);
+        //   }
           
-          #{$c}__time-icon {
-            color: var(--white);
-          }
-        }
+        //   #{$c}__time-icon {
+        //     color: var(--white);
+        //   }
+        // }
       }
 
       #{$c}__heading {
