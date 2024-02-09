@@ -45,7 +45,7 @@ def get_favourites_metadata():
 
 
 def get_command(recipe_id):
-    SQLCommand = "SELECT command FROM steps WHERE recipe_id=" + str(recipe_id) + "ORDER BY step"
+    SQLCommand = "SELECT command FROM steps WHERE recipe_id=" + str(recipe_id) + " ORDER BY step"
     return SQLiteQuery(SQLCommand, "all")
 
 
