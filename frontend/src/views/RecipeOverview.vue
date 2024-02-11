@@ -139,13 +139,25 @@ function parseRecipeFromJson(RecipeJsonMessage)
     recipe.name = RecipeJsonMessage.name
     recipe.decription = RecipeJsonMessage.description
     recipe.img = RecipeJsonMessage.image
-    recipe.prepTime = RecipeJsonMessage.prepTime
-    recipe.cookTime = RecipeJsonMessage.cookTime
+    recipe.prepTime = formatTime(RecipeJsonMessage.prepTime)
+    recipe.cookTime = formatTime(RecipeJsonMessage.cookTime)
     recipe.ingredients = formatIngredients(RecipeJsonMessage)
     recipe.isFavourite = RecipeJsonMessage.isFavourite
     recipe.steps = RecipeJsonMessage['commands']
     recipe.isSmart = RecipeJsonMessage.isSmart
     recipe.servingSize = RecipeJsonMessage.servingSize
+}
+
+const formatTime = (Time) => {
+    const hours = Math.floor(Time / 60);
+    const remainingMinutes = Time % 60;
+    if (hours === 0) {
+        return `${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+    } else if (remainingMinutes === 0) {
+        return `${hours} hour${hours !== 1 ? 's' : ''}`;
+    } else {
+        return `${hours} hour${hours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+    }
 }
 
 const toggleFavourite = ($event) => {

@@ -38,14 +38,16 @@ def set_favourite(recipe_id, favourite):
 
 def get_favourites_metadata():
     query = SQLiteQuery(
-        "SELECT id , image , name , description , favourite, AI FROM recipes WHERE favourite = 1",
+        "SELECT * FROM recipes WHERE favourite = 1",
         "all",
     )
     return utils.convert_metadata(query)
 
 
 def get_command(recipe_id):
-    SQLCommand = "SELECT command FROM steps WHERE recipe_id=" + str(recipe_id) + " ORDER BY step"
+    SQLCommand = (
+        "SELECT command FROM steps WHERE recipe_id=" + str(recipe_id) + " ORDER BY step"
+    )
     return SQLiteQuery(SQLCommand, "all")
 
 
@@ -56,16 +58,12 @@ def get_all_metadata_from(recipe_id):
 
 
 def get_all_metadata():
-    return utils.convert_metadata(
-        SQLiteQuery(
-            "SELECT id , image , name , description , favourite, AI FROM recipes", "all"
-        )
-    )
+    return utils.convert_metadata(SQLiteQuery("SELECT * FROM recipes", "all"))
 
 
 def get_AIs_metadata():
     query = SQLiteQuery(
-        "SELECT id , image , name , description , favourite, AI FROM recipes WHERE AI = 1",
+        "SELECT * FROM recipes WHERE AI = 1",
         "all",
     )
     return utils.convert_metadata(query)
@@ -86,9 +84,7 @@ def search(query):
             query = corrected_query
 
     SQLCommand = (
-        "SELECT id , image , name , description , favourite, AI FROM recipes WHERE name LIKE '%"
-        + query
-        + "%' ORDER BY "
+        "SELECT * FROM recipes WHERE name LIKE '%" + query + "%' ORDER BY "
         "CASE WHEN name LIKE '" + query + "%' THEN 1 "
         "WHEN name LIKE '% " + query + "%' THEN 2 "
         "WHEN name LIKE '%" + query + "%' THEN 3 ELSE 4 END, name;"
@@ -101,9 +97,9 @@ def search(query):
 def insert_recipe_into_database(json_data):
     # Insert recipe information
     SQLCommandRecipe = (
-        f"INSERT INTO recipes (image, name, description, prepTime, cookTime, AI, favourite) "
+        f"INSERT INTO recipes (image, name, description, prepTime, cookTime, AI, favourite, servingSize) "
         f"VALUES ('{json_data['image']}', '{json_data['name']}', '{json_data['description']}', '{json_data['prepTime']}', "
-        f"'{json_data['cookTime']}', '{0}', '{0}')"
+        f"'{json_data['cookTime']}', '{0}', '{0}', '{4}')"
     )
     SQLiteQuery(SQLCommandRecipe, "commit")
 
@@ -167,18 +163,24 @@ def check_word(word):
 
 
 def get_Random_metadata():
-    target_recipe = SQLiteQuery(
-        "SELECT id , image , name , description  FROM recipes ORDER BY RANDOM()",
+    recipe = SQLiteQuery(
+        "SELECT *  FROM recipes ORDER BY RANDOM()",
         "one",
     )
-    if not target_recipe:
+    if not recipe:
         return None
     metadata = {
-        "id": target_recipe[0],
-        "image": utils.convert_image(target_recipe[1]),
-        "name": target_recipe[2],
-        "description": target_recipe[3],
+        "id": recipe[0],
+        "image": utils.convert_image(recipe[1]),
+        "name": recipe[2],
+        "description": recipe[3],
+        "prepTime": recipe[4],
+        "cookTime": recipe[5],
+        "isFavourite": bool(recipe[6]),
+        "isSmart": bool(recipe[7]),
+        "servingSize": recipe[8],
     }
+
     return json.dumps(metadata)
 
 

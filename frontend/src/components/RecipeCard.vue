@@ -36,7 +36,7 @@
             class="c-card__time-icon"
           />
 
-          <p>1 hour</p>
+          <p> {{ time }}</p>
         </div>
       </div>
     </a>
@@ -63,7 +63,8 @@ const props = defineProps({
     isFavourite: {type: Boolean, default: true},
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1},
-    isSmart: {type: Boolean, default: false}
+    isSmart: {type: Boolean, default: false},
+    time: {type: String, default: "1 hour"}
 })
 var isLocalFavourite  = props.isFavourite
 var isLocalSmart = props.isSmart

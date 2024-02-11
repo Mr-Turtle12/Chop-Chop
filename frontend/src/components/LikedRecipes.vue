@@ -26,7 +26,7 @@
           :info="recipe.info"
           :size="'vertical'"
           :isSmart ="recipe.isSmart"
-          :servingSize ="recipe.servingSize"
+          :time ="recipe.time"
           @favourite-change="handleFavouriteChange"
         />
       </div>
@@ -52,6 +52,7 @@ const recipes = ref([])
 const emits = defineEmits()
 const socket = new WebSocket(store.state.websocketUrl)
 
+
 onMounted(async () => {
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "get","recipe_id": -1}}')
@@ -68,16 +69,30 @@ onMounted(async () => {
                 info: recipe.description,
                 isSmart: recipe.isSmart,
                 id: recipe.id,
-                servingSize: recipe.servingSize
+                time: formatTime(recipe.prepTime, recipe.cookTime)
             }))
             recipesLoaded.value = true
         } else {
             console.error('Invalid data structure received from WebSocket:', arrayRecipe)
         }
+
     })
 })
 const handleFavouriteChange = () => {
     emits('favouriteChange')
+}
+
+const formatTime = (preTime, cookTime) => {
+    const totalMinutes = preTime + cookTime;
+    const hours = Math.floor(totalMinutes / 60);
+    const remainingMinutes = totalMinutes % 60;
+    if (hours === 0) {
+        return `${remainingMinutes} min${remainingMinutes !== 1 ? 's' : ''}`;
+    } else if (remainingMinutes === 0) {
+        return `${hours} hr${hours !== 1 ? 's' : ''}`;
+    } else {
+        return `${hours} hr${hours !== 1 ? 's' : ''} ${remainingMinutes} min${remainingMinutes !== 1 ? 's' : ''}`;
+    }
 }
 
 onBeforeUnmount(() => {

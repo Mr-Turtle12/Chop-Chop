@@ -27,6 +27,7 @@
           :size="'horizontal'"
           :isSmart ="true"
           :is-favourite="recipe.isFavourite"
+          :time = "recipe.time"
           @favouriteChange="handleFavouriteChange"
         />
       </div>
@@ -54,7 +55,7 @@ onMounted(async () => {
 
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
-        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite}))
+        recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite, time: formatTime(recipe.prepTime , recipe.cookTime)}))
         recipesLoaded.value = true
     })
 })
@@ -65,6 +66,18 @@ const handleFavouriteChange = () => {
 onBeforeUnmount(() => {
     socket.close()
 })
+const formatTime = (preTime, cookTime) => {
+    const totalMinutes = preTime + cookTime;
+    const hours = Math.floor(totalMinutes / 60);
+    const remainingMinutes = totalMinutes % 60;
+    if (hours === 0) {
+        return `${remainingMinutes} min${remainingMinutes !== 1 ? 's' : ''}`;
+    } else if (remainingMinutes === 0) {
+        return `${hours} hr${hours !== 1 ? 's' : ''}`;
+    } else {
+        return `${hours} hr${hours !== 1 ? 's' : ''} ${remainingMinutes} mini${remainingMinutes !== 1 ? 's' : ''}`;
+    }
+}
 
 </script>
 
