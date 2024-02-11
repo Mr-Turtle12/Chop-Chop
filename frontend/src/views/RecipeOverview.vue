@@ -32,6 +32,9 @@
             <p class="c-recipe__meta">
               Cook: {{ recipe.cookTime }}
             </p>
+            <p class="c-recipe__meta__server">
+              Serving Size: {{ recipe.servingSize }}
+            </p>
           </div>
         </div>
 
@@ -133,6 +136,7 @@ function formatIngredients(RecipeJsonMessage)
 
 function parseRecipeFromJson(RecipeJsonMessage)
 {
+  console.log(RecipeJsonMessage)
     recipe.name = RecipeJsonMessage.name
     recipe.decription = RecipeJsonMessage.description
     recipe.img = RecipeJsonMessage.image
@@ -142,6 +146,7 @@ function parseRecipeFromJson(RecipeJsonMessage)
     recipe.isFavourite = RecipeJsonMessage.isFavourite
     recipe.steps = RecipeJsonMessage['commands']
     recipe.isSmart = RecipeJsonMessage.isSmart
+    recipe.servingSize = RecipeJsonMessage.servingSize
 }
 
 const toggleFavourite = ($event) => {
@@ -220,6 +225,27 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
 
+      &__server{
+        @include ts-heading-4;
+        color: var(--white);
+        display: flex;
+        align-items: center;
+
+        &::before{
+          content:'';
+          mask:url('@/assets/people-icon.png');
+          background: var(--white);
+          display:inline-block;
+          height:28px;
+          width:28px;
+          mask-size: cover;
+          margin-right: var(--space-xs);
+        }
+        @include media("<=tablet") {
+          width:50%;
+        }
+      }
+
     &::before {
       content:'';
       mask:url('@/assets/clock.svg');
@@ -237,6 +263,13 @@ onBeforeUnmount(() => {
   }
 
   &__meta + &__meta {
+    margin-top: var(--space-xs);
+
+    @include media("<=tablet") {
+      margin-top:0;
+    }
+  }
+  &__meta + &__meta__server {
     margin-top: var(--space-xs);
 
     @include media("<=tablet") {

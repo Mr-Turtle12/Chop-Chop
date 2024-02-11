@@ -53,6 +53,8 @@ class Controller:
         print(target_recipe)
         if not target_recipe:
             return None
+
+        print(target_recipe)
         metadata = {
             "image": utils.convert_image(target_recipe[1]),
             "name": target_recipe[2],
@@ -60,9 +62,10 @@ class Controller:
             "ingredients": utils.get_ingredients(recipe_id),
             "prepTime": target_recipe[4],
             "cookTime": target_recipe[5],
-            "isFavourite": bool(target_recipe[8]),
+            "isFavourite": bool(target_recipe[7]),
             "commands": utils.get_commands(recipe_id),
             "isSmart": bool(SQLQueries.is_smart(recipe_id)),
+            "servingSize": target_recipe[8],
         }
         return json.dumps(metadata)
 
