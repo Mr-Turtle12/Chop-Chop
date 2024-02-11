@@ -86,7 +86,9 @@ def search(query):
             query = corrected_query
 
     SQLCommand = (
-        "SELECT * FROM recipes WHERE name LIKE '%" + query + "%' ORDER BY "
+        "SELECT id , image , name , description , favourite, AI FROM recipes WHERE name LIKE '%"
+        + query
+        + "%' ORDER BY "
         "CASE WHEN name LIKE '" + query + "%' THEN 1 "
         "WHEN name LIKE '% " + query + "%' THEN 2 "
         "WHEN name LIKE '%" + query + "%' THEN 3 ELSE 4 END, name;"
