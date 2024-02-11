@@ -45,7 +45,9 @@ def get_favourites_metadata():
 
 
 def get_command(recipe_id):
-    SQLCommand = "SELECT command FROM steps WHERE recipe_id=" + str(recipe_id) + " ORDER BY step"
+    SQLCommand = (
+        "SELECT command FROM steps WHERE recipe_id=" + str(recipe_id) + " ORDER BY step"
+    )
     return SQLiteQuery(SQLCommand, "all")
 
 
@@ -56,11 +58,7 @@ def get_all_metadata_from(recipe_id):
 
 
 def get_all_metadata():
-    return utils.convert_metadata(
-        SQLiteQuery(
-            "SELECT * FROM recipes", "all"
-        )
-    )
+    return utils.convert_metadata(SQLiteQuery("SELECT * FROM recipes", "all"))
 
 
 def get_AIs_metadata():
@@ -86,9 +84,7 @@ def search(query):
             query = corrected_query
 
     SQLCommand = (
-        "SELECT * FROM recipes WHERE name LIKE '%"
-        + query
-        + "%' ORDER BY "
+        "SELECT * FROM recipes WHERE name LIKE '%" + query + "%' ORDER BY "
         "CASE WHEN name LIKE '" + query + "%' THEN 1 "
         "WHEN name LIKE '% " + query + "%' THEN 2 "
         "WHEN name LIKE '%" + query + "%' THEN 3 ELSE 4 END, name;"
@@ -167,13 +163,25 @@ def check_word(word):
 
 
 def get_Random_metadata():
-    target_recipe = SQLiteQuery(
+    recipe = SQLiteQuery(
         "SELECT *  FROM recipes ORDER BY RANDOM()",
         "one",
     )
-    if not target_recipe:
+    if not recipe:
         return None
-    return utils.convert_metadata(target_recipe)
+    metadata = {
+        "id": recipe[0],
+        "image": utils.convert_image(recipe[1]),
+        "name": recipe[2],
+        "description": recipe[3],
+        "prepTime": recipe[4],
+        "cookTime": recipe[5],
+        "isFavourite": bool(recipe[6]),
+        "isSmart": bool(recipe[7]),
+        "servingSize": recipe[8],
+    }
+
+    return json.dumps(metadata)
 
 
 def is_smart(recipe_id):

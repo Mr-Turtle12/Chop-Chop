@@ -57,11 +57,11 @@ def convert_metadata(SQLRecipes):
             "image": convert_image(recipe[1]),
             "name": recipe[2],
             "description": recipe[3],
-            "isFavourite": bool(recipe[4]),
-            "isSmart": bool(recipe[5]),
-            "prepTime": recipe[6],
-            "cookTime": recipe[7],
-            "servingSize": recipe[8]
+            "prepTime": recipe[4],
+            "cookTime": recipe[5],
+            "isSmart": bool(recipe[6]),
+            "isFavourite": bool(recipe[7]),
+            "servingSize": recipe[8],
         }
         for recipe in SQLRecipes
     ]

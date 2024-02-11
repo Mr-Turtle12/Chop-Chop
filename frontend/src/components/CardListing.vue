@@ -16,6 +16,7 @@
           :info="recipe.info"
           :is-favourite="recipe.isFavourite"
           :isSmart = "recipe.isSmart"
+          :time = "recipe.time"
           :size="'vertical'"
         />
       </div>
@@ -57,7 +58,7 @@ onMounted(async () => {
     socket.addEventListener('message', (event) => {
         const arrayRecipe = JSON.parse(event.data)
         if (Array.isArray(arrayRecipe)) {
-          recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite, isSmart:recipe.isSmart}))
+          recipes.value = arrayRecipe.map(recipe => ({ name: recipe.name, image: recipe.image, info: recipe.description , id:recipe.id, isFavourite:recipe.isFavourite, isSmart:recipe.isSmart,time: formatTime(recipe.prepTime, recipe.cookTime)}))
         }else{
             name = 'No recipes found'
             recipes.value = null
@@ -66,6 +67,19 @@ onMounted(async () => {
         recipesLoaded.value = true
     })
 })
+
+const formatTime = (preTime, cookTime) => {
+    const totalMinutes = preTime + cookTime;
+    const hours = Math.floor(totalMinutes / 60);
+    const remainingMinutes = totalMinutes % 60;
+    if (hours === 0) {
+        return `${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+    } else if (remainingMinutes === 0) {
+        return `${hours} hour${hours !== 1 ? 's' : ''}`;
+    } else {
+        return `${hours} hour${hours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+    }
+}
 
 onBeforeUnmount(() => {
     socket.close()

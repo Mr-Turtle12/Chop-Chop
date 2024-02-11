@@ -26,9 +26,17 @@
               <ClockSVG
                 class="c-featured-recipe__time-icon"
               />
-
-              <p>{{ recipes.info }}</p>
+              
+              <p>Prep Time:  {{ formatTime(recipes.prepTime) }}</p>
             </div>
+            <div class="c-featured-recipe__time">
+              <ClockSVG
+                class="c-featured-recipe__time-icon"
+              />
+              
+              <p>Cook Time:  {{ formatTime(recipes.cookTime) }}</p>
+            </div>
+            <p>{{ recipes.description }}</p>
           </div>
         </div>
       </div>
@@ -62,6 +70,19 @@ onMounted(async () => {
         recipesLoaded.value = true
     })
 })
+
+const formatTime = (Time) => {
+    const hours = Math.floor(Time / 60);
+    const remainingMinutes = Time % 60;
+    if (hours === 0) {
+        return `${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+    } else if (remainingMinutes === 0) {
+        return `${hours} hour${hours !== 1 ? 's' : ''}`;
+    } else {
+        return `${hours} hour${hours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+    }
+}
+
 
 onBeforeUnmount(() => {
     socket.close()
