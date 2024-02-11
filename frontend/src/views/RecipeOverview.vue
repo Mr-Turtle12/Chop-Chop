@@ -136,7 +136,6 @@ function formatIngredients(RecipeJsonMessage)
 
 function parseRecipeFromJson(RecipeJsonMessage)
 {
-  console.log(RecipeJsonMessage)
     recipe.name = RecipeJsonMessage.name
     recipe.decription = RecipeJsonMessage.description
     recipe.img = RecipeJsonMessage.image

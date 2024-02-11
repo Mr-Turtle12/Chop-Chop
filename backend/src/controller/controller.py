@@ -50,7 +50,6 @@ class Controller:
 
     def get_recipe_metadata(self, recipe_id):
         target_recipe = SQLQueries.get_all_metadata_from(recipe_id)
-        print(target_recipe)
         if not target_recipe:
             return None
 
