@@ -1,31 +1,33 @@
 <template>
-  <!-- <PageHeader /> -->
-  <div class="container">
-    <div class="horizontal-container">
-      <nav>
-        <img
-          class="back-arrow"
-          src="@/assets/back-arrow-icon.svg"
-          @click="EndRecipe()"
+  <div class="c-recipe-view__container">
+    <!-- <nav>
+      <img
+        class="back-arrow"
+        src="@/assets/back-arrow-icon.svg"
+        @click="EndRecipe()"
+      >
+      <p>Back to recipe</p>
+    </nav> -->
+    <BackButton />
+
+
+    <div class="timer-container">
+      <div class="timer-wrapper">
+        <div
+          v-for="(item, index) in timerItems"
+          :key="index"
+          class="recipe-timer"
         >
-      </nav>
-      <div class="timer-container">
-        <div class="timer-wrapper">
-          <div
-            v-for="(item, index) in timerItems"
-            :key="index"
-            class="recipe-timer"
-          >
-            <TimerCard
-              :initial-time="item.time"
-              :timer-string="item.note"
-              :step-generated-on="item.stepIndex"
-              @countdown-end="handleCountdownEnd"
-            />
-          </div>
+          <TimerCard
+            :initial-time="item.time"
+            :timer-string="item.note"
+            :step-generated-on="item.stepIndex"
+            @countdown-end="handleCountdownEnd"
+          />
         </div>
       </div>
     </div>
+
     <RecipeCarousel
       class="recipe-carousel"
       :recipe="recipe"
@@ -35,9 +37,9 @@
 </template>
 
 <script setup>
-import PageHeader from '@/components/PageHeader.vue'
-import RecipeCarousel from '@/components/RecipeCarousel.vue'
+import BackButton from '@/components/BackButton.vue'
 import TimerCard from '@/components/TimerCard.vue'
+import RecipeCarousel from '@/components/RecipeCarousel.vue'
 
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
@@ -51,9 +53,9 @@ const store = useStore()
 const socket = new WebSocket(store.state.websocketUrl)
 
 socket.addEventListener('open', (event) => {
-        socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
+    socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
     
-    })
+})
 var stepIndex = ref(0)
 
 var recipe = reactive({
@@ -73,19 +75,19 @@ socket.addEventListener('open', (event) => {
 })
 
 socket.addEventListener('message', (event) => {
-  try{
-      const data = JSON.parse(event.data)
-      if (data.name) {
-          recipe.name = data.name
-          recipe.steps = data['commands']
-          recipe.isSmart = data.isSmart
+    try{
+        const data = JSON.parse(event.data)
+        if (data.name) {
+            recipe.name = data.name
+            recipe.steps = data['commands']
+            recipe.isSmart = data.isSmart
 
-      } else if (data.step) {
-          stepIndex.value = data.step
-          if (data.inhibitors.progressionObject == 'timer') {
-              addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
-          }
-      }
+        } else if (data.step) {
+            stepIndex.value = data.step
+            if (data.inhibitors.progressionObject == 'timer') {
+                addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
+            }
+        }
     }
     catch (error) {
         console.error('Error parsing JSON:', error)
