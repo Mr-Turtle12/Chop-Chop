@@ -3,13 +3,16 @@
     <nav class="c-back-button__container o-container">
       <a class="c-back-button__button">
         <span class="c-back-button__icon"><</span>
-        <span class="c-back-button__text">Back to recipe</span>
+        <span class="c-back-button__text">{{ buttonText }}</span>
       </a>
     </nav>
   </section>
 </template>
 
 <script setup>
+const props = defineProps({
+    buttonText: { type: String, default: 'back' }, 
+})
 </script>
 
 <style scoped lang="scss">

@@ -38,6 +38,10 @@ body {
   &:last-child {
     margin-bottom: var(--space-xl);
   }
+
+  .c-back-button+& {
+    margin-top: var(--space-xs);
+  }
 }
 
 .o-container {

@@ -5,7 +5,8 @@
     <div class="c-card__image-wrapper">
       <img
         class="c-card__image"
-        :src="image" :alt = "ImageNotFound"
+        :src="image"
+        :alt="ImageNotFound"
       >
 
       <div
@@ -17,7 +18,10 @@
           :class="`c-card__bookmark-icon js-bookmark-icon ${isLocalFavourite ? 'c-card__bookmark-icon--favourite' : ''}`"
         />
       </div>
-      <div v-if="isLocalSmart" class="c-card__smart-icon-wrapper">
+      <div
+        v-if="isLocalSmart"
+        class="c-card__smart-icon-wrapper"
+      >
         <SmartRecipeSVG class="c-card__smart-icon" />
       </div>
     </div>
@@ -64,7 +68,7 @@ const props = defineProps({
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1},
     isSmart: {type: Boolean, default: false},
-    time: {type: String, default: "1 hour"}
+    time: {type: String, default: '1 hour'}
 })
 var isLocalFavourite  = props.isFavourite
 var isLocalSmart = props.isSmart

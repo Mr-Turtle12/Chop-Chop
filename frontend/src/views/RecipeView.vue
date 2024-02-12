@@ -1,14 +1,8 @@
 <template>
   <div class="c-recipe-view__container">
-    <!-- <nav>
-      <img
-        class="back-arrow"
-        src="@/assets/back-arrow-icon.svg"
-        @click="EndRecipe()"
-      >
-      <p>Back to recipe</p>
-    </nav> -->
-    <BackButton />
+    <BackButton 
+      :button-text="'Back to recipe'"
+    />
 
 
     <div class="timer-container">

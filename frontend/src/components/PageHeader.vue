@@ -92,6 +92,10 @@
 import Logo from '@/assets/logo-svg.vue'
 import SearchIcon from '@/assets/search-svg.vue'
 
+const props = defineProps({
+    backButton: { type: Boolean, default: false },
+})
+
 function toggleMenu() {
     const burgerMenu = document.getElementsByClassName('js-burger-button')[0]
     const headerMenu = document.getElementsByClassName('js-header-menu')[0]
