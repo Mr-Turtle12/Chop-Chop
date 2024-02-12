@@ -189,7 +189,6 @@ onBeforeUnmount(() => {
     display:flex;
     column-gap: var(--gutter);
     overflow: auto;
-    white-space: nowrap;
   }
 }
 </style>
