@@ -163,10 +163,11 @@ function onClickEnd(){
 
 .c-recipe-carousel {
   height: calc(100vh - (var(--space-xl)*2)); // might need to change, sets height of the carousel to be 100% minus the header and margins
+  margin-bottom: 0!important;
 
   &__container {
     @include grid;
-    height: 90%;
+    height: 100%;
   }
 
   &__button-container {
