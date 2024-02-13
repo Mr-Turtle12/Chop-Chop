@@ -60,7 +60,7 @@ onMounted(async () => {
     })
 })
 const handleFavouriteChange = () => {
-    emits('favourite-change')
+    emits('favouriteChange')
 }
 
 onBeforeUnmount(() => {

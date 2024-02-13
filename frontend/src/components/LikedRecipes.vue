@@ -27,7 +27,7 @@
           :size="'vertical'"
           :isSmart ="recipe.isSmart"
           :time ="recipe.time"
-          @favourite-change="handleFavouriteChange"
+          @favouriteChange="handleFavouriteChange"
         />
       </div>
     </div>

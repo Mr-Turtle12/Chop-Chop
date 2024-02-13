@@ -48,13 +48,11 @@ import ClockSVG from '@/assets/clock-svg.vue'
 import ImageNotFound from '@/assets/ImageNotFound.png'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
 import SmartRecipeSVG from '@/assets/SmartRecipe-svg.vue'
-import {onBeforeUnmount} from 'vue'
+import {onBeforeMount, onBeforeUnmount} from 'vue'
 
 import { useStore } from 'vuex'
 
 const store = useStore()
-
-const socket = new WebSocket(store.state.websocketUrl)
 
 const props = defineProps({
     size: { type: String, default: 'vertical' },
@@ -70,7 +68,7 @@ var isLocalFavourite  = props.isFavourite
 var isLocalSmart = props.isSmart
 const emits = defineEmits()
 
-const toggleFavourite = ($event) => {
+function toggleFavourite($event) {
 
     const bookmarkIcon = $event.target.parentElement
     if (bookmarkIcon.classList.contains('c-card__bookmark-icon--favourite')) {
@@ -80,14 +78,11 @@ const toggleFavourite = ($event) => {
     }
     isLocalFavourite = !isLocalFavourite
     emits('favouriteChange')
+    const socket = new WebSocket(store.state.websocketUrl)
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+isLocalFavourite+' ,"recipe_id": '+ props.id +  '}}')
     })
 }
-
-onBeforeUnmount(() => {
-    socket.close()
-})
 
 </script>
 
