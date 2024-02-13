@@ -1,10 +1,22 @@
 <template>
   <section class="c-recipe-carousel o-section">
     <div class="c-recipe-carousel__container o-container">
+      <div class="c-recipe-carousel__timer-container">
+        <TimerCard
+          v-for="(item, index) in timerItems"
+          :key="index"
+          :initial-time="item.time"
+          :timer-string="item.note"
+          :step-generated-on="item.stepIndex"
+          @countdown-end="handleCountdownEnd"
+        />
+      </div>
+
       <ul class="c-recipe-carousel__steps js-carousel-steps">
         <li class="c-recipe-carousel__step c-recipe-carousel__step--previous">
           {{ previousStep }}
         </li>
+
         <li class="c-recipe-carousel__step c-recipe-carousel__step--current">
           {{ currentStep }}
           <template v-if="nextStep == null">
@@ -18,6 +30,7 @@
             </div>
           </template>
         </li>
+        
         <li class="c-recipe-carousel__step c-recipe-carousel__step--next">
           {{ nextStep }}
         </li>
@@ -56,6 +69,8 @@
 </template>
 
 <script setup>
+import TimerCard from '@/components/TimerCard.vue'
+
 import { computed, toRef, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -64,8 +79,6 @@ const store = useStore()
 const router = useRouter()
 
 const socket = new WebSocket(store.state.websocketUrl)
-
-
 
 const props = defineProps({
     recipe: {
@@ -76,12 +89,17 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    timerFlag : {
+        type: Boolean,
+        default: false,
+    },
 })
 
 const isPeeking = ref(false)
 const recipe = toRef(props, 'recipe')
 const stepIndex = toRef(props, 'stepIndex')
 const localStepDelta = ref(0)
+const showTimer = props.timerFlag
 
 const previousStep = computed(() => {
     const index = stepIndex.value + localStepDelta.value - 1
@@ -126,14 +144,45 @@ function onClickEnd(){
     router.back()
 }
 
+const timerItems = ref([]) // No initial timers
 
+// addTimerCard(1000000, 'test timer')
 
+socket.addEventListener('message', (event) => {
+    try {
+        const data = JSON.parse(event.data)
+
+        if (data.inhibitors.progressionObject == 'timer') {
+            if(showTimer.value == true) {
+                addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.value.steps[stepIndex.value], stepIndex.value)
+            }
+        }
+    } catch (error) {
+        console.error('Error parsing JSON:', error)
+    }
+})
+
+// Function to add a TimerCard with a specific time and note
+function addTimerCard(time, note) {
+    timerItems.value.push({ time, note,stepIndex}) //pass array index here
+}
+
+// Handle countdown end event here
+function handleCountdownEnd(stepGeneratedOn) {
+    // Find the index of the timer in the array
+    const index = timerItems.value.findIndex((timer) => timer.stepIndex === stepGeneratedOn)
+
+    // Remove the timer from the array
+    if (index !== -1) {
+        setTimeout(() => {
+            timerItems.value.splice(index, 1)
+            socket.send(`{"command": { "keyword": "timer-end","timer_id": ${stepGeneratedOn} }}`)
+        }, 7000)
+    }
+}
 </script>
 
-
-
 <style scoped lang="scss">
-
 .enjoy-meal-container {
   text-align: center;
   margin: 20px;
@@ -168,6 +217,21 @@ function onClickEnd(){
   &__container {
     @include grid;
     height: 100%;
+
+    @include media("<=tablet") {
+      display:flex;
+      flex-direction: column;
+    }
+  }
+
+  &__timer-container {
+    grid-column:1/2;
+    display:flex;
+    align-items: center;
+
+    @include media("<=tablet") {
+      justify-content: center;
+    }
   }
 
   &__button-container {
@@ -175,6 +239,10 @@ function onClickEnd(){
     flex-direction: column;
     justify-content: space-between;
     grid-column: 12;
+
+    @include media("<=tablet") {
+      flex-direction: row;
+    }
   }
 
   &__button {
@@ -183,10 +251,20 @@ function onClickEnd(){
 
     &--next {
       transform: rotate(180deg);
+
+      @include media("<=tablet") {
+        transform:rotate(90deg);
+      }
     }
 
     &--return {
       align-items: center;
+    }
+
+    &--previous {
+      @include media("<=tablet") {
+        transform:rotate(270deg);
+      }
     }
   }
   
@@ -199,6 +277,10 @@ function onClickEnd(){
     align-items: center;
     list-style-type: none;
     justify-content: space-between;
+
+    @include media("<=tablet") {
+      justify-content : center;
+    }
   }
 
   &__step {
@@ -209,6 +291,10 @@ function onClickEnd(){
     &--next {
       @include ts-heading-2;
       opacity: 0.6;
+
+      @include media("<=tablet") {
+        display:none;
+      }
     }
 
     &--current {

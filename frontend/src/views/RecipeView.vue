@@ -52,6 +52,8 @@ socket.addEventListener('open', (event) => {
 })
 var stepIndex = ref(0)
 
+var timerFlag = false
+
 var recipe = reactive({
     name: 'ERROR NAME NOT FOUND',
     steps: [
@@ -69,46 +71,63 @@ socket.addEventListener('open', (event) => {
 })
 
 socket.addEventListener('message', (event) => {
-    try{
+    try {
         const data = JSON.parse(event.data)
+        console.log()
         if (data.name) {
             recipe.name = data.name
             recipe.steps = data['commands']
             recipe.isSmart = data.isSmart
 
-        } else if (data.step) {
+        } 
+        else {
             stepIndex.value = data.step
+
             if (data.inhibitors.progressionObject == 'timer') {
-                addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
+                timerFlag = true
             }
         }
-    }
-    catch (error) {
+        
+        // else {
+        // stepIndex.value = data.step
+        // if (data.inhibitors.progressionObject == 'timer') {
+        //     // update flag prop 
+        //     // with time 
+        //     // addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
+        //     timerFlag = true
+        //     timerTime = parseInt(data.inhibitors.inhibitor) * 60000
+        //     timerName = recipe.steps[stepIndex.value]
+        //     currentStepIndex = stepIndex.value
+        // }
+        // }
+    } catch (error) {
         console.error('Error parsing JSON:', error)
     }
 })
 
 
-const timerItems = ref([]) // No initial timers
+// const timerItems = ref([]) // No initial timers
 
-// Function to add a TimerCard with a specific time and note
-function addTimerCard(time, note) {
-    timerItems.value.push({ time, note,stepIndex}) //pass array index here
-}
+// addTimerCard(1000000, 'test timer')
 
-// Handle countdown end event here
-function handleCountdownEnd(stepGeneratedOn) {
-    // Find the index of the timer in the array
-    const index = timerItems.value.findIndex((timer) => timer.stepIndex === stepGeneratedOn)
+// // Function to add a TimerCard with a specific time and note
+// function addTimerCard(time, note) {
+//     timerItems.value.push({ time, note,stepIndex}) //pass array index here
+// }
 
-    // Remove the timer from the array
-    if (index !== -1) {
-        setTimeout(() => {
-            timerItems.value.splice(index, 1)
-            socket.send(`{"command": { "keyword": "timer-end","timer_id": ${stepGeneratedOn} }}`)
-        }, 7000)
-    }
-}
+// // Handle countdown end event here
+// function handleCountdownEnd(stepGeneratedOn) {
+//     // Find the index of the timer in the array
+//     const index = timerItems.value.findIndex((timer) => timer.stepIndex === stepGeneratedOn)
+
+//     // Remove the timer from the array
+//     if (index !== -1) {
+//         setTimeout(() => {
+//             timerItems.value.splice(index, 1)
+//             socket.send(`{"command": { "keyword": "timer-end","timer_id": ${stepGeneratedOn} }}`)
+//         }, 7000)
+//     }
+// }
 
 const EndRecipe = () => {
     socket.send('{"command": { "keyword": "end"}}')
