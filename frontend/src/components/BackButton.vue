@@ -1,18 +1,28 @@
 <template>
   <section class="c-back-button">
     <nav class="c-back-button__container o-container">
-      <a class="c-back-button__button">
+      <button
+        class="c-back-button__button"
+        @click="getPreviousPage"
+      >
         <span class="c-back-button__icon"><</span>
         <span class="c-back-button__text">{{ buttonText }}</span>
-      </a>
+      </button>
     </nav>
   </section>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 const props = defineProps({
     buttonText: { type: String, default: 'back' }, 
 })
+
+function getPreviousPage() {
+    return router.back()
+}
 </script>
 
 <style scoped lang="scss">

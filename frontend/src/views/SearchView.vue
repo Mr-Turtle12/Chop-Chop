@@ -1,7 +1,5 @@
 <template>
-  <BackButton 
-    :button-text="'Home'"
-  />
+  <BackButton />
     
   <PageHeader />
 
