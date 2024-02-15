@@ -113,27 +113,41 @@
               </div>
             </div>
 
-            <div class="c-add-recipe__image-container">
+            <div class="c-add-recipe__serving-size">
               <label
-                for="recipeImage"
+                for="servingSize"
                 class="c-add-recipe__label"
-              >Image:</label><br>
+              >Serving Size:</label><br>
 
               <input
-                id="recipeImage"
-                ref="fileInput"
-                class="c-add-recipe__image"
-                type="file"
-                accept="image/*"
-                @change="handleFileChange"
-              >
-              <img
-                v-if="base64Image"
-                :src="base64Image"
-                alt="Uploaded Image"
-                :style="{ maxWidth: '50%', maxHeight: '50%' }"
-              >
+                id="servingSize"
+                type="number"
+                class="c-add-recipe__input c-add-recipe__input--serving"
+                placeholder="Size"
+              > 
             </div>
+          </div>
+
+          <div class="c-add-recipe__image-container">
+            <label
+              for="recipeImage"
+              class="c-add-recipe__label"
+            >Image:</label><br>
+
+            <input
+              id="recipeImage"
+              ref="fileInput"
+              class="c-add-recipe__image"
+              type="file"
+              accept="image/*"
+              @change="handleFileChange"
+            >
+            <img
+              v-if="base64Image"
+              :src="base64Image"
+              alt="Uploaded Image"
+              :style="{ maxWidth: '50%', maxHeight: '50%' }"
+            >
           </div>
         </form>
       </div>
@@ -483,7 +497,7 @@ const submitForm = () => {
   // Overview form //
   &__overview-form {
     flex-direction: column;
-    gap: var(--space-xxl);
+    gap: var(--space-m);
   }
 
   &__top {
@@ -535,14 +549,17 @@ const submitForm = () => {
     gap: var(--space-xs);
   }
 
-  &__image-container {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
+  &__serving-size {
+    width:50%;
 
     @include media("<=tablet") {
-      width: 100%;
+      width:100%;
     }
+  }
+
+  &__image-container {
+    display: flex;
+    flex-direction: column;
   }
 
   &__image {
