@@ -50,20 +50,36 @@
             src="@/assets/navigation-arrow.svg"
           >
         </button>
+
+        <div>
+          <button @click="toggleAudio">
+            <img v-if="isAudioPlaying" src="@/assets/Speaker.svg">
+            <img v-else src="@/assets/mute_Speaker.svg">
+          </button>
+          <audio id="audioPlayer" :src="null"></audio>
+      </div>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { computed, toRef, ref } from 'vue'
+import { computed, toRef, ref, onMounted, watch  } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 const store = useStore()
 const router = useRouter()
+const isAudioPlaying = ref(true)
 
 const socket = new WebSocket(store.state.websocketUrl)
+const toggleAudio = () => {
+  isAudioPlaying.value = !isAudioPlaying.value
+  if(isAudioPlaying.value){
+    const audioElement = document.getElementById('audioPlayer');
+    //audioElement.play();
+  }
+}
 
 
 
@@ -88,6 +104,21 @@ const previousStep = computed(() => {
     return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
 })
 
+onMounted(() => {
+  watch(
+    () => stepIndex.value,
+    (newValue, oldValue) => {
+      // Code to play audio based on the new stepIndex value
+      const Url = "http://localhost:8000/photos/Sandwiches/Wallace_" + (newValue + localStepDelta.value + 1) + ".mp3";
+      const audioElement = document.getElementById('audioPlayer');
+      if (isAudioPlaying.value && audioElement) {
+        console.log(Url);
+        audioElement.src = Url;
+        audioElement.play();
+      }
+    }
+  )
+})
 const currentStep = computed(() => {
     const index = stepIndex.value + localStepDelta.value
     return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
