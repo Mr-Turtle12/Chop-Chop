@@ -32,8 +32,8 @@
         </div> 
 
         <form class="c-add-recipe__overview-form js-overview-form is-toggled">
-          <div class="c-add-recipe__overview-left-container">
-            <div class="c-add-recipe__overview-left c-add-recipe__overview-left--full">
+          <div class="c-add-recipe__top">
+            <div class="c-add-recipe__recipe-name">
               <label
                 for="recipeName"
                 class="c-add-recipe__label"
@@ -49,77 +49,92 @@
               />
             </div>
 
-            <div class="c-add-recipe__overview-left c-add-recipe__overview-left--half">
+            <div class="c-add-recipe__recipe-description">
               <label
-                for="prepTime"
+                for="recipeDescription"
                 class="c-add-recipe__label"
-              >Prep Time:</label><br>
+              >Description:</label>
 
-              <div class="c-add-recipe__input-time-container">
-                <input
-                  id="prepTimeHour"
-                  type="number"
-                  class="c-add-recipe__input c-add-recipe__input--hour"
-                  placeholder="Hour"
-
-                > 
-                <input
-                  id="prepTimeMinute"
-                  type="number"
-                  class="c-add-recipe__input c-add-recipe__input--minute"
-                  placeholder="Minute"
-
-                > 
-              </div>
-            </div>
-
-            <div class="c-add-recipe__overview-left c-add-recipe__overview-left--half">
-              <label
-                for="cookTime"
-                class="c-add-recipe__label"
-              >Cook Time:</label><br>
-
-              <div class="c-add-recipe__input-time-container">
-                <input
-                  id="cookTimeHour"
-                  type="number"
-                  class="c-add-recipe__input c-add-recipe__input--hour"
-                  placeholder="Hour"
-                > 
-                <input
-                  id="cookTimeMinute"
-                  type="number"
-                  class="c-add-recipe__input c-add-recipe__input--minute"
-                  placeholder="Minute"
-
-                > 
-              </div>
+              <textarea
+                id="recipeDescription"
+                class="c-add-recipe__input"
+                name="recipeDescription"
+                rows="4"
+                col="1"
+                maxlength="255"
+              />
             </div>
           </div>
 
-          <div
-            class="
-                c-add-recipe__overview-right-container"
-          >
-            <label
-              for="recipeDescription"
-              class="c-add-recipe__label"
-            >Description:</label>
+          <div class="c-add-recipe__bottom">
+            <div class="c-add-recipe__time-container">
+              <div class="c-add-recipe__time">
+                <label
+                  for="prepTime"
+                  class="c-add-recipe__label"
+                >Prep Time:</label><br>
 
-            <textarea
-              id="recipeDescription"
-              class="c-add-recipe__input"
-              name="recipeDescription"
-              rows="4"
-              col="1"
-              maxlength="255"
-            />
+                <div class="c-add-recipe__input-time-container">
+                  <input
+                    id="prepTimeHour"
+                    type="number"
+                    class="c-add-recipe__input c-add-recipe__input--hour"
+                    placeholder="Hour"
+                  > 
+                  <input
+                    id="prepTimeMinute"
+                    type="number"
+                    class="c-add-recipe__input c-add-recipe__input--minute"
+                    placeholder="Minute"
+                  > 
+                </div>
+              </div>
 
-            
-            <label for="recipeImage" class="c-add-recipe__label">Image:</label>
-            <input type="file" id="recipeImage" ref="fileInput" accept="image/*" @change="handleFileChange">
-            <img v-if="base64Image" :src="base64Image" alt="Uploaded Image" :style="{ maxWidth: '50%', maxHeight: '50%' }">
-          </div> 
+              <div class="c-add-recipe__time">
+                <label
+                  for="cookTime"
+                  class="c-add-recipe__label"
+                >Cook Time:</label><br>
+
+                <div class="c-add-recipe__input-time-container">
+                  <input
+                    id="cookTimeHour"
+                    type="number"
+                    class="c-add-recipe__input c-add-recipe__input--hour"
+                    placeholder="Hour"
+                  > 
+                  <input
+                    id="cookTimeMinute"
+                    type="number"
+                    class="c-add-recipe__input c-add-recipe__input--minute"
+                    placeholder="Minute"
+                  > 
+                </div>
+              </div>
+            </div>
+
+            <div class="c-add-recipe__image-container">
+              <label
+                for="recipeImage"
+                class="c-add-recipe__label"
+              >Image:</label><br>
+
+              <input
+                id="recipeImage"
+                ref="fileInput"
+                class="c-add-recipe__image"
+                type="file"
+                accept="image/*"
+                @change="handleFileChange"
+              >
+              <img
+                v-if="base64Image"
+                :src="base64Image"
+                alt="Uploaded Image"
+                :style="{ maxWidth: '50%', maxHeight: '50%' }"
+              >
+            </div>
+          </div>
         </form>
       </div>
 
@@ -228,7 +243,10 @@
         value="submit button"
         @click="submitForm()"
       > 
-      <div id="submitErrorMessage" style="color: red;"></div>
+      <div
+        id="submitErrorMessage"
+        style="color: red;"
+      />
     </div>
   </section>
 </template>
@@ -236,7 +254,7 @@
 <script setup>
 import PageHeader from '@/components/PageHeader.vue'
 import { ref  } from 'vue'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 
 const store = useStore()
@@ -273,24 +291,24 @@ function toggle(buttonName) {
 }
 
 function addIngredient() {
-    event.preventDefault();
+    event.preventDefault()
 
-    const ingredientContainer = document.querySelector('.js-ingredient-container');
-    const ingredientTemplate = document.querySelector('.js-ingredient'); // Template to clone
+    const ingredientContainer = document.querySelector('.js-ingredient-container')
+    const ingredientTemplate = document.querySelector('.js-ingredient') // Template to clone
 
     // Clone the template
-    const newIngredient = ingredientTemplate.cloneNode(true);
+    const newIngredient = ingredientTemplate.cloneNode(true)
 
     // Clear input values in the cloned ingredient
-    const inputs = newIngredient.querySelectorAll('.c-add-recipe__input');
+    const inputs = newIngredient.querySelectorAll('.c-add-recipe__input')
     inputs.forEach(input => {
-        input.value = '';
-    });
-    const unitDropdown = newIngredient.querySelector('.c-add-recipe__input--ingredient-unit');
-    unitDropdown.selectedIndex = 0; // This will select the first option
+        input.value = ''
+    })
+    const unitDropdown = newIngredient.querySelector('.c-add-recipe__input--ingredient-unit')
+    unitDropdown.selectedIndex = 0 // This will select the first option
 
     // Append the cloned ingredient to the container
-    ingredientContainer.appendChild(newIngredient);
+    ingredientContainer.appendChild(newIngredient)
 }
 
 
@@ -302,7 +320,7 @@ function addRecipeStep() {
 
     const newRecipeStep = recipeStep.cloneNode(true)
 
-    newRecipeStep.querySelector('.c-add-recipe__input--recipe-step').value = '';    
+    newRecipeStep.querySelector('.c-add-recipe__input--recipe-step').value = ''    
     
     recipeContainer.appendChild(newRecipeStep)
 }
@@ -320,24 +338,24 @@ const handleFileChange = (event) => {
 
 const getFileExtension = (fileType) => {
     // Split the fileType string by '/' and get the second part which contains the file extension
-    const parts = fileType.split('/');
-    console.log(parts[1]);
+    const parts = fileType.split('/')
+    console.log(parts[1])
     if (parts.length === 2) {
-        return '.' + parts[1];
+        return '.' + parts[1]
     }
     // Default to '.png' if file type is not supported or unknown
-    return '.png';
+    return '.png'
 }
 const submitForm = () => {
     // Collect form data and structure it into the desired JSON format
 
-    const form = new FormData();
-    const fileInput = document.getElementById('recipeImage');
-    let filename = ""; // Change to let to allow reassignment
+    const form = new FormData()
+    const fileInput = document.getElementById('recipeImage')
+    let filename = '' // Change to let to allow reassignment
     if (fileInput.files.length > 0) {
-        const file = fileInput.files[0]; // Define file first
-        filename = document.getElementById('recipeName').value.replace(/\s+/g, '_') + getFileExtension(file.type);
-        form.append('image', file, filename);
+        const file = fileInput.files[0] // Define file first
+        filename = document.getElementById('recipeName').value.replace(/\s+/g, '_') + getFileExtension(file.type)
+        form.append('image', file, filename)
     }
     const formData = {
         image: filename || '', // Assuming base64Image is optional
@@ -355,7 +373,7 @@ const submitForm = () => {
         const quantity = container.querySelector('.c-add-recipe__input--ingredient-quantity').value || ''
         const unit = container.querySelector('.c-add-recipe__input--ingredient-unit').value || ''
         const name = container.querySelector('.c-add-recipe__input--ingredient-name').value || ''
-        console.log(name);
+        console.log(name)
         if (quantity && unit && name) {
             formData.ingredients.push({ item: name, amount: quantity, unit })
         }
@@ -369,13 +387,13 @@ const submitForm = () => {
             formData.steps.push({ step: index + 1, command })
         }
     })
-    const emptyFields = ['name', 'image' , 'description', 'ingredients', 'steps'].filter(field => !String(formData[field]).trim());
+    const emptyFields = ['name', 'image' , 'description', 'ingredients', 'steps'].filter(field => !String(formData[field]).trim())
     if (emptyFields.length > 0) {
-        document.getElementById('submitErrorMessage').textContent = `You need to fill in ${emptyFields.join(', ')}.`;
-        return; // Don't proceed further if essential fields are not filled
+        document.getElementById('submitErrorMessage').textContent = `You need to fill in ${emptyFields.join(', ')}.`
+        return // Don't proceed further if essential fields are not filled
     } else {
         // Clear any previous error messages
-        document.getElementById('submitErrorMessage').textContent = '';
+        document.getElementById('submitErrorMessage').textContent = ''
     }
     // Convert formData to JSON string
     const jsonData = JSON.stringify(formData, null, 2)
@@ -386,40 +404,28 @@ const submitForm = () => {
         method: 'POST',
         body: form,
     })
-    .then(response => response.text())
-    .then(data => {
+        .then(response => response.text())
+        .then(data => {
         // Once the image is uploaded, send the recipe data via WebSocket
-        const socket = new WebSocket(store.state.websocketUrl)
-        socket.addEventListener('open', (event) => {
-            socket.send(`{"command": { "keyword": "new_recipe","recipe_metadata": ${jsonData} }}`)
+            const socket = new WebSocket(store.state.websocketUrl)
+            socket.addEventListener('open', (event) => {
+                socket.send(`{"command": { "keyword": "new_recipe","recipe_metadata": ${jsonData} }}`)
+            })
+            socket.addEventListener('message', (event) => {
+                const nextPage = `/recipe-overview/${event.data}`
+                // Navigate to the next page
+                window.location.href = nextPage
+            })
         })
-        socket.addEventListener('message', (event) => {
-            const nextPage = `/recipe-overview/${event.data}`;
-            // Navigate to the next page
-            window.location.href = nextPage;
+        .catch(error => {
+            console.error('Error:', error)
         })
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
 }
 
 
 </script>
 
 <style scoped lang="scss">
-
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
 .c-add-recipe {
   $c : &;
 
@@ -476,37 +482,73 @@ input[type=number] {
 
   // Overview form //
   &__overview-form {
+    flex-direction: column;
     gap: var(--space-xxl);
   }
 
-  &__overview-left-container {
-    display: inline-block;
-    width:50%;
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gutter);
+
+    @include media("<=tablet") {
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
   }
 
-  &__overview-left {
-    &--full {
-      display: flex;
-      flex-direction: column;
-      width:100%;
-    }
+  &__recipe-name,
+  &__recipe-description {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
 
-    &--half {
-      display: inline-block;
-      margin-top: var(--space-s);
-      width:50%;
+    @include media("<=tablet") {
+      width: 100%;
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--gutter);
+
+    @include media("<=tablet") {
+      flex-direction: column;
+    }
+  }
+
+  &__time-container {
+    display: flex;
+    width: 50%;
+    gap: var(--space-xs);
+
+    @include media("<=tablet") {
+      width: 100%;
+      flex-direction: column;
     }
   }
 
   &__input-time-container {
-    display:flex;
-    gap: var(--space-xxs);
+    display: flex;
+    gap: var(--space-xs);
   }
 
-  &__overview-right-container {
-    display:flex;
+  &__image-container {
+    width: 50%;
+    display: flex;
     flex-direction: column;
-    width:50%;
+
+    @include media("<=tablet") {
+      width: 100%;
+    }
+  }
+
+  &__image {
+    border: solid 1px var(--dark-green);
+    height: 100%;
+    padding: var(--space-xxs);
   }
 
   // Ingredient form //
