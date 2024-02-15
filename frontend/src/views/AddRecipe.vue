@@ -254,7 +254,7 @@
       <input
         class="c-add-recipe__submit-button"
         type="submit"
-        value="submit button"
+        value="Submit"
         @click="submitForm()"
       > 
       <div
@@ -447,6 +447,10 @@ const submitForm = () => {
   &__heading {
     @include ts-heading-1;
     color: #419170;
+
+    @include media("<=tablet") {
+      @include ts-heading-2;
+    }
   }
 
   &__form-container {
@@ -463,6 +467,11 @@ const submitForm = () => {
     color: #fff;
     padding:var(--space-m);
     width: 50%;
+
+    @include media("<=tablet") {
+      @include ts-heading-4;
+      padding:var(--space-xs);
+    }
 
     &--overview {
       border-radius: 30px 0px 0px 0px;
@@ -580,25 +589,45 @@ const submitForm = () => {
     
     &--quantity {
       grid-column: 1/3;
+
+      @include media("<=tablet") {
+        grid-column: 1/1;
+      }
     }
 
     &--unit {
       grid-column: 3/6;
+
+      @include media("<=tablet") {
+        grid-column: 2/3;
+      }
     }
 
     &--ingredient {
       grid-column: 6/-1;
+
+      @include media("<=tablet") {
+        grid-column: 3/-1;
+      }
     }
   }
 
   &__ingredient {
     @include grid;
+
+    &:last-child {
+      margin-bottom: var(--space-m);
+
+      @include media("<=tablet") {
+        margin-bottom: var(--space-xs);
+      }
+    }
   }
 
   &__add-ingredient-button,
   &__add-step-button {
     @include ts-heading-4;
-    margin-top: var(--space-m);
+    margin-top:auto;
     display: block;
     margin-left: auto;
     background-color: #fff;
@@ -623,6 +652,14 @@ const submitForm = () => {
     &::marker {
       @include ts-heading-4;
       color:#419170;
+    }
+
+    &:last-child {
+      margin-bottom: var(--space-m);
+
+      @include media("<=tablet") {
+        margin-bottom: var(--space-xs);
+      }
     }
   }
 
@@ -666,14 +703,26 @@ const submitForm = () => {
 
     &--ingredient-quantity {
     grid-column: 1/3;
+
+      @include media("<=tablet") {
+        grid-column: 1/1;
+      }
     }
 
     &--ingredient-unit {
       grid-column: 3/6;
+
+      @include media("<=tablet") {
+        grid-column: 2/3;
+      }
     }
 
     &--ingredient-name {
       grid-column: 6/-1;
+
+      @include media("<=tablet") {
+        grid-column: 3/-1;
+      }
     }
 
     &--select {
