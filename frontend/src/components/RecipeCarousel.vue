@@ -50,16 +50,15 @@
             src="@/assets/navigation-arrow.svg"
           >
         </button>
-
-        <div>
+      </div>
+    </div>
+    <div v-if="isSmart">
           <button @click="toggleAudio">
             <img v-if="isAudioPlaying" src="@/assets/Speaker.svg">
             <img v-else src="@/assets/mute_Speaker.svg">
           </button>
           <audio id="audioPlayer" :src="null"></audio>
       </div>
-      </div>
-    </div>
   </section>
 </template>
 
@@ -75,14 +74,8 @@ const isAudioPlaying = ref(true)
 const socket = new WebSocket(store.state.websocketUrl)
 const toggleAudio = () => {
   isAudioPlaying.value = !isAudioPlaying.value
-  if(isAudioPlaying.value){
-    const audioElement = document.getElementById('audioPlayer');
-    //audioElement.play();
-  }
+  updateVoice()
 }
-
-
-
 const props = defineProps({
     recipe: {
         type: Object,
@@ -95,9 +88,12 @@ const props = defineProps({
 })
 
 const isPeeking = ref(false)
+const isSmart = ref(false)
+
 const recipe = toRef(props, 'recipe')
 const stepIndex = toRef(props, 'stepIndex')
 const localStepDelta = ref(0)
+
 
 const previousStep = computed(() => {
     const index = stepIndex.value + localStepDelta.value - 1
@@ -106,19 +102,40 @@ const previousStep = computed(() => {
 
 onMounted(() => {
   watch(
-    () => stepIndex.value,
-    (newValue, oldValue) => {
-      // Code to play audio based on the new stepIndex value
-      const Url = "http://localhost:8000/photos/Sandwiches/Wallace_" + (newValue + localStepDelta.value + 1) + ".mp3";
-      const audioElement = document.getElementById('audioPlayer');
-      if (isAudioPlaying.value && audioElement) {
-        console.log(Url);
-        audioElement.src = Url;
-        audioElement.play();
+    () => localStepDelta.value,
+    () => {
+      updateVoice()
+    },
+  )
+  watch(
+    () => recipe.value.isSmart,
+    () => {
+      if(recipe.value.isSmart){
+        isSmart.value = true
+        updateVoice()
       }
     }
   )
 })
+
+function updateVoice(){
+  const socket = new WebSocket(store.state.websocketUrl)
+  socket.addEventListener('open', async (event) => {
+      socket.send('{"command": {"keyword": "get-audio"}}')
+  }) 
+  socket.addEventListener('message', async (event) => {
+    const Url = event.data
+    //for testing
+    //const Url = "http://localhost:8000/photos/Sandwiches/Wallace_" + (stepIndex.value + localStepDelta.value + 1) + ".mp3";
+    const audioElement = document.getElementById('audioPlayer');
+    if (isAudioPlaying.value && audioElement) {
+      audioElement.src = Url;
+      audioElement.play();
+     }else if (!isAudioPlaying && audioElement){
+      audioElement.pause()
+     }
+  })  
+}
 const currentStep = computed(() => {
     const index = stepIndex.value + localStepDelta.value
     return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null

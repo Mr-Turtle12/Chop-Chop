@@ -27,6 +27,9 @@ async def consumer_handler(websocket):
 
             match request.matcher:
                 # returns basic info for all recipes
+                case "get-audio":
+                    log(f">>> get audio for current step", "API")
+                    await websocket.send(CONTROLLER_INSTANCE.get_audio_URL())
                 case ("get", 0):
                     log(">>> all recipes' info", "API")
                     await websocket.send(SQLQueries.get_all_metadata())

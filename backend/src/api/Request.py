@@ -31,6 +31,8 @@ class Request:
                 return self.keyword
             case "get-search":
                 return (self.keyword, self.search_name)
+            case "get-audio":
+                return self.keyword
             case _:
                 return None
 
