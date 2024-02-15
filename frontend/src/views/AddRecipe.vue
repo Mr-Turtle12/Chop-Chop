@@ -377,6 +377,7 @@ const submitForm = () => {
         description: document.getElementById('recipeDescription').value || '',
         prepTime: (parseInt(document.getElementById('prepTimeHour').value || 0) * 60) + parseInt(document.getElementById('prepTimeMinute').value || 0), // Convert prep time to minutes
         cookTime: (parseInt(document.getElementById('cookTimeHour').value || 0) * 60) + parseInt(document.getElementById('cookTimeMinute').value || 0), // Convert cook time to minutes
+        servingSize: document.getElementById('servingSize').value,
         ingredients: [],
         steps: [],
     }
@@ -540,7 +541,6 @@ const submitForm = () => {
 
     @include media("<=tablet") {
       width: 100%;
-      flex-direction: column;
     }
   }
 
