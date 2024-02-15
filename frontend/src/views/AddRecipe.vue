@@ -402,7 +402,7 @@ const submitForm = () => {
             formData.steps.push({ step: index + 1, command })
         }
     })
-    const emptyFields = ['name', 'image' , 'description', 'ingredients', 'steps'].filter(field => !String(formData[field]).trim())
+    const emptyFields = ['name', 'image' , 'description', 'servingSize', 'ingredients', 'steps'].filter(field => !String(formData[field]).trim())
     if (emptyFields.length > 0) {
         document.getElementById('submitErrorMessage').textContent = `You need to fill in ${emptyFields.join(', ')}.`
         return // Don't proceed further if essential fields are not filled

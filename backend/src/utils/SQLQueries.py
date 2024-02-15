@@ -99,7 +99,7 @@ def insert_recipe_into_database(json_data):
     SQLCommandRecipe = (
         f"INSERT INTO recipes (image, name, description, prepTime, cookTime, AI, favourite, servingSize) "
         f"VALUES ('{json_data['image']}', '{json_data['name']}', '{json_data['description']}', '{json_data['prepTime']}', "
-        f"'{json_data['cookTime']}', '{0}', '{0}', '{4}')"
+        f"'{json_data['cookTime']}', '{0}', '{0}', '{json_data['servingSize']}')"
     )
     SQLiteQuery(SQLCommandRecipe, "commit")
 
