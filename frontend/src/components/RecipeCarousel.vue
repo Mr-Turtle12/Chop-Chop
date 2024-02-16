@@ -52,7 +52,7 @@
         </button>
       </div>
     </div>
-    <div v-if="isSmart">
+    <div v-if="isAudio">
           <button @click="toggleAudio">
             <img v-if="isAudioPlaying" src="@/assets/Speaker.svg">
             <img v-else src="@/assets/mute_Speaker.svg">
@@ -89,6 +89,8 @@ const props = defineProps({
 
 const isPeeking = ref(false)
 const isSmart = ref(false)
+const isAudio = ref(false)
+
 
 const recipe = toRef(props, 'recipe')
 const stepIndex = toRef(props, 'stepIndex')
@@ -108,10 +110,10 @@ onMounted(() => {
     },
   )
   watch(
-    () => recipe.value.isSmart,
+    () => recipe.value.isAudio,
     () => {
-      if(recipe.value.isSmart){
-        isSmart.value = true
+      if(recipe.value.isAudio){
+        isAudio.value = true
         updateVoice()
       }
     }

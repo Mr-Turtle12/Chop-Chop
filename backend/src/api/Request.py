@@ -12,13 +12,16 @@ class Request:
         self.timer_id: int = command.get("timer_id", None)
         self.recipe_metadata: str = command.get("recipe_metadata", None)
         self.search_name: str = command.get("search_name", None)
+        self.voice: str = command.get("voice", None)
         self.matcher = self.__matcher()
 
     def __matcher(self):
         """returns matcher object as a tuple of (keyword, recipe_id | step_number)"""
         match self.keyword:
-            case "get" | "start":
+            case "get":
                 return (self.keyword, self.recipe_id)
+            case "start":
+                return (self.keyword, (self.recipe_id, self.voice))
             case "set":
                 return (self.keyword, self.step_number)
             case "favourite":

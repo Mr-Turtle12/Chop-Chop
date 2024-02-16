@@ -17,12 +17,13 @@ class Controller:
         self.AIvoice = "Wallace"
         self.Cameras = None
 
-    def new_recipe(self, recipe_id):
+    def new_recipe(self, recipe_id, Voice):
         """Starts a new recipe with the given recipe ID.
         Args:
             recipe_id (int): The ID of the recipe to start.
         """
         self.current_recipe = recipe.Recipe(recipe_id)
+        self.AIvoice = Voice
         self.end_flag.clear()
         self.Cameras = create_camera()
         if SQLQueries.is_smart(self.current_recipe.recipe_id):
@@ -67,6 +68,7 @@ class Controller:
             "commands": utils.get_commands(recipe_id),
             "isSmart": bool(SQLQueries.is_smart(recipe_id)),
             "servingSize": target_recipe[8],
+            "Voices": SQLQueries.get_voices(recipe_id),
         }
         return json.dumps(metadata)
 

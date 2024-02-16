@@ -24,7 +24,6 @@ async def consumer_handler(websocket):
             except json.JSONDecodeError:
                 log("!!! Poorly formatted JSON", "API")
                 await websocket.send("Poorly formatted JSON")
-
             match request.matcher:
                 # returns basic info for all recipes
                 case "get-audio":
@@ -58,9 +57,9 @@ async def consumer_handler(websocket):
                     await websocket.send(SQLQueries.search(search_name))
 
                 # "loads" the recipe to the controller
-                case ("start", recipe_id):
+                case ("start", (recipe_id, Voice)):
                     log(f">>> starting recipe {recipe_id}", "API")
-                    CONTROLLER_INSTANCE.new_recipe(recipe_id)
+                    CONTROLLER_INSTANCE.new_recipe(recipe_id, Voice)
                     await websocket.send(json.dumps({"start": recipe_id}))
 
                 # Sets current step (to be implemented later)
@@ -89,7 +88,6 @@ async def consumer_handler(websocket):
                     log(f">>> end the recipe", "API")
                     CONTROLLER_INSTANCE.update_end_flag()
                     await websocket.send(json.dumps({"end": True}))
-
                 case _:
                     log(request.matcher, "API")
                     log("!!! unknown command", "API")

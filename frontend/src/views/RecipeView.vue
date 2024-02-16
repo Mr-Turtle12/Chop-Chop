@@ -51,8 +51,7 @@ const store = useStore()
 const socket = new WebSocket(store.state.websocketUrl)
 
 socket.addEventListener('open', (event) => {
-        socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
-    
+      socket.send('{"command": {"keyword": "start", "recipe_id": '+route.params.id+' ,"voice": "'+ route.params.voice +  '"}}')
     })
 var stepIndex = ref(0)
 
@@ -64,9 +63,10 @@ var recipe = reactive({
     progressionObject: [
         'NO PROGRESSION OBJECT'
     ],
-    isSmart: false
+    isSmart: false,
+    isAudio : route.params.voice !== "false"
 })
-
+console.log(route.params.voice !== false)
 socket.addEventListener('open', (event) => {
     socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
 
