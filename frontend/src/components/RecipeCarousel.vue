@@ -110,7 +110,7 @@ onMounted(() => {
     },
   )
   watch(
-    () => recipe.value.isAudio,
+    () => recipe.value.isSmart,
     () => {
       if(recipe.value.isAudio){
         isAudio.value = true
