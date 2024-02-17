@@ -54,7 +54,7 @@
             <div v-if="recipe.Voices" class="c-recipe__dropdown-container">
               <select  v-model="selectedVoice">
                 <option value="" disabled selected>Choose your voice</option>
-                <option v-for="option in recipe.Voices" :key="option" :value="option">{{ option }}</option>
+                <option v-for="option in recipe.Voices" :key="option" :value="option">{{  option.replace('_', ' ') }}</option>
               </select>
             </div>
             <a
@@ -375,15 +375,11 @@ onBeforeUnmount(() => {
       flex-direction: column;
     }
   }
-
   &__dropdown-container {
-    // Add your styles for the dropdown container here
-    // Example styles:
     select {
-      // Add styles for the select element
       background-color: var(--white);
       border: 2px solid var(--dark-green);
-      border-radius: 10px;
+      border-radius: 20px;
       padding: var(--space-xxs);
       color: var(--dark-green);
       font-size: 16px;
@@ -392,6 +388,10 @@ onBeforeUnmount(() => {
       &:focus {
         background-color: var(--dark-green);
         color: var(--white);
+      }
+      @include media("<=tablet") {
+        width:100%;
+
       }
     }
   }
