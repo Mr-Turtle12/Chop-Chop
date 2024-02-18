@@ -43,39 +43,26 @@
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--next"
           :class="{ 'disabled': !nextStep }"
-          @click="
-            incrementPeek()"
+          @click="incrementPeek"
         >
           <img
             src="@/assets/navigation-arrow.svg"
           >
         </button>
       </div>
-    </div>
-    <div v-if="isAudio">
-          <button @click="toggleAudio">
-            <img v-if="isAudioPlaying" src="@/assets/Speaker.svg">
-            <img v-else src="@/assets/mute_Speaker.svg">
-          </button>
-          <audio id="audioPlayer" :src="null"></audio>
       </div>
   </section>
 </template>
 
 <script setup>
-import { computed, toRef, ref, onMounted, watch  } from 'vue'
+import { computed, toRef, ref} from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 const store = useStore()
 const router = useRouter()
-const isAudioPlaying = ref(true)
 
 const socket = new WebSocket(store.state.websocketUrl)
-const toggleAudio = () => {
-  isAudioPlaying.value = !isAudioPlaying.value
-  updateVoice()
-}
 const props = defineProps({
     recipe: {
         type: Object,
@@ -88,8 +75,6 @@ const props = defineProps({
 })
 
 const isPeeking = ref(false)
-const isSmart = ref(false)
-const isAudio = ref(false)
 
 
 const recipe = toRef(props, 'recipe')
@@ -102,42 +87,6 @@ const previousStep = computed(() => {
     return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
 })
 
-onMounted(() => {
-  watch(
-    () => localStepDelta.value,
-    () => {
-      updateVoice()
-    },
-  )
-  watch(
-    () => recipe.value.isSmart,
-    () => {
-      if(recipe.value.isAudio){
-        isAudio.value = true
-        updateVoice()
-      }
-    }
-  )
-})
-
-function updateVoice(){
-  const socket = new WebSocket(store.state.websocketUrl)
-  socket.addEventListener('open', async (event) => {
-      socket.send('{"command": {"keyword": "get-audio"}}')
-  }) 
-  socket.addEventListener('message', async (event) => {
-    const Url = event.data
-    //for testing
-    //const Url = "http://localhost:8000/photos/Sandwiches/Wallace_" + (stepIndex.value + localStepDelta.value + 1) + ".mp3";
-    const audioElement = document.getElementById('audioPlayer');
-    if (isAudioPlaying.value && audioElement) {
-      audioElement.src = Url;
-      audioElement.play();
-     }else if (!isAudioPlaying && audioElement){
-      audioElement.pause()
-     }
-  })  
-}
 const currentStep = computed(() => {
     const index = stepIndex.value + localStepDelta.value
     return index >= 0 && index < recipe.value.steps.length ? recipe.value.steps[index] : null
