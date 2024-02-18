@@ -11,7 +11,7 @@
 
     <LikedRecipes
       :key="componentKey"
-      @favouriteChange-="handleFavouriteChange"
+      @favouriteChange="handleFavouriteChange"
     />
   </body>
 </template>
@@ -27,7 +27,6 @@ import { ref } from 'vue'
 const componentKey = ref(0)
 const handleFavouriteChange = () => {
     componentKey.value += 1
-    console.log(componentKey.value)
 }
 
 </script>

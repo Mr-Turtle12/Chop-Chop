@@ -189,6 +189,7 @@ const toggleFavourite = ($event) => {
     }
     
     recipe.isFavourite = !recipe.isFavourite
+    const socket = new WebSocket(store.state.websocketUrl)
     socket.addEventListener('open', (event) => {
         socket.send('{"command": {"keyword": "favourite", "type": '+recipe.isFavourite+' ,"recipe_id": '+ route.params.id +  '}}')
     })
