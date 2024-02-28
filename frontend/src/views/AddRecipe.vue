@@ -152,7 +152,10 @@
         </form>
       </div>
 
-      <form class="c-add-recipe__ingredient-form js-ingredient-form">
+      <form
+        class="c-add-recipe__ingredient-form js-ingredient-form"
+        @submit.prevent="removeIngredient($event)"
+      >
         <div class="c-add-recipe__ingredient-headings">
           <h2 class="c-add-recipe__ingredient-heading c-add-recipe__ingredient-heading--quantity">
             Quantity
@@ -169,9 +172,17 @@
           
         <ul class="c-add-recipe__ingredient-container js-ingredient-container">
           <li class="c-add-recipe__ingredient js-ingredient">
+            <button
+              id="ingredient_0"
+              class="c-add-recipe__remove-ingredient js-remove-ingredient"
+              @click="removeIngredient($event)"
+            >
+              X
+            </button>
+
             <input
               id="ingredientQuantity"
-              type="text"
+              type="number"
               class="c-add-recipe__input c-add-recipe__input--ingredient-quantity"
               maxlength="25"
             >
@@ -308,21 +319,46 @@ function addIngredient() {
     event.preventDefault()
 
     const ingredientContainer = document.querySelector('.js-ingredient-container')
-    const ingredientTemplate = document.querySelector('.js-ingredient') // Template to clone
+    const ingredientTemplate = document.querySelector('.js-ingredient')
 
-    // Clone the template
+    // Clone ingredient template
     const newIngredient = ingredientTemplate.cloneNode(true)
 
-    // Clear input values in the cloned ingredient
+    // Clear input values
     const inputs = newIngredient.querySelectorAll('.c-add-recipe__input')
     inputs.forEach(input => {
         input.value = ''
     })
     const unitDropdown = newIngredient.querySelector('.c-add-recipe__input--ingredient-unit')
-    unitDropdown.selectedIndex = 0 // This will select the first option
+    unitDropdown.selectedIndex = 0 
 
     // Append the cloned ingredient to the container
     ingredientContainer.appendChild(newIngredient)
+
+    // Set id of the remove button
+    const index = ingredientContainer.children.length - 1
+    const removeButtonID = 'ingredient_' + index
+
+    newIngredient.children[0].setAttribute('id', removeButtonID)
+
+    // Add event listener to the remove button on the newIngredient
+    newIngredient.children[0].addEventListener('click', () => {
+        // this needs to pass through the id
+        removeIngredient(removeButtonID)
+    })
+}
+
+
+// removing index of the ingredient within the array rather than the id of the ingredient 
+function removeIngredient(removeButtonID) {
+    console.log('remove button ' + removeButtonID)
+
+    const containerToRemove = document.getElementById(removeButtonID).parentElement
+    console.log(containerToRemove)
+
+    if (containerToRemove) {
+        containerToRemove.remove()
+    }
 }
 
 
@@ -588,7 +624,7 @@ const submitForm = () => {
     color: #419170;
     
     &--quantity {
-      grid-column: 1/3;
+      grid-column: 2/4;
 
       @include media("<=tablet") {
         grid-column: 1/1;
@@ -596,7 +632,7 @@ const submitForm = () => {
     }
 
     &--unit {
-      grid-column: 3/6;
+      grid-column: 4/6;
 
       @include media("<=tablet") {
         grid-column: 2/3;
@@ -615,6 +651,12 @@ const submitForm = () => {
   &__ingredient {
     @include grid;
 
+    &:first-child {
+      #{$c}__remove-ingredient {
+        display:none;
+      }
+    }
+
     &:last-child {
       margin-bottom: var(--space-m);
 
@@ -622,6 +664,13 @@ const submitForm = () => {
         margin-bottom: var(--space-xs);
       }
     }
+  }
+
+  &__remove-ingredient {
+    @include ts-heading-3;
+    color: var(--dark-green);
+    grid-column: 1/1;
+    margin-top: var(--space-xs);
   }
 
   &__add-ingredient-button,
@@ -648,7 +697,14 @@ const submitForm = () => {
     color: #419170;
   }
 
+  &__recipe-container {
+    @include grid;
+  }
+
   &__recipe-step {
+    grid-column: 2/-1;
+
+
     &::marker {
       @include ts-heading-4;
       color:#419170;
@@ -671,6 +727,7 @@ const submitForm = () => {
 
   &__input {
     border: solid 1px #419170;
+    box-sizing: border-box;
     margin-top: var(--space-xs);
     padding:var(--space-xxs);
     position: relative;
@@ -702,7 +759,7 @@ const submitForm = () => {
     }
 
     &--ingredient-quantity {
-    grid-column: 1/3;
+    grid-column: 2/4;
 
       @include media("<=tablet") {
         grid-column: 1/1;
@@ -710,7 +767,7 @@ const submitForm = () => {
     }
 
     &--ingredient-unit {
-      grid-column: 3/6;
+      grid-column: 4/6;
 
       @include media("<=tablet") {
         grid-column: 2/3;
