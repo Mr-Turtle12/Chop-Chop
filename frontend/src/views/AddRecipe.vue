@@ -285,8 +285,7 @@ import { useStore } from 'vuex'
 const store = useStore()
 const base64Image = ref(null)
 function toggle(buttonName) {
-    console.log('buttonName: ' + buttonName)
-
+  
     const buttons = {
         overview: document.querySelector('.js-overview-button'),
         recipe: document.querySelector('.js-recipe-button'),
@@ -351,10 +350,7 @@ function addIngredient() {
 
 // removing index of the ingredient within the array rather than the id of the ingredient 
 function removeIngredient(removeButtonID) {
-    console.log('remove button ' + removeButtonID)
-
     const containerToRemove = document.getElementById(removeButtonID).parentElement
-    console.log(containerToRemove)
 
     if (containerToRemove) {
         containerToRemove.remove()
