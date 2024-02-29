@@ -730,6 +730,10 @@ const submitForm = () => {
       background-color: #419170;
       color: #fff;
     }
+
+    @include media("<=tablet") {
+      width:100%;
+    }
   }
 
   // Recipe form //
@@ -861,6 +865,10 @@ const submitForm = () => {
     &:focus {
       color: #fff;
       background-color: #419170;
+    }
+
+    @include media("<=tablet") {
+      width:100%;
     }
   }
 }
