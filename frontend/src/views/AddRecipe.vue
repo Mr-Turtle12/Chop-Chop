@@ -154,7 +154,7 @@
 
       <form
         class="c-add-recipe__ingredient-form js-ingredient-form"
-        @submit.prevent="removeIngredient($event)"
+        @submit.prevent="removeStep($event.target.id)"
       >
         <div class="c-add-recipe__ingredient-headings">
           <h2 class="c-add-recipe__ingredient-heading c-add-recipe__ingredient-heading--quantity">
@@ -175,7 +175,7 @@
             <button
               id="ingredient_0"
               class="c-add-recipe__remove-ingredient js-remove-ingredient"
-              @click="removeIngredient($event)"
+              @click="removeStep($event.target.id)"
             >
               X
             </button>
@@ -234,25 +234,40 @@
         </button>
       </form>
 
-      <form class="c-add-recipe__recipe-form js-recipe-form">
+      <form
+        class="c-add-recipe__recipe-form js-recipe-form"
+        @submit.prevent="removeStep($event.target.id)"
+      >
         <div class="c-add-recipe__recipe-headings">
           <h2 class="c-add-recipe__recipe-heading">
             Steps
           </h2>
         </div>
           
-        <ol class="c-add-recipe__recipe-container js-recipe-container">
+        <ul class="c-add-recipe__recipe-container js-recipe-container">
           <li class="c-add-recipe__recipe-step js-recipe-step">
-            <textarea
-              id="recipeStep"
-              class=" c-add-recipe__input c-add-recipe__input--recipe-step"
-              name="recipeStep"
-              rows="2"
-              col="1"
-              maxlength="255"
-            />
+            <button
+              id="step_0"
+              class="c-add-recipe__remove-step js-remove-step"
+              @click="removeStep($event.target.id)"
+            >
+              X
+            </button>
+
+            <div class="c-add-recipe__step-container">
+              <span class="c-add-recipe__step-counter js-step-counter">1.</span>
+
+              <textarea
+                id="recipeStep"
+                class=" c-add-recipe__input c-add-recipe__input--recipe-step"
+                name="recipeStep"
+                rows="2"
+                col="1"
+                maxlength="255"
+              />
+            </div>
           </li>
-        </ol>
+        </ul>
 
         <button
           class="c-add-recipe__add-step-button js-add-step-button"
@@ -285,7 +300,7 @@ import { useStore } from 'vuex'
 const store = useStore()
 const base64Image = ref(null)
 function toggle(buttonName) {
-  
+
     const buttons = {
         overview: document.querySelector('.js-overview-button'),
         recipe: document.querySelector('.js-recipe-button'),
@@ -343,17 +358,27 @@ function addIngredient() {
     // Add event listener to the remove button on the newIngredient
     newIngredient.children[0].addEventListener('click', () => {
         // this needs to pass through the id
-        removeIngredient(removeButtonID)
+        removeStep(removeButtonID)
     })
 }
 
 
 // removing index of the ingredient within the array rather than the id of the ingredient 
-function removeIngredient(removeButtonID) {
+function removeStep(removeButtonID) {
     const containerToRemove = document.getElementById(removeButtonID).parentElement
 
     if (containerToRemove) {
+        const index = Array.from(containerToRemove.parentElement.children).indexOf(containerToRemove)
         containerToRemove.remove()
+
+        // Update recipe step counters so they are still in order (1,2,3...)
+        const recipeContainer = document.querySelector('.js-recipe-container')
+        const stepCounters = recipeContainer.querySelectorAll('.js-step-counter')
+        stepCounters.forEach((counter, i) => {
+            if (i >= index) {
+                counter.textContent = (i + 1) + '.' // Update the counter
+            }
+        })
     }
 }
 
@@ -364,11 +389,30 @@ function addRecipeStep() {
     const recipeContainer = document.querySelector('.js-recipe-container')
     const recipeStep = document.querySelector('.js-recipe-step')
 
+    // Clone ingredient template
     const newRecipeStep = recipeStep.cloneNode(true)
 
-    newRecipeStep.querySelector('.c-add-recipe__input--recipe-step').value = ''    
-    
+    // Clear input values
+    newRecipeStep.querySelector('.c-add-recipe__input--recipe-step').value = ''   
+
+    // Append the cloned ingredient to the container
     recipeContainer.appendChild(newRecipeStep)
+
+    // Increment step counter
+    const stepCounter = recipeContainer.children.length 
+    newRecipeStep.querySelector('.js-step-counter').textContent = stepCounter + '.' 
+
+    // Set id of the remove button
+    const index = recipeContainer.children.length - 1
+    const removeButtonID = 'step_' + index
+
+    newRecipeStep.children[0].setAttribute('id', removeButtonID)
+
+    // Add event listener to the remove button on the newIngredient
+    newRecipeStep.children[0].addEventListener('click', () => {
+        // this needs to pass through the id
+        removeStep(removeButtonID)
+    })
 }
 
 const handleFileChange = (event) => {
@@ -662,7 +706,8 @@ const submitForm = () => {
     }
   }
 
-  &__remove-ingredient {
+  &__remove-ingredient,
+  &__remove-step {
     @include ts-heading-3;
     color: var(--dark-green);
     grid-column: 1/1;
@@ -693,27 +738,36 @@ const submitForm = () => {
     color: #419170;
   }
 
-  &__recipe-container {
-    @include grid;
+  &__step-container {
+    align-items: center;
+    column-gap: var(--space-xs);
+    display: flex;
+    grid-column: 2/-1;
+  }
+
+  &__step-counter {
+    @include ts-heading-3;
+    color: #419170;
+    margin-top: var(--space-xs);
   }
 
   &__recipe-step {
-    grid-column: 2/-1;
+  @include grid;
 
-
-    &::marker {
-      @include ts-heading-4;
-      color:#419170;
-    }
-
-    &:last-child {
-      margin-bottom: var(--space-m);
-
-      @include media("<=tablet") {
-        margin-bottom: var(--space-xs);
+  &:first-child {
+    #{$c}__remove-step {
+        display:none;
       }
+  }
+
+  &:last-child {
+    margin-bottom: var(--space-m);
+
+    @include media("<=tablet") {
+      margin-bottom: var(--space-xs);
     }
   }
+}
 
   // Input stylings //
   &__label {
