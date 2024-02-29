@@ -92,7 +92,7 @@ socket.addEventListener('message', (event) => {
       } else if (data.step) {
           stepIndex.value = data.step
           if (data.inhibitors.progressionObject == 'timer') {
-              addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
+              addTimerCard(parseInt(data.inhibitors.inhibitor * 60000), recipe.steps[stepIndex.value], stepIndex.value)
           }
       }
     }
