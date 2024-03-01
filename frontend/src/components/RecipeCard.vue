@@ -12,8 +12,7 @@
 
       <div
         class="c-card__bookmark-icon-wrapper"
-        @click="
-          toggleFavourite($event)"
+        @click.prevent="toggleFavourite($event)"
       >
         <BookmarkSVG
           :class="`c-card__bookmark-icon js-bookmark-icon ${isLocalFavourite ? 'c-card__bookmark-icon--favourite' : ''}`"
