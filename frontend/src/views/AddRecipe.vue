@@ -580,6 +580,12 @@ const submitForm = () => {
     flex-direction: column;
   }
 
+  &__ingredient-container,
+  &__recipe-container {
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
+
   // Overview form //
   &__overview-form {
     flex-direction: column;
