@@ -97,6 +97,11 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 
 .c-featured-recipe {
+  &__card-container {
+    display:flex;
+    column-gap: var(--gutter);
+  }
+
   &__container {
     display: flex;
     align-items: center;
@@ -184,11 +189,6 @@ onBeforeUnmount(() => {
   &__time-icon {
     margin-right:4px;
     color: var(--white);
-  }
-  &__card-container {
-    display:flex;
-    column-gap: var(--gutter);
-    overflow: auto;
   }
 }
 </style>
