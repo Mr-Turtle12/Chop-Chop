@@ -1,4 +1,6 @@
 <template>
+  <BackButton />
+    
   <PageHeader />
   
   <section class="c-add-recipe o-section">
@@ -292,6 +294,7 @@
 </template>
 
 <script setup>
+import BackButton from '@/components/BackButton.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import { ref  } from 'vue'
 import { useStore } from 'vuex'
