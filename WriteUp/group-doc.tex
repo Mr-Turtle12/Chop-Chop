@@ -94,7 +94,31 @@ During our research process, we tried out Roboflow and used a trial of their tra
 
     \section{Design}
     \subsection{Frontend}
-    \lipsum[15-17]
+    Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
+
+    \subsubsection{Research}
+    
+    Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
+    
+    Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
+    
+    Each site also used cards as a way to display each recipe. We found that this was an effective way to display each of the recipes, while only showing the necessary information needed for the user.
+    
+    On Yummly, a variation of their recipe cards caught our attention with an interactive hover feature. Initially displaying just the recipe title, hovering over the card revealed more details about the recipe. We aimed to incorporate a similar functionality into our own cards.
+    
+    For the Recipe Overview page, we wanted the user to be able to see a summary of the recipe and navigate between seeing the recipe steps and the ingredients in a seamless way.
+    
+    To keep the design of the page simple and clean, we split the page into two sections: the header and the information. The header of the page would show off important information about the recipe, such as the name, a description and a summary of how long the recipe will take to prepare. This section would also feature a start recipe button to take the user to the recipe carousel page.
+    
+    The information section of the page would showcase both the ingredients and recipe portions of the overview.
+    
+    After looking at the 3 initial sites, we discovered that the layout was overly cluttered, and the transition between viewing the recipe and its ingredients was not seamless. Instead, most sites placed the ingredients and recipe either side by side or one after the other, which disrupted the flow of navigation.
+    
+    Instead, we opted for a switcher component that enables users to toggle between viewing the recipe and the ingredients. We believed that this approach would reduce clutter on the page and separate information in a more organised manner. We found inspiration for this functionality on W3Schools.
+    We liked the simplicity of this design and the effective functionality to show off information without cluttering the page. 
+
+
+    
     \subsection{Architecture}
     \lipsum[17-19]
 
