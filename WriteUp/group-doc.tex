@@ -52,7 +52,6 @@ Chop Chop \\
 
     \section{Introduction}
 Chop Chop makes cooking more accessible by offering hands-free, smart recipes. Our smart recipes allow users to get on with cooking without having to worry about looking through the steps of a recipe, scrolling a screen with messy hands, or starting timers. It achieves this by using artificial intelligence, computer vision, and a full-stack application.
-    \lipsum[3-7]
 
     \section{Research}
     \subsection{Object detection}
@@ -75,7 +74,6 @@ RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively
 During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
 
     \section{Aims}
-    \lipsum[7-11]
 
     \section{Ways of Working}
     \subsection{Source Control}
@@ -90,10 +88,11 @@ During our research process, we tried out Roboflow and used a trial of their tra
     We aimed to ensure the main branch was kept as clean as possible; we were mindful of what should and should not be on the repo. This included adding rules to the git ignore file when needed, pruning unnecessary files, and ensuring consistency in naming conventions for files and folders.
 
     \subsection{Meetings}
-    \lipsum[13-15]
+
 
     \section{Design}
     \subsection{Frontend}
+<<<<<<< HEAD
     Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
 
     \subsubsection{Research}
@@ -150,33 +149,49 @@ During our research process, we tried out Roboflow and used a trial of their tra
 
     \subsubsection{Figma vs Zeplin}
     
+=======
+>>>>>>> 80cd5f7a73297d9b099e6b72b09bf7a1db764e0c
 
-    
     \subsection{Architecture}
-    \lipsum[17-19]
+  
 
     \section{Development}
     \subsection{Backend}
-    \lipsum[19-21]
+
     \subsection{Frontend}
-    \lipsum[39-41]
+ 
     \subsection{Database}
-    \lipsum[41-43]
+
     \subsection{Data Collection \& Training}
+<<<<<<< HEAD
+=======
+    \subsubsection{RoboFlow}
+    For developing our object detection system, we needed a trained model. From our research, we decided to use Roboflow for data collection and management and trained with YOLOv8.
+    
+To train, we first needed to collect many images of the object we wanted to detect. We found during development that it is best to start with lots of good-quality images of the object; They should be in good lighting and well-framed. Then many different positions of objects in the frame. Finally, gathering some more obscure images. These can be in different lighting conditions, from far away, and with multiple other objects in the frame as well. These all create a diverse data set, which increases the chance of detection.
+
+Once a significant number of images had been gathered (around 100) they were uploaded to Roboflow for annotating. Annotation jobs can be generated and sent to each person on the project. We decided to use box annotation, as it was significantly quicker to annotate and in our preliminary tests offered the same level of object detection that poly-selection did.
+
+Each annotation was then reviewed by someone else before being added to the dataset. This ensured that the dataset was accurate in its annotations as small mistakes could teach the AI the wrong classification.
+
+When all images are annotated a new YOLOv8 dataset can be generated. Before this Roboflow will split up your images into training, testing, and validation. Training will teach AI, validation are used to as it trains test how good the AI is getting. Testing “a test data set is a separate sample, an unseen data set, to provide an unbiased final evaluation of a model fit.” \cite{trainvalidtest} It will resize the image to 640x640 which greatly reduces training time, and smaller images reduce computational cost. 
+
+Finally, it generates extra images through augmentation. We chose Shear ±15° and Brightness ±25\%. Shear would simulate different camera angles, which would provide greater angle coverage. Brightness would widen the number of handled lighting conditions, as different kitchens could have very varied levels of brightness.
+
+    \subsubsection{Training with CUDA}
+    
+
+>>>>>>> 80cd5f7a73297d9b099e6b72b09bf7a1db764e0c
     
 
 
     \section{Testing}
-    \lipsum[23-27]
 
     \section{Results}
-    \lipsum[43-45]
 
     \section{Future Work}
-    \lipsum[35-39]
 
     \section{Conclusion}
-    \lipsum[27-31]
 
     \pagebreak
 
