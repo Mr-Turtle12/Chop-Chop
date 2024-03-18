@@ -3,6 +3,7 @@
 \usepackage{lipsum}
 \usepackage{lineno}
 \usepackage{parskip}
+\usepackage{graphicx}
 
 \title{%
 Chop Chop \\
@@ -103,6 +104,77 @@ During our research process, we tried out Roboflow and used a trial of their tra
 
     \section{Design}
     \subsection{Frontend}
+    Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
+
+    \subsubsection{Research}
+    
+    Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
+    
+    \paragraph{Recipe Overview}
+    Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
+    
+    \begin{figure}
+      \includegraphics[width=1.0\textwidth]{BBCGF featured-image.png}
+      \centering
+      \caption{insert caption here}
+    \end{figure}
+
+    \paragraph{Recipe cards}
+    Each site also used cards as a way to display each recipe. We found that this was an effective way to display each of the recipes, while only showing the necessary information needed for the user.
+    
+    On Yummly, a variation of their recipe cards caught our attention with an interactive hover feature. Initially displaying just the recipe title, hovering over the card revealed more details about the recipe. We aimed to incorporate a similar functionality into our own cards.
+    
+    \begin{figure}
+      \includegraphics[width=1.0\textwidth]{Yummly recipe cards.png}
+      \centering
+      \caption{insert caption here}
+    \end{figure}
+
+    \paragraph{Recipe Overview}
+    For the Recipe Overview page, we wanted the user to be able to see a summary of the recipe and navigate between seeing the recipe steps and the ingredients in a seamless way.
+    
+    To keep the design of the page simple and clean, we split the page into two sections: the header and the information. The header of the page would show off important information about the recipe, such as the name, a description and a summary of how long the recipe will take to prepare. This section would also feature a start recipe button to take the user to the recipe carousel page.
+    
+    The information section of the page would showcase both the ingredients and recipe portions of the overview.
+    
+    After looking at the 3 initial sites, we discovered that the layout was overly cluttered, and the transition between viewing the recipe and its ingredients was not seamless. Instead, most sites placed the ingredients and recipe either side by side or one after the other, which disrupted the flow of navigation.
+    
+    Instead, we opted for a switcher component that enables users to toggle between viewing the recipe and the ingredients. We believed that this approach would reduce clutter on the page and separate information in a more organised manner. We found inspiration for this functionality on W3Schools.
+    
+    \begin{figure}
+      \includegraphics[width=1.0\textwidth]{W3Schools tabbed component.png}
+      \centering
+      \caption{insert caption here}
+    \end{figure}
+
+    We liked the simplicity of this design and the effective functionality to show off information without cluttering the page. 
+
+    \paragraph{Colour Palette}
+    To begin our investigation into which colour palette should be used for the frontend, we decided to investigate any accessibility issues which we will have to take in to consideration to ensure that our design enhanced readability and usability for all users. 
+
+    During this investigation, we found that the use of bright colours may cause pain for those who suffer with low vision or dyslexia, and may also prevent them from being able to read information from the page. This means that websites need to have a low brightness background to accommodate for this disability.
+    
+    Users also need a high contrast between the text and the background on a page. According to the W3C accessibility standards, people will be able to read information better on a page which incorporates dark text on a light background. We wanted to select colours for our frontend which would meet both of these accessibility criteria and found that a neutral tone for our main colour scheme would effectively meet these standards.
+    
+    For the background of the the web application, we opted to use a pale peach colour. We selected this colour as it would provide a warmth to the page while also ensuring that users who struggle with bright backgrounds are not overwhelmed when reading information. Furthermore, the selection of this colour made it easier to find secondary colours for text and highlights that would provide a bold contrast.
+
+    \subsubsection{Figma vs Zeplin}
+    Before we began to design the prototype of the frontend, we had to decide which software application we should use. From prior experience during our placement year, we initially chose to use either Figma or Zeplin.
+
+    Within our research, we found that Zeplin is primarily a collaboration and handoff tool whereas Figma is a comprehensive design tool that enables collaborative design, prototyping, and sharing within a single platform. This means that you could create designs directly using Figma, while on Zeplin, designs must be created using a dedicated design tool such as Sketch or Adobe XD, and then imported. 
+    
+    Figma also features a Dev Mode interface that allows for developers to translate created designs into code more efficiently. As a team, we liked the use of this feature since we would be able to streamline the design-to-development workflow and reduce the use of repetitive, manual coding.
+    
+    While Zeplin does also feature some developer tools, Figma is exclusively tailored for the design process. This means that Figma can provide a better experience while designing prototypes as it doe not have the additional complexity of features which are shown within Zeplin. 
+
+    After considering the pros and cons of both applications, combined with the research which we conducted, we decided that Figma would be the best solution for us.
+    
+    \subsubsection{Designs: Version 1}
+    The initial iteration of the designs prioritised the application's functionality over user experience considerations. We used our prior research to design a homepage which would allow the user to view and navigate to recipes easily as well as providing essential information to the user. 
+
+    Inspired by our research, we designed our own featured recipe component, recipe cards and recipe pages. 
+
+    \subsubsection{Designs: Version 2}
 
     \subsection{Architecture}
   
@@ -147,9 +219,10 @@ When all images are annotated a new YOLOv8 dataset can be generated. Before this
 Finally, it generates extra images through augmentation. We chose Shear ±15° and Brightness ±25\%. Shear would simulate different camera angles, which would provide greater angle coverage. Brightness would widen the number of handled lighting conditions, as different kitchens could have very varied levels of brightness.
 
     \subsubsection{Training with CUDA}
-    
+    While RoboFlow did offer the option to train the models for us, it required monetary payments, so we opted to train on our Nivida GPU using CUDA \cite{cudacuda}.
+    ...... HERE
 
-    
+    \subsubsection{Reviewing \& Improving}
 
 
     \section{Testing}
