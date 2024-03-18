@@ -53,8 +53,25 @@ Chop Chop \\
 Chop Chop makes cooking more accessible by offering hands-free, smart recipes. Our smart recipes allow users to get on with cooking without having to worry about looking through the steps of a recipe, scrolling a screen with messy hands, or starting timers. It achieves this by using artificial intelligence, computer vision, and a full-stack application.
     \lipsum[3-7]
 
-    \section{Background}
-    \lipsum[31-35]
+    \section{Research}
+    \subsection{Object detection}
+    Our project's flagship feature was our custom real-time object detection system. This would be used to detect culinary objects such as food and utensils which would dictate when a recipe step had been completed.
+    
+None of us on the project had experience creating an object detection system. So, we began by doing some research. 
+
+With the huge demand for real-time object detection in the modern age many different algorithms have emerged.
+
+Faster R-CNN offers a real-time object detection algorithm version of R-CNN. “One of the most accurate object detection algorithms” \cite{FasterRCNN} with the drawback of “requires a lot of power at inference time” IE when running in real-time. So, detecting small food objects in a kitchen would be perfect. However, we hoped to run on a Raspberry Pi (a hub in the kitchen area), and we fear the Raspberry Pi will not have the computational power required \cite{Fast-CNN-Rasberry-Pi} at inference time.
+
+Detectron2- Created by Facebook AI research it claims to “provides state-of-the-art detection and segmentation algorithms” \cite{wu2019detectron2} and has been used in many Facebook products such as “Smart Camera for new Portal video-calling devices” \cite{metasmartcameras}. It’s built using the COCO, LVIS, CityScape, and VOC20 datasets, this creates an accurate dataset with an MNAP. However, in many cases “YOLOv8 models outperformed the detectron2 mode” \cite{ai5010005}.
+
+YOLO – You Only Look Once, “It is a state-of-the-art, real-time object detection system which offers extreme levels of speed and accuracy.” (cite 1), that is around “1000x faster than RCNN and 100x faster than the Fast R-CNN model” \cite{rajeshwari2019object}. “YOLO proves to be a cleaner and more efficient” \cite{joiya2022object}, which gave us more confidence if we do eventually choose to run it on slower hardware such as a Raspberry Pi.
+
+Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management. 
+
+RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively create image datasets. It allows you to upload images you have taken for training, delegate annotation jobs out to different members of the team, and then create a dataset which can be downloaded and trained locally. It was one of the few sites that offered an immense data set (max 10,000 images) with an easy-to-use interface, all for free.
+
+During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
 
     \section{Aims}
     \lipsum[7-11]
@@ -88,23 +105,7 @@ Chop Chop makes cooking more accessible by offering hands-free, smart recipes. O
     \subsection{Database}
     \lipsum[41-43]
     \subsection{Data Collection \& Training}
-    Our project's flagship feature was our custom real-time object detection system. This would be used to detect culinary objects such as food and utensils which would dictate when a recipe step had been completed.
     
-None of us on the project had experience creating an object detection system. So, we began by doing some research. 
-
-With the huge demand for real-time object detection in the modern age many different algorithms have emerged.
-
-Faster R-CNN offers a real-time object detection algorithm version of R-CNN. “One of the most accurate object detection algorithms” \cite{FasterRCNN} with the drawback of “requires a lot of power at inference time” IE when running in real-time. So, detecting small food objects in a kitchen would be perfect. However, we hoped to run on a Raspberry Pi (a hub in the kitchen area), and we fear the Raspberry Pi will not have the computational power required \cite{Fast-CNN-Rasberry-Pi} at inference time.
-
-Detectron2- Created by Facebook AI research it claims to “provides state-of-the-art detection and segmentation algorithms” \cite{wu2019detectron2} and has been used in many Facebook products such as “Smart Camera for new Portal video-calling devices” \cite{metasmartcameras}. It’s built using the COCO, LVIS, CityScape, and VOC20 datasets, this creates an accurate dataset with an MNAP. However, in many cases “YOLOv8 models outperformed the detectron2 mode” \cite{ai5010005}.
-
-YOLO – You Only Look Once, “It is a state-of-the-art, real-time object detection system which offers extreme levels of speed and accuracy.” (cite 1), that is around “1000x faster than RCNN and 100x faster than the Fast R-CNN model” \cite{rajeshwari2019object}. “YOLO proves to be a cleaner and more efficient” \cite{joiya2022object}, which gave us more confidence if we do eventually choose to run it on slower hardware such as a Raspberry Pi.
-
-Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management. 
-
-RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively create image datasets. It allows you to upload images you have taken for training, delegate annotation jobs out to different members of the team, and then create a dataset which can be downloaded and trained locally. It was one of the few sites that offered an immense data set (max 10,000 images) with an easy-to-use interface, all for free.
-
-During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubix cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
 
 
     \section{Testing}
