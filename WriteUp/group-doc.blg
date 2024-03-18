@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: group-doc.aux
+Reallocating 'name_of_file' (item size: 1) to 7 items.
+The style file: ieeetr.bst
+Reallocating 'name_of_file' (item size: 1) to 10 items.
+Database file #1: group-doc.bib
+Warning--entry type for "Fast-CNN-Rasberry-Pi" isn't style-file defined
+--line 45 of file group-doc.bib
+Warning--entry type for "FasterRCNN" isn't style-file defined
+--line 61 of file group-doc.bib
+Warning--entry type for "Jocher_Ultralytics_YOLO_2023" isn't style-file defined
+--line 77 of file group-doc.bib
+Warning--entry type for "metasmartcameras" isn't style-file defined
+--line 115 of file group-doc.bib
+Warning--entry type for "RoboFlow-Software" isn't style-file defined
+--line 151 of file group-doc.bib
+You've used 9 entries,
+            1876 wiz_defined-function locations,
+            523 strings with 4728 characters,
+and the built_in function-call counts, 1977 in all, are:
+= -- 185
+> -- 89
+< -- 0
++ -- 34
+- -- 25
+* -- 132
+:= -- 288
+add.period$ -- 9
+call.type$ -- 9
+change.case$ -- 9
+chr.to.int$ -- 0
+cite$ -- 9
+duplicate$ -- 77
+empty$ -- 202
+format.name$ -- 25
+if$ -- 480
+int.to.chr$ -- 0
+int.to.str$ -- 9
+missing$ -- 3
+newline$ -- 30
+num.names$ -- 9
+pop$ -- 41
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 69
+stack$ -- 0
+substring$ -- 104
+swap$ -- 29
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 18
+width$ -- 10
+write$ -- 81
+(There were 5 warnings)

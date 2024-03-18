@@ -1,0 +1,41 @@
+\begin{thebibliography}{1}
+
+\bibitem{FasterRCNN}
+RoboFlow, ``What is faster r-cnn?.'' https://roboflow.com/model/faster-r-cnn,
+  2023.
+
+\bibitem{Fast-CNN-Rasberry-Pi}
+EdjeElectronics, ``Faster rcnn on raspberry pi - github.''
+  https://github.com/EdjeElectronics/TensorFlow-Object-Detection-on-the-Raspberry-Pi/issues/57,
+  2019.
+
+\bibitem{wu2019detectron2}
+Y.~Wu, A.~Kirillov, F.~Massa, W.-Y. Lo, and R.~Girshick, ``Detectron2.''
+  https://github.com/facebookresearch/detectron2, 2019.
+
+\bibitem{metasmartcameras}
+Meta, ``Meta smart camera portal with detectron2.''
+  https://ai.meta.com/blog/smart-camera-portal-advances/, 2019.
+
+\bibitem{ai5010005}
+M.~Butt, N.~Glas, J.~Monsuur, R.~Stoop, and A.~de~Keijzer, ``Application of
+  yolov8 and detectron2 for bullet hole detection and score calculation from
+  shooting cards,'' {\em AI}, vol.~5, no.~1, pp.~72--90, 2024.
+
+\bibitem{rajeshwari2019object}
+P.~Rajeshwari, P.~Abhishek, P.~Srikanth, and T.~Vinod, ``Object detection: an
+  overview,'' {\em Int. J. Trend Sci. Res. Dev.(IJTSRD)}, vol.~3, no.~1,
+  pp.~1663--1665, 2019.
+
+\bibitem{joiya2022object}
+F.~Joiya, ``Object detection: Yolo vs faster r-cnn,'' {\em Int Res J Modern Eng
+  Technol Sci}, vol.~9, pp.~1911--1915, 2022.
+
+\bibitem{Jocher_Ultralytics_YOLO_2023}
+G.~Jocher, A.~Chaurasia, and J.~Qiu, ``{Ultralytics YOLO},'' Jan. 2023.
+
+\bibitem{RoboFlow-Software}
+B.~Dwyer, J.~Nelson, T.~Hansen, {\em et~al.}, ``Roboflow 1.0.''
+  https://roboflow.com, 2024.
+
+\end{thebibliography}
