@@ -106,6 +106,16 @@ During our research process, we tried out Roboflow and used a trial of their tra
     \subsection{Database}
     \lipsum[41-43]
     \subsection{Data Collection \& Training}
+    For developing our object detection system, we needed a trained model. From our research, we decided to use Roboflow for data collection and management and trained with YOLOv8.
+    
+To train, we first needed to collect many images of the object we wanted to detect. We found during development that it is best to start with lots of good-quality images of the object; They should be in good lighting and well-framed. Then many different positions of objects in the frame. Finally, gathering some more obscure images. These can be in different lighting conditions, from far away, and with multiple other objects in the frame as well. These all create a diverse data set, which increases the chance of detection.
+
+Once a significant number of images had been gathered (around 100) they were uploaded to Roboflow for annotating. Annotation jobs can be generated and sent to each person on the project. We decided to use box annotation, as it was significantly quicker to annotate and in our preliminary tests offered the same level of object detection that poly-selection did.
+
+Each annotation was then reviewed by someone else before being added to the dataset. This ensured that the dataset was accurate in its annotations as small mistakes could teach the AI the wrong classification.
+
+When all images are annotated a new YOLOv8 dataset can be generated. Before this Roboflow will split up your images into training, testing, and validation. Training will teach AI, validation are used to as it trains test how good the AI is getting. Testing “a test data set is a separate sample, an unseen data set, to provide an unbiased final evaluation of a model fit.” \cite{trainvalidtest} 
+
     
 
 
