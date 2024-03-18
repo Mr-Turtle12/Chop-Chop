@@ -3,7 +3,6 @@
 \usepackage{lipsum}
 \usepackage{lineno}
 \usepackage{parskip}
-\usepackage{graphicx}
 
 \title{%
 Chop Chop \\
@@ -101,6 +100,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
     
     Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
     
+    \paragraph{Recipe Overview}
     Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
     
     \begin{figure}
@@ -109,10 +109,18 @@ During our research process, we tried out Roboflow and used a trial of their tra
       \caption{insert caption here}
     \end{figure}
 
+    \paragraph{Recipe cards}
     Each site also used cards as a way to display each recipe. We found that this was an effective way to display each of the recipes, while only showing the necessary information needed for the user.
     
     On Yummly, a variation of their recipe cards caught our attention with an interactive hover feature. Initially displaying just the recipe title, hovering over the card revealed more details about the recipe. We aimed to incorporate a similar functionality into our own cards.
     
+    \begin{figure}
+      \includegraphics[width=1.0\textwidth]{Yummly recipe cards.png}
+      \centering
+      \caption{insert caption here}
+    \end{figure}
+
+    \paragraph{Recipe Overview}
     For the Recipe Overview page, we wanted the user to be able to see a summary of the recipe and navigate between seeing the recipe steps and the ingredients in a seamless way.
     
     To keep the design of the page simple and clean, we split the page into two sections: the header and the information. The header of the page would show off important information about the recipe, such as the name, a description and a summary of how long the recipe will take to prepare. This section would also feature a start recipe button to take the user to the recipe carousel page.
@@ -122,8 +130,26 @@ During our research process, we tried out Roboflow and used a trial of their tra
     After looking at the 3 initial sites, we discovered that the layout was overly cluttered, and the transition between viewing the recipe and its ingredients was not seamless. Instead, most sites placed the ingredients and recipe either side by side or one after the other, which disrupted the flow of navigation.
     
     Instead, we opted for a switcher component that enables users to toggle between viewing the recipe and the ingredients. We believed that this approach would reduce clutter on the page and separate information in a more organised manner. We found inspiration for this functionality on W3Schools.
+    
+    \begin{figure}
+      \includegraphics[width=1.0\textwidth]{W3Schools tabbed component.png}
+      \centering
+      \caption{insert caption here}
+    \end{figure}
+
     We liked the simplicity of this design and the effective functionality to show off information without cluttering the page. 
 
+    \paragraph{Colour Palette}
+    To begin our investigation into which colour palette should be used for the frontend, we decided to investigate any accessibility issues which we will have to take in to consideration to ensure that our design enhanced readability and usability for all users. 
+
+    During this investigation, we found that the use of bright colours may cause pain for those who suffer with low vision or dyslexia, and may also prevent them from being able to read information from the page. This means that websites need to have a low brightness background to accommodate for this disability.
+    
+    Users also need a high contrast between the text and the background on a page. According to the W3C accessibility standards, people will be able to read information better on a page which incorporates dark text on a light background. We wanted to select colours for our frontend which would meet both of these accessibility criteria and found that a neutral tone for our main colour scheme would effectively meet these standards.
+    
+    For the background of the the web application, we opted to use a pale peach colour. We selected this colour as it would provide a warmth to the page while also ensuring that users who struggle with bright backgrounds are not overwhelmed when reading information. Furthermore, the selection of this colour made it easier to find secondary colours for text and highlights that would provide a bold contrast.
+
+    \subsubsection{Figma vs Zeplin}
+    
 
     
     \subsection{Architecture}
@@ -137,16 +163,6 @@ During our research process, we tried out Roboflow and used a trial of their tra
     \subsection{Database}
     \lipsum[41-43]
     \subsection{Data Collection \& Training}
-    For developing our object detection system, we needed a trained model. From our research, we decided to use Roboflow for data collection and management and trained with YOLOv8.
-    
-To train, we first needed to collect many images of the object we wanted to detect. We found during development that it is best to start with lots of good-quality images of the object; They should be in good lighting and well-framed. Then many different positions of objects in the frame. Finally, gathering some more obscure images. These can be in different lighting conditions, from far away, and with multiple other objects in the frame as well. These all create a diverse data set, which increases the chance of detection.
-
-Once a significant number of images had been gathered (around 100) they were uploaded to Roboflow for annotating. Annotation jobs can be generated and sent to each person on the project. We decided to use box annotation, as it was significantly quicker to annotate and in our preliminary tests offered the same level of object detection that poly-selection did.
-
-Each annotation was then reviewed by someone else before being added to the dataset. This ensured that the dataset was accurate in its annotations as small mistakes could teach the AI the wrong classification.
-
-When all images are annotated a new YOLOv8 dataset can be generated. Before this Roboflow will split up your images into training, testing, and validation. Training will teach AI, validation are used to as it trains test how good the AI is getting. Testing “a test data set is a separate sample, an unseen data set, to provide an unbiased final evaluation of a model fit.” \cite{trainvalidtest} 
-
     
 
 
