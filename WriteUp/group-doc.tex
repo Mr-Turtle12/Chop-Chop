@@ -88,6 +88,17 @@ During our research process, we tried out Roboflow and used a trial of their tra
     We aimed to ensure the main branch was kept as clean as possible; we were mindful of what should and should not be on the repo. This included adding rules to the git ignore file when needed, pruning unnecessary files, and ensuring consistency in naming conventions for files and folders.
 
     \subsection{Meetings}
+    \subsubsection{Meeting Documents}
+    During our sprints, we scheduled one team meeting and one supervisor meeting each week. Ideally, we arranged the supervisor meeting to take place after the team meeting, allowing us to bring any discussions raised in the team meeting to the supervisor within the same week.
+    Throughout the week a shared team document was available for any members to note down any questions or issues that they wanted to raise in the team meeting. This functioned very well as it meant discussions were not accidentally overlooked during the meeting and it also allowed other members to see the discussions points raised and prepare prior to the meeting.
+    We also made use of the GitLabs issues board and our own Gannt chart to keep ourselves on schedule throughout the project. These tools allowed us to easily check what work was still outstanding for the week and compare the progress we were making to our initials estimates when starting out. As this was a particularly large project to undertake it was crucial we kept ourselves on track this way.
+    \subsubsection{Team Meetings}
+    At the beginning of each team meeting, we allocated a minute-taker to record the discussions. We would then begin by addressing any discussion points or questions raised in the shared document or brought up by members during the meeting. The practice of having discussions pre-documented in the shared file significantly sped up the note-taking process, enabling us to focus more on the discussions themselves. 
+    Following the discussions, we would quickly cover all issues closed on the GitLabs since last meeting, making note of them in the minutes, before reviewing any outstanding issues. We made sure that each team member individually was making good progress and was clear with what work was still to be done and provided team assistance to any members that were encountering any difficulties with their work.
+    Finally, we would create new issues aligned with the progress steps outlined on the Gannt Chart and assign them out to team members based on their current workloads and experience in the given areas of the project.
+    \subsubsection{Supervisor Meetings}
+    Our supervisor meetings were usually well organised as we would make notes during the team meetings for any discussions to be bought up to the supervisor. Any feedback or recommendations were then considered, and issues and objectives updated to reflect any changes from the meeting.
+    As well as this, we made sure to keep our supervisor updated on our progress and any issues closed since the last meeting and inform them of the issues outstanding and assigned for this week. This way we made sure the supervisor was always aware of the work we were aiming to achieve for next week and could hold us accountable for any delays.
 
 
     \section{Design}
@@ -98,10 +109,28 @@ During our research process, we tried out Roboflow and used a trial of their tra
 
     \section{Development}
     \subsection{Backend}
-
+        The backend is divided into several sections: API, controller, interpreter, and object detection. Additionally, we have utilities and tests, which support and are utilised within other sections. The backend is initiated from 'main.py', which launches the controller, API, and our logging system, producing two separate log files: one called 'detection' and one called 'API' to help us track the status of the program. We also have 'config.py', which houses common variables used throughout the backend. This allows us to easily change any of these variables without delving too deeply into the backend.
+    \subsubsection{Controller}
+    Our controller keeps state for the backend: storing the current recipe and step, taking messages from the API to the database, and handling detection events from the interpreter. It is built from 3 core scripts, the Controller main script, a manageThread script and a recipe script. 
+    The recipe script is for all the getter and setter functions that are recipe dependent. This includes functions such as get\textunderscore command\textunderscore for\textunderscore step to be able to read and serve the human readable commands to the frontend and get\textunderscore progression\textunderscore requirements\textunderscore for\textunderscore step to get and serve the progression objects to the interpreter. We split these functions into a separate script from the main Controller as they are recipe dependent, meaning we need to have already selected a recipe in the initialisation stage of this script and we wanted to keep this function out of the main controller script as that also houses recipe independent functions.
+    The main Controller script contains functions for starting new recipes, recipe dependent functions called from the recipes script and recipe independent functions such as retrieving all recipe metadata for displaying multiple recipes on the frontend.
+    \subsubsection{Interpreter}
+    \subsubsection{API}
     \subsection{Frontend}
  
     \subsection{Database}
+    \subsubsection{JSON}
+    We originally built a JSON database to quickly get started with storing recipes. We broke the initial database into separate recipes, each with three distinct areas. Recipe Details contained the recipe ID, Name and Description, Recipe Ingredients contained all the ingredient Names as well as Amount and Unit. Recipe Steps then contained Steps in human readable form, the Progression Object and Inhibitor for the backends understanding and the Camera which the step is expected to be completed under.
+    We chose to use JSON to start with due to its quick and simple nature to set up, allowing us to quickly begin testing the process of displaying recipe details and ingredients on the frontend and progressing through recipe steps with the backend.
+    When breaking the recipes into separate steps we knew we had to do it in a way that could be easily translated into Progression Objects and Inhibitor Objects. From our first database we had the steps broken down into their most simple form so that the neural network would only ever have one object to be looking for at once. It was important that this step was done early as it led the way for knowing what images we would need to have for our training dataset.
+    \subsubsection{SQL}
+    Further into the project, once we had a good setup for displaying and progressing our recipes, we wanted to add a significant amount of “dummy data” to fill out the frontend application and allow for features such as featured recipes and recipe searching. It became clear that the JSON database would no longer be the best way to store our recipes and we instead opted to transition to an SQL database before progressing with adding the additional recipes and search functionality.
+    After deciding to migrate to an SQL database, we conducted research and opted for SQLite over other SQL database engines. This choice stemmed from our desire for a straightforward implementation while still leveraging the features of SQL and not needing to start running any more servers which would have been required for an SQL server.
+    The SQL database comprises five tables, three of these tables are mapped from the same segments that were split from the JSON data. These tables include Recipes, which store core recipe information such as name and description, Steps which is linked to recipes in a one-to-many relationship, and Ingredients, also linked to recipes in a one-to-many relationship. Recipes contains the same information as it did in the JSON, while Steps and Ingredients needed a column added for RecipeID to now be able to link it back to the recipe they belong to.
+    Additionally, the database includes two new tables to accommodate the work done with voices. The Voices table assigns a unique ID to each voice, and the Recipe\textunderscore Voices table facilitates many-to-many connections between recipes and voice recordings.
+    \subsubsection{Multimedia Gallery}
+    As well as the SQL database the final project also contains a file storage server to store our photos and voice recordings for recipe steps. This is local file storage server with its location stored inside the SQL database.
+    This file storage is called using a custom HTML web request to retrieve the images and voice recordings. We chose to store our recipe images like this as we found it to be the simplest and easiest way to store photos with a focus on scalability.
 
     \subsection{Data Collection \& Training}
     \subsubsection{RoboFlow}
