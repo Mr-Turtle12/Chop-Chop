@@ -1,8 +1,8 @@
 \documentclass{article}
 \usepackage{multicol}
 \usepackage{lipsum}
-\newcommand{\frontmatter}{\pagenumbering{roman}\setcounter{secnumdepth}{0}}
-\newcommand{\body}{\clearpage\pagenumbering{arabic}\setcounter{secnumdepth}{2}}
+\usepackage{lineno}
+\usepackage{parskip}
 
 \title{%
 Chop Chop \\
@@ -26,14 +26,15 @@ Chop Chop \\
 
 \begin{document}
 
-  \maketitle
+\maketitle
 
-  \pagebreak
+\pagebreak
 
-  \pagenumbering{roman}
+\pagenumbering{roman}
+\linenumbers
 
-  \begin{abstract}
-    \addcontentsline{toc}{section}{Abstract}
+\begin{abstract}
+  \addcontentsline{toc}{section}{Abstract}
       This report surrounds our group software development project, a smart cooking assistant called \emph{Chop Chop}. 
     
       In this report we will showcase our group project. We will be evaluating not only the software we made but also how we made it, looking into our design, development, and ways of working. In addition to this, we will 
@@ -47,7 +48,7 @@ Chop Chop \\
 
   \pagenumbering{arabic}
 
-  \begin{multicols}{2}
+  %\begin{multicols}{2}
 
     \section{Introduction}
 Chop Chop makes cooking more accessible by offering hands-free, smart recipes. Our smart recipes allow users to get on with cooking without having to worry about looking through the steps of a recipe, scrolling a screen with messy hands, or starting timers. It achieves this by using artificial intelligence, computer vision, and a full-stack application.
@@ -122,7 +123,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
     \pagebreak
 
     
-  \end{multicols}
+  %\end{multicols}
   
   \addcontentsline{toc}{section}{References}
 
