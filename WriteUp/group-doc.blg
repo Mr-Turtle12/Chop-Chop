@@ -15,36 +15,38 @@ Warning--entry type for "metasmartcameras" isn't style-file defined
 --line 115 of file group-doc.bib
 Warning--entry type for "RoboFlow-Software" isn't style-file defined
 --line 151 of file group-doc.bib
-You've used 9 entries,
+Warning--entry type for "trainvalidtest" isn't style-file defined
+--line 181 of file group-doc.bib
+You've used 10 entries,
             1876 wiz_defined-function locations,
-            523 strings with 4728 characters,
-and the built_in function-call counts, 1977 in all, are:
-= -- 185
-> -- 89
+            528 strings with 4930 characters,
+and the built_in function-call counts, 2104 in all, are:
+= -- 196
+> -- 93
 < -- 0
-+ -- 34
-- -- 25
-* -- 132
-:= -- 288
-add.period$ -- 9
-call.type$ -- 9
-change.case$ -- 9
++ -- 36
+- -- 26
+* -- 137
+:= -- 308
+add.period$ -- 10
+call.type$ -- 10
+change.case$ -- 10
 chr.to.int$ -- 0
-cite$ -- 9
-duplicate$ -- 77
-empty$ -- 202
-format.name$ -- 25
-if$ -- 480
+cite$ -- 10
+duplicate$ -- 81
+empty$ -- 220
+format.name$ -- 26
+if$ -- 512
 int.to.chr$ -- 0
-int.to.str$ -- 9
+int.to.str$ -- 10
 missing$ -- 3
-newline$ -- 30
-num.names$ -- 9
-pop$ -- 41
+newline$ -- 33
+num.names$ -- 10
+pop$ -- 47
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 69
+skip$ -- 72
 stack$ -- 0
 substring$ -- 104
 swap$ -- 29
@@ -53,7 +55,7 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 18
-width$ -- 10
-write$ -- 81
-(There were 5 warnings)
+while$ -- 19
+width$ -- 12
+write$ -- 89
+(There were 6 warnings)
