@@ -4,6 +4,7 @@
 \usepackage{lineno}
 \usepackage{parskip}
 \usepackage{graphicx}
+\usepackage{subcaption}
 
 \title{%
 Chop Chop \\
@@ -20,7 +21,7 @@ Chop Chop \\
   \and
   Beth, Hill\\
   \texttt{Berh2}
-  \andLaTeX file called myFile.tex. When inkscape is called from within LaTeX, it will create a sub-directory under the current directory. The new directory’s name will be myFile-inkscape, and it will contain the converted files (figSVG.png, for example).
+  \and
   Jack, Fermer\\
   \texttt{Jdf50}
 }
@@ -177,23 +178,52 @@ During our research process, we tried out Roboflow and used a trial of their tra
     \subsubsection{Designs: Version 2}
 
     \subsection{Architecture}
-    % It was a big project so we knew we had to detail what we needed before we started working
-    % First we detailed what we wanted, an app capable of connecting to a backend which would identify and progress steps in a recipe. Then what we needed to do this, A backend running an api server, a frontend web-app, a database to store recipe informations. This would make the basis of our tech stack.
-    Due to the size and complexity of this project, we knew we needed to outline what we needed before begining a substatial ammount of work. First, we detailed what we wanted: a multi-platform app capable of identifying and progress steps of a recipe. We then researched how we could execute our idea; we settled on a basic client/server approach using a client, a server, and a database which only the server could access and server. This would comprise the basis of our tech stack.
+    \subsubsection{Software}
+    Due to the size and complexity of this project, we knew we needed to outline what we needed before begining a substantial ammount of work. First, we detailed what we wanted: a multi-platform app capable of identifying and progressing steps of a recipe. We then researched how we could execute our idea; we settled on a basic client/server approach using a client, a server, and a database (which only the server could access). This would comprise the basis of our tech stack.
 
-    \begin{figure}
-      \includegraphics[scale=0.5]{assets/first-architecture.png}
-      \caption{Our first architecture drawing.}
-      \label{fig:architecture1}
+    \begin{figure}[t]
+      \centering
+      \begin{subfigure}{0.45\linewidth}
+        \includegraphics[width=\linewidth]{assets/first-architecture.png}
+        \caption{}
+        \label{fig:architectureA}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}{0.45\linewidth}
+        \includegraphics[width=\linewidth]{assets/second-architecture.png}
+        \caption{}
+        \label{fig:architectureB}
+      \end{subfigure}
+      \vfill
+      \begin{subfigure}{0.5\linewidth}
+        \includegraphics[width=\linewidth]{assets/final-architecture.png}
+        \caption{}
+        \label{fig:architectureC}
+      \end{subfigure}
+      \caption{Our architecture drawings in chronological order}
+      \label{fig:architectures}
     \end{figure}
 
-    In our first diagram we detailed a very simplistic backend
-    
-    % Changed our architecture a few times throughout the project as our program developed. To include concurrency, an external database, then a http webserver for image hosting.
+    In our first diagram (\ref{fig:architectureA}) we identified a very simplistic backend, it utilised a flask (REST) api to connect to the client and a backend without many control flows. There were cameras attatched to the backend and a database which the backend could also access.
 
-    % As a team we had lots of collaboration on this we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.
+    In our next drawing (\ref{fig:architectureB}), we detailed the backend control flow in-depth which helped us outline our python classes and files. We implemented a controller model where one central controller would process data and record the state of the program. This was to reduce complexity by making the code more modular.
 
-    % The planning of architecture contributed a lot to our process it allowed us to develop features simultaneously knowing how they would interact ahead of time.
+    After much discussion, we decided to change our API to a websocket API to allow for multiple clients and two way communication. This also avoided the problem of long polling with a RESTful API.
+
+    We also made our object detection system run concurrently so it could be interrupted or killed whit ease whilst still maintaining the API. Now, the controller and interpreter would send messages over python threads to communicate, like when a step has been detected or what step is next.
+
+    Additionally, we changed our database from a JSON file to a relational databse (SQL Lite). This increased our application's scalability by allowing us to manage recipe data more easily rather than manipulating a plain-text JSON file.
+
+    As a team we had lots of collaboration on the architecture, we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.
+
+    The planning of architecture contributed a lot to our process it allowed us to develop features simultaneously knowing how they would interact ahead of time.
+
+    \subsubsection{Hardware}
+    For the hardware, we looked into running our main backend on a Raspberry Pi with web-cameras connected via USB. The Raspberry Pi would host the websocket API on our local network for any devices using the frontend to connect to. An SQL Server would also be hosted on the Raspberry Pi locally for it to access.
+
+    This way of hosting made it easier to debug as we could 'fake' messages from the frontend or backend using HTTP requests. 
+
+    In reality, the Convoluted Neural Network ran inneficiently on the Raspberry Pi so we substituted it for a normal laptop, however, our modular architecture allowed us to do this with no problems.
 
     \section{Development}
     \subsection{Backend}
