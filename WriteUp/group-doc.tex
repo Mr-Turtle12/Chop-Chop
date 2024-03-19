@@ -197,6 +197,10 @@ During our research process, we tried out Roboflow and used a trial of their tra
     
     For the background of the the web application, we opted to use a pale peach colour. We selected this colour as it would provide a warmth to the page while also ensuring that users who struggle with bright backgrounds are not overwhelmed when reading information. Furthermore, the selection of this colour made it easier to find secondary colours for text and highlights that would provide a bold contrast.
 
+    Following our research from the initial recipe websites, we noted that both BBC Good Foods and Yummly incorporated green into their website design. We liked the use of the colour green since it is associated with promoting healthy eating, and although our application is not necessarily for this purpose, it can make people feel better about what they eat.
+
+    We also found that this colour contrasts well with the pale peach background and is not harsh on the eyes, providing a bold contrast to increase readability for users.
+
     \subsubsection{Figma vs Zeplin}
     Before we began to design the prototype of the frontend, we had to decide which software application we should use. From prior experience during our placement year, we initially chose to use either Figma or Zeplin.
 
@@ -252,7 +256,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
 
     Additionally, we changed our database from a JSON file to a relational databse (SQL Lite). This increased our application's scalability by allowing us to manage recipe data more easily rather than manipulating a plain-text JSON file.
 
-    As a team we had lots of collaboration on the architecture, we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.
+    As a team we had lots of collaboration on the architecture, we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.\footnote{Figure \ref{fig:architectureC}, is not technically the final architecture diagram as we also added the multimedia gallery (section \ref{multimediaGallery}) which adds another database sending information to the frontend.}
 
     The planning of architecture contributed a lot to our process it allowed us to develop features simultaneously knowing how they would interact ahead of time.
 
@@ -265,7 +269,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
 
     \section{Development}
     \subsection{Backend}
-        The backend is divided into several sections: API, controller, interpreter, and object detection. Additionally, we have utilities and tests, which support and are utilised within other sections. The backend is initiated from 'main.py', which launches the controller, API, and our logging system, producing two separate log files: one called 'detection' and one called 'API' to help us track the status of the program. We also have 'config.py', which houses common variables used throughout the backend. This allows us to easily change any of these variables without delving too deeply into the backend.
+        The backend is divided into several sections: API, controller, interpreter, and object detection. Additionally, we have utilities and tests, which support and are utilised within other sections. The backend is initiated from \verb|main.py|, which launches the controller, API, and our logging system, producing two separate log files: one called \verb|detection| and one called \verb|API| to help us track the status of the program. We also have \verb|config.py|, which houses common variables used throughout the backend. This allows us to easily change any of these variables without delving too deeply into the backend.
     \subsubsection{Controller}
     Our controller keeps state for the backend: storing the current recipe and step, taking messages from the API to the database, and handling detection events from the interpreter. It is built from 3 core scripts, the Controller main script, a manageThread script and a recipe script. 
     The recipe script is for all the getter and setter functions that are recipe dependent. This includes functions such as \verb|get_command_for_step()| to be able to read and serve the human readable commands to the frontend and \verb|get_progression_requirements_for_step()| to get and serve the progression objects to the interpreter. We split these functions into a separate script from the main Controller as they are recipe dependent, meaning we need to have already selected a recipe in the initialisation stage of this script and we wanted to keep this function out of the main controller script as that also houses recipe independent functions.
@@ -273,7 +277,15 @@ During our research process, we tried out Roboflow and used a trial of their tra
     \subsubsection{Interpreter}
     \subsubsection{API}
     \subsection{Frontend}
-    
+    Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
+    \begin{description}
+      \item[Flexibility:] vue is flexible, we can make custom components to fit our application, we can test it on a web-browser and utilise powerful debuging tools, additionally with a bit of work we can sandbox it into a mobile application.
+      \item[Easy to learn:] vue's syntax and component systems are easy to learn and to read which suits our team, some of which had never used a frontend framework before. This makes understanding the code much easier when it comes to reviewing merge requests or discussing approaches.
+      \item[Lightweight:] vue is lightweight, it's quick to load as it is made to be run from a web-browser. Features like hot reload help us devlop quickly and it's cli tools\footnote{in addition to the node package manager} make installing packages easy.
+      \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
+    \end{description}
+
+
  
     \subsection{Database}
     \subsubsection{JSON}
@@ -285,7 +297,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
     After deciding to migrate to an SQL database, we conducted research and opted for SQLite over other SQL database engines. This choice stemmed from our desire for a straightforward implementation while still leveraging the features of SQL and not needing to start running any more servers which would have been required for an SQL server.
     The SQL database comprises five tables, three of these tables are mapped from the same segments that were split from the JSON data. These tables include Recipes, which store core recipe information such as name and description, Steps which is linked to recipes in a one-to-many relationship, and Ingredients, also linked to recipes in a one-to-many relationship. Recipes contains the same information as it did in the JSON, while Steps and Ingredients needed a column added for RecipeID to now be able to link it back to the recipe they belong to.
     Additionally, the database includes two new tables to accommodate the work done with voices. The Voices table assigns a unique ID to each voice, and the Recipe\textunderscore Voices table facilitates many-to-many connections between recipes and voice recordings.
-    \subsubsection{Multimedia Gallery}
+    \subsubsection{Multimedia Gallery}\label{multimediaGallery}
     As well as the SQL database the final project also contains a file storage server to store our photos and voice recordings for recipe steps. This is local file storage server with its location stored inside the SQL database.
     This file storage is called using a custom HTML web request to retrieve the images and voice recordings. We chose to store our recipe images like this as we found it to be the simplest and easiest way to store photos with a focus on scalability.
 
