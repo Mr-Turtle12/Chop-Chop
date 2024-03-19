@@ -20,7 +20,7 @@ Chop Chop \\
   \and
   Beth, Hill\\
   \texttt{Berh2}
-  \and
+  \andLaTeX file called myFile.tex. When inkscape is called from within LaTeX, it will create a sub-directory under the current directory. The new directory’s name will be myFile-inkscape, and it will contain the converted files (figSVG.png, for example).
   Jack, Fermer\\
   \texttt{Jdf50}
 }
@@ -177,7 +177,23 @@ During our research process, we tried out Roboflow and used a trial of their tra
     \subsubsection{Designs: Version 2}
 
     \subsection{Architecture}
-  
+    % It was a big project so we knew we had to detail what we needed before we started working
+    % First we detailed what we wanted, an app capable of connecting to a backend which would identify and progress steps in a recipe. Then what we needed to do this, A backend running an api server, a frontend web-app, a database to store recipe informations. This would make the basis of our tech stack.
+    Due to the size and complexity of this project, we knew we needed to outline what we needed before begining a substatial ammount of work. First, we detailed what we wanted: a multi-platform app capable of identifying and progress steps of a recipe. We then researched how we could execute our idea; we settled on a basic client/server approach using a client, a server, and a database which only the server could access and server. This would comprise the basis of our tech stack.
+
+    \begin{figure}
+      \includegraphics[scale=0.5]{assets/first-architecture.png}
+      \caption{Our first architecture drawing.}
+      \label{fig:architecture1}
+    \end{figure}
+
+    In our first diagram 
+    
+    % Changed our architecture a few times throughout the project as our program developed. To include concurrency, an external database, then a http webserver for image hosting.
+
+    % As a team we had lots of collaboration on this we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.
+
+    % The planning of architecture contributed a lot to our process it allowed us to develop features simultaneously knowing how they would interact ahead of time.
 
     \section{Development}
     \subsection{Backend}
