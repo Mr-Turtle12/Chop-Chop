@@ -227,7 +227,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
 
     Additionally, we changed our database from a JSON file to a relational databse (SQL Lite). This increased our application's scalability by allowing us to manage recipe data more easily rather than manipulating a plain-text JSON file.
 
-    As a team we had lots of collaboration on the architecture, we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.
+    As a team we had lots of collaboration on the architecture, we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.\footnote{Figure \ref{fig:architectureC}, is not technically the final architecture diagram as we also added the multimedia gallery (section \ref{multimediaGallery}) which adds another database sending information to the frontend.}
 
     The planning of architecture contributed a lot to our process it allowed us to develop features simultaneously knowing how they would interact ahead of time.
 
@@ -248,7 +248,15 @@ During our research process, we tried out Roboflow and used a trial of their tra
     \subsubsection{Interpreter}
     \subsubsection{API}
     \subsection{Frontend}
-    
+    Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
+    \begin{description}
+      \item[Flexibility:] vue is flexible, we can make custom components to fit our application, we can test it on a web-browser and utilise powerful debuging tools, additionally with a bit of work we can sandbox it into a mobile application.
+      \item[Easy to learn:] vue's syntax and component systems are easy to learn and to read which suits our team, some of which had never used a frontend framework before. This makes understanding the code much easier when it comes to reviewing merge requests or discussing approaches.
+      \item[Lightweight:] vue is lightweight, it's quick to load as it is made to be run from a web-browser. Features like hot reload help us devlop quickly and it's cli tools\footnote{in addition to the node package manager} make installing packages easy.
+      \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
+    \end{description}
+
+
  
     \subsection{Database}
     \subsubsection{JSON}
@@ -260,7 +268,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
     After deciding to migrate to an SQL database, we conducted research and opted for SQLite over other SQL database engines. This choice stemmed from our desire for a straightforward implementation while still leveraging the features of SQL and not needing to start running any more servers which would have been required for an SQL server.
     The SQL database comprises five tables, three of these tables are mapped from the same segments that were split from the JSON data. These tables include Recipes, which store core recipe information such as name and description, Steps which is linked to recipes in a one-to-many relationship, and Ingredients, also linked to recipes in a one-to-many relationship. Recipes contains the same information as it did in the JSON, while Steps and Ingredients needed a column added for RecipeID to now be able to link it back to the recipe they belong to.
     Additionally, the database includes two new tables to accommodate the work done with voices. The Voices table assigns a unique ID to each voice, and the Recipe\textunderscore Voices table facilitates many-to-many connections between recipes and voice recordings.
-    \subsubsection{Multimedia Gallery}
+    \subsubsection{Multimedia Gallery}\label{multimediaGallery}
     As well as the SQL database the final project also contains a file storage server to store our photos and voice recordings for recipe steps. This is local file storage server with its location stored inside the SQL database.
     This file storage is called using a custom HTML web request to retrieve the images and voice recordings. We chose to store our recipe images like this as we found it to be the simplest and easiest way to store photos with a focus on scalability.
 
