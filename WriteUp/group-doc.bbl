@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{1}
 
 \bibitem{FasterRCNN}
 RoboFlow, ``What is faster r-cnn?.'' https://roboflow.com/model/faster-r-cnn,
@@ -26,10 +26,6 @@ M.~Butt, N.~Glas, J.~Monsuur, R.~Stoop, and A.~de~Keijzer, ``Application of
 P.~Rajeshwari, P.~Abhishek, P.~Srikanth, and T.~Vinod, ``Object detection: an
   overview,'' {\em Int. J. Trend Sci. Res. Dev.(IJTSRD)}, vol.~3, no.~1,
   pp.~1663--1665, 2019.
-
-\bibitem{joiya2022object}
-F.~Joiya, ``Object detection: Yolo vs faster r-cnn,'' {\em Int Res J Modern Eng
-  Technol Sci}, vol.~9, pp.~1911--1915, 2022.
 
 \bibitem{Jocher_Ultralytics_YOLO_2023}
 G.~Jocher, A.~Chaurasia, and J.~Qiu, ``{Ultralytics YOLO},'' Jan. 2023.

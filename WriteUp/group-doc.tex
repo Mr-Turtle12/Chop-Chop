@@ -64,29 +64,38 @@ We made this application as a team of five people, all with previous experience 
 
 We implemented extra features on our project which we did not plan to do when the project was defined. Contrastingly, we ran into some problems which meanth we had to adapt some aspects of the original plan.
 
-    \section{Research}
-    \subsection{Object detection}
-    Our project's flagship feature was our custom real-time object detection system. This would be used to detect culinary objects such as food and utensils which would dictate when a recipe step had been completed.
     
-None of us on the project had experience creating an object detection system. So, we began by doing some research. 
-
-With the huge demand for real-time object detection in the modern age many different algorithms have emerged.
-
-Faster R-CNN offers a real-time object detection algorithm version of R-CNN. “One of the most accurate object detection algorithms” \cite{FasterRCNN} with the drawback of “requires a lot of power at inference time” IE when running in real-time. So, detecting small food objects in a kitchen would be perfect. However, we hoped to run on a Raspberry Pi (a hub in the kitchen area), and we fear the Raspberry Pi will not have the computational power required \cite{Fast-CNN-Rasberry-Pi} at inference time.
-
-Detectron2- Created by Facebook AI research it claims to “provides state-of-the-art detection and segmentation algorithms” \cite{wu2019detectron2} and has been used in many Facebook products such as “Smart Camera for new Portal video-calling devices” \cite{metasmartcameras}. It’s built using the COCO, LVIS, CityScape, and VOC20 datasets, this creates an accurate dataset with an MNAP. However, in many cases “YOLOv8 models outperformed the detectron2 mode” \cite{ai5010005}.
-
-YOLO – You Only Look Once, “It is a state-of-the-art, real-time object detection system which offers extreme levels of speed and accuracy.” \cite{rajeshwari2019object}, that is around “1000x faster than RCNN and 100x faster than the Fast R-CNN model” \cite{rajeshwari2019object}.  It's also shown to have a much higher mAP50-95 "96.7\%" compared to detectron2 (Faster RCNN-101) at "83.554\%" \cite{ai5010005}.
-
-Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management. 
-
-RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively create image datasets. It allows you to upload images you have taken for training, delegate annotation jobs out to different members of the team, and then create a dataset which can be downloaded and trained locally. It was one of the few sites that offered an immense data set (max 10,000 images) with an easy-to-use interface, all for free.
-
-During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
 
     \section{Aims}
 
     \section{Ways of Working}
+    \subsection{User Stories}
+    Right at the start of our project, we came up with and decided on our user stories. We took our vision of what a theoretical end-product would be. It was broken into fundamental statements that the user should “feel” when they use the product. Below we state the story, then the features it will need.
+
+    \begin{center}
+        \textbf{\textit{“I should be able to progress a recipe without touching the screen”}}
+        \begin{itemize}
+            \item A Camera rig system to observe the kitchen's working areas.
+            \item Object detection system that tells us what’s in the camera's frames. 
+            \item System to check if the culinary objects present satisfy the recipe step.
+            \item Way to send the correct step to a GUI.
+        \end{itemize}
+        
+        \textbf{\textit{“It should be clear to the user what to do for each step”}}
+        \begin{itemize}
+            \item Design with thought and simplicity in mind.
+        \end{itemize}
+        \textbf{\textit{“UI Should be easy to use and modern”}}
+        \begin{itemize}
+            \item UI should be intuitive and follow common design protocols.
+        \end{itemize}
+        
+        \textbf{\textit{“Our interface should be accessible for a range of different disabilities”}}
+        \begin{itemize}
+            \item Design a colour palette that is easy to see and offers good levels of contrast.
+        \end{itemize}
+        
+    \end{center}
     \subsection{Source Control}
     One of the key components to Chop-Chops’ success was our well-set-up and organised GitLab repository. 
 
@@ -112,6 +121,26 @@ During our research process, we tried out Roboflow and used a trial of their tra
     As well as this, we made sure to keep our supervisor updated on our progress and any issues closed since the last meeting and inform them of the issues outstanding and assigned for this week. This way we made sure the supervisor was always aware of the work we were aiming to achieve for next week and could hold us accountable for any delays.
 
 
+    \section{Research}
+    \subsection{Object detection}
+    Our project's flagship feature was our custom real-time object detection system. This would be used to detect culinary objects such as food and utensils which would dictate when a recipe step had been completed.
+    
+None of us on the project had experience creating an object detection system. So, we began by doing some research. 
+
+With the huge demand for real-time object detection in the modern age many different algorithms have emerged.
+
+Faster R-CNN offers a real-time object detection algorithm version of R-CNN. “One of the most accurate object detection algorithms” \cite{FasterRCNN} with the drawback of “requires a lot of power at inference time” IE when running in real-time. So, detecting small food objects in a kitchen would be perfect. However, we hoped to run on a Raspberry Pi (a hub in the kitchen area), and we fear the Raspberry Pi will not have the computational power required \cite{Fast-CNN-Rasberry-Pi} at inference time.
+
+Detectron2- Created by Facebook AI research it claims to “provides state-of-the-art detection and segmentation algorithms” \cite{wu2019detectron2} and has been used in many Facebook products such as “Smart Camera for new Portal video-calling devices” \cite{metasmartcameras}. It’s built using the COCO, LVIS, CityScape, and VOC20 datasets, this creates an accurate dataset with an MNAP. However, in many cases “YOLOv8 models outperformed the detectron2 mode” \cite{ai5010005}.
+
+YOLO – You Only Look Once, “It is a state-of-the-art, real-time object detection system which offers extreme levels of speed and accuracy.” \cite{rajeshwari2019object}, that is around “1000x faster than RCNN and 100x faster than the Fast R-CNN model” \cite{rajeshwari2019object}.  It's also shown to have a much higher mAP50-95 "96.7\%" compared to detectron2 (Faster RCNN-101) at "83.554\%" \cite{ai5010005}.
+
+Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management. 
+
+RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively create image datasets. It allows you to upload images you have taken for training, delegate annotation jobs out to different members of the team, and then create a dataset which can be downloaded and trained locally. It was one of the few sites that offered an immense data set (max 10,000 images) with an easy-to-use interface, all for free.
+
+During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
+    
     \section{Design}
     \subsection{Frontend}
     Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
@@ -124,7 +153,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
     Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
     
     \begin{figure}[htbp]
-      \includegraphics[width=1.0\textwidth]{BBCGF featured-image.png}
+      \includegraphics[width=1.0\textwidth]{assets/BBCGF featured-image.png}
       \centering
       \caption{insert caption here}
     \end{figure}
@@ -135,7 +164,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
     On Yummly, a variation of their recipe cards caught our attention with an interactive hover feature. Initially displaying just the recipe title, hovering over the card revealed more details about the recipe. We aimed to incorporate a similar functionality into our own cards.
     
     \begin{figure}[htbp]
-      \includegraphics[width=1.0\textwidth]{Yummly recipe cards.png}
+      \includegraphics[width=1.0\textwidth]{assets/Yummly recipe cards.png}
       \centering
       \caption{insert caption here}
     \end{figure}
@@ -152,7 +181,7 @@ During our research process, we tried out Roboflow and used a trial of their tra
     Instead, we opted for a switcher component that enables users to toggle between viewing the recipe and the ingredients. We believed that this approach would reduce clutter on the page and separate information in a more organised manner. We found inspiration for this functionality on W3Schools.
     
     \begin{figure}[htbp]
-      \includegraphics[width=1.0\textwidth]{W3Schools tabbed component.png}
+      \includegraphics[width=1.0\textwidth]{assets/W3Schools tabbed component.png}
       \centering
       \caption{insert caption here}
     \end{figure}
