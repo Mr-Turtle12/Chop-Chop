@@ -4,6 +4,8 @@
 \usepackage{lineno}
 \usepackage{parskip}
 \usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{listings}
 
 \title{%
 Chop Chop \\
@@ -38,7 +40,11 @@ Chop Chop \\
   \addcontentsline{toc}{section}{Abstract}
       This report surrounds our group software development project, a smart cooking assistant called \emph{Chop Chop}. 
     
-      In this report we will showcase our group project. We will be evaluating not only the software we made but also how we made it, looking into our design, development, and ways of working. In addition to this, we will 
+      In this report we will showcase our group project. We will be evaluating not only the software we made but also how we made it, looking into our design, development, and ways of working.
+
+      We work through this report in a semi-chronological order. We first outline our research and aims. We will later use our aims as metrics to critique how well we acheived our goals. We then explain how we made Chop-Chop, and go on to discuss what we could have done with more time.
+
+      Throughout the report we will explain both the acheivements and pitfalls we have fallen into as a group and how we dealt with them.
   \end{abstract}
 
   \pagebreak
@@ -52,7 +58,11 @@ Chop Chop \\
   %\begin{multicols}{2}
 
     \section{Introduction}
-Chop Chop makes cooking more accessible by offering hands-free, smart recipes. Our smart recipes allow users to get on with cooking without having to worry about looking through the steps of a recipe, scrolling a screen with messy hands, or starting timers. It achieves this by using artificial intelligence, computer vision, and a full-stack application.
+Chop Chop makes cooking more accessible by offering hands-free, smart recipes. Our smart recipes allow users to cook without having to worry about looking through the steps of a recipe, scrolling a screen with messy hands, or starting timers. It achieves this by using a convoluted neural network (CNN), computer vision, and a full-stack application.
+
+We made this application as a team of five people, all with previous experience of developing on large projects. Following agile methodologies, we used our experience and finished our development with a prototype of a full-stack application which acheives what we set out to do. 
+
+We implemented extra features on our project which we did not plan to do when the project was defined. Contrastingly, we ran into some problems which meanth we had to adapt some aspects of the original plan.
 
     \section{Research}
     \subsection{Object detection}
@@ -181,18 +191,64 @@ During our research process, we tried out Roboflow and used a trial of their tra
     \subsubsection{Designs: Version 2}
 
     \subsection{Architecture}
-  
+    \subsubsection{Software}
+    Due to the size and complexity of this project, we knew we needed to outline what we needed before begining a substantial ammount of work. First, we detailed what we wanted: a multi-platform app capable of identifying and progressing steps of a recipe. We then researched how we could execute our idea; we settled on a basic client/server approach using a client, a server, and a database (which only the server could access). This would comprise the basis of our tech stack.
+
+    \begin{figure}[t]
+      \centering
+      \begin{subfigure}{0.45\linewidth}
+        \includegraphics[width=\linewidth]{assets/first-architecture.png}
+        \caption{}
+        \label{fig:architectureA}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}{0.45\linewidth}
+        \includegraphics[width=\linewidth]{assets/second-architecture.png}
+        \caption{}
+        \label{fig:architectureB}
+      \end{subfigure}
+      \vfill
+      \begin{subfigure}{0.5\linewidth}
+        \includegraphics[width=\linewidth]{assets/final-architecture.png}
+        \caption{}
+        \label{fig:architectureC}
+      \end{subfigure}
+      \caption{Our architecture drawings in chronological order}
+      \label{fig:architectures}
+    \end{figure}
+
+    In our first diagram (\ref{fig:architectureA}) we identified a very simplistic backend, it utilised a flask (REST) api to connect to the client and a backend without many control flows. There were cameras attatched to the backend and a database which the backend could also access.
+
+    In our next drawing (\ref{fig:architectureB}), we detailed the backend control flow in-depth which helped us outline our python classes and files. We implemented a controller model where one central controller would process data and record the state of the program. This was to reduce complexity by making the code more modular.
+
+    After much discussion, we decided to change our API to a websocket API to allow for multiple clients and two way communication. This also avoided the problem of long polling with a RESTful API.
+
+    We also made our object detection system run concurrently so it could be interrupted or killed whit ease whilst still maintaining the API. Now, the controller and interpreter would send messages over python threads to communicate, like when a step has been detected or what step is next.
+
+    Additionally, we changed our database from a JSON file to a relational databse (SQL Lite). This increased our application's scalability by allowing us to manage recipe data more easily rather than manipulating a plain-text JSON file.
+
+    As a team we had lots of collaboration on the architecture, we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.
+
+    The planning of architecture contributed a lot to our process it allowed us to develop features simultaneously knowing how they would interact ahead of time.
+
+    \subsubsection{Hardware}
+    For the hardware, we looked into running our main backend on a Raspberry Pi with web-cameras connected via USB. The Raspberry Pi would host the websocket API on our local network for any devices using the frontend to connect to. An SQL Server would also be hosted on the Raspberry Pi locally for it to access.
+
+    This way of hosting made it easier to debug as we could 'fake' messages from the frontend or backend using HTTP requests. 
+
+    In reality, the Convoluted Neural Network ran inneficiently on the Raspberry Pi so we substituted it for a normal laptop, however, our modular architecture allowed us to do this with no problems.
 
     \section{Development}
     \subsection{Backend}
         The backend is divided into several sections: API, controller, interpreter, and object detection. Additionally, we have utilities and tests, which support and are utilised within other sections. The backend is initiated from 'main.py', which launches the controller, API, and our logging system, producing two separate log files: one called 'detection' and one called 'API' to help us track the status of the program. We also have 'config.py', which houses common variables used throughout the backend. This allows us to easily change any of these variables without delving too deeply into the backend.
     \subsubsection{Controller}
     Our controller keeps state for the backend: storing the current recipe and step, taking messages from the API to the database, and handling detection events from the interpreter. It is built from 3 core scripts, the Controller main script, a manageThread script and a recipe script. 
-    The recipe script is for all the getter and setter functions that are recipe dependent. This includes functions such as get\textunderscore command\textunderscore for\textunderscore step to be able to read and serve the human readable commands to the frontend and get\textunderscore progression\textunderscore requirements\textunderscore for\textunderscore step to get and serve the progression objects to the interpreter. We split these functions into a separate script from the main Controller as they are recipe dependent, meaning we need to have already selected a recipe in the initialisation stage of this script and we wanted to keep this function out of the main controller script as that also houses recipe independent functions.
+    The recipe script is for all the getter and setter functions that are recipe dependent. This includes functions such as \verb|get_command_for_step()| to be able to read and serve the human readable commands to the frontend and \verb|get_progression_requirements_for_step()| to get and serve the progression objects to the interpreter. We split these functions into a separate script from the main Controller as they are recipe dependent, meaning we need to have already selected a recipe in the initialisation stage of this script and we wanted to keep this function out of the main controller script as that also houses recipe independent functions.
     The main Controller script contains functions for starting new recipes, recipe dependent functions called from the recipes script and recipe independent functions such as retrieving all recipe metadata for displaying multiple recipes on the frontend.
     \subsubsection{Interpreter}
     \subsubsection{API}
     \subsection{Frontend}
+    
  
     \subsection{Database}
     \subsubsection{JSON}
