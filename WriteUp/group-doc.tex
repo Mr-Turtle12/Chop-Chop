@@ -287,6 +287,20 @@ During our research process, we tried out Roboflow and used a trial of their tra
     \subsubsection{Object Detection}
     The object detection module is designed to analyse individual frames for the presence of progression and inhibitory objects. When queried by the interpreter, it captures the current frame using OpenCV2 and processes it using Supervision and  Ultralytics libraries to extract tags for the objects visible in the frame. Subsequently, it determines whether progression objects are present in the list and inhibitory objects are absent, returning either true or false accordingly.
     \subsubsection{API}
+    Our project's API system comprises two main components: a WebSocket server and a custom HTTP server. These two systems run at the same time to achieve different parts of the API requirements.
+    
+    \paragraph{WebSocket Server}
+    The WebSocket server facilitates real-time bidirectional communication between clients and the server, operating on asynchronous principles. It consists of two main handlers: a consumer and a producer. The handler function serves as a central component, running both consumer and producer handlers using the asyncio library to run at the same time.
+    
+    The consumer handler processes incoming requests from clients, parsing JSON payloads into request objects, and executing corresponding commands. These commands involve interactions with the controller or the database.
+    
+    The producer handler manages outgoing responses to clients, continuously monitoring changes in the system state. For instance, it tracks updates in recipe steps and broadcasts these updates to all connected clients. 
+    
+    \paragraph{Custom HTTP Server}
+    The custom HTTP server handles file retrieval and uploads from the multimedia gallery. It extends the \verb|MyCustomHTTPRequestHandler| class, inheriting functionality from Python's \verb|http.server.SimpleHTTPRequestHandler|.
+    
+    Its primary function is to retrieve multimedia content, such as photos or voice lines, from the gallery via URLs. If it receives a POST request, the server validates whether the request contains image data. If image data is present, the server stores the uploaded image in the Multimedia Gallery.
+    
     \subsection{Frontend}
     Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
     \begin{description}
