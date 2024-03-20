@@ -1,16 +1,17 @@
 <template>
   <section class="c-featured-recipe o-section"> 
     <div
-        v-if="recipesLoaded"
-        class="c-featured-recipe__card-container"
-      > 
-    <div class="c-featured-recipe__container o-container">
-      <div class="c-featured-recipe__image-container">
-        <img
-          class="c-featured-recipe__image"
-          :src="recipes.image" :alt = "ImageNotFound"
-        >
-      </div>
+      v-if="recipesLoaded"
+      class="c-featured-recipe__card-container"
+    > 
+      <div class="c-featured-recipe__container o-container">
+        <div class="c-featured-recipe__image-container">
+          <img
+            class="c-featured-recipe__image"
+            :src="recipes.image"
+            :alt="ImageNotFound"
+          >
+        </div>
     
         <div class="c-featured-recipe__text-container">
           <h1 class="c-featured-recipe__heading">
@@ -21,22 +22,25 @@
             </a>
           </h1>
 
+          <p class="c-featured-recipe__description">
+            {{ recipes.description }}
+          </p>
+
           <div class="c-featured-recipe__meta">
             <div class="c-featured-recipe__time">
               <ClockSVG
                 class="c-featured-recipe__time-icon"
               />
               
-              <p>Prep Time:  {{ formatTime(recipes.prepTime) }}</p>
+              <p>Prep:  {{ formatTime(recipes.prepTime) }}</p>
             </div>
             <div class="c-featured-recipe__time">
               <ClockSVG
                 class="c-featured-recipe__time-icon"
               />
               
-              <p>Cook Time:  {{ formatTime(recipes.cookTime) }}</p>
+              <p>Cook:  {{ formatTime(recipes.cookTime) }}</p>
             </div>
-            <p>{{ recipes.description }}</p>
           </div>
         </div>
       </div>
@@ -72,14 +76,14 @@ onMounted(async () => {
 })
 
 const formatTime = (Time) => {
-    const hours = Math.floor(Time / 60);
-    const remainingMinutes = Time % 60;
+    const hours = Math.floor(Time / 60)
+    const remainingMinutes = Time % 60
     if (hours === 0) {
-        return `${remainingMinutes} min${remainingMinutes !== 1 ? 's' : ''}`;
+        return `${remainingMinutes} min${remainingMinutes !== 1 ? 's' : ''}`
     } else if (remainingMinutes === 0) {
-        return `${hours} hr${hours !== 1 ? 's' : ''}`;
+        return `${hours} hr${hours !== 1 ? 's' : ''}`
     } else {
-        return `${hours} hr${hours !== 1 ? 's' : ''} ${remainingMinutes} min${remainingMinutes !== 1 ? 's' : ''}`;
+        return `${hours} hr${hours !== 1 ? 's' : ''} ${remainingMinutes} min${remainingMinutes !== 1 ? 's' : ''}`
     }
 }
 
@@ -93,6 +97,11 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 
 .c-featured-recipe {
+  &__card-container {
+    display:flex;
+    column-gap: var(--gutter);
+  }
+
   &__container {
     display: flex;
     align-items: center;
@@ -138,11 +147,11 @@ onBeforeUnmount(() => {
     color: var(--white);
     display: flex;
     flex-direction: column;
-    padding: var(--space-xxl) 0;
+    padding: var(--space-xxl) var(--space-xxs);
     z-index:3;
 
     @include media("<=tablet") {
-      padding: var(--space-m) 0;
+      padding: var(--space-m) var(--space-xxs);
     }
   }
 
@@ -159,8 +168,17 @@ onBeforeUnmount(() => {
     }
   }
 
+  &__description {
+    @include ts-meta;
+    margin-bottom: var(--space-xs);
+    text-align: center;
+    text-wrap: wrap;
+  }
+
   &__meta {
     @include ts-meta;
+    display:flex;
+    column-gap: var(--gutter);
   }
 
   &__time {
@@ -171,12 +189,6 @@ onBeforeUnmount(() => {
   &__time-icon {
     margin-right:4px;
     color: var(--white);
-  }
-  &__card-container {
-    display:flex;
-    column-gap: var(--gutter);
-    overflow: auto;
-    white-space: nowrap;
   }
 }
 </style>

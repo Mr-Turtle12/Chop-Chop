@@ -1,11 +1,14 @@
 <template>
+  <BackButton />
+
   <PageHeader />
 
   <section class="c-recipe-image o-section">
     <div class="c-recipe-image__image-container">
       <img
         class="c-recipe-image__image"
-        :src="recipe.img" :alt = "require('@/assets/ImageNotFound.png')"
+        :src="recipe.img"
+        :alt="require('@/assets/ImageNotFound.png')"
       >
     </div>
   </section>
@@ -55,7 +58,9 @@
           <a
             class="c-recipe__link"
             :href="`/recipe/${ route.params.id }`"
-          >start recipe</a>
+          >
+            <p class="c-recipe__link-heading">Start Recipe</p>
+          </a>
         </div>
       </div>
 
@@ -68,6 +73,7 @@
 </template>
 
 <script setup>
+import BackButton from '@/components/BackButton.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import RecipeSwitcher from '@/components/RecipeSwitcher.vue'
 import BookmarkSVG from '@/assets/bookmark-svg.vue'
@@ -149,14 +155,14 @@ function parseRecipeFromJson(RecipeJsonMessage)
 }
 
 const formatTime = (Time) => {
-    const hours = Math.floor(Time / 60);
-    const remainingMinutes = Time % 60;
+    const hours = Math.floor(Time / 60)
+    const remainingMinutes = Time % 60
     if (hours === 0) {
-        return `${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+        return `${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`
     } else if (remainingMinutes === 0) {
-        return `${hours} hour${hours !== 1 ? 's' : ''}`;
+        return `${hours} hour${hours !== 1 ? 's' : ''}`
     } else {
-        return `${hours} hour${hours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+        return `${hours} hour${hours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`
     }
 }
 
@@ -184,6 +190,8 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .c-recipe {
+  $c : &;
+  
   &__info-container {
     @include grid;
   }
@@ -335,7 +343,6 @@ onBeforeUnmount(() => {
     border-radius: 10px;
     border: 2px solid var(--dark-green);
     background-color: var(--white);
-    color: var(--dark-green);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -344,8 +351,15 @@ onBeforeUnmount(() => {
     &:hover,
     &:focus {
       background-color: var(--dark-green);
-      color: var(--white);
+
+      #{$c}__link-heading {
+        color: var(--white);
+      }
     }
+  }
+
+  &__link-heading {
+    color: var(--dark-green);
   }
 }
 .c-recipe-image {

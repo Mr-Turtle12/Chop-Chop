@@ -1,64 +1,60 @@
 <template>
-  <section class="c-timer-card o-section">
-    <div class="c-timer-card__container o-container">
-      <div class="circular-timer">
-        <svg
-          class="progress-ring"
-          width="120"
-          height="120"
-          viewBox="0 0 120 120"
-        >
-          <!-- Background circle -->
-          <circle
-            class="progress-ring-circle background-circle"
-            :stroke="backgroundStrokeColor"
-            :stroke-dasharray="circumference"
-            stroke-width="8"
-            fill="transparent"
-            r="50"
-            cx="60"
-            cy="60"
-          />
+  <section class="c-timer-card">
+    <div class="c-timer-card__container">
+      <svg
+        class="c-timer-card__timer"
+        width="120"
+        height="120"
+        viewBox="0 0 120 120"
+      >
+        <!-- Background circle -->
+        <circle
+          :stroke="backgroundStrokeColor"
+          :stroke-dasharray="circumference"
+          stroke-width="8"
+          fill="transparent"
+          r="50"
+          cx="60"
+          cy="60"
+        />
           
-          <!-- Progress circle -->
-          <circle
-            class="progress-ring-circle"
-            :stroke-dasharray="circumference"
-            :stroke-dashoffset="circumference * progress"
-            :stroke="progressStrokeColor"
-            stroke-width="8"
-            fill="transparent"
-            r="50"
-            cx="60"
-            cy="60"
-            transform="rotate(-90 60 60)"
-          />
+        <!-- Progress circle -->
+        <circle
+          :stroke-dasharray="circumference"
+          :stroke-dashoffset="circumference * progress"
+          :stroke="`#419170`"
+          stroke-linecap="round"
+          s
+          stroke-width="8"
+          fill="transparent"
+          r="50"
+          cx="60"
+          cy="60"
+          transform="rotate(-90 60 60)"
+        />
 
-
-          <!-- Text time element -->
-          <text
-            x="50%"
-            y="50%"
-            text-anchor="middle"
-            alignment-baseline="middle"
-            :class="timerTextClass"
-            :style="{ fill: textColor }"
-          >
-            {{ formatTime(hours, minutes, seconds) }}
-          </text>
-        </svg>
-        <!-- Time Note -->
+        <!-- Text time element -->
         <text
-          v-if="timerString"
           x="50%"
-          y="70%"
+          y="50%"
           text-anchor="middle"
           alignment-baseline="middle"
-          class="timer-string"
+          :class="timerTextClass"
+          :style="{ fill: textColor }"
         >
-          {{ timerString }}
+          {{ formatTime(hours, minutes, seconds) }}
         </text>
-      </div>
+      </svg>
+
+      <!-- Time Note -->
+      <text
+        v-if="timerString"
+        text-anchor="middle"
+        alignment-baseline="middle"
+        class="timer-string"
+      >
+        {{ timerString }}
+      </text>
     </div>
   </section>
 </template>
@@ -115,10 +111,6 @@ onUnmounted(() => {
 
 const textColor = computed(() => {
     return remainingTime.value === 0 ? '#e74c3c' : '#333' // Red color when completed, otherwise black
-})
-
-const progressStrokeColor = computed(() => {
-    return '#3498db' // Blue color for background circle
 })
 
 const backgroundStrokeColor = computed(() => {
@@ -186,7 +178,16 @@ watch(remainingTime, (newVal, oldVal) => {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+.c-timer-card {
+  &__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
 .timer-text {
   font-size: 1.5em;
   fill: #333;
@@ -199,29 +200,6 @@ watch(remainingTime, (newVal, oldVal) => {
 .timer-string {
   font-size: 1em;
   fill: #777;
-}
-
-.circular-timer {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.progress-ring {
-  display: block;
-}
-
-.background-circle {
-  stroke-width: 8;
-}
-.progress-ring-circle {
-  stroke-linecap: round;
-  transition: stroke 0.5s; /* Add transition for smooth color change */
-}
-.completed-circle {
-  stroke-linecap: round;
-  transition: stroke 0.5s; /* Add transition for smooth color change */
 }
 
 @keyframes flash {

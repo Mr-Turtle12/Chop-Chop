@@ -1,30 +1,33 @@
 <template>
-  <div
+  <a
     :class="`c-card c-card--${ size }`"
+    :href="`/recipe-overview/${ id }`"
   >
     <div class="c-card__image-wrapper">
       <img
         class="c-card__image"
-        :src="image" :alt = "ImageNotFound"
+        :src="image"
+        :alt="ImageNotFound"
       >
 
       <div
         class="c-card__bookmark-icon-wrapper"
-        @click="
-          toggleFavourite($event)"
+        @click.prevent="toggleFavourite($event)"
       >
         <BookmarkSVG
           :class="`c-card__bookmark-icon js-bookmark-icon ${isLocalFavourite ? 'c-card__bookmark-icon--favourite' : ''}`"
         />
       </div>
-      <div v-if="isLocalSmart" class="c-card__smart-icon-wrapper">
+      <div
+        v-if="isLocalSmart"
+        class="c-card__smart-icon-wrapper"
+      >
         <SmartRecipeSVG class="c-card__smart-icon" />
       </div>
     </div>
 
-    <a
+    <div
       class="c-card__info"
-      :href="`/recipe-overview/${ id }`"
     >
       <h1 class="c-card__heading">
         {{ recipeName }}
@@ -39,8 +42,8 @@
           <p> {{ time }}</p>
         </div>
       </div>
-    </a>
-  </div>
+    </div>
+  </a>
 </template>
 
 <script setup>
@@ -62,7 +65,7 @@ const props = defineProps({
     image: { type: String, default: require('@/assets/ImageNotFound.png') },
     id : {type: Number, default: 1},
     isSmart: {type: Boolean, default: false},
-    time: {type: String, default: "1 hour"}
+    time: {type: String, default: '1 hour'}
 })
 var isLocalFavourite  = props.isFavourite
 var isLocalSmart = props.isSmart
@@ -181,6 +184,22 @@ function toggleFavourite($event) {
   &--horizontal {
     display:flex;
 
+    &:hover, 
+    &:focus {
+      #{$c}__info {
+        background-color: var(--dark-green);
+      }
+
+      #{$c}__heading,
+      #{$c}__meta {
+        color: var(--white);
+      }
+      
+      #{$c}__time-icon {
+        color: var(--white);
+      }
+    }
+
       #{$c}__image-wrapper {
         height: 100%;
         width: 50%;
@@ -204,19 +223,19 @@ function toggleFavourite($event) {
         padding: 30px;
         width:50%;
 
-        &:hover,
-        &:focus {
-          background-color: var(--dark-green);
+        // &:hover,
+        // &:focus {
+        //   background-color: var(--dark-green);
 
-          #{$c}__heading,
-          #{$c}__meta {
-            color: var(--white);
-          }
+        //   #{$c}__heading,
+        //   #{$c}__meta {
+        //     color: var(--white);
+        //   }
           
-          #{$c}__time-icon {
-            color: var(--white);
-          }
-        }
+        //   #{$c}__time-icon {
+        //     color: var(--white);
+        //   }
+        // }
       }
 
       #{$c}__heading {
