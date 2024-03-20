@@ -142,81 +142,124 @@ RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively
 
 During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
     
-    \section{Design}
-    \subsection{Frontend}
-    Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
+\section{Design}
+\subsection{Frontend}
+Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
 
-    \subsubsection{Research}
-    
-    Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
-    
-    \paragraph{Featured Recipe}
-    Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
-    
-    \begin{figure}[htbp]
-      \includegraphics[width=1.0\textwidth]{assets/BBCGF featured-image.png}
-      \centering
-      \caption{insert caption here}
-    \end{figure}
+\subsubsection{Research}
 
-    \paragraph{Recipe cards}
-    Each site also used cards as a way to display each recipe. We found that this was an effective way to display each of the recipes, while only showing the necessary information needed for the user.
-    
-    On Yummly, a variation of their recipe cards caught our attention with an interactive hover feature. Initially displaying just the recipe title, hovering over the card revealed more details about the recipe. We aimed to incorporate a similar functionality into our own cards.
-    
-    \begin{figure}[htbp]
-      \includegraphics[width=1.0\textwidth]{assets/Yummly recipe cards.png}
-      \centering
-      \caption{insert caption here}
-    \end{figure}
+Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
 
-    \paragraph{Recipe Overview}
-    For the Recipe Overview page, we wanted the user to be able to see a summary of the recipe and navigate between seeing the recipe steps and the ingredients in a seamless way.
-    
-    To keep the design of the page simple and clean, we split the page into two sections: the header and the information. The header of the page would show off important information about the recipe, such as the name, a description and a summary of how long the recipe will take to prepare. This section would also feature a start recipe button to take the user to the recipe carousel page.
-    
-    The information section of the page would showcase both the ingredients and recipe portions of the overview.
-    
-    After looking at the 3 initial sites, we discovered that the layout was overly cluttered, and the transition between viewing the recipe and its ingredients was not seamless. Instead, most sites placed the ingredients and recipe either side by side or one after the other, which disrupted the flow of navigation.
-    
-    Instead, we opted for a switcher component that enables users to toggle between viewing the recipe and the ingredients. We believed that this approach would reduce clutter on the page and separate information in a more organised manner. We found inspiration for this functionality on W3Schools.
-    
-    \begin{figure}[htbp]
-      \includegraphics[width=1.0\textwidth]{assets/W3Schools tabbed component.png}
-      \centering
-      \caption{insert caption here}
-    \end{figure}
+\paragraph{Featured Recipe}
+Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
 
-    We liked the simplicity of this design and the effective functionality to show off information without cluttering the page. 
+\begin{figure}[htbp]
+  \includegraphics[width=1.0\textwidth]{BBCGF featured-image.png}
+  \centering
+  \caption{insert caption here}
+\end{figure}
 
-    \paragraph{Colour Palette}
-    To begin our investigation into which colour palette should be used for the frontend, we decided to investigate any accessibility issues which we will have to take in to consideration to ensure that our design enhanced readability and usability for all users. 
+\paragraph{Recipe cards}
+Each site also used cards as a way to display each recipe. We found that this was an effective way to display each of the recipes, while only showing the necessary information needed for the user.
 
-    During this investigation, we found that the use of bright colours may cause pain for those who suffer with low vision or dyslexia, and may also prevent them from being able to read information from the page. This means that websites need to have a low brightness background to accommodate for this disability.
-    
-    Users also need a high contrast between the text and the background on a page. According to the W3C accessibility standards, people will be able to read information better on a page which incorporates dark text on a light background. We wanted to select colours for our frontend which would meet both of these accessibility criteria and found that a neutral tone for our main colour scheme would effectively meet these standards.
-    
-    For the background of the the web application, we opted to use a pale peach colour. We selected this colour as it would provide a warmth to the page while also ensuring that users who struggle with bright backgrounds are not overwhelmed when reading information. Furthermore, the selection of this colour made it easier to find secondary colours for text and highlights that would provide a bold contrast.
+On Yummly, a variation of their recipe cards caught our attention with an interactive hover feature. Initially displaying just the recipe title, hovering over the card revealed more details about the recipe. We aimed to incorporate a similar functionality into our own cards.
 
-    Following our research from the initial recipe websites, we noted that both BBC Good Foods and Yummly incorporated green into their website design. We liked the use of the colour green since it is associated with promoting healthy eating, and although our application is not necessarily for this purpose, it can make people feel better about what they eat.
+\begin{figure}[htbp]
+  \includegraphics[width=1.0\textwidth]{Yummly recipe cards.png}
+  \centering
+  \caption{insert caption here}
+\end{figure}
 
-    We also found that this colour contrasts well with the pale peach background and is not harsh on the eyes, providing a bold contrast to increase readability for users.
+\paragraph{Recipe Overview}
+For the Recipe Overview page, we wanted the user to be able to see a summary of the recipe and navigate between seeing the recipe steps and the ingredients in a seamless way.
 
-    \subsubsection{Figma vs Zeplin}
-    Before we began to design the prototype of the frontend, we had to decide which software application we should use. From prior experience during our placement year, we initially chose to use either Figma or Zeplin.
+To keep the design of the page simple and clean, we split the page into two sections: the header and the information. The header of the page would show off important information about the recipe, such as the name, a description and a summary of how long the recipe will take to prepare. This section would also feature a start recipe button to take the user to the recipe carousel page.
 
-    Within our research, we found that Zeplin is primarily a collaboration and handoff tool whereas Figma is a comprehensive design tool that enables collaborative design, prototyping, and sharing within a single platform. This means that you could create designs directly using Figma, while on Zeplin, designs must be created using a dedicated design tool such as Sketch or Adobe XD, and then imported. 
-    
-    Figma also features a Dev Mode interface that allows for developers to translate created designs into code more efficiently. As a team, we liked the use of this feature since we would be able to streamline the design-to-development workflow and reduce the use of repetitive, manual coding.
-    
-    While Zeplin does also feature some developer tools, Figma is exclusively tailored for the design process. This means that Figma can provide a better experience while designing prototypes as it doe not have the additional complexity of features which are shown within Zeplin. 
+The information section of the page would showcase both the ingredients and recipe portions of the overview.
 
-    After considering the pros and cons of both applications, combined with the research which we conducted, we decided that Figma would be the best solution for us.
-    
-    \subsubsection{Designs: Version 1}
-    The initial iteration of the designs prioritised the application's functionality over user experience considerations. We used our prior research to design a homepage which would allow the user to view and navigate to recipes easily as well as providing essential information to the user. 
+After looking at the 3 initial sites, we discovered that the layout was overly cluttered, and the transition between viewing the recipe and its ingredients was not seamless. Instead, most sites placed the ingredients and recipe either side by side or one after the other, which disrupted the flow of navigation.
 
-    Inspired by our research, we designed our own featured recipe component, recipe cards and recipe pages. 
+Instead, we opted for a switcher component that enables users to toggle between viewing the recipe and the ingredients. We believed that this approach would reduce clutter on the page and separate information in a more organised manner. We found inspiration for this functionality on W3Schools.
+
+\begin{figure}[htbp]
+  \includegraphics[width=1.0\textwidth]{W3Schools tabbed component.png}
+  \centering
+  \caption{insert caption here}
+\end{figure}
+
+We liked the simplicity of this design and the effective functionality to show off information without cluttering the page. 
+
+\paragraph{Colour Palette}
+To begin our investigation into which colour palette should be used for the frontend, we decided to investigate any accessibility issues which we will have to take in to consideration to ensure that our design enhanced readability and usability for all users. 
+
+During this investigation, we found that the use of bright colours may cause pain for those who suffer with low vision or dyslexia, and may also prevent them from being able to read information from the page. This means that websites need to have a low brightness background to accommodate for this disability.
+
+Users also need a high contrast between the text and the background on a page. According to the W3C accessibility standards, people will be able to read information better on a page which incorporates dark text on a light background. We wanted to select colours for our frontend which would meet both of these accessibility criteria and found that a neutral tone for our main colour scheme would effectively meet these standards.
+
+For the background of the the web application, we opted to use a pale peach colour. We selected this colour as it would provide a warmth to the page while also ensuring that users who struggle with bright backgrounds are not overwhelmed when reading information. Furthermore, the selection of this colour made it easier to find secondary colours for text and highlights that would provide a bold contrast.
+
+\subsubsection{Figma vs Zeplin}
+Before we began to design the prototype of the frontend, we had to decide which software application we should use. From prior experience during our placement year, we initially chose to use either Figma or Zeplin.
+
+Within our research, we found that Zeplin is primarily a collaboration and handoff tool whereas Figma is a comprehensive design tool that enables collaborative design, prototyping, and sharing within a single platform. This means that you could create designs directly using Figma, while on Zeplin, designs must be created using a dedicated design tool such as Sketch or Adobe XD, and then imported. 
+
+Figma also features a Dev Mode interface that allows for developers to translate created designs into code more efficiently. As a team, we liked the use of this feature since we would be able to streamline the design-to-development workflow and reduce the use of repetitive, manual coding.
+
+While Zeplin does also feature some developer tools, Figma is exclusively tailored for the design process. This means that Figma can provide a better experience while designing prototypes as it doe not have the additional complexity of features which are shown within Zeplin. 
+
+After considering the pros and cons of both applications, combined with the research which we conducted, we decided that Figma would be the best solution for us.
+
+\subsubsection{Designs: Version 1}
+The initial iteration of the designs prioritised the application's functionality over user experience considerations. Inspired by our research, we designed our own components, recipe cards and recipe pages. Within this subsection, we provide a detailed description of these components and their functionalities.
+
+\paragraph{Homepage}
+We used our prior research to design a homepage which would allow the user to view and navigate to recipes easily as well as providing essential information to the user. 
+
+Below we have highlighted the components shown within the homepage of our web application, including what each component looks like, how the components functionality works and any thoughts which we discussed to make our design improved.
+
+\paragraph{Featured Recipe}
+In designing this component, the goal was to create a visually appealing design which allowed the user to see a summarised recipe while also not making the homepage cluttered.
+
+\begin{figure}[htbp]
+  \includegraphics[width=1.0\textwidth]{Version 1 Featured Recipe.png}
+  \centering
+  \caption{insert caption here}
+\end{figure}
+
+We designed the component so it would include a background image of the recipe, a title and some metadata including the prep and cook time of the recipe. We felt that this would still make the design eye-catching to the user, while also not overwhelming the user with information.
+
+We wanted to make the functionality of this component randomly choose a recipe from the database, ensuring a dynamic and fresh experience for users with each visit to the homepage.
+
+The component would also a feature a favourite button, giving the users an opportunity to save the recipe so they can build a collection of recipes which they would can go back to and find more easily in the future. 
+
+\paragraph{Recent Recipes}  
+Within the design, we wanted to add a component to show recent recipes which the user has visited before. This feature does not only allow users to revisit recipes which they may have liked before, but it also enhances the users browsing experience since users can quickly see recipes without having to search for them again, adding more simplicity and efficiency to our application.
+
+\begin{figure}[htbp]
+  \includegraphics[width=1.0\textwidth]{Version 1 Recent Recipes.png}
+  \centering
+  \caption{insert caption here}
+\end{figure}
+
+We liked what functionality this component could bring the our web application. By showing the user their recently viewed recipes, it would enhance user engagement and streamline their journey across the application, by allowing them to access content which they find relevant.
+
+The design of this would include the 4 most recently viewed recipes, displayed using a card layout. We found that this layout is user friendly and visually appealing and can display each recipe in a clear and organised manner. 
+
+\paragraph{Liked Recipes}
+We also liked the idea of allowing the user to bookmark recipes which they find appealing and may want to revisit in the future. 
+
+This feature will add another layer of personalisation for the user, allowing them to create their own collection of recipes which they may want to go back and access whenever they need them. 
+
+\begin{figure}[htbp]
+  \includegraphics[width=1.0\textwidth]{Version 1 Liked Recipes.png}
+  \centering
+  \caption{insert caption here}
+\end{figure}
+
+
+On each recipe card, it was designed so a heart shaped icon would be shown, providing the option for users to click and add the recipe to their liked recipe collection. 
+
+It was designed that the component itself would feature 10 favourited recipes and a title linking the user to a search page filtered to display all their bookmarked recipes. To ensure the component would not be cluttered and overwhelming to the user, we decided that it would be best to include a scroll feature, allowing for the user to smoothly navigate though their bookmarked recipes while still providing an organised interface. 
 
     \subsubsection{Designs: Version 2}
 
