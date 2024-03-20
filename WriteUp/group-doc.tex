@@ -38,95 +38,95 @@ Chop Chop \\
 
 \begin{abstract}
   \addcontentsline{toc}{section}{Abstract}
-      This report surrounds our group software development project, a smart cooking assistant called \emph{Chop Chop}. 
-    
-      In this report we will showcase our group project. We will be evaluating not only the software we made but also how we made it, looking into our design, development, and ways of working.
+  This report surrounds our group software development project, a smart cooking assistant called \emph{Chop Chop}.
 
-      We work through this report in a semi-chronological order. We first outline our research and aims. We will later use our aims as metrics to critique how well we acheived our goals. We then explain how we made Chop-Chop, and go on to discuss what we could have done with more time.
+  In this report we will showcase our group project. We will be evaluating not only the software we made but also how we made it, looking into our design, development, and ways of working.
 
-      Throughout the report we will explain both the acheivements and pitfalls we have fallen into as a group and how we dealt with them.
-  \end{abstract}
+  We work through this report in a semi-chronological order. We first outline our research and aims. We will later use our aims as metrics to critique how well we acheived our goals. We then explain how we made Chop-Chop, and go on to discuss what we could have done with more time.
 
-  \pagebreak
+  Throughout the report we will explain both the acheivements and pitfalls we have fallen into as a group and how we dealt with them.
+\end{abstract}
 
-  \tableofcontents
+\pagebreak
 
-  \pagebreak
+\tableofcontents
 
-  \pagenumbering{arabic}
+\pagebreak
 
-  %\begin{multicols}{2}
+\pagenumbering{arabic}
 
-    \section{Introduction}
+%\begin{multicols}{2}
+
+\section{Introduction}
 Chop Chop makes cooking more accessible by offering hands-free, smart recipes. Our smart recipes allow users to cook without having to worry about looking through the steps of a recipe, scrolling a screen with messy hands, or starting timers. It achieves this by using a convoluted neural network (CNN), computer vision, and a full-stack application.
 
-We made this application as a team of five people, all with previous experience of developing on large projects. Following agile methodologies, we used our experience and finished our development with a prototype of a full-stack application which acheives what we set out to do. 
+We made this application as a team of five people, all with previous experience of developing on large projects. Following agile methodologies, we used our experience and finished our development with a prototype of a full-stack application which acheives what we set out to do.
 
 We implemented extra features on our project which we did not plan to do when the project was defined. Contrastingly, we ran into some problems which meanth we had to adapt some aspects of the original plan.
 
-    
-
-    \section{Aims}
-
-    \section{Ways of Working}
-    \subsection{User Stories}
-    Right at the start of our project, we came up with and decided on our user stories. We took our vision of what a theoretical end-product would be. It was broken into fundamental statements that the user should “feel” when they use the product. Below we state the story, then the features it will need.
-
-    \begin{center}
-        \textbf{\textit{“I should be able to progress a recipe without touching the screen”}}
-        \begin{itemize}
-            \item A Camera rig system to observe the kitchen's working areas.
-            \item Object detection system that tells us what’s in the camera's frames. 
-            \item System to check if the culinary objects present satisfy the recipe step.
-            \item Way to send the correct step to a GUI.
-        \end{itemize}
-        
-        \textbf{\textit{“It should be clear to the user what to do for each step”}}
-        \begin{itemize}
-            \item Design with thought and simplicity in mind.
-        \end{itemize}
-        \textbf{\textit{“UI Should be easy to use and modern”}}
-        \begin{itemize}
-            \item UI should be intuitive and follow common design protocols.
-        \end{itemize}
-        
-        \textbf{\textit{“Our interface should be accessible for a range of different disabilities”}}
-        \begin{itemize}
-            \item Design a colour palette that is easy to see and offers good levels of contrast.
-            \item A text-to-speech system that can verbally guide the user alongside displayed text.
-        \end{itemize}
-        
-    \end{center}
-    \subsection{Source Control}
-    One of the key components to Chop-Chops’ success was our well-set-up and organised GitLab repository. 
-
-    Initially, we decided to create a Gantt chart to record the project timeline and delegate deliverables, which was broken down into two-week sprints. Once all members approved this, it was sent to our supervisor who provided insight into improvements to ensure the project worked effectively. An example of this would be adding our module assessments to the chart to accurately manage and consider our university commitments and workload. 
-
-    A scrum-style agile approach was adopted to our project management strategy. We broke down our Gantt charts’ deliverables into “Issues” on Gitlab. Issues were put on our virtual board, which had four categories, Open, In Development, Review/ Testing, and Closed. These issues were assigned and then moved across given their completion state. 
-
-    From our team’s year-in-industry experience, we adopted a review before merging convention. This rule ensures that tasks were overlooked by other members before being added to the main branch from their working one. This had two main advantages. One was a hugely reduced chance of buggy code getting into the main branch. Two: you gained knowledge of how the rest of the project worked outside of your assigned issues. To enforce this, we locked the main branch from being merged and required at least one approval before the merge.
-
-    We aimed to ensure the main branch was kept as clean as possible; we were mindful of what should and should not be on the repo. This included adding rules to the git ignore file when needed, pruning unnecessary files, and ensuring consistency in naming conventions for files and folders.
-
-    \subsection{Meetings}
-    \subsubsection{Meeting Documents}
-    During our sprints, we scheduled one team meeting and one supervisor meeting each week. Ideally, we arranged the supervisor meeting to take place after the team meeting, allowing us to bring any discussions raised in the team meeting to the supervisor within the same week.
-    Throughout the week a shared team document was available for any members to note down any questions or issues that they wanted to raise in the team meeting. This functioned very well as it meant discussions were not accidentally overlooked during the meeting and it also allowed other members to see the discussions points raised and prepare prior to the meeting.
-    We also made use of the GitLabs issues board and our own Gannt chart to keep ourselves on schedule throughout the project. These tools allowed us to easily check what work was still outstanding for the week and compare the progress we were making to our initials estimates when starting out. As this was a particularly large project to undertake it was crucial we kept ourselves on track this way.
-    \subsubsection{Team Meetings}
-    At the beginning of each team meeting, we allocated a minute-taker to record the discussions. We would then begin by addressing any discussion points or questions raised in the shared document or brought up by members during the meeting. The practice of having discussions pre-documented in the shared file significantly sped up the note-taking process, enabling us to focus more on the discussions themselves. 
-    Following the discussions, we would quickly cover all issues closed on the GitLabs since last meeting, making note of them in the minutes, before reviewing any outstanding issues. We made sure that each team member individually was making good progress and was clear with what work was still to be done and provided team assistance to any members that were encountering any difficulties with their work.
-    Finally, we would create new issues aligned with the progress steps outlined on the Gannt Chart and assign them out to team members based on their current workloads and experience in the given areas of the project.
-    \subsubsection{Supervisor Meetings}
-    Our supervisor meetings were usually well organised as we would make notes during the team meetings for any discussions to be bought up to the supervisor. Any feedback or recommendations were then considered, and issues and objectives updated to reflect any changes from the meeting.
-    As well as this, we made sure to keep our supervisor updated on our progress and any issues closed since the last meeting and inform them of the issues outstanding and assigned for this week. This way we made sure the supervisor was always aware of the work we were aiming to achieve for next week and could hold us accountable for any delays.
 
 
-    \section{Research}
-    \subsection{Object detection}
-    Our project's flagship feature was our custom real-time object detection system. This would be used to detect culinary objects such as food and utensils which would dictate when a recipe step had been completed.
-    
-None of us on the project had experience creating an object detection system. So, we began by doing some research. 
+\section{Aims}
+
+\section{Ways of Working}
+\subsection{User Stories}
+Right at the start of our project, we came up with and decided on our user stories. We took our vision of what a theoretical end-product would be. It was broken into fundamental statements that the user should “feel” when they use the product. Below we state the story, then the features it will need.
+
+\begin{center}
+  \textbf{\textit{“I should be able to progress a recipe without touching the screen”}}
+  \begin{itemize}
+    \item A Camera rig system to observe the kitchen's working areas.
+    \item Object detection system that tells us what’s in the camera's frames.
+    \item System to check if the culinary objects present satisfy the recipe step.
+    \item Way to send the correct step to a GUI.
+  \end{itemize}
+
+  \textbf{\textit{“It should be clear to the user what to do for each step”}}
+  \begin{itemize}
+    \item Design with thought and simplicity in mind.
+  \end{itemize}
+  \textbf{\textit{“UI Should be easy to use and modern”}}
+  \begin{itemize}
+    \item UI should be intuitive and follow common design protocols.
+  \end{itemize}
+
+  \textbf{\textit{“Our interface should be accessible for a range of different disabilities”}}
+  \begin{itemize}
+    \item Design a colour palette that is easy to see and offers good levels of contrast.
+    \item A text-to-speech system that can verbally guide the user alongside displayed text.
+  \end{itemize}
+
+\end{center}
+\subsection{Source Control}
+One of the key components to Chop-Chops’ success was our well-set-up and organised GitLab repository.
+
+Initially, we decided to create a Gantt chart to record the project timeline and delegate deliverables, which was broken down into two-week sprints. Once all members approved this, it was sent to our supervisor who provided insight into improvements to ensure the project worked effectively. An example of this would be adding our module assessments to the chart to accurately manage and consider our university commitments and workload.
+
+A scrum-style agile approach was adopted to our project management strategy. We broke down our Gantt charts’ deliverables into “Issues” on Gitlab. Issues were put on our virtual board, which had four categories, Open, In Development, Review/ Testing, and Closed. These issues were assigned and then moved across given their completion state.
+
+From our team’s year-in-industry experience, we adopted a review before merging convention. This rule ensures that tasks were overlooked by other members before being added to the main branch from their working one. This had two main advantages. One was a hugely reduced chance of buggy code getting into the main branch. Two: you gained knowledge of how the rest of the project worked outside of your assigned issues. To enforce this, we locked the main branch from being merged and required at least one approval before the merge.
+
+We aimed to ensure the main branch was kept as clean as possible; we were mindful of what should and should not be on the repo. This included adding rules to the git ignore file when needed, pruning unnecessary files, and ensuring consistency in naming conventions for files and folders.
+
+\subsection{Meetings}
+\subsubsection{Meeting Documents}
+During our sprints, we scheduled one team meeting and one supervisor meeting each week. Ideally, we arranged the supervisor meeting to take place after the team meeting, allowing us to bring any discussions raised in the team meeting to the supervisor within the same week.
+Throughout the week a shared team document was available for any members to note down any questions or issues that they wanted to raise in the team meeting. This functioned very well as it meant discussions were not accidentally overlooked during the meeting and it also allowed other members to see the discussions points raised and prepare prior to the meeting.
+We also made use of the GitLabs issues board and our own Gannt chart to keep ourselves on schedule throughout the project. These tools allowed us to easily check what work was still outstanding for the week and compare the progress we were making to our initials estimates when starting out. As this was a particularly large project to undertake it was crucial we kept ourselves on track this way.
+\subsubsection{Team Meetings}
+At the beginning of each team meeting, we allocated a minute-taker to record the discussions. We would then begin by addressing any discussion points or questions raised in the shared document or brought up by members during the meeting. The practice of having discussions pre-documented in the shared file significantly sped up the note-taking process, enabling us to focus more on the discussions themselves.
+Following the discussions, we would quickly cover all issues closed on the GitLabs since last meeting, making note of them in the minutes, before reviewing any outstanding issues. We made sure that each team member individually was making good progress and was clear with what work was still to be done and provided team assistance to any members that were encountering any difficulties with their work.
+Finally, we would create new issues aligned with the progress steps outlined on the Gannt Chart and assign them out to team members based on their current workloads and experience in the given areas of the project.
+\subsubsection{Supervisor Meetings}
+Our supervisor meetings were usually well organised as we would make notes during the team meetings for any discussions to be bought up to the supervisor. Any feedback or recommendations were then considered, and issues and objectives updated to reflect any changes from the meeting.
+As well as this, we made sure to keep our supervisor updated on our progress and any issues closed since the last meeting and inform them of the issues outstanding and assigned for this week. This way we made sure the supervisor was always aware of the work we were aiming to achieve for next week and could hold us accountable for any delays.
+
+
+\section{Research}
+\subsection{Object detection}
+Our project's flagship feature was our custom real-time object detection system. This would be used to detect culinary objects such as food and utensils which would dictate when a recipe step had been completed.
+
+None of us on the project had experience creating an object detection system. So, we began by doing some research.
 
 With the huge demand for real-time object detection in the modern age many different algorithms have emerged.
 
@@ -136,19 +136,19 @@ Detectron2- Created by Facebook AI research it claims to “provides state-of-th
 
 YOLO – You Only Look Once, “It is a state-of-the-art, real-time object detection system which offers extreme levels of speed and accuracy.” \cite{rajeshwari2019object}, that is around “1000x faster than RCNN and 100x faster than the Fast R-CNN model” \cite{rajeshwari2019object}.  It's also shown to have a much higher mAP50-95 "96.7\%" compared to detectron2 (Faster RCNN-101) at "83.554\%" \cite{ai5010005}.
 
-Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management. 
+Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management.
 
 RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively create image datasets. It allows you to upload images you have taken for training, delegate annotation jobs out to different members of the team, and then create a dataset which can be downloaded and trained locally. It was one of the few sites that offered an immense data set (max 10,000 images) with an easy-to-use interface, all for free.
 
 During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
-    
+
 \section{Design}
 \subsection{Frontend}
 Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
 
 \subsubsection{Research}
 
-Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
+Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly.
 
 \paragraph{Featured Recipe}
 Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
@@ -187,10 +187,10 @@ Instead, we opted for a switcher component that enables users to toggle between 
   \caption{insert caption here}
 \end{figure}
 
-We liked the simplicity of this design and the effective functionality to show off information without cluttering the page. 
+We liked the simplicity of this design and the effective functionality to show off information without cluttering the page.
 
 \paragraph{Colour Palette}
-To begin our investigation into which colour palette should be used for the frontend, we decided to investigate any accessibility issues which we will have to take in to consideration to ensure that our design enhanced readability and usability for all users. 
+To begin our investigation into which colour palette should be used for the frontend, we decided to investigate any accessibility issues which we will have to take in to consideration to ensure that our design enhanced readability and usability for all users.
 
 During this investigation, we found that the use of bright colours may cause pain for those who suffer with low vision or dyslexia, and may also prevent them from being able to read information from the page. This means that websites need to have a low brightness background to accommodate for this disability.
 
@@ -201,11 +201,11 @@ For the background of the the web application, we opted to use a pale peach colo
 \subsubsection{Figma vs Zeplin}
 Before we began to design the prototype of the frontend, we had to decide which software application we should use. From prior experience during our placement year, we initially chose to use either Figma or Zeplin.
 
-Within our research, we found that Zeplin is primarily a collaboration and handoff tool whereas Figma is a comprehensive design tool that enables collaborative design, prototyping, and sharing within a single platform. This means that you could create designs directly using Figma, while on Zeplin, designs must be created using a dedicated design tool such as Sketch or Adobe XD, and then imported. 
+Within our research, we found that Zeplin is primarily a collaboration and handoff tool whereas Figma is a comprehensive design tool that enables collaborative design, prototyping, and sharing within a single platform. This means that you could create designs directly using Figma, while on Zeplin, designs must be created using a dedicated design tool such as Sketch or Adobe XD, and then imported.
 
 Figma also features a Dev Mode interface that allows for developers to translate created designs into code more efficiently. As a team, we liked the use of this feature since we would be able to streamline the design-to-development workflow and reduce the use of repetitive, manual coding.
 
-While Zeplin does also feature some developer tools, Figma is exclusively tailored for the design process. This means that Figma can provide a better experience while designing prototypes as it doe not have the additional complexity of features which are shown within Zeplin. 
+While Zeplin does also feature some developer tools, Figma is exclusively tailored for the design process. This means that Figma can provide a better experience while designing prototypes as it doe not have the additional complexity of features which are shown within Zeplin.
 
 After considering the pros and cons of both applications, combined with the research which we conducted, we decided that Figma would be the best solution for us.
 
@@ -213,7 +213,7 @@ After considering the pros and cons of both applications, combined with the rese
 The initial iteration of the designs prioritised the application's functionality over user experience considerations. Inspired by our research, we designed our own components, recipe cards and recipe pages. Within this subsection, we provide a detailed description of these components and their functionalities.
 
 \paragraph{Homepage}
-We used our prior research to design a homepage which would allow the user to view and navigate to recipes easily as well as providing essential information to the user. 
+We used our prior research to design a homepage which would allow the user to view and navigate to recipes easily as well as providing essential information to the user.
 
 Below we have highlighted the components shown within the homepage of our web application, including what each component looks like, how the components functionality works and any thoughts which we discussed to make our design improved.
 
@@ -230,9 +230,9 @@ We designed the component so it would include a background image of the recipe, 
 
 We wanted to make the functionality of this component randomly choose a recipe from the database, ensuring a dynamic and fresh experience for users with each visit to the homepage.
 
-The component would also a feature a favourite button, giving the users an opportunity to save the recipe so they can build a collection of recipes which they would can go back to and find more easily in the future. 
+The component would also a feature a favourite button, giving the users an opportunity to save the recipe so they can build a collection of recipes which they would can go back to and find more easily in the future.
 
-\paragraph{Recent Recipes}  
+\paragraph{Recent Recipes}
 Within the design, we wanted to add a component to show recent recipes which the user has visited before. This feature does not only allow users to revisit recipes which they may have liked before, but it also enhances the users browsing experience since users can quickly see recipes without having to search for them again, adding more simplicity and efficiency to our application.
 
 \begin{figure}[htbp]
@@ -243,12 +243,12 @@ Within the design, we wanted to add a component to show recent recipes which the
 
 We liked what functionality this component could bring the our web application. By showing the user their recently viewed recipes, it would enhance user engagement and streamline their journey across the application, by allowing them to access content which they find relevant.
 
-The design of this would include the 4 most recently viewed recipes, displayed using a card layout. We found that this layout is user friendly and visually appealing and can display each recipe in a clear and organised manner. 
+The design of this would include the 4 most recently viewed recipes, displayed using a card layout. We found that this layout is user friendly and visually appealing and can display each recipe in a clear and organised manner.
 
 \paragraph{Liked Recipes}
-We also liked the idea of allowing the user to bookmark recipes which they find appealing and may want to revisit in the future. 
+We also liked the idea of allowing the user to bookmark recipes which they find appealing and may want to revisit in the future.
 
-This feature will add another layer of personalisation for the user, allowing them to create their own collection of recipes which they may want to go back and access whenever they need them. 
+This feature will add another layer of personalisation for the user, allowing them to create their own collection of recipes which they may want to go back and access whenever they need them.
 
 \begin{figure}[htbp]
   \includegraphics[width=1.0\textwidth]{assets/Version 1 Liked Recipes.png}
@@ -257,12 +257,12 @@ This feature will add another layer of personalisation for the user, allowing th
 \end{figure}
 
 
-On each recipe card, it was designed so a heart shaped icon would be shown, providing the option for users to click and add the recipe to their liked recipe collection. 
+On each recipe card, it was designed so a heart shaped icon would be shown, providing the option for users to click and add the recipe to their liked recipe collection.
 
-It was designed that the component itself would feature 10 favourited recipes and a title linking the user to a search page filtered to display all their bookmarked recipes. To ensure the component would not be cluttered and overwhelming to the user, we decided that it would be best to include a scroll feature, allowing for the user to smoothly navigate though their bookmarked recipes while still providing an organised interface. 
+It was designed that the component itself would feature 10 favourited recipes and a title linking the user to a search page filtered to display all their bookmarked recipes. To ensure the component would not be cluttered and overwhelming to the user, we decided that it would be best to include a scroll feature, allowing for the user to smoothly navigate though their bookmarked recipes while still providing an organised interface.
 
 \paragraph{Recipe Cards}
-We opted to have 2 different recipe card versions within the application: horizontal and vertical. The decision to have these different types was made so the cards can be more versatile and could be used for multiple components. Both versions of the cards include an image, title, like button and some metadata to display important information to the user. 
+We opted to have 2 different recipe card versions within the application: horizontal and vertical. The decision to have these different types was made so the cards can be more versatile and could be used for multiple components. Both versions of the cards include an image, title, like button and some metadata to display important information to the user.
 
 The horizontal card has been designed to show the image of the recipe on the left-hand side, and the information associated with the recipe on the right with a white background. The vertical card was designed to have the recipe image as the background of the card, with a green box at the bottom to display the recipe information.
 
@@ -278,10 +278,10 @@ The horizontal card has been designed to show the image of the recipe on the lef
   \caption{insert caption here}
 \end{figure}
 
-A hover state was also designed for each recipe card, to allow users to know which card they are currently selecting and improving accessibility. Depending on the card, different hover state versions are shown. 
+A hover state was also designed for each recipe card, to allow users to know which card they are currently selecting and improving accessibility. Depending on the card, different hover state versions are shown.
 
 Within the horizontal card, the colour scheme undergoes an inversion, with the background of the information displayed in green and the text presented in white. On the other hand, the green box displaying the recipe information within the vertical card expands and raises within the card to reveal additional details.
-    
+
 \paragraph{Recipe Overview}
 The recipe overview page highlights essential elements such as ingredients, cooking steps and preparation time which allows the users to have an understanding of the recipe before they proceed with cooking.
 
@@ -296,7 +296,7 @@ The component was designed to include two tabs which the user could switch betwe
   \caption{insert caption here}
 \end{figure}
 
-The recipe section stated the steps which the user would be following. 
+The recipe section stated the steps which the user would be following.
 
 \begin{figure}[htbp]
   \includegraphics[width=1.0\textwidth]{assets/Version 1 Recipe Switcher recipe.png}
@@ -311,139 +311,139 @@ Within this version, we added an add recipe form to allow users to add in their 
 
 \paragraph{Add Recipe Form}
 
-    \subsection{Architecture}
-    \subsubsection{Software}
-    Due to the size and complexity of this project, we knew we needed to outline what we needed before begining a substantial ammount of work. First, we detailed what we wanted: a multi-platform app capable of identifying and progressing steps of a recipe. We then researched how we could execute our idea; we settled on a basic client/server approach using a client, a server, and a database (which only the server could access). This would comprise the basis of our tech stack.
+\subsection{Architecture}
+\subsubsection{Software}
+Due to the size and complexity of this project, we knew we needed to outline what we needed before begining a substantial ammount of work. First, we detailed what we wanted: a multi-platform app capable of identifying and progressing steps of a recipe. We then researched how we could execute our idea; we settled on a basic client/server approach using a client, a server, and a database (which only the server could access). This would comprise the basis of our tech stack.
 
-    \begin{figure}[t]
-      \centering
-      \begin{subfigure}{0.45\linewidth}
-        \includegraphics[width=\linewidth]{assets/first-architecture.png}
-        \caption{}
-        \label{fig:architectureA}
-      \end{subfigure}
-      \hfill
-      \begin{subfigure}{0.45\linewidth}
-        \includegraphics[width=\linewidth]{assets/second-architecture.png}
-        \caption{}
-        \label{fig:architectureB}
-      \end{subfigure}
-      \vfill
-      \begin{subfigure}{0.5\linewidth}
-        \includegraphics[width=\linewidth]{assets/final-architecture.png}
-        \caption{}
-        \label{fig:architectureC}
-      \end{subfigure}
-      \caption{Our architecture drawings in chronological order}
-      \label{fig:architectures}
-    \end{figure}
+\begin{figure}[t]
+  \centering
+  \begin{subfigure}{0.45\linewidth}
+    \includegraphics[width=\linewidth]{assets/first-architecture.png}
+    \caption{}
+    \label{fig:architectureA}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.45\linewidth}
+    \includegraphics[width=\linewidth]{assets/second-architecture.png}
+    \caption{}
+    \label{fig:architectureB}
+  \end{subfigure}
+  \vfill
+  \begin{subfigure}{0.5\linewidth}
+    \includegraphics[width=\linewidth]{assets/final-architecture.png}
+    \caption{}
+    \label{fig:architectureC}
+  \end{subfigure}
+  \caption{Our architecture drawings in chronological order}
+  \label{fig:architectures}
+\end{figure}
 
-    In our first diagram (\ref{fig:architectureA}) we identified a very simplistic backend, it utilised a flask (REST) api to connect to the client and a backend without many control flows. There were cameras attatched to the backend and a database which the backend could also access.
+In our first diagram (\ref{fig:architectureA}) we identified a very simplistic backend, it utilised a flask (REST) api to connect to the client and a backend without many control flows. There were cameras attatched to the backend and a database which the backend could also access.
 
-    In our next drawing (\ref{fig:architectureB}), we detailed the backend control flow in-depth which helped us outline our python classes and files. We implemented a controller model where one central controller would process data and record the state of the program. This was to reduce complexity by making the code more modular.
+In our next drawing (\ref{fig:architectureB}), we detailed the backend control flow in-depth which helped us outline our python classes and files. We implemented a controller model where one central controller would process data and record the state of the program. This was to reduce complexity by making the code more modular.
 
-    After much discussion, we decided to change our API to a websocket API to allow for multiple clients and two way communication. This also avoided the problem of long polling with a RESTful API.
+After much discussion, we decided to change our API to a websocket API to allow for multiple clients and two way communication. This also avoided the problem of long polling with a RESTful API.
 
-    We also made our object detection system run concurrently so it could be interrupted or killed whit ease whilst still maintaining the API. Now, the controller and interpreter would send messages over python threads to communicate, like when a step has been detected or what step is next.
+We also made our object detection system run concurrently so it could be interrupted or killed whit ease whilst still maintaining the API. Now, the controller and interpreter would send messages over python threads to communicate, like when a step has been detected or what step is next.
 
-    Additionally, we changed our database from a JSON file to a relational databse (SQL Lite). This increased our application's scalability by allowing us to manage recipe data more easily rather than manipulating a plain-text JSON file.
+Additionally, we changed our database from a JSON file to a relational databse (SQL Lite). This increased our application's scalability by allowing us to manage recipe data more easily rather than manipulating a plain-text JSON file.
 
-    As a team we had lots of collaboration on the architecture, we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.\footnote{Figure \ref{fig:architectureC}, is not technically the final architecture diagram as we also added the multimedia gallery (section \ref{multimediaGallery}) which adds another database sending information to the frontend.}
+As a team we had lots of collaboration on the architecture, we would often draw up designs on whiteboards and discuss the pros and cons of each approach this led to us being well prepared for problems and making an architecture that is modular by design.\footnote{Figure \ref{fig:architectureC}, is not technically the final architecture diagram as we also added the multimedia gallery (section \ref{multimediaGallery}) which adds another database sending information to the frontend.}
 
-    The planning of architecture contributed a lot to our process it allowed us to develop features simultaneously knowing how they would interact ahead of time.
+The planning of architecture contributed a lot to our process it allowed us to develop features simultaneously knowing how they would interact ahead of time.
 
-    \subsubsection{Hardware}
-    For the hardware, we looked into running our main backend on a Raspberry Pi with web-cameras connected via USB. The Raspberry Pi would host the websocket API on our local network for any devices using the frontend to connect to. An SQL Server would also be hosted on the Raspberry Pi locally for it to access.
+\subsubsection{Hardware}
+For the hardware, we looked into running our main backend on a Raspberry Pi with web-cameras connected via USB. The Raspberry Pi would host the websocket API on our local network for any devices using the frontend to connect to. An SQL Server would also be hosted on the Raspberry Pi locally for it to access.
 
-    This way of hosting made it easier to debug as we could 'fake' messages from the frontend or backend using HTTP requests. 
+This way of hosting made it easier to debug as we could 'fake' messages from the frontend or backend using HTTP requests.
 
-    In reality, the Convoluted Neural Network ran inneficiently on the Raspberry Pi so we substituted it for a normal laptop, however, our modular architecture allowed us to do this with no problems.
+In reality, the Convoluted Neural Network ran inneficiently on the Raspberry Pi so we substituted it for a normal laptop, however, our modular architecture allowed us to do this with no problems.
 
-    \section{Development}
-    \subsection{Backend}
-        The backend is divided into several sections: API, controller, interpreter, and object detection. Additionally, we have utilities and tests, which support and are utilised within other sections. The backend is initiated from \verb|main.py|, which launches the controller, API, and our logging system, producing two separate log files: one called \verb|detection| and one called \verb|API| to help us track the status of the program. We also have \verb|config.py|, which houses common variables used throughout the backend. This allows us to easily change any of these variables without delving too deeply into the backend.
-    \subsubsection{Controller}
-    Our controller keeps state for the backend: storing the current recipe and step, taking messages from the API to the database, and handling detection events from the interpreter. It is built from 3 core scripts, the Controller main script, a manageThread script and a recipe script. 
-    
-    The recipe script is for all the getter and setter functions that are recipe dependent. This includes functions such as \verb|get_command_for_step()| to be able to read and serve the human readable commands to the frontend and \\ \verb|get_progression_requirements_for_step()| to get and serve the progression objects to the interpreter. We split these functions into a separate script from the main Controller as they are recipe dependent, meaning we need to have already selected a recipe in the initialisation stage of this script and we wanted to keep this function out of the main controller script as that also houses recipe independent functions.
-    The main Controller script contains functions for starting new recipes, recipe dependent functions called from the recipes script and recipe independent functions such as retrieving all recipe metadata for displaying multiple recipes on the frontend.
-    \subsubsection{Interpreter}
-    The interpreter acts as a link between the visual inputs coming out of object detection and the controller, it operates on a separate thread, allowing the controller to handle frontend requests simultaneously and without interruption. We initialise the interpreter thread with the progression object, inhibitor object and camera passed into it, this setup enables the interpreter to query the object detection module for the presence of progression objects while ensuring the absence of inhibitory ones. Additionally, we add hands as a default inhibitor object to ensure that the interpreter does not progress while the user is still working on the current step. Hard coding this into the interpreter reduces the need to specify them for each individual step and avoids clogging up the database with duplicate information.
-    
-    Instead of initialising the cameras inside the interpreter, which was our initial approach, we now initialise them outside of the thread in an initialisation script and pass them into the interpreter. This change was made because the initial method led to long processing time between recipe steps as each step required the cameras to be reinitialised as a new thread was being created. With this change the progression between recipe steps significantly sped up, with the trade-off being that it now takes slightly longer to initialise the recipe at the beginning.
-    
-    To help prevent false positives from progressing the step prematurely we implemented a rolling average process into the interpreter. To achieve this we developed a custom \verb|LimitedQueue| datatype. This datatype is used to take an average over the last 10 outputs from object detection as true or false denoting whether the last frames met progression the requirements, with at least 6 of these frames needing to be true to allow the step to progress. We experimented with the number of frames being used to calculate our rolling average and found that 7 out of a set of 10 worked well to reduce the false positives without significantly delaying progression times. This was easy to experiment with as both these variables are housed inside \verb|config.py|.
-    
-    Once the rolling average requirement is met, the thread closes, triggering an \verb|'end_thread'| function that isn’t run on the thread itself. This function informs the controller that the step has been completed and progresses the step sending a message to the API for the frontend and starting a new thread with the progression and inhibitor objects for the next step.
+\section{Development}
+\subsection{Backend}
+The backend is divided into several sections: API, controller, interpreter, and object detection. Additionally, we have utilities and tests, which support and are utilised within other sections. The backend is initiated from \verb|main.py|, which launches the controller, API, and our logging system, producing two separate log files: one called \verb|detection| and one called \verb|API| to help us track the status of the program. We also have \verb|config.py|, which houses common variables used throughout the backend. This allows us to easily change any of these variables without delving too deeply into the backend.
+\subsubsection{Controller}
+Our controller keeps state for the backend: storing the current recipe and step, taking messages from the API to the database, and handling detection events from the interpreter. It is built from 3 core scripts, the Controller main script, a manageThread script and a recipe script.
 
-    \subsubsection{Object Detection}
-    The object detection module is designed to analyse individual frames for the presence of progression and inhibitory objects. When queried by the interpreter, it captures the current frame using OpenCV2 and processes it using Supervision and  Ultralytics libraries to extract tags for the objects visible in the frame. Subsequently, it determines whether progression objects are present in the list and inhibitory objects are absent, returning either true or false accordingly.
-    \subsubsection{API}
-    Our project's API system comprises two main components: a WebSocket server and a custom HTTP server. These two systems run at the same time to achieve different parts of the API requirements.
-    
-    \paragraph{WebSocket Server}
-    The WebSocket server facilitates real-time bidirectional communication between clients and the server, operating on asynchronous principles. It consists of two main handlers: a consumer and a producer. The handler function serves as a central component, running both consumer and producer handlers using the asyncio library to run at the same time.
-    
-    The consumer handler processes incoming requests from clients, parsing JSON payloads into request objects, and executing corresponding commands. These commands involve interactions with the controller or the database.
-    
-    The producer handler manages outgoing responses to clients, continuously monitoring changes in the system state. For instance, it tracks updates in recipe steps and broadcasts these updates to all connected clients. 
-    
-    \paragraph{Custom HTTP Server}
-    The custom HTTP server handles file retrieval and uploads from the multimedia gallery. It extends the \verb|MyCustomHTTPRequestHandler| class, inheriting functionality from Python's \verb|http.server.SimpleHTTPRequestHandler|.
-    
-    Its primary function is to retrieve multimedia content, such as photos or voice lines, from the gallery via URLs. If it receives a POST request, the server validates whether the request contains image data. If image data is present, the server stores the uploaded image in the Multimedia Gallery.
-    
-    \subsection{Frontend}
-    Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
-    \begin{description}
-      \item[Flexibility:] vue is flexible, we can make custom components to fit our application, we can test it on a web-browser and utilise powerful debuging tools, additionally with a bit of work we can sandbox it into a mobile application.
-      \item[Easy to learn:] vue's syntax and component systems are easy to learn and to read which suits our team, some of which had never used a frontend framework before. This makes understanding the code much easier when it comes to reviewing merge requests or discussing approaches.
-      \item[Lightweight:] vue is lightweight, it's quick to load as it is made to be run from a web-browser. Features like hot reload help us devlop quickly and it's cli tools\footnote{in addition to the node package manager} make installing packages easy.
-      \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
-    \end{description}
+The recipe script is for all the getter and setter functions that are recipe dependent. This includes functions such as \verb|get_command_for_step()| to be able to read and serve the human readable commands to the frontend and \\ \verb|get_progression_requirements_for_step()| to get and serve the progression objects to the interpreter. We split these functions into a separate script from the main Controller as they are recipe dependent, meaning we need to have already selected a recipe in the initialisation stage of this script and we wanted to keep this function out of the main controller script as that also houses recipe independent functions.
+The main Controller script contains functions for starting new recipes, recipe dependent functions called from the recipes script and recipe independent functions such as retrieving all recipe metadata for displaying multiple recipes on the frontend.
+\subsubsection{Interpreter}
+The interpreter acts as a link between the visual inputs coming out of object detection and the controller, it operates on a separate thread, allowing the controller to handle frontend requests simultaneously and without interruption. We initialise the interpreter thread with the progression object, inhibitor object and camera passed into it, this setup enables the interpreter to query the object detection module for the presence of progression objects while ensuring the absence of inhibitory ones. Additionally, we add hands as a default inhibitor object to ensure that the interpreter does not progress while the user is still working on the current step. Hard coding this into the interpreter reduces the need to specify them for each individual step and avoids clogging up the database with duplicate information.
+
+Instead of initialising the cameras inside the interpreter, which was our initial approach, we now initialise them outside of the thread in an initialisation script and pass them into the interpreter. This change was made because the initial method led to long processing time between recipe steps as each step required the cameras to be reinitialised as a new thread was being created. With this change the progression between recipe steps significantly sped up, with the trade-off being that it now takes slightly longer to initialise the recipe at the beginning.
+
+To help prevent false positives from progressing the step prematurely we implemented a rolling average process into the interpreter. To achieve this we developed a custom \verb|LimitedQueue| datatype. This datatype is used to take an average over the last 10 outputs from object detection as true or false denoting whether the last frames met progression the requirements, with at least 6 of these frames needing to be true to allow the step to progress. We experimented with the number of frames being used to calculate our rolling average and found that 7 out of a set of 10 worked well to reduce the false positives without significantly delaying progression times. This was easy to experiment with as both these variables are housed inside \verb|config.py|.
+
+Once the rolling average requirement is met, the thread closes, triggering an \verb|'end_thread'| function that isn’t run on the thread itself. This function informs the controller that the step has been completed and progresses the step sending a message to the API for the frontend and starting a new thread with the progression and inhibitor objects for the next step.
+
+\subsubsection{Object Detection}
+The object detection module is designed to analyse individual frames for the presence of progression and inhibitory objects. When queried by the interpreter, it captures the current frame using OpenCV2 and processes it using Supervision and  Ultralytics libraries to extract tags for the objects visible in the frame. Subsequently, it determines whether progression objects are present in the list and inhibitory objects are absent, returning either true or false accordingly.
+\subsubsection{API}
+Our project's API system comprises two main components: a WebSocket server and a custom HTTP server. These two systems run at the same time to achieve different parts of the API requirements.
+
+\paragraph{WebSocket Server}
+The WebSocket server facilitates real-time bidirectional communication between clients and the server, operating on asynchronous principles. It consists of two main handlers: a consumer and a producer. The handler function serves as a central component, running both consumer and producer handlers using the asyncio library to run at the same time.
+
+The consumer handler processes incoming requests from clients, parsing JSON payloads into request objects, and executing corresponding commands. These commands involve interactions with the controller or the database.
+
+The producer handler manages outgoing responses to clients, continuously monitoring changes in the system state. For instance, it tracks updates in recipe steps and broadcasts these updates to all connected clients.
+
+\paragraph{Custom HTTP Server}
+The custom HTTP server handles file retrieval and uploads from the multimedia gallery. It extends the \verb|MyCustomHTTPRequestHandler| class, inheriting functionality from Python's \verb|http.server.SimpleHTTPRequestHandler|.
+
+Its primary function is to retrieve multimedia content, such as photos or voice lines, from the gallery via URLs. If it receives a POST request, the server validates whether the request contains image data. If image data is present, the server stores the uploaded image in the Multimedia Gallery.
+
+\subsection{Frontend}
+Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons:
+\begin{description}
+  \item[Flexibility:] vue is flexible, we can make custom components to fit our application, we can test it on a web-browser and utilise powerful debuging tools, additionally with a bit of work we can sandbox it into a mobile application.
+  \item[Easy to learn:] vue's syntax and component systems are easy to learn and to read which suits our team, some of which had never used a frontend framework before. This makes understanding the code much easier when it comes to reviewing merge requests or discussing approaches.
+  \item[Lightweight:] vue is lightweight, it's quick to load as it is made to be run from a web-browser. Features like hot reload help us devlop quickly and it's cli tools\footnote{in addition to the node package manager} make installing packages easy.
+  \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
+\end{description}
 
 
- 
-    \subsection{Database}
-    \subsubsection{JSON}
-    We originally built a JSON database to quickly get started with storing recipes. We broke the initial database into separate recipes, each with three distinct areas. Recipe Details contained the recipe ID, Name and Description, Recipe Ingredients contained all the ingredient Names as well as Amount and Unit. Recipe Steps then contained Steps in human readable form, the Progression Object and Inhibitor for the backends understanding and the Camera which the step is expected to be completed under.
-    
-    We chose to use JSON to start with due to its quick and simple nature to set up, allowing us to quickly begin testing the process of displaying recipe details and ingredients on the frontend and progressing through recipe steps with the backend.
-    
-    When breaking the recipes into separate steps we knew we had to do it in a way that could be easily translated into Progression Objects and Inhibitor Objects. From our first database we had the steps broken down into their most simple form so that the neural network would only ever have one object to be looking for at once. It was important that this step was done early as it led the way for knowing what images we would need to have for our training dataset.
-    \subsubsection{SQL}
-    Further into the project, once we had a good setup for displaying and progressing our recipes, we wanted to add a significant amount of “dummy data” to fill out the frontend application and allow for features such as featured recipes and recipe searching. It became clear that the JSON database would no longer be the best way to store our recipes and we instead opted to transition to an SQL database before progressing with adding the additional recipes and search functionality.
-    After deciding to migrate to an SQL database, we conducted research and opted for SQLite over other SQL database engines. This choice stemmed from our desire for a straightforward implementation while still leveraging the features of SQL and not needing to start running any more servers which would have been required for an SQL server.
-    
-    The SQL database comprises five tables, three of these tables are mapped from the same segments that were split from the JSON data. These tables include Recipes, which store core recipe information such as name and description, Steps which is linked to recipes in a one-to-many relationship, and Ingredients, also linked to recipes in a one-to-many relationship. Recipes contains the same information as it did in the JSON, while Steps and Ingredients needed a column added for RecipeID to now be able to link it back to the recipe they belong to.
-    
-    Additionally, the database includes two new tables to accommodate the work done with voices. The Voices table assigns a unique ID to each voice, and the Recipe\textunderscore Voices table facilitates many-to-many connections between recipes and voice recordings.
-    \subsubsection{Multimedia Gallery}\label{multimediaGallery}
-    As well as the SQL database the final project also contains a file storage server to store our photos and voice recordings for recipe steps. This is local file storage server with its location stored inside the SQL database.
-    
-    This file storage is called using a custom HTML web request to retrieve the images and voice recordings. We chose to store our recipe images like this as we found it to be the simplest and easiest way to store photos with a focus on scalability.
 
-    \subsection{Data Collection \& Training}
-    \subsubsection{RoboFlow}
-    For developing our object detection system, we needed a trained model. From our research, we decided to use Roboflow for data collection and management and trained with YOLOv8.
-    
+\subsection{Database}
+\subsubsection{JSON}
+We originally built a JSON database to quickly get started with storing recipes. We broke the initial database into separate recipes, each with three distinct areas. Recipe Details contained the recipe ID, Name and Description, Recipe Ingredients contained all the ingredient Names as well as Amount and Unit. Recipe Steps then contained Steps in human readable form, the Progression Object and Inhibitor for the backends understanding and the Camera which the step is expected to be completed under.
+
+We chose to use JSON to start with due to its quick and simple nature to set up, allowing us to quickly begin testing the process of displaying recipe details and ingredients on the frontend and progressing through recipe steps with the backend.
+
+When breaking the recipes into separate steps we knew we had to do it in a way that could be easily translated into Progression Objects and Inhibitor Objects. From our first database we had the steps broken down into their most simple form so that the neural network would only ever have one object to be looking for at once. It was important that this step was done early as it led the way for knowing what images we would need to have for our training dataset.
+\subsubsection{SQL}
+Further into the project, once we had a good setup for displaying and progressing our recipes, we wanted to add a significant amount of “dummy data” to fill out the frontend application and allow for features such as featured recipes and recipe searching. It became clear that the JSON database would no longer be the best way to store our recipes and we instead opted to transition to an SQL database before progressing with adding the additional recipes and search functionality.
+After deciding to migrate to an SQL database, we conducted research and opted for SQLite over other SQL database engines. This choice stemmed from our desire for a straightforward implementation while still leveraging the features of SQL and not needing to start running any more servers which would have been required for an SQL server.
+
+The SQL database comprises five tables, three of these tables are mapped from the same segments that were split from the JSON data. These tables include Recipes, which store core recipe information such as name and description, Steps which is linked to recipes in a one-to-many relationship, and Ingredients, also linked to recipes in a one-to-many relationship. Recipes contains the same information as it did in the JSON, while Steps and Ingredients needed a column added for RecipeID to now be able to link it back to the recipe they belong to.
+
+Additionally, the database includes two new tables to accommodate the work done with voices. The Voices table assigns a unique ID to each voice, and the Recipe\textunderscore Voices table facilitates many-to-many connections between recipes and voice recordings.
+\subsubsection{Multimedia Gallery}\label{multimediaGallery}
+As well as the SQL database the final project also contains a file storage server to store our photos and voice recordings for recipe steps. This is local file storage server with its location stored inside the SQL database.
+
+This file storage is called using a custom HTML web request to retrieve the images and voice recordings. We chose to store our recipe images like this as we found it to be the simplest and easiest way to store photos with a focus on scalability.
+
+\subsection{Data Collection \& Training}
+\subsubsection{RoboFlow}
+For developing our object detection system, we needed a trained model. From our research, we decided to use Roboflow for data collection and management and trained with YOLOv8.
+
 To train, we first needed to collect many images of the object we wanted to detect. We found during development that it is best to start with lots of good-quality images of the object; They should be in good lighting and well-framed. Then many different positions of objects in the frame. Finally, gathering some more obscure images. These can be in different lighting conditions, from far away, and with multiple other objects in the frame as well. These all create a diverse data set, which increases the chance of detection.
 
 Once a significant number of images had been gathered (around 100) they were uploaded to Roboflow for annotating. Annotation jobs can be generated and sent to each person on the project. We decided to use box annotation, as it was significantly quicker to annotate and in our preliminary tests offered the same level of object detection that poly-selection did.
 
 Each annotation was then reviewed by someone else before being added to the dataset. This ensured that the dataset was accurate in its annotations as small mistakes could teach the AI the wrong classification.
 
-When all images are annotated a new YOLOv8 dataset can be generated. Before this Roboflow will split up your images into training, testing, and validation. Training will teach AI, validation are used to as it trains test how good the AI is getting. Testing “a test data set is a separate sample, an unseen data set, to provide an unbiased final evaluation of a model fit.” \cite{trainvalidtest} It will resize the image to 640x640 which greatly reduces training time, and smaller images reduce computational cost. 
+When all images are annotated a new YOLOv8 dataset can be generated. Before this Roboflow will split up your images into training, testing, and validation. Training will teach AI, validation are used to as it trains test how good the AI is getting. Testing “a test data set is a separate sample, an unseen data set, to provide an unbiased final evaluation of a model fit.” \cite{trainvalidtest} It will resize the image to 640x640 which greatly reduces training time, and smaller images reduce computational cost.
 
 Finally, it generates extra images through augmentation. We chose Shear ±15° and Brightness ±25\%. Shear would simulate different camera angles, which would provide greater angle coverage. Brightness would widen the number of handled lighting conditions, as different kitchens could have very varied levels of brightness.
 
-    \subsubsection{Training YOLO with CUDA}
-    While RoboFlow did offer the option to train the models for us, it required monetary payments, so we opted to train on our Nivida GPU using CUDA \cite{cudacuda} instead.
+\subsubsection{Training YOLO with CUDA}
+While RoboFlow did offer the option to train the models for us, it required monetary payments, so we opted to train on our Nivida GPU using CUDA \cite{cudacuda} instead.
 
-    CUDA allows for faster YOLO training. It works by taking advantage of CUDA cores that are found on Nivida Graphics cards. In short “CUDA is NVIDIA’s parallel computing architecture. It enables dramatic increases in computing performance, by harnessing the power of the GPU” \cite{ghorpade2012gpgpu}. YOLO itself uses Pytorch \cite{nvidiapytorch} which implements tensor cores, “similar to a multidimensional array, used to store and manipulate the inputs and outputs of a model, as well as the model’s parameters. Tensors are similar to NumPy’s ndarrays, except that tensors can run on GPUs to accelerate computing” \cite{nvidiapytorch}. 
-    
-    By running this command we were able to train our model
-    \begin{verbatim}
+CUDA allows for faster YOLO training. It works by taking advantage of CUDA cores that are found on Nivida Graphics cards. In short “CUDA is NVIDIA’s parallel computing architecture. It enables dramatic increases in computing performance, by harnessing the power of the GPU” \cite{ghorpade2012gpgpu}. YOLO itself uses Pytorch \cite{nvidiapytorch} which implements tensor cores, “similar to a multidimensional array, used to store and manipulate the inputs and outputs of a model, as well as the model’s parameters. Tensors are similar to NumPy’s ndarrays, except that tensors can run on GPUs to accelerate computing” \cite{nvidiapytorch}.
+
+By running this command we were able to train our model
+\begin{verbatim}
     yolo task=detect \
         mode=train \
         model=yolov8s.pt \
@@ -454,72 +454,72 @@ Finally, it generates extra images through augmentation. We chose Shear ±15° a
     \end{verbatim}
 
 
-    Which took in the dataset (data.yaml) from RoboFlow, and outputted weights, and results of the training.
+Which took in the dataset (data.yaml) from RoboFlow, and outputted weights, and results of the training.
 
 
-    \subsubsection{Reviewing \& Improving}
+\subsubsection{Reviewing \& Improving}
 
 
-    \begin{figure}[htbp]
-        \begin{minipage}[htbp]{1\linewidth}
-            \centering
-            \includegraphics[width=\linewidth]{assets/confusion_matrix_normalized-Version-1.png}
-            \caption{Confusion Matrix for first model (normalized)}
-        \end{minipage}%
-        
-        \begin{minipage}[htbp]{1\linewidth}
-            \centering
-            \includegraphics[width=\linewidth]{assets/confusion_matrix_normalized-Version-6.png}
-            \caption{Confusion Matrix for last model (normalized)}
-        \end{minipage}
-    \end{figure}
-    
-    ////Here we will add graphs of our results for our first model and the last model showing how we improved over time
+\begin{figure}[htbp]
+  \begin{minipage}[htbp]{1\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/confusion_matrix_normalized-Version-1.png}
+    \caption{Confusion Matrix for first model (normalized)}
+  \end{minipage}%
 
-    Also, talk here about how we improved out data collection over time, also mention null data
+  \begin{minipage}[htbp]{1\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/confusion_matrix_normalized-Version-6.png}
+    \caption{Confusion Matrix for last model (normalized)}
+  \end{minipage}
+\end{figure}
+
+////Here we will add graphs of our results for our first model and the last model showing how we improved over time
+
+Also, talk here about how we improved out data collection over time, also mention null data
 
 
-    \section{Testing}
-    ////This section we will talk about our attempts at recording a chop-chop video. Refer to youtube for this and also old recordings
+\section{Testing}
+////This section we will talk about our attempts at recording a chop-chop video. Refer to youtube for this and also old recordings
 
-    Maybe also talk about user testing from other people (friends)
+Maybe also talk about user testing from other people (friends)
 
-    \section{Results}
-    //// Talk about the success and also how well the poster fair went. Here is a great place to talk about reliability. Great place to also talk about the varied nMap-50 scores (hands are high other are not)
+\section{Results}
+//// Talk about the success and also how well the poster fair went. Here is a great place to talk about reliability. Great place to also talk about the varied nMap-50 scores (hands are high other are not)
 
-    \section{Future Work}
-    There are a few extra features that we came up with during the development process that we didn’t get time to fully implement into the final project. 
-    \subsection{Raspberry Pi}
-    In our original vision for the project we wanted to be able to run our backend and frontend locally on a Raspberry Pi running an ubuntu server, this was to align with our future vision of having Chop-Chop installed in users kitchens and using a Pi allowed us to sandbox the project in the users local environment. 
-    
-    The choice to use a Raspberry Pi was due to its ease of use and deployment as well as its flexibility in terms of connectivity options, enabling integration with various kitchen appliances or sensors. We did manage to successfully setup the Raspberry Pi during the project, however we found that it was unusably slow when progressing recipe steps and we would have needed to optimise our backend to use it effectively.
-    \subsection{Events Manager}
-    Another feature we originally wanted to see in the final project was an events system manager. This was envisioned as a system that would alert the user if anything had been recognised during the cooking process that needed their immediate attention. The main use we envisioned for this was to alert the user to a saucepan that was beginning to boil over, which the image dataset did have training on, the idea being that if the interpreter registered the tag “Boil-Over-Warning” then an alert would appear on the user’s screen informing them that the saucepan is about to boil over. We wanted to implement this to align with our goal of making Chop-Chop a cooking assistant that could really act as a second pair of eyes during the cooking process.
-    \subsection{Smart Kitchen Integrations}
-    The use of the Raspberry Pi and Event systems manager together culminates in a future version of Chop-Chop which would have more control over the user’s kitchen. In our vision for a Chop-Chop powered smart kitchen our system would be able to operate kitchen devices such as the hob or oven and, following the steps taken from the recipe that is being followed, activate these devices when necessary. This could be used for preheating or setting timers and would improve on the warning system for the boil over event by being able to turn down the heat of the hob on its own once the event has been recognised. This would complete the vision for Chop-Chop to be a home cooking assistant that can take away from the stress of cooking by controlling a lot of the core processes so that the user doesn’t have to.
-    \subsection{Recipe Builder}
-    Another area we would want to enhance as a future idea is the process of choosing which meal to cook. We propose expanding the capabilities of Chop-Chop to include identifying a wider range of foods stored in the fridge and other areas. Currently, our image recogonition can only recognise few ingredients, but by expanding its capabilities, it could effectively determine the contents of your fridge and suggest meals based on available ingredients. This would transforming Chop-Chop it into a comprehensive AI cooking assistant, guiding users from selecting ingredients to completing their meals.
-    \subsection{Industry Integrations}
-    The final big vision we had for Chop-Chop was integration into the restaurant and fast-food industries, as these were two big user profiles that we had considered for our application.
-    By embedding our application directly into professional kitchens, we envisioned alleviating much of the pressure experienced by chefs during peak service hours. Acting as a virtual sous chef, Chop-Chop would efficiently monitor all ongoing meal preparations and cooking processes. This integration could involve a dedicated screen within the kitchen, offering a concise overview of current orders and their estimated completion times, this would significantly streamline kitchen operations.
-    
-    For fast food industries we imagine Chop-Chop could work as a secondary pair of eyes during the meal preparation stage. As each order is being put together and packed up it would have a list of items it expects to see placed into the bag and could then quickly flag up if any items that were overlooked. This would significantly minimise the chance of orders going out with missing or incorrect items and would therefore result in a higher customer satisfaction for these orders.
+\section{Future Work}
+There are a few extra features that we came up with during the development process that we didn’t get time to fully implement into the final project.
+\subsection{Raspberry Pi}
+In our original vision for the project we wanted to be able to run our backend and frontend locally on a Raspberry Pi running an ubuntu server, this was to align with our future vision of having Chop-Chop installed in users kitchens and using a Pi allowed us to sandbox the project in the users local environment.
 
-    \subsection{Dataset Additions}
-    To be able to fully realise these visions, we would need to drastically increase the size of our image training set. As this is a very time-consuming process one of the first changes to the system to allow for these future plans would be creating a more efficient way for the neural network to obtain images. The main idea we had for this would be to allow the system to search across stock images or image search results for specified ingredients and training itself on the results. This would automate the training of the system, but would still need to be constrained and reviewed by individuals to ensure that it is training itself correctly.
+The choice to use a Raspberry Pi was due to its ease of use and deployment as well as its flexibility in terms of connectivity options, enabling integration with various kitchen appliances or sensors. We did manage to successfully setup the Raspberry Pi during the project, however we found that it was unusably slow when progressing recipe steps and we would have needed to optimise our backend to use it effectively.
+\subsection{Events Manager}
+Another feature we originally wanted to see in the final project was an events system manager. This was envisioned as a system that would alert the user if anything had been recognised during the cooking process that needed their immediate attention. The main use we envisioned for this was to alert the user to a saucepan that was beginning to boil over, which the image dataset did have training on, the idea being that if the interpreter registered the tag “Boil-Over-Warning” then an alert would appear on the user’s screen informing them that the saucepan is about to boil over. We wanted to implement this to align with our goal of making Chop-Chop a cooking assistant that could really act as a second pair of eyes during the cooking process.
+\subsection{Smart Kitchen Integrations}
+The use of the Raspberry Pi and Event systems manager together culminates in a future version of Chop-Chop which would have more control over the user’s kitchen. In our vision for a Chop-Chop powered smart kitchen our system would be able to operate kitchen devices such as the hob or oven and, following the steps taken from the recipe that is being followed, activate these devices when necessary. This could be used for preheating or setting timers and would improve on the warning system for the boil over event by being able to turn down the heat of the hob on its own once the event has been recognised. This would complete the vision for Chop-Chop to be a home cooking assistant that can take away from the stress of cooking by controlling a lot of the core processes so that the user doesn’t have to.
+\subsection{Recipe Builder}
+Another area we would want to enhance as a future idea is the process of choosing which meal to cook. We propose expanding the capabilities of Chop-Chop to include identifying a wider range of foods stored in the fridge and other areas. Currently, our image recogonition can only recognise few ingredients, but by expanding its capabilities, it could effectively determine the contents of your fridge and suggest meals based on available ingredients. This would transforming Chop-Chop it into a comprehensive AI cooking assistant, guiding users from selecting ingredients to completing their meals.
+\subsection{Industry Integrations}
+The final big vision we had for Chop-Chop was integration into the restaurant and fast-food industries, as these were two big user profiles that we had considered for our application.
+By embedding our application directly into professional kitchens, we envisioned alleviating much of the pressure experienced by chefs during peak service hours. Acting as a virtual sous chef, Chop-Chop would efficiently monitor all ongoing meal preparations and cooking processes. This integration could involve a dedicated screen within the kitchen, offering a concise overview of current orders and their estimated completion times, this would significantly streamline kitchen operations.
 
-    \section{Conclusion}
-    //// Say it was a success, say what we didn't manage to do
+For fast food industries we imagine Chop-Chop could work as a secondary pair of eyes during the meal preparation stage. As each order is being put together and packed up it would have a list of items it expects to see placed into the bag and could then quickly flag up if any items that were overlooked. This would significantly minimise the chance of orders going out with missing or incorrect items and would therefore result in a higher customer satisfaction for these orders.
 
-    \pagebreak
+\subsection{Dataset Additions}
+To be able to fully realise these visions, we would need to drastically increase the size of our image training set. As this is a very time-consuming process one of the first changes to the system to allow for these future plans would be creating a more efficient way for the neural network to obtain images. The main idea we had for this would be to allow the system to search across stock images or image search results for specified ingredients and training itself on the results. This would automate the training of the system, but would still need to be constrained and reviewed by individuals to ensure that it is training itself correctly.
 
-    
-  %\end{multicols}
-  
-  \addcontentsline{toc}{section}{References}
+\section{Conclusion}
+//// Say it was a success, say what we didn't manage to do
 
-  \bibliographystyle{ieeetr}
-  
-  \bibliography{group-doc}
+\pagebreak
+
+
+%\end{multicols}
+
+\addcontentsline{toc}{section}{References}
+
+\bibliographystyle{ieeetr}
+
+\bibliography{group-doc}
 
 \end{document}
