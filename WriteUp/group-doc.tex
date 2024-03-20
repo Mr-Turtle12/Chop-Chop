@@ -93,6 +93,7 @@ We implemented extra features on our project which we did not plan to do when th
         \textbf{\textit{“Our interface should be accessible for a range of different disabilities”}}
         \begin{itemize}
             \item Design a colour palette that is easy to see and offers good levels of contrast.
+            \item A text-to-speech system that can verbally guide the user alongside displayed text.
         \end{itemize}
         
     \end{center}
@@ -325,11 +326,43 @@ When all images are annotated a new YOLOv8 dataset can be generated. Before this
 
 Finally, it generates extra images through augmentation. We chose Shear ±15° and Brightness ±25\%. Shear would simulate different camera angles, which would provide greater angle coverage. Brightness would widen the number of handled lighting conditions, as different kitchens could have very varied levels of brightness.
 
-    \subsubsection{Training with CUDA}
-    While RoboFlow did offer the option to train the models for us, it required monetary payments, so we opted to train on our Nivida GPU using CUDA \cite{cudacuda}.
-    ...... HERE
+    \subsubsection{Training YOLO with CUDA}
+    While RoboFlow did offer the option to train the models for us, it required monetary payments, so we opted to train on our Nivida GPU using CUDA \cite{cudacuda} instead.
+
+    CUDA allows for faster YOLO training. It works by taking advantage of CUDA cores that are found on Nivida Graphics cards. In short “CUDA is NVIDIA’s parallel computing architecture. It enables dramatic increases in computing performance, by harnessing the power of the GPU” \cite{ghorpade2012gpgpu}. YOLO itself uses Pytorch \cite{nvidiapytorch} which implements tensor cores, “similar to a multidimensional array, used to store and manipulate the inputs and outputs of a model, as well as the model’s parameters. Tensors are similar to NumPy’s ndarrays, except that tensors can run on GPUs to accelerate computing” \cite{nvidiapytorch}. 
+    
+    By running this command we were able to train our model
+    \begin{verbatim}
+    yolo task=detect \
+        mode=train \
+        model=yolov8s.pt \
+        data={Location-Of-Dataset}/data.yaml \
+        epochs=100 \
+        imgsz=640 \
+        device=0
+    \end{verbatim}
+
+
+    Which took in the dataset (data.yaml) from RoboFlow, and outputted weights, and results of the training.
+
 
     \subsubsection{Reviewing \& Improving}
+
+
+    \begin{figure}[htbp]
+        \begin{minipage}[htbp]{1\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{assets/confusion_matrix_normalized-Version-1.png}
+            \caption{Confusion Matrix for first model (normalized)}
+        \end{minipage}%
+        
+        \begin{minipage}[htbp]{1\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{assets/confusion_matrix_normalized-Version-6.png}
+            \caption{Confusion Matrix for last model (normalized)}
+        \end{minipage}
+    \end{figure}
+    
     ////Here we will add graphs of our results for our first model and the last model showing how we improved over time
 
     Also, talk here about how we improved out data collection over time, also mention null data
