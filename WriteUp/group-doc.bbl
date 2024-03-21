@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{FasterRCNN}
 RoboFlow, ``What is faster r-cnn?.'' https://roboflow.com/model/faster-r-cnn,
@@ -33,6 +33,13 @@ G.~Jocher, A.~Chaurasia, and J.~Qiu, ``{Ultralytics YOLO},'' Jan. 2023.
 \bibitem{RoboFlow-Software}
 B.~Dwyer, J.~Nelson, T.~Hansen, {\em et~al.}, ``Roboflow 1.0.''
   https://roboflow.com, 2024.
+
+\bibitem{cobley2020onionbot}
+B.~Cobley and D.~Boyle, ``Onionbot: A system for collaborative computational
+  cooking,'' 2020.
+
+\bibitem{OnionBot-github}
+B.~Cobley, ``Onionbot.'' https://github.com/onionbot, 2023.
 
 \bibitem{trainvalidtest}
 Kili, ``Training, validation and test sets: How to split machine learning
