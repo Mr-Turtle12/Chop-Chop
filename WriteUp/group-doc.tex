@@ -516,31 +516,40 @@ Which took in the dataset (data.yaml) from RoboFlow, and outputted weights, and 
 
 
 \subsubsection{Reviewing \& Improving}
-
-
-\begin{figure}[htbp]
-  \begin{minipage}[htbp]{1\linewidth}
+We found the development of our AI model to be very iterative (agile). Our first model was comprised of a small number of detectable objects but it was enough to allow for the development of the rest of the project.
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{assets/confusion_matrix_normalized-Version-1.png}
-    \caption{Confusion Matrix for first model (normalized)}
-  \end{minipage}%
-
-  \begin{minipage}[htbp]{1\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{assets/confusion_matrix_normalized-Version-6.png}
-    \caption{Confusion Matrix for last model (normalized)}
-  \end{minipage}
+    \includegraphics[width=1\linewidth]{assets/confusion_matrix_normalized-Version-1.png}
+    \caption{confusion matrix normalised of our version 1 model}
+    \label{fig:enter-label}
 \end{figure}
 
-////Here we will add graphs of our results for our first model and the last model showing how we improved over time
+As shown in the figure above, version 1 while sometimes accurate and precise, often it will miss classify. We found by inducing more diversity into the data set (different angles and lighting conditions), we could gain more accurate results.
 
-Also, talk here about how we improved out data collection over time, also mention null data
+Another thing we found was that by adding some null data to the dataset. we can reduce how often the background gets classified as an object.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{assets/confusion_matrix_normalized-Version-6.png}
+    \caption{confusion matrix normalised of our version 1 model}
+    \label{fig:enter-label}
+\end{figure}
+
+Figure 12 shows our final confusion matrix. It has a lot more detectable objects to cover the Quorn spag bowl, jam sandwich, and our carrot test recipe.
+
+Our final model is not perfect, with some miss misclassifying. However, was a lot stronger than when we started and proved to be very reliable in testing.
 
 
 \section{Testing}
-////This section we will talk about our attempts at recording a chop-chop video. Refer to youtube for this and also old recordings
+Chop-Chop, throughout development, stuck to a strong testing methodology. With each new feature, it was tested by the reviewer before it was allowed to be merged in. While we shied away from writing unit tests, we always tried our best to keep the main branch as bug-free as possible. 
 
-Maybe also talk about user testing from other people (friends)
+\subsection{Cooking Tests}
+We had the opportunity to test the full application working in our kitchen. A Mic stand with one web camera attached to pointing down to the work surface, and another attached to the extractor fan. Both were plugged into a laptop running the Chop-Chop app. This setup allowed us to test the hands-free recipe, the Quorn Spag bowl.
+
+For each test, we would record the data gathered by our program. Such as API requests, and what the object detection system saw. As well as video recordings. This would allow us to go back and analyse when the program failed. 
+
+\subsection{User Testing}
+Our opportunities for user testing were not huge, but we did get various friends and family to look at and try our system. We would often take on feedback, and decide if it was a high enough priority to try and implement. This would be decided on a mix between the time complexity of the idea versus how important they and we felt it would be. Such as adding serving sizes, easy to do and very important, so was added in.
 
 \section{Results}
 % Talk about the success and also how well the poster fair went. Here is a great place to talk about reliability. Great place to also talk about the varied nMap-50 scores (hands are high others are not)
