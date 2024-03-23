@@ -487,7 +487,7 @@ For developing our object detection system, we needed a trained model. From our 
 
 To train, we first needed to collect many images of the object we wanted to detect. We found during development that it is best to start with lots of good-quality images of the object; They should be in good lighting and well-framed. Then many different positions of objects in the frame. Finally, gathering some more obscure images. These can be in different lighting conditions, from far away, and with multiple other objects in the frame as well. These all create a diverse data set, which increases the chance of detection.
 
-Once a significant number of images had been gathered (around 100) they were uploaded to Roboflow for annotating. Annotation jobs can be generated and sent to each person on the project. We decided to use box annotation, as it was significantly quicker to annotate and in our preliminary tests offered the same level of object detection that poly-selection did.
+Once a significant number of images had been gathered (around 100 per object) they were uploaded to Roboflow for annotating. Annotation jobs can be generated and sent to each person on the project. We decided to use box annotation, as it was significantly quicker to annotate and in our preliminary tests offered the same level of object detection that poly-selection did.
 
 Each annotation was then reviewed by someone else before being added to the dataset. This ensured that the dataset was accurate in its annotations as small mistakes could teach the AI the wrong classification.
 
@@ -551,7 +551,7 @@ Our final model is not perfect, with some miss misclassifying. However, was a lo
 Chop-Chop, throughout development, stuck to a strong testing methodology. With each new feature, it was tested by the reviewer before it was allowed to be merged in. While we shied away from writing unit tests, we always tried our best to keep the main branch as bug-free as possible. 
 
 \subsection{Cooking Tests}
-We had the opportunity to test the full application working in our kitchen. A Mic stand with one web camera attached to pointing down to the work surface, and another attached to the extractor fan. Both were plugged into a laptop running the Chop-Chop app. This setup allowed us to test the hands-free recipe, the Quorn Spag bowl.
+We had the opportunity to test the full application working in our kitchen. A Mic stand with one web camera attached to pointing down to the prepping area, and another attached to the extractor fan looking at the cooking area. Both were plugged into a laptop running the Chop-Chop app. This setup allowed us to test the hands-free recipe, the Quorn Spag bowl.
 
 For each test, we would record the data gathered by our program. Such as API requests, and what the object detection system saw. As well as video recordings. This would allow us to go back and analyse when the program failed. 
 
