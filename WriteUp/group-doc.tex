@@ -438,6 +438,7 @@ We also removed the idea of implementing tags within recipes and recipe cards. W
     Its primary function is to retrieve multimedia content, such as photos or voice lines, from the gallery via URLs. If it receives a POST request, the server validates whether the request contains image data. If image data is present, the server stores the uploaded image in the Multimedia Gallery.
     
     \subsection{Frontend}
+    \subsubsection{Vue.js}
     Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
     \begin{description}
       \item[Flexibility:] vue is flexible, we can make custom components to fit our application, we can test it on a web-browser and utilise powerful debuging tools, additionally with a bit of work we can sandbox it into a mobile application.
@@ -446,7 +447,9 @@ We also removed the idea of implementing tags within recipes and recipe cards. W
       \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
     \end{description}
 
-
+    \subsubsection{SCSS}
+    \subsubsection{BEM coding standards}
+    
 
  
     \subsection{Database}
