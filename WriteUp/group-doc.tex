@@ -457,6 +457,7 @@ Our controller keeps state for the backend: storing the current recipe and step,
 The recipe script is for all the getter and setter functions that are recipe dependent. This includes functions such as \verb|get_command_for_step()| to be able to read and serve the human readable commands to the frontend and \\ \verb|get_progression_requirements_for_step()| to get and serve the progression objects to the interpreter. We split these functions into a separate script from the main Controller as they are recipe dependent, meaning we need to have already selected a recipe in the initialisation stage of this script and we wanted to keep this function out of the main controller script as that also houses recipe independent functions.
 The main Controller script contains functions for starting new recipes, recipe dependent functions called from the recipes script and recipe independent functions such as retrieving all recipe metadata for displaying multiple recipes on the frontend.
 
+<<<<<<< HEAD
 The main Controller script contains functions for starting new recipes, recipe dependent functions called from the Recipes script and recipe independent functions such as retrieving all recipe metadata for displaying multiple recipes on the frontend. It also contains functions for updating the threading safe flags we use in the case that a thread needs to be ended from the frontend instead of the interpreter.
 
 The manageThread script deals with the initialisation and termination of threads. Threads are initialised with the current step information, containing the progression object, any inhibitor objects, and the camera for which the thread is relevant to. They are then terminated by the Interpreter once it confirms that the current step has been completed, or by the Controller if the user has decided to end the current step on the frontend.
@@ -494,8 +495,38 @@ Whilst researching for the frontend we considered a number of different frontend
   \item[Lightweight:] vue is lightweight, it's quick to load as it is made to be run from a web-browser. Features like hot reload help us devlop quickly and it's cli tools\footnote{in addition to the node package manager} make installing packages easy.
   \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
 \end{description}
+=======
+    \subsubsection{Object Detection}
+    The object detection module is designed to analyse individual frames for the presence of progression and inhibitory objects. When queried by the interpreter, it captures the current frame using OpenCV2 and processes it using Supervision and  Ultralytics libraries to extract tags for the objects visible in the frame. Subsequently, it determines whether progression objects are present in the list and inhibitory objects are absent, returning either true or false accordingly.
+    \subsubsection{API}
+    Our project's API system comprises two main components: a WebSocket server and a custom HTTP server. These two systems run at the same time to achieve different parts of the API requirements.
+    
+    \paragraph{WebSocket Server}
+    The WebSocket server facilitates real-time bidirectional communication between clients and the server, operating on asynchronous principles. It consists of two main handlers: a consumer and a producer. The handler function serves as a central component, running both consumer and producer handlers using the asyncio library to run at the same time.
+    
+    The consumer handler processes incoming requests from clients, parsing JSON payloads into request objects, and executing corresponding commands. These commands involve interactions with the controller or the database.
+    
+    The producer handler manages outgoing responses to clients, continuously monitoring changes in the system state. For instance, it tracks updates in recipe steps and broadcasts these updates to all connected clients. 
+    
+    \paragraph{Custom HTTP Server}
+    The custom HTTP server handles file retrieval and uploads from the multimedia gallery. It extends the \verb|MyCustomHTTPRequestHandler| class, inheriting functionality from Python's \verb|http.server.SimpleHTTPRequestHandler|.
+    
+    Its primary function is to retrieve multimedia content, such as photos or voice lines, from the gallery via URLs. If it receives a POST request, the server validates whether the request contains image data. If image data is present, the server stores the uploaded image in the Multimedia Gallery.
+    
+    \subsection{Frontend}
+    \subsubsection{Vue.js}
+    Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
+    \begin{description}
+      \item[Flexibility:] vue is flexible, we can make custom components to fit our application, we can test it on a web-browser and utilise powerful debuging tools, additionally with a bit of work we can sandbox it into a mobile application.
+      \item[Easy to learn:] vue's syntax and component systems are easy to learn and to read which suits our team, some of which had never used a frontend framework before. This makes understanding the code much easier when it comes to reviewing merge requests or discussing approaches.
+      \item[Lightweight:] vue is lightweight, it's quick to load as it is made to be run from a web-browser. Features like hot reload help us devlop quickly and it's cli tools\footnote{in addition to the node package manager} make installing packages easy.
+      \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
+    \end{description}
+>>>>>>> 3723d3d (frontend development headings)
 
-
+    \subsubsection{SCSS}
+    \subsubsection{BEM coding standards}
+    
 
 \subsection{Database}
 \subsubsection{JSON}
