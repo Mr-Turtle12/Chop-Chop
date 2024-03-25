@@ -207,7 +207,7 @@ Our design process began by investigating and researching what other recipe appl
 Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
 
 \begin{figure}[h]
-  \includegraphics[width=1.0\textwidth]{assets/BBCGF featured-image.png}
+  \includegraphics[width=1.0\textwidth]{assets/design-images/BBCGF featured-image.png}
   \centering
   \caption{insert caption here}
 \end{figure}
@@ -218,7 +218,7 @@ Each site also used cards as a way to display each recipe. We found that this wa
 On Yummly, a variation of their recipe cards caught our attention with an interactive hover feature. Initially displaying just the recipe title, hovering over the card revealed more details about the recipe. We aimed to incorporate a similar functionality into our own cards.
 
 \begin{figure}[h]
-  \includegraphics[width=1.0\textwidth]{assets/Yummly recipe cards.png}
+  \includegraphics[width=1.0\textwidth]{assets/design-images/Yummly recipe cards.png}
   \centering
   \caption{insert caption here}
 \end{figure}
@@ -235,7 +235,7 @@ After looking at the 3 initial sites, we discovered that the layout was overly c
 Instead, we opted for a switcher component that enables users to toggle between viewing the recipe and the ingredients. We believed that this approach would reduce clutter on the page and separate information in a more organised manner. We found inspiration for this functionality on W3Schools.
 
 \begin{figure}[h]
-  \includegraphics[width=1.0\textwidth]{assets/W3Schools tabbed component.png}
+  \includegraphics[width=1.0\textwidth]{assets/design-images/W3Schools tabbed component.png}
   \centering
   \caption{insert caption here}
 \end{figure}
@@ -274,9 +274,9 @@ Below we have highlighted the components shown within the homepage of our web ap
 In designing this component, the goal was to create a visually appealing design which allowed the user to see a summarised recipe while also not making the homepage cluttered.
 
 \begin{figure}[h]
-  \includegraphics[width=1.0\textwidth]{assets/Version 1 Featured Recipe.png}
+  \includegraphics[width=1.0\textwidth]{assets/design-images/Version 1 Featured Recipe.png}
   \centering
-  \caption{insert caption here}
+  \caption{Homepage featured article shown on BBCGoodFoods}
 \end{figure}
 
 We designed the component so it would include a background image of the recipe, a title and some metadata including the prep and cook time of the recipe. We felt that this would still make the design eye-catching to the user, while also not overwhelming the user with information.
@@ -289,9 +289,9 @@ The component would also a feature a favourite button, giving the users an oppor
 Within the design, we wanted to add a component to show recent recipes which the user has visited before. This feature does not only allow users to revisit recipes which they may have liked before, but it also enhances the users browsing experience since users can quickly see recipes without having to search for them again, adding more simplicity and efficiency to our application.
 
 \begin{figure}[h]
-  \includegraphics[width=1.0\textwidth]{assets/Version 1 Recent Recipes.png}
+  \includegraphics[width=1.0\textwidth]{assets/design-images/Version 1 Recent Recipes.png}
   \centering
-  \caption{insert caption here}
+  \caption{Recent Recipes component design}
 \end{figure}
 
 We liked what functionality this component could bring the our web application. By showing the user their recently viewed recipes, it would enhance user engagement and streamline their journey across the application, by allowing them to access content which they find relevant.
@@ -304,9 +304,9 @@ We also liked the idea of allowing the user to bookmark recipes which they find 
 This feature will add another layer of personalisation for the user, allowing them to create their own collection of recipes which they may want to go back and access whenever they need them. 
 
 \begin{figure}[h]
-  \includegraphics[width=1.0\textwidth]{assets/Version 1 Liked Recipes.png}
+  \includegraphics[width=1.0\textwidth]{assets/design-images/Version 1 Liked Recipes.png}
   \centering
-  \caption{insert caption here}
+  \caption{Liked Recipes component design}
 \end{figure}
 
 
@@ -320,15 +320,15 @@ We opted to have 2 different recipe card versions within the application: horizo
 The horizontal card has been designed to show the image of the recipe on the left-hand side, and the information associated with the recipe on the right with a white background. The vertical card was designed to have the recipe image as the background of the card, with a green box at the bottom to display the recipe information.
 
 \begin{figure}[h]
-  \includegraphics[width=1.0\textwidth]{assets/Version 1 Horizontal Cards.png}
+  \includegraphics[width=1.0\textwidth]{assets/design-images/Version 1 Horizontal Cards.png}
   \centering
-  \caption{insert caption here}
+  \caption{Horizontal recipe card design}
 \end{figure}
 
 \begin{figure}[h]
-  \includegraphics[width=1.0\textwidth]{assets/Version 1 Vertical Cards.png}
+  \includegraphics[width=1.0\textwidth]{assets/design-images/Version 1 Vertical Cards.png}
   \centering
-  \caption{insert caption here}
+  \caption{Vertical recipe card design}
 \end{figure}
 
 A hover state was also designed for each recipe card, to allow users to know which card they are currently selecting and improving accessibility. Depending on the card, different hover state versions are shown. 
@@ -365,6 +365,40 @@ The second iteration of our designs focused more on user experience and frontend
 Within this version, we added an add recipe form to allow users to add in their own recipe into the system, as well as a homepage menu and back buttons to increase navigation across the application. We also reviewed some of the components and features that we designed from version 1, and removed any features we thought we no longer needed.
 
 \paragraph{Add Recipe Form}
+After discussing what features could be added to the application, we found that one of the most impactful addition would be to have an “Add Recipe” form. This form would allow users to add in their own recipes to the system so we could diversify recipes more to the users taste whilst also giving them the same step by step functionality shown within the recipe carousel.
+
+Initially, we created two different designs for the form. Both forms featured buttons which were would toggle between different forms, each corresponding to the heading of the respective button.
+
+Within Design 1, the buttons were positioned on the left-hand side of the page, while the corresponding forms were located on the right-hand side. Design 2 incorporated a 'recipe switcher' component, with form boxes situated below the corresponding headings.
+
+After a few discussions, we decided that the layout of Design 2 provided a more user-friendly experience. Since this component was already featured elsewhere within the application, we opted for consistency and familiarity by incorporating it into the form design as well.
+
+\begin{figure}[h]
+  \includegraphics[width=1.0\textwidth]{assets/design-images/Design 1 Add Recipe Form.png}
+  \centering
+  \caption{Add Recipe form: Design 1 }
+\end{figure}
+
+\begin{figure}[h]
+  \includegraphics[width=1.0\textwidth]{assets/design-images/Design 2 Add Recipe Form.png}
+  \centering
+  \caption{Add Recipe Form: Design 2}
+\end{figure}
+
+\paragraph{Navigation Menu}
+To improve user experience within the application, we decided to add a navigation menu to the application, which would act a centralised hub to important links. By implementing this menu, we hoped that it would streamline user journey, enhance usability and lead to a increased user satisfaction.
+
+\paragraph{Back Buttons}
+Upon review of the version 1 designs, we noticed that there was not a clear way for users to navigate around the application. The original idea was to have our logo as the main way to access the homepage, and as the application had shallow page structure, we did not see the need for a back button except for when navigating on the recipe carousel page.
+
+Within version 2 of the design we introduced a new homepage menu and expanded the number of pages within the application. This added an importance to provide users with a clear way to navigate and enhance their browsing experience. 
+
+\paragraph{Downfalls}
+Between Version 1 and 2 of the designs, there was not many features which we removed. We mainly focused on refining and optimising existing features, as well as introducing new elements to enhance usability and overall user experience.
+
+However, we decided to remove some unnecessary features to reduce clutter within the application and enhance user experience. The first feature which we deemed redundant was within the recipe switcher component. Originally, we wanted to add a checkbox for users to select if they had already prepared ingredients for the recipes. For instance, if they had already chopped carrots in advance, they could mark this checkbox to skip over related steps within the recipe carousel page. However, we realised that this would this would add unnecessary complexity to the user interface and potentially confuse users.
+
+We also removed the idea of implementing tags within recipes and recipe cards. We found that this would make the database overly complex and potentially overwhelming for users to navigate. The metadata shown for recipes were also not essential for the core functionality of the application, so to simplify the design we opted to eliminate this feature.
 
 \subsection{Architecture}
 \subsubsection{Software}
