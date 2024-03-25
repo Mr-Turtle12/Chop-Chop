@@ -32,6 +32,13 @@
       :step-index="stepIndex"
     />
   </div>
+  <div v-if="recipe.isAudio" class = "bottom-container">
+      <button @click="toggleAudio" class="mute-button">
+        <img v-if="isAudioPlaying" src="@/assets/Speaker.svg">
+        <img v-else src="@/assets/mute_Speaker.svg">
+      </button>
+      <audio id="audioPlayer" :src="null"></audio>
+  </div>
 </template>
 
 <script setup>
@@ -43,16 +50,17 @@ import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
-import { ref,reactive,onBeforeUnmount } from 'vue'
+import { ref,reactive,onBeforeUnmount ,  onMounted, watch } from 'vue'
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
-
+const isAudioPlaying = ref(true)
 const socket = new WebSocket(store.state.websocketUrl)
 
+
+
 socket.addEventListener('open', (event) => {
-        socket.send(`{"command": { "keyword": "start","recipe_id": ${route.params.id} }}`)
-    
+      socket.send('{"command": {"keyword": "start", "recipe_id": '+route.params.id+' ,"voice": "'+ route.params.voice +  '"}}')
     })
 var stepIndex = ref(0)
 
@@ -64,9 +72,9 @@ var recipe = reactive({
     progressionObject: [
         'NO PROGRESSION OBJECT'
     ],
-    isSmart: false
+    isSmart: false,
+    isAudio : route.params.voice !== "false"
 })
-
 socket.addEventListener('open', (event) => {
     socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
 
@@ -79,11 +87,12 @@ socket.addEventListener('message', (event) => {
           recipe.name = data.name
           recipe.steps = data['commands']
           recipe.isSmart = data.isSmart
+          updateVoice()
 
       } else if (data.step) {
           stepIndex.value = data.step
           if (data.inhibitors.progressionObject == 'timer') {
-              addTimerCard((parseInt(data.inhibitors.inhibitor) * 60000), recipe.steps[stepIndex.value], stepIndex.value)
+              addTimerCard(parseInt(data.inhibitors.inhibitor * 60000), recipe.steps[stepIndex.value], stepIndex.value)
           }
       }
     }
@@ -92,6 +101,37 @@ socket.addEventListener('message', (event) => {
     }
 })
 
+onMounted(() => {
+  watch(
+    () => stepIndex.value,
+    () => {
+      updateVoice()
+    },
+  )
+})
+
+const toggleAudio = () => {
+  isAudioPlaying.value = !isAudioPlaying.value
+  updateVoice()
+}
+function updateVoice(){
+  const socket = new WebSocket(store.state.websocketUrl)
+  socket.addEventListener('open', async (event) => {
+      socket.send('{"command": {"keyword": "get-audio"}}')
+  }) 
+  socket.addEventListener('message', async (event) => {
+    const Url = event.data
+    const audioElement = document.getElementById('audioPlayer');
+    if (isAudioPlaying.value && audioElement) {
+      audioElement.src = Url;
+      audioElement.addEventListener('canplay', () => {
+        audioElement.play();
+      });
+    } else if (!isAudioPlaying && audioElement) {
+      audioElement.pause();
+    }
+  })  
+}
 
 const timerItems = ref([]) // No initial timers
 
@@ -137,9 +177,30 @@ onBeforeUnmount(() => {
   padding: 1rem;
   position: relative; /* Position relative for absolute positioning of arrow */
 }
+.bottom-container {
+  position: fixed;
+  bottom: 0; 
+  left: 0; 
+  width: 100%; 
+  display: flex;
+  justify-content: flex-start; 
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.mute-button {
+  height: 3rem; 
+  width: 3rem; 
+  margin: 1rem;
+}
+
+.mute-button img {
+  height: 100%; 
+  width: 100%; 
+}
 
 nav {
-  position: absolute; /* Position the arrow absolutely */
+  position: fixed; /* Position fixed */
   top: 0; /* Align to the top */
   left: 0; /* Align to the left */
 }

@@ -37,7 +37,6 @@
             </p>
           </div>
         </div>
-
         <div class="c-recipe__info-bottom">
           <div
             class="c-recipe__bookmark-button-container"
@@ -51,11 +50,24 @@
               Bookmark Recipe
             </p>
           </div>
-        
-          <a
-            class="c-recipe__link"
-            :href="`/recipe/${ route.params.id }`"
-          >start recipe</a>
+          <div class="c-recipe__info-bottom">
+            <div v-if="recipe.Voices" class="c-recipe__dropdown-container">
+              <select  v-model="selectedVoice">
+                <option value="" disabled selected>Choose your voice</option>
+                <option v-for="option in recipe.Voices" :key="option" :value="option">{{  option.replace('_', ' ') }}</option>
+              </select>
+            </div>
+            <a
+                v-if="recipe.isSmart"
+                class="c-recipe__link"
+                :href="GetURL()"
+              >start recipe</a>
+              <a
+                v-else
+                class="c-recipe__link"
+                :href="`/recipe/${ route.params.id }/false`" 
+              >start recipe</a>
+          </div>
         </div>
       </div>
 
@@ -74,13 +86,13 @@ import BookmarkSVG from '@/assets/bookmark-svg.vue'
 import { useStore } from 'vuex'
 
 
-import { onMounted, reactive, onBeforeUnmount } from 'vue'
+import { onMounted, reactive, onBeforeUnmount,ref  } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const route = useRoute()
 const store = useStore()
 const socket = new WebSocket(store.state.websocketUrl)
-
+const selectedVoice = ref('')
 
 var recipe = reactive({
     name: 'ERROR NAME NOT FOUND',
@@ -100,12 +112,17 @@ onMounted(() => {
     getRecipeInfo()
 })
 
+function GetURL() {
+    const temp = `/recipe/${route.params.id}/${selectedVoice.value ? selectedVoice.value : "false"}`
+    return temp
+}
+
 
 function getRecipeInfo()
 {
     socket.addEventListener('open', (event) => {
         socket.send(`{"command": { "keyword": "get","recipe_id": ${route.params.id} }}`)
-    
+
     })
     socket.addEventListener('message', (event) => {
         const RecipeJsonMessage = JSON.parse(event.data)
@@ -146,6 +163,7 @@ function parseRecipeFromJson(RecipeJsonMessage)
     recipe.steps = RecipeJsonMessage['commands']
     recipe.isSmart = RecipeJsonMessage.isSmart
     recipe.servingSize = RecipeJsonMessage.servingSize
+    recipe.Voices = RecipeJsonMessage['Voices']
 }
 
 const formatTime = (Time) => {
@@ -161,6 +179,7 @@ const formatTime = (Time) => {
 }
 
 const toggleFavourite = ($event) => {
+  console.log(selectedVoice)
     const bookmarkIcon = $event.target.parentElement
     
     if (bookmarkIcon.classList.contains('favourite')) {
@@ -345,6 +364,36 @@ onBeforeUnmount(() => {
     &:focus {
       background-color: var(--dark-green);
       color: var(--white);
+    }
+  }
+  &__info-bottom {
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-xxs);
+
+    @include media("<=tablet") {
+      flex-direction: column;
+    }
+  }
+  &__dropdown-container {
+    select {
+      background-color: var(--white);
+      border: 2px solid var(--dark-green);
+      border-radius: 20px;
+      padding: var(--space-xxs);
+      color: var(--dark-green);
+      font-size: 16px;
+
+      &:hover,
+      &:focus {
+        background-color: var(--dark-green);
+        color: var(--white);
+      }
+      @include media("<=tablet") {
+        width:100%;
+
+      }
     }
   }
 }

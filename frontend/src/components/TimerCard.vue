@@ -114,15 +114,19 @@ onUnmounted(() => {
  */
 
 const textColor = computed(() => {
-    return remainingTime.value === 0 ? '#e74c3c' : '#333' // Red color when completed, otherwise black
+    return remainingTime.value <= 0 ? '#e74c3c' : '#333' // Red color when completed, otherwise black
 })
 
 const progressStrokeColor = computed(() => {
-    return '#3498db' // Blue color for background circle
+  if (flashText.value) {
+        return 'transparent'; // Transparent color when flashing
+    } else {
+        return '#3498db'; // Blue color for background circle
+    }
 })
 
 const backgroundStrokeColor = computed(() => {
-    if(remainingTime.value === 0){
+    if(remainingTime.value <= 0){
         return '#333'
     }
     return `rgb(204, 204, 204, ${1 - progress.value})` // Grey color for progress circle
@@ -142,7 +146,11 @@ const timerTextClass = computed(() => {
  * String formatting
  */
 function formatTime(h, m, s) {
-    return `${pad(h)}:${pad(m)}:${pad(s)}`
+  if (flashText.value) {
+        return '00:00:00';
+    } else {
+        return `${pad(h)}:${pad(m)}:${pad(s)}`;
+    }
 }
 
 function pad(value) {
@@ -178,7 +186,7 @@ function updateProgress() {
 
 watch(remainingTime, (newVal, oldVal) => {
     updateTime()
-    if (newVal === 0) {
+    if (newVal <= 0) {
         flashText.value = true
     }
 })

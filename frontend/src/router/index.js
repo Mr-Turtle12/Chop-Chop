@@ -12,7 +12,7 @@ const routes = [
         component: HomeView
     },
     {
-        path: '/recipe/:id',
+        path: '/recipe/:id/:voice',
         name: 'recipe',
         component: RecipeView,
         meta: { transition: 'slide-left'}

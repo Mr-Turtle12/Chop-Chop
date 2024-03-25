@@ -1,6 +1,7 @@
 import base64
 import json
 from backend.src.controller import recipe, manageThread
+from backend.src.config import SERVER_IP
 from backend.src.interpreter import create_camera, destroy_camera
 from backend.src.utils import utils, SQLQueries
 
@@ -13,14 +14,16 @@ class Controller:
         self.thread_instance = None
         self.step_changed_flag = utils.StepChangeFlag()
         self.end_flag = utils.EndFlag()
+        self.AIvoice = "Null"
         self.Cameras = None
 
-    def new_recipe(self, recipe_id):
+    def new_recipe(self, recipe_id, Voice):
         """Starts a new recipe with the given recipe ID.
         Args:
             recipe_id (int): The ID of the recipe to start.
         """
         self.current_recipe = recipe.Recipe(recipe_id)
+        self.AIvoice = Voice
         self.end_flag.clear()
         self.Cameras = create_camera()
         if SQLQueries.is_smart(self.current_recipe.recipe_id):
@@ -65,8 +68,12 @@ class Controller:
             "commands": utils.get_commands(recipe_id),
             "isSmart": bool(SQLQueries.is_smart(recipe_id)),
             "servingSize": target_recipe[8],
+            "Voices": SQLQueries.get_voices(recipe_id),
         }
         return json.dumps(metadata)
+
+    def get_audio_URL(self):
+        return f"http://{SERVER_IP}:8000/photos/{self.current_recipe.recipe_name.replace(' ', '_')}/{self.AIvoice}_{self.current_recipe.current_step+1}.mp3"
 
     def progress_next_step(self):
         """Progresses to the next step in the recipe."""

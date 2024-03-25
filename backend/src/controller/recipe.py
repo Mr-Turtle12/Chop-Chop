@@ -6,6 +6,10 @@ class Recipe:
 
     def __init__(self, recipe_id):
         self.recipe_id = recipe_id
+        self.recipe_name = SQLQueries.SQLiteQuery(
+            "SELECT name FROM recipes WHERE id = " + str(self.recipe_id),
+            "one",
+        )[0]
         self.current_step = 0
 
     def get_recipe_step(self, step_number):

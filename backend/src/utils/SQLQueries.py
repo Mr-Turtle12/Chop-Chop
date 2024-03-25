@@ -36,6 +36,20 @@ def set_favourite(recipe_id, favourite):
     return SQLiteQuery(update_query, "commit")
 
 
+def get_voices(recipe_id):
+
+    Voices = SQLiteQuery(
+        "SELECT v.voice_name FROM voices v JOIN recipe_voices rv ON v.voice_id = rv.voice_id WHERE rv.recipe_id = "
+        + str(recipe_id)
+        + ";",
+        "all",
+    )
+    if Voices is not None:
+        Voice_List = [Voice[0] for Voice in Voices]
+        return Voice_List
+    return None
+
+
 def get_favourites_metadata():
     query = SQLiteQuery(
         "SELECT * FROM recipes WHERE favourite = 1",

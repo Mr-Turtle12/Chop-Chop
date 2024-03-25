@@ -43,20 +43,19 @@
         <button
           class="c-recipe-carousel__button c-recipe-carousel__button--next"
           :class="{ 'disabled': !nextStep }"
-          @click="
-            incrementPeek()"
+          @click="incrementPeek"
         >
           <img
             src="@/assets/navigation-arrow.svg"
           >
         </button>
       </div>
-    </div>
+      </div>
   </section>
 </template>
 
 <script setup>
-import { computed, toRef, ref } from 'vue'
+import { computed, toRef, ref} from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -64,9 +63,6 @@ const store = useStore()
 const router = useRouter()
 
 const socket = new WebSocket(store.state.websocketUrl)
-
-
-
 const props = defineProps({
     recipe: {
         type: Object,
@@ -79,9 +75,12 @@ const props = defineProps({
 })
 
 const isPeeking = ref(false)
+
+
 const recipe = toRef(props, 'recipe')
 const stepIndex = toRef(props, 'stepIndex')
 const localStepDelta = ref(0)
+
 
 const previousStep = computed(() => {
     const index = stepIndex.value + localStepDelta.value - 1
