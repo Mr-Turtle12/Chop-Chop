@@ -14,7 +14,7 @@ class Controller:
         self.thread_instance = None
         self.step_changed_flag = utils.StepChangeFlag()
         self.end_flag = utils.EndFlag()
-        self.AIvoice = "Wallace"
+        self.AIvoice = "Null"
         self.Cameras = None
 
     def new_recipe(self, recipe_id, Voice):
