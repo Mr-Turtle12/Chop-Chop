@@ -12,7 +12,7 @@ CONFIDENCE_THRESHOLD = float(0.6)
 DETECT_FRAMES = 10
 DETECT_THRESHOLD = 7
 # Camera settings
-CAMERA_IDS = [0, 1]
+CAMERA_IDS = [0]
 # API settings
 WEBSOCKET_UPDATE_INTERVAL = 1
 # Database location
