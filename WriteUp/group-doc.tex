@@ -131,33 +131,28 @@ We decided on these objectives to measure our progress and ensure a clear direct
     As well as this, we made sure to keep our supervisor updated on our progress and any issues closed since the last meeting and inform them of the issues outstanding and assigned for this week. This way we made sure the supervisor was always aware of the work we were aiming to achieve for next week and could hold us accountable for any delays.
 
 
-    \section{Research}
+    \section{Research} 
     \subsection{Object detection}
     Our project's flagship feature was our custom real-time object detection system. This would be used to detect culinary objects such as food and utensils which would dictate when a recipe step had been completed.
     
-None of us on the project had experience creating an object detection system. So, we began by doing some research. 
+    None of us on the project had experience creating an object detection system. So, we began by doing some research. 
 
-With the huge demand for real-time object detection in the modern age many different algorithms have emerged.
+    With the huge demand for real-time object detection in the modern age many different algorithms have emerged.
 
-Faster R-CNN offers a real-time object detection algorithm version of R-CNN. “One of the most accurate object detection algorithms” \cite{FasterRCNN} with the drawback of “requires a lot of power at inference time” IE when running in real-time. So, detecting small food objects in a kitchen would be perfect. However, we hoped to run on a Raspberry Pi (a hub in the kitchen area), and we fear the Raspberry Pi will not have the computational power required \cite{Fast-CNN-Rasberry-Pi} at inference time.
+    Faster R-CNN offers a real-time object detection algorithm version of R-CNN. “One of the most accurate object detection algorithms” \cite{FasterRCNN} with the drawback of “requires a lot of power at inference time” IE when running in real-time. So, detecting small food objects in a kitchen would be perfect. However, we hoped to run on a Raspberry Pi (a hub in the kitchen area), and we fear the Raspberry Pi will not have the computational power required \cite{Fast-CNN-Rasberry-Pi} at inference time.
 
-Detectron2- Created by Facebook AI research it claims to “provides state-of-the-art detection and segmentation algorithms” \cite{wu2019detectron2} and has been used in many Facebook products such as “Smart Camera for new Portal video-calling devices” \cite{metasmartcameras}. It’s built using the COCO, LVIS, CityScape, and VOC20 datasets, this creates an accurate dataset with an MNAP. However, in many cases “YOLOv8 models outperformed the detectron2 mode” \cite{ai5010005}.
+    Detectron2- Created by Facebook AI research it claims to “provides state-of-the-art detection and segmentation algorithms” \cite{wu2019detectron2} and has been used in many Facebook products such as “Smart Camera for new Portal video-calling devices” \cite{metasmartcameras}. It’s built using the COCO, LVIS, CityScape, and VOC20 datasets, this creates an accurate dataset with an MNAP. However, in many cases “YOLOv8 models outperformed the detectron2 mode” \cite{ai5010005}.
 
-YOLO – You Only Look Once, “It is a state-of-the-art, real-time object detection system which offers extreme levels of speed and accuracy.” \cite{rajeshwari2019object}, that is around “1000x faster than RCNN and 100x faster than the Fast R-CNN model” \cite{rajeshwari2019object}.  It's also shown to have a much higher mAP50-95 "96.7\%" compared to detectron2 (Faster RCNN-101) at "83.554\%" \cite{ai5010005}.
+    YOLO – You Only Look Once, “It is a state-of-the-art, real-time object detection system which offers extreme levels of speed and accuracy.” \cite{rajeshwari2019object}, that is around “1000x faster than RCNN and 100x faster than the Fast R-CNN model” \cite{rajeshwari2019object}.  It's also shown to have a much higher mAP50-95 "96.7\%" compared to detectron2 (Faster RCNN-101) at "83.554\%" \cite{ai5010005}.
 
-Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management. 
+    Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management. 
 
-RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively create image datasets. It allows you to upload images you have taken for training, delegate annotation jobs out to different members of the team, and then create a dataset which can be downloaded and trained locally. It was one of the few sites that offered an immense data set (max 10,000 images) with an easy-to-use interface, all for free.
+    RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively create image datasets. It allows you to upload images you have taken for training, delegate annotation jobs out to different members of the team, and then create a dataset which can be downloaded and trained locally. It was one of the few sites that offered an immense data set (max 10,000 images) with an easy-to-use interface, all for free.
 
-During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
-    
-\section{Design}
-\subsection{Frontend}
-Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
-
-\subsubsection{Research}
-
-Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
+    During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
+        
+    \subsection{Design}
+    Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
 
 \paragraph{Featured Recipe}
 Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
@@ -217,6 +212,34 @@ Figma also features a Dev Mode interface that allows for developers to translate
 While Zeplin does also feature some developer tools, Figma is exclusively tailored for the design process. This means that Figma can provide a better experience while designing prototypes as it doe not have the additional complexity of features which are shown within Zeplin. 
 
 After considering the pros and cons of both applications, combined with the research which we conducted, we decided that Figma would be the best solution for us.
+
+\subsection{Frontend Development}
+\subsubsection{Vue.js}
+    Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
+    \begin{description}
+      \item[Flexibility:] vue is flexible, we can make custom components to fit our application, we can test it on a web-browser and utilise powerful debuging tools, additionally with a bit of work we can sandbox it into a mobile application.
+      \item[Easy to learn:] vue's syntax and component systems are easy to learn and to read which suits our team, some of which had never used a frontend framework before. This makes understanding the code much easier when it comes to reviewing merge requests or discussing approaches.
+      \item[Lightweight:] vue is lightweight, it's quick to load as it is made to be run from a web-browser. Features like hot reload help us devlop quickly and it's cli tools\footnote{in addition to the node package manager} make installing packages easy.
+      \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
+    \end{description}
+
+    \subsubsection{CSS vs SCSS}
+    Both CSS and SCSS are stylesheets used for styling web pages. One of the first decisions we had to make before beginning frontend development for our application was to decide which one to use. 
+
+    To begin with, CSS is the "standard stylesheet language used to define the presentation and layout of a webpage written in HTML or XML" \cite{geeksforgeeks}. It has a simple syntax with selectors, properties and values. On the other hand, SCSS is a "superset of CSS and it provides additional features and functionalities that are not available in regular CSS" \cite{geeksforgeeks} (e.g. variable, nesting, and mixins). 
+
+    For our project, we decided that the use of SCSS would benefit us due to its enhanced features and flexibility. With the extra features available to us, we felt like code could be maintained and our development more efficient by the use of mixing and variables. 
+    
+    \subsubsection{BEM coding standards}
+    The BEM (Block Element Modifier) methodology is a popular naming convention for classes in HTML and CSS. Its goal is to help developers better understand the relationship between the HTML and CSS in a given project. 
+
+    We decided to use the BEM methodology within our project to maintain consistency and improve code readability. By adopting this naming convention, we felt like we could manage and differentiate between components and their corresponding styles creating a more robust and maintainable codebase. 
+    
+    The use of modifiers allowed us to reuse code within the project, while also providing a way to add customisations to existing components. 
+
+\section{Design}
+\subsection{Frontend}
+Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
 
 \subsubsection{Designs: Version 1}
 The initial iteration of the designs prioritised the application's functionality over user experience considerations. Inspired by our research, we designed our own components, recipe cards and recipe pages. Within this subsection, we provide a detailed description of these components and their functionalities.
@@ -438,29 +461,7 @@ We also removed the idea of implementing tags within recipes and recipe cards. W
     Its primary function is to retrieve multimedia content, such as photos or voice lines, from the gallery via URLs. If it receives a POST request, the server validates whether the request contains image data. If image data is present, the server stores the uploaded image in the Multimedia Gallery.
     
     \subsection{Frontend}
-    \subsubsection{Vue.js}
-    Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
-    \begin{description}
-      \item[Flexibility:] vue is flexible, we can make custom components to fit our application, we can test it on a web-browser and utilise powerful debuging tools, additionally with a bit of work we can sandbox it into a mobile application.
-      \item[Easy to learn:] vue's syntax and component systems are easy to learn and to read which suits our team, some of which had never used a frontend framework before. This makes understanding the code much easier when it comes to reviewing merge requests or discussing approaches.
-      \item[Lightweight:] vue is lightweight, it's quick to load as it is made to be run from a web-browser. Features like hot reload help us devlop quickly and it's cli tools\footnote{in addition to the node package manager} make installing packages easy.
-      \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
-    \end{description}
-
-    \subsubsection{CSS vs SCSS}
-    Both CSS and SCSS are stylesheets used for styling web pages. One of the first decisions we had to make before beginning frontend development for our application was to decide which one to use. 
-
-    To begin with, CSS is the "standard stylesheet language used to define the presentation and layout of a webpage written in HTML or XML" \cite{geeksforgeeks}. It has a simple syntax with selectors, properties and values. On the other hand, SCSS is a "superset of CSS and it provides additional features and functionalities that are not available in regular CSS" \cite{geeksforgeeks} (e.g. variable, nesting, and mixins). 
-
-    For our project, we decided that the use of SCSS would benefit us due to its enhanced features and flexibility. With the extra features available to us, we felt like code could be maintained and our development more efficient by the use of mixing and variables. 
     
-    \subsubsection{BEM coding standards}
-    The BEM (Block Element Modifier) methodology is a popular naming convention for classes in HTML and CSS. Its goal is to help developers better understand the relationship between the HTML and CSS in a given project. 
-
-    We decided to use the BEM methodology within our project to maintain consistency and improve code readability. By adopting this naming convention, we felt like we could manage and differentiate between components and their corresponding styles creating a more robust and maintainable codebase. 
-    
-    The use of modifiers allowed us to reuse code within the project, while also providing a way to add customisations to existing components. 
-
  
     \subsection{Database}
     \subsubsection{JSON}
