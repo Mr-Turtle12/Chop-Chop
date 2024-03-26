@@ -450,6 +450,7 @@ We also removed the idea of implementing tags within recipes and recipe cards. W
     Its primary function is to retrieve multimedia content, such as photos or voice lines, from the gallery via URLs. If it receives a POST request, the server validates whether the request contains image data. If image data is present, the server stores the uploaded image in the Multimedia Gallery.
     
     \subsection{Frontend}
+<<<<<<< HEAD
     \subsubsection{Vue.js}
     Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
     \begin{description}
@@ -482,6 +483,28 @@ Additionally, the database includes two new tables to accommodate the work done 
 As well as the SQL database the final project also contains a file storage server to store our photos and voice recordings for recipe steps. This is local file storage server with its location stored inside the SQL database.
 
 This file storage is called using a custom HTML web request to retrieve the images and voice recordings. We chose to store our recipe images like this as we found it to be the simplest and easiest way to store photos with a focus on scalability.
+=======
+    
+ 
+    \subsection{Database}
+    \subsubsection{JSON}
+    We originally built a JSON database to quickly get started with storing recipes. We broke the initial database into separate recipes, each with three distinct areas. Recipe Details contained the recipe ID, Name and Description, Recipe Ingredients contained all the ingredient Names as well as Amount and Unit. Recipe Steps then contained Steps in human readable form, the Progression Object and Inhibitor for the backends understanding and the Camera which the step is expected to be completed under.
+    
+    We chose to use JSON to start with due to its quick and simple nature to set up, allowing us to quickly begin testing the process of displaying recipe details and ingredients on the frontend and progressing through recipe steps with the backend.
+    
+    When breaking the recipes into separate steps we knew we had to do it in a way that could be easily translated into Progression Objects and Inhibitor Objects. From our first database we had the steps broken down into their most simple form so that the neural network would only ever have one object to be looking for at once. It was important that this step was done early as it led the way for knowing what images we would need to have for our training dataset.
+    \subsubsection{SQL}
+    Further into the project, once we had a good setup for displaying and progressing our recipes, we wanted to add a significant amount of “dummy data” to fill out the frontend application and allow for features such as featured recipes and recipe searching. It became clear that the JSON database would no longer be the best way to store our recipes and we instead opted to transition to an SQL database before progressing with adding the additional recipes and search functionality.
+    After deciding to migrate to an SQL database, we conducted research and opted for SQLite over other SQL database engines. This choice stemmed from our desire for a straightforward implementation while still leveraging the features of SQL and not needing to start running any more servers which would have been required for an SQL server.
+    
+    The SQL database comprises five tables, three of these tables are mapped from the same segments that were split from the JSON data. These tables include Recipes, which store core recipe information such as name and description, Steps which is linked to recipes in a one-to-many relationship, and Ingredients, also linked to recipes in a one-to-many relationship. Recipes contains the same information as it did in the JSON, while Steps and Ingredients needed a column added for RecipeID to now be able to link it back to the recipe they belong to.
+    
+    Additionally, the database includes two new tables to accommodate the work done with voices. The Voices table assigns a unique ID to each voice, and the Recipe\textunderscore Voices table facilitates many-to-many connections between recipes and voice recordings.
+    \subsubsection{Multimedia Gallery}\label{multimediaGallery}
+    As well as the SQL database the final project also contains a file storage server to store our photos and voice recordings for recipe steps. This is local file storage server with its location stored inside the SQL database.
+    
+    This file storage is called using a custom HTML web request to retrieve the images and voice recordings. We chose to store our recipe images like this as we found it to be the simplest and easiest way to store photos with a focus on scalability.
+>>>>>>> 6795e425c06a7cac3014b2fd60c10d9250e1aae2
 
     \subsection{Data Collection \& Training}
     \subsubsection{RoboFlow}
