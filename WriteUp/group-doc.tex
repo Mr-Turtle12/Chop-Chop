@@ -115,6 +115,7 @@ A scrum-style agile approach was adopted to our project management strategy. We 
 
 From our team’s year-in-industry experience, we adopted a review before merging convention. This rule ensures that tasks were overlooked by other members before being added to the main branch from their working one. This had two main advantages. One was a hugely reduced chance of buggy code getting into the main branch. Two: you gained knowledge of how the rest of the project worked outside of your assigned issues. To enforce this, we locked the main branch from being merged and required at least one approval before the merge.
 
+<<<<<<< HEAD
 We aimed to ensure the main branch was kept as clean as possible; we were mindful of what should and should not be on the repo. This included adding rules to the git ignore file when needed, pruning unnecessary files, and ensuring consistency in naming conventions for files and folders.
 
 \subsection{Meetings}
@@ -170,19 +171,31 @@ We also frequently pair programmed in person which aided everyone in learning al
 Our project's flagship feature was our custom real-time object detection system. This would be used to detect culinary objects such as food and utensils which would dictate when a recipe step had been completed.
 
 None of us on the project had experience creating an object detection system. So, we began by doing some research.
+=======
+    \section{Research} 
+    \subsection{Object detection}
+    Our project's flagship feature was our custom real-time object detection system. This would be used to detect culinary objects such as food and utensils which would dictate when a recipe step had been completed.
+    
+    None of us on the project had experience creating an object detection system. So, we began by doing some research. 
+>>>>>>> 6795e42 (moving design and frontend research to research section)
 
-With the huge demand for real-time object detection in the modern age many different algorithms have emerged.
+    With the huge demand for real-time object detection in the modern age many different algorithms have emerged.
 
-Faster R-CNN offers a real-time object detection algorithm version of R-CNN. “One of the most accurate object detection algorithms” \cite{FasterRCNN} with the drawback of “requires a lot of power at inference time” IE when running in real-time. So, detecting small food objects in a kitchen would be perfect. However, we hoped to run on a Raspberry Pi (a hub in the kitchen area), and we fear the Raspberry Pi will not have the computational power required \cite{Fast-CNN-Rasberry-Pi} at inference time.
+    Faster R-CNN offers a real-time object detection algorithm version of R-CNN. “One of the most accurate object detection algorithms” \cite{FasterRCNN} with the drawback of “requires a lot of power at inference time” IE when running in real-time. So, detecting small food objects in a kitchen would be perfect. However, we hoped to run on a Raspberry Pi (a hub in the kitchen area), and we fear the Raspberry Pi will not have the computational power required \cite{Fast-CNN-Rasberry-Pi} at inference time.
 
-Detectron2- Created by Facebook AI research it claims to “provides state-of-the-art detection and segmentation algorithms” \cite{wu2019detectron2} and has been used in many Facebook products such as “Smart Camera for new Portal video-calling devices” \cite{metasmartcameras}. It’s built using the COCO, LVIS, CityScape, and VOC20 datasets, this creates an accurate dataset with an MNAP. However, in many cases “YOLOv8 models outperformed the detectron2 mode” \cite{ai5010005}.
+    Detectron2- Created by Facebook AI research it claims to “provides state-of-the-art detection and segmentation algorithms” \cite{wu2019detectron2} and has been used in many Facebook products such as “Smart Camera for new Portal video-calling devices” \cite{metasmartcameras}. It’s built using the COCO, LVIS, CityScape, and VOC20 datasets, this creates an accurate dataset with an MNAP. However, in many cases “YOLOv8 models outperformed the detectron2 mode” \cite{ai5010005}.
 
-YOLO – You Only Look Once, “It is a state-of-the-art, real-time object detection system which offers extreme levels of speed and accuracy.” \cite{rajeshwari2019object}, that is around “1000x faster than RCNN and 100x faster than the Fast R-CNN model” \cite{rajeshwari2019object}.  It's also shown to have a much higher mAP50-95 "96.7\%" compared to detectron2 (Faster RCNN-101) at "83.554\%" \cite{ai5010005}.
+    YOLO – You Only Look Once, “It is a state-of-the-art, real-time object detection system which offers extreme levels of speed and accuracy.” \cite{rajeshwari2019object}, that is around “1000x faster than RCNN and 100x faster than the Fast R-CNN model” \cite{rajeshwari2019object}.  It's also shown to have a much higher mAP50-95 "96.7\%" compared to detectron2 (Faster RCNN-101) at "83.554\%" \cite{ai5010005}.
 
+<<<<<<< HEAD
 Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management.
+=======
+    Dean reached out to an ex-colleague who had experience in this area. They suggested using YOLOv8 \cite{Jocher_Ultralytics_YOLO_2023} as a base for real-time object detection and suggested using Roboflow \cite{RoboFlow-Software} for dataset management. 
+>>>>>>> 6795e42 (moving design and frontend research to research section)
 
-RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively create image datasets. It allows you to upload images you have taken for training, delegate annotation jobs out to different members of the team, and then create a dataset which can be downloaded and trained locally. It was one of the few sites that offered an immense data set (max 10,000 images) with an easy-to-use interface, all for free.
+    RoboFlow \cite{RoboFlow-Software} is a site where you can easily collaboratively create image datasets. It allows you to upload images you have taken for training, delegate annotation jobs out to different members of the team, and then create a dataset which can be downloaded and trained locally. It was one of the few sites that offered an immense data set (max 10,000 images) with an easy-to-use interface, all for free.
 
+<<<<<<< HEAD
 During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
 
 \subsection{Background \& Novelty}
@@ -202,6 +215,12 @@ Figma was the main tool which we used to craft the frontend design of our web ap
 \subsubsection{Research}
 
 Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
+=======
+    During our research process, we tried out Roboflow and used a trial of their training cloud computers. With only 100 images we were able to confidently detect a Rubik's cube, being held, rotated in the hand, and placed under different backgrounds. Given the lack of experience we had, the relatively small number of images, and the very accurate results we achieved. We were confident that scaling up to whole recipes should on paper be very possible.
+        
+    \subsection{Design}
+    Our design process began by investigating and researching what other recipe applications offered in terms of layout, features, and user experience. The three main recipe applications which we focused our research on was BBC Good Foods, AllRecipes and Yummly. 
+>>>>>>> 6795e42 (moving design and frontend research to research section)
 
 \paragraph{Featured Recipe}
 Our findings found that the majority of the sites that we looked at showed a featured article or recipe which was the the forefront of the homepage. This component would usually include a background image, title, description, and a button directing users to the featured collection. We quite liked this idea, as it was visually appealing, and an effective way to draw users attention to a focal point on the homepage. We also liked how it could streamline user navigation, and that we could implement our own functionality to make the component work well with our application.
@@ -261,6 +280,34 @@ Figma also features a Dev Mode interface that allows for developers to translate
 While Zeplin does also feature some developer tools, Figma is exclusively tailored for the design process. This means that Figma can provide a better experience while designing prototypes as it doe not have the additional complexity of features which are shown within Zeplin. 
 
 After considering the pros and cons of both applications, combined with the research which we conducted, we decided that Figma would be the best solution for us.
+
+\subsection{Frontend Development}
+\subsubsection{Vue.js}
+    Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
+    \begin{description}
+      \item[Flexibility:] vue is flexible, we can make custom components to fit our application, we can test it on a web-browser and utilise powerful debuging tools, additionally with a bit of work we can sandbox it into a mobile application.
+      \item[Easy to learn:] vue's syntax and component systems are easy to learn and to read which suits our team, some of which had never used a frontend framework before. This makes understanding the code much easier when it comes to reviewing merge requests or discussing approaches.
+      \item[Lightweight:] vue is lightweight, it's quick to load as it is made to be run from a web-browser. Features like hot reload help us devlop quickly and it's cli tools\footnote{in addition to the node package manager} make installing packages easy.
+      \item[Familiarity:] our team already had some experience in vue so it would be quicker to develop with and easier to teach to other team memebers.
+    \end{description}
+
+    \subsubsection{CSS vs SCSS}
+    Both CSS and SCSS are stylesheets used for styling web pages. One of the first decisions we had to make before beginning frontend development for our application was to decide which one to use. 
+
+    To begin with, CSS is the "standard stylesheet language used to define the presentation and layout of a webpage written in HTML or XML" \cite{geeksforgeeks}. It has a simple syntax with selectors, properties and values. On the other hand, SCSS is a "superset of CSS and it provides additional features and functionalities that are not available in regular CSS" \cite{geeksforgeeks} (e.g. variable, nesting, and mixins). 
+
+    For our project, we decided that the use of SCSS would benefit us due to its enhanced features and flexibility. With the extra features available to us, we felt like code could be maintained and our development more efficient by the use of mixing and variables. 
+    
+    \subsubsection{BEM coding standards}
+    The BEM (Block Element Modifier) methodology is a popular naming convention for classes in HTML and CSS. Its goal is to help developers better understand the relationship between the HTML and CSS in a given project. 
+
+    We decided to use the BEM methodology within our project to maintain consistency and improve code readability. By adopting this naming convention, we felt like we could manage and differentiate between components and their corresponding styles creating a more robust and maintainable codebase. 
+    
+    The use of modifiers allowed us to reuse code within the project, while also providing a way to add customisations to existing components. 
+
+\section{Design}
+\subsection{Frontend}
+Figma was the main tool which we used to craft the frontend design of our web application. We were able to create and pull ideas from each other and prototype how we wanted the design of the application to look by using its collaborative interface. Within this section, we outline our process of exploring and integrating various ideas into our designs, as well as how we utilised Figma to translate these designs into functional code.
 
 \subsubsection{Designs: Version 1}
 The initial iteration of the designs prioritised the application's functionality over user experience considerations. Inspired by our research, we designed our own components, recipe cards and recipe pages. Within this subsection, we provide a detailed description of these components and their functionalities.
@@ -514,6 +561,7 @@ Whilst researching for the frontend we considered a number of different frontend
     Its primary function is to retrieve multimedia content, such as photos or voice lines, from the gallery via URLs. If it receives a POST request, the server validates whether the request contains image data. If image data is present, the server stores the uploaded image in the Multimedia Gallery.
     
     \subsection{Frontend}
+<<<<<<< HEAD
     \subsubsection{Vue.js}
     Whilst researching for the frontend we considered a number of different frontend frameworks before settling on Vue.js (vue), Node.js (node), and electron. We had discussed using Flutter as opposed to vue since it's superiour at making mobile interfaces however, as making a mobile app became less prioritised we decided to go with vue for the following reasons: 
     \begin{description}
@@ -560,6 +608,28 @@ This file storage is called using a custom HTML web request to retrieve the imag
 \subsection{Data Collection \& Training}
 \subsubsection{RoboFlow}
 For developing our object detection system, we needed a trained model. From our research, we decided to use Roboflow for data collection and management and trained with YOLOv8.
+=======
+    
+ 
+    \subsection{Database}
+    \subsubsection{JSON}
+    We originally built a JSON database to quickly get started with storing recipes. We broke the initial database into separate recipes, each with three distinct areas. Recipe Details contained the recipe ID, Name and Description, Recipe Ingredients contained all the ingredient Names as well as Amount and Unit. Recipe Steps then contained Steps in human readable form, the Progression Object and Inhibitor for the backends understanding and the Camera which the step is expected to be completed under.
+    
+    We chose to use JSON to start with due to its quick and simple nature to set up, allowing us to quickly begin testing the process of displaying recipe details and ingredients on the frontend and progressing through recipe steps with the backend.
+    
+    When breaking the recipes into separate steps we knew we had to do it in a way that could be easily translated into Progression Objects and Inhibitor Objects. From our first database we had the steps broken down into their most simple form so that the neural network would only ever have one object to be looking for at once. It was important that this step was done early as it led the way for knowing what images we would need to have for our training dataset.
+    \subsubsection{SQL}
+    Further into the project, once we had a good setup for displaying and progressing our recipes, we wanted to add a significant amount of “dummy data” to fill out the frontend application and allow for features such as featured recipes and recipe searching. It became clear that the JSON database would no longer be the best way to store our recipes and we instead opted to transition to an SQL database before progressing with adding the additional recipes and search functionality.
+    After deciding to migrate to an SQL database, we conducted research and opted for SQLite over other SQL database engines. This choice stemmed from our desire for a straightforward implementation while still leveraging the features of SQL and not needing to start running any more servers which would have been required for an SQL server.
+    
+    The SQL database comprises five tables, three of these tables are mapped from the same segments that were split from the JSON data. These tables include Recipes, which store core recipe information such as name and description, Steps which is linked to recipes in a one-to-many relationship, and Ingredients, also linked to recipes in a one-to-many relationship. Recipes contains the same information as it did in the JSON, while Steps and Ingredients needed a column added for RecipeID to now be able to link it back to the recipe they belong to.
+    
+    Additionally, the database includes two new tables to accommodate the work done with voices. The Voices table assigns a unique ID to each voice, and the Recipe\textunderscore Voices table facilitates many-to-many connections between recipes and voice recordings.
+    \subsubsection{Multimedia Gallery}\label{multimediaGallery}
+    As well as the SQL database the final project also contains a file storage server to store our photos and voice recordings for recipe steps. This is local file storage server with its location stored inside the SQL database.
+    
+    This file storage is called using a custom HTML web request to retrieve the images and voice recordings. We chose to store our recipe images like this as we found it to be the simplest and easiest way to store photos with a focus on scalability.
+>>>>>>> 6795e42 (moving design and frontend research to research section)
 
 To train, we first needed to collect many images of the object we wanted to detect. We found during development that it is best to start with lots of good-quality images of the object; They should be in good lighting and well-framed. Then many different positions of objects in the frame. Finally, gathering some more obscure images. These can be in different lighting conditions, from far away, and with multiple other objects in the frame as well. These all create a diverse data set, which increases the chance of detection.
 
