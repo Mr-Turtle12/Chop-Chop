@@ -3,10 +3,5 @@
 .pytest_cache/
 <<<<<<< HEAD
 logs/
-group-doc.aux
-group-doc.fdb_latexmk
-group-doc.fls
-group-doc.log
-group-doc.pdf
-group-doc.synctex.gz
-group-doc.toc
+WriteUp/*
+!WriteUp/*.tex
