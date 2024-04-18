@@ -37,7 +37,7 @@ class Detection:
             bool: True if the progression object is in the detected class names and the inhibitor is not, otherwise False.
         """
         result = self.model(frame, verbose=False)[0]
-        detections = sv.Detections.from_yolov8(result)
+        detections = sv.Detections.from_ultralytics(result)
         detections = detections[detections.confidence > self.confidence_threshold]
         class_names = self.get_tags_from_class_ids(detections.class_id)
         if self.last_tag != class_names:
